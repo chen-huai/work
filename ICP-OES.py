@@ -10,9 +10,10 @@ import time
 now = int(time.strftime('%Y'))
 last_time = now-1
 
-
+now_1= time.strftime('%m%d')
+print(now_1)
 def heavy_metal():
-        path=g.fileopenbox(msg=None,title=None,default='Z:/Inorganic_batch/Formaldehyde/batch/*.xlsx',filetypes=None)
+        path=g.fileopenbox(msg=None,title=None,default='Z:/Inorganic_batch/Microwave/batch/%s'%now_1,filetypes=None)
         w=Dispatch('Word.Application')
         w.Visible=0
         doc=w.Documents.Open(r'%s'%path)
@@ -49,16 +50,12 @@ def heavy_metal():
                                         sequence.append(each)
                                         sequence_mm.append(each)
 
-        excel = win32com.gencache.EnsureDispatch('Excel.Application')
-        
-        excel.Visible = 1
-        wb=excel.Workbooks.Add()
-        ws=wb.Worksheets('Sheet1')
-        
-        row=2
+        name=time.strftime("MM %m-%d")       
+        file=open('./%s.txt'%name,'a+')
+        file.write('\n')
         for each in sequence_mm:
-                ws.Cells(row,1).Value=each
-                row+=1                        
+                file.write('%s\n'%each)
+                                 
         
 heavy_metal()
 action=g.ccbox('whether need to run the program again', choices=('continue','finsh'))
