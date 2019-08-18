@@ -22,9 +22,9 @@ window = tk.Tk()
  
 # 第2步，给窗口的可视化起名字
 window.title('操作界面，作者：Frank Chen')
- 
 # 第3步，设定窗口的大小(长 * 宽)
 window.geometry('600x400')  # 这里的乘是小x
+window.resizable(0, 0)
 #第一行
 l_1 = tk.Label(window, text='加班申请', font=('Arial', 16,'bold'), width=40, height=2)
 l_1.place(x=45, y=0) 
@@ -58,8 +58,8 @@ def print_selection_1():
     for m in range(31):
         if var_1[m].get()==1 :
             list_1.append(int(m)+1) 
-    print(1)     
-    print(list_1)  
+    #print(1)     
+    #print(list_1)  
 def print_selection_2():
 
     global list_2
@@ -67,8 +67,8 @@ def print_selection_2():
     for m in range(31):
         if var_2[m].get()==1 :
             list_2.append(int(m)+1)
-    print(2) 
-    print(list_2) 
+    #print(2) 
+    #print(list_2) 
 var_1 = [tk.IntVar(),tk.IntVar(),tk.IntVar() ,tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar() ,tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar() ,tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar()]       
 for i in range(31):
     if i < 7:
@@ -124,20 +124,25 @@ b_2= tk.Button(window, text='加班确认', font=('Arial', 12), width=20, height
 b_2.place(x=360, y=335)
 
 def get_data():
+    t.delete(1.0, tkinter.END)
+    t.see(tk.END)
+    window.update() 
     excel = win32com.gencache.EnsureDispatch('Excel.Application')
     excel.Visible = False
     excel.Application.DisplayAlerts = False   
     wb = openpyxl.load_workbook(os.path.join(os.getcwd(),'%s'%path))
-    ws=wb.get_sheet_by_name('Sheet1')
+    sheets_1 = wb.sheetnames
+    ws=wb['%s'%sheets_1[0]]
+    #ws=wb.get_sheet_by_name('Sheet1')
     row_1=2
     wb_2=openpyxl.load_workbook('%s\\Overtimes Application Form.xlsx'%(address))
-    ws_2=wb_2.get_sheet_by_name('加班申请表-正式&派遣&外包')
+    ws_2=wb_2['加班申请表-正式&派遣&外包']
     list_3=[]
     column_1=1
     while ws.cell(row=1,column=column_1).value is not None:
         list_3.append(ws.cell(row=1,column=column_1).value)
         column_1+=1
-        print(list_3)
+        #print(list_3)
     while ws.cell(row=row_1,column=3).value!=name:
         row_1+=1
     while ws.cell(row=row_1,column=3).value==name:
@@ -152,31 +157,37 @@ def get_data():
         ws_2.cell(row=5,column=7).value=name
         ws_2.cell(row=6,column=7).value=time_2
         ws_2.cell(row=6,column=3).value=department
-        print(row_1,date)
+        #print(row_1,date)
         if (start_time==''):
             t.insert('end', '%s上班时间没打卡\n'%date) 
             start_time='12:30'
         elif (end_time==''): 
             t.insert('end', '%s下班时间没打卡\n'%date)
             end_time='17:30'
-            print(end_time)          
+            #print(end_time)          
         else : 
             a=datetime.datetime.strptime(str(start_time),"%H:%M")   
             b=datetime.datetime.strptime(str(end_time),"%H:%M")
-            c=int((b-a).seconds)
-            d=c/3600-9 
+            c=int((b-a).seconds)/3600
+            if c%0.5>0.41:
+                d=c//0.5*0.5-9+0.5
+                e=c//0.5*0.5-1+0.5
+            else:
+                d=c//0.5*0.5-9 
+                e=c//0.5*0.5-1
             while  ws_2.cell(row=row_2,column=1).value is not None:
                 row_2+=1          
             if week=='Mon' or week=='Tue' or week=='Wed' or week=='Thu' or week=='Fri':
                 if  int(date_time[2]) in list_2:
-                    print(date_time,row_1,end_time,week,111)
+                    #print(date_time,row_1,end_time,week,111)
                     ws_2.cell(row=row_2,column=1).value='Weekend'
                     ws_2.cell(row=row_2,column=2).value=date
                     ws_2.cell(row=row_2,column=3).value=start_time
                     ws_2.cell(row=row_2,column=4).value=end_time
-                    ws_2.cell(row=row_2,column=5).value=(c/3600-1)
+                    ws_2.cell(row=row_2,column=5).value=e                     
+
                 elif d>0.91:
-                    print(date_time,row_1,end_time,week,222) 
+                    #print(date_time,row_1,end_time,week,222) 
                     ws_2.cell(row=row_2,column=1).value='Weekday'
                     ws_2.cell(row=row_2,column=2).value=date
                     ws_2.cell(row=row_2,column=3).value='17:30'
@@ -185,19 +196,19 @@ def get_data():
             else:
                 if  int(date_time[2]) in list_1:
                     if d>0.91:
-                        print(date_time,row_1,end_time,week,333)
+                        #print(date_time,row_1,end_time,week,333)
                         ws_2.cell(row=row_2,column=1).value='Weekday'
                         ws_2.cell(row=row_2,column=2).value=date
                         ws_2.cell(row=row_2,column=3).value='17:30'
                         ws_2.cell(row=row_2,column=4).value=end_time
                         ws_2.cell(row=row_2,column=5).value=d
                 else: 
-                    print(date_time,row_1,end_time,week,444)
+                    #print(date_time,row_1,end_time,week,444)
                     ws_2.cell(row=row_2,column=1).value='Weekend'
                     ws_2.cell(row=row_2,column=2).value=date
                     ws_2.cell(row=row_2,column=3).value=start_time
                     ws_2.cell(row=row_2,column=4).value=end_time
-                    ws_2.cell(row=row_2,column=5).value=(c/3600-1) 
+                    ws_2.cell(row=row_2,column=5).value=e
         row_1+=1
         row_2+=1
     wb_2.save('%s\\%s Overtimes Application Form.xlsx'%(address,name))    
