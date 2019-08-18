@@ -21,7 +21,7 @@ address=os.path.abspath('.')
 window = tk.Tk()
  
 # 第2步，给窗口的可视化起名字
-window.title('操作界面')
+window.title('操作界面，作者：Frank Chen')
  
 # 第3步，设定窗口的大小(长 * 宽)
 window.geometry('600x400')  # 这里的乘是小x
@@ -132,15 +132,22 @@ def get_data():
     row_1=2
     wb_2=openpyxl.load_workbook('%s\\Overtimes Application Form.xlsx'%(address))
     ws_2=wb_2.get_sheet_by_name('加班申请表-正式&派遣&外包')
+    list_3=[]
+    column_1=1
+    while ws.cell(row=1,column=column_1).value is not None:
+        list_3.append(ws.cell(row=1,column=column_1).value)
+        column_1+=1
+        print(list_3)
     while ws.cell(row=row_1,column=3).value!=name:
         row_1+=1
     while ws.cell(row=row_1,column=3).value==name:
-        department=ws.cell(row=row_1,column=4).value
-        date=ws.cell(row=row_1,column=5).value
+
+        department=ws.cell(row=row_1,column=int(list_3.index('部门'))+1).value
+        date=ws.cell(row=row_1,column=int(list_3.index('日期'))+1).value
         date_time=date.split('-')
-        week=ws.cell(row=row_1,column=6).value  
-        start_time=ws.cell(row=row_1,column=7).value
-        end_time=ws.cell(row=row_1,column=8).value
+        week=ws.cell(row=row_1,column=int(list_3.index('week'))+1).value  
+        start_time=ws.cell(row=row_1,column=int(list_3.index('签到时间'))+1).value
+        end_time=ws.cell(row=row_1,column=int(list_3.index('签退时间'))+1).value
         row_2=10
         ws_2.cell(row=5,column=7).value=name
         ws_2.cell(row=6,column=7).value=time_2
