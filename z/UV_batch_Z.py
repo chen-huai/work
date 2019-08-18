@@ -22,13 +22,8 @@ def Cr():
         doc.Close()
         w.Quit()       
         for each in b:               
-            if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each) :
-                    if 'agingB' in b[count+5]:
-                        sequence.append('%sB'%each)
-                    elif 'aging' in b[count+5]:   
-                        sequence.append('%sA'%each)
-                    else:
-                            sequence.append('%s'%each)                      
+            if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each) and (' Separate' not in each) and ('GB/T' not in each):
+                sequence.append(each)                   
             count+=1
         name=time.strftime("CR %m-%d-%H-%M-%S")       
         file=open('Z:/Inorganic_batch/Formaldehyde/batch/%s.txt'%name,'a')
@@ -59,7 +54,7 @@ def HCHO():
         #判断是否日本方法
         JISL=0       
         for each in b:              
-                if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each) and ('Formal+GB/T' not in each) and ('5mg/kg' not in each):
+                if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each) and (' Separate' not in each) and ('Formal+GB/T' not in each) and ('5mg/kg' not in each):
                         sequence.append('%s'%each)                        
                 if ('Formal+JISL1041A') in each:
                         JISL=1
