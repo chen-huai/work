@@ -21,7 +21,7 @@ def get_list():
     #wavelenths=['202.548','249.772','188.980','206.834','267.716','220.353','228.615','230.424','189.925','202.032','343.823','236.705','228.802','589.592','460.733']
     rows=['3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22']
     n=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-    lines= csv.reader(open('%s'%path,"rt",encoding='utf-8'))
+    lines= csv.reader(open('%s'%path))
     lists=[]
     for l in lines:
         lists.append(l) 
@@ -46,10 +46,12 @@ def get_list():
                 excel.Sheets("1").Cells(rows[i],3).Value=float(list[0][4])*volume/quality
         else:
             excel.Sheets("1").Cells(rows[i],3).Value='未走标准曲线'
-        if n[i]==n[len(elements)-1]:  
+        if n[i]==n[len(elements)-1]:
+            excel.Sheets("1").Cells(1, 3).Value = lab_number
             address=os.path.abspath('.')
             workbook.SaveAs('%s\\SVHC %s.xlsx'%(address,name))
             excel.Application.Quit()
+
 path=tkinter.filedialog.askopenfilenames(initialdir='Z:/Data/%s/66-01-2018-012 5110 ICP-OES/'%now_1,filetypes=[("csvfile", "*.csv")])
 get_list()
 action=g.ccbox('whether need to run the program again', choices=('continue','finsh'))
