@@ -2,12 +2,11 @@
 
 # Form implementation generated from reading ui file 'test.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
-import sys
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -53,7 +52,9 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
 
+
 if __name__ == "__main__":
+    import sys
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()    # 创建一个QMainWindow，用来装载你需要的各种组件、控件
     ui = Ui_MainWindow()                    # ui是Ui_MainWindow()类的实例化对象
