@@ -23,7 +23,7 @@ def heavy_metal():
         sequence_mm=[]
         for each in b:
                 #print(each)
-                if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each):
+                if ('/' in each) and (len(each)>5) and ('/'+str(last_time) not in each) and ('/'+str(now) not in each) and ('QB/T' not in each):
                         
                         if ' ' in each :
                                 
