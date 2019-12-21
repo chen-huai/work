@@ -15,7 +15,7 @@ t_2 = t_1-1
 now = str(t_1)
 last_time = str(t_2)
 def heavy_metal():
-        path=g.fileopenbox(msg=None,title=None,default='./*.xlsx',filetypes=None)
+        path=g.fileopenbox(msg=None,title=None,default='./*.doc',filetypes=None)
         w=Dispatch('Word.Application')
         w.Visible=0
         doc=w.Documents.Open(r'%s'%path)
