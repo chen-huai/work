@@ -360,6 +360,7 @@ if __name__ == "__main__":
     import pyautogui
     import easygui as g
     from win32com.client import Dispatch
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
     ui = Ui_Dialog()  # ui是Ui_MainWindow()类的实例化对象
