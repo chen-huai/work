@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 import os;
 import re
-
+address=os.path.abspath('.')
+print(address)
 def reset():
     i = 0
-    path = r"C:\Users\chen-fr\Desktop\result\\";
+    path = r"/home/chenhuai/Desktop/result//";
     filelist = os.listdir(path)  # 该文件夹下所有的文件（包括文件夹）
     for files in filelist:  # 遍历所有文件
         i = i + 1
@@ -28,17 +29,15 @@ def alter(file):
     with open(file, "r+", encoding="utf-8") as f1:
         for line in f1:
             old_str = re.findall('\d{1,2}.\d{1,4}E.*\d{1,4} ug/l',line)
+
             #print(old_str)
             if old_str !=[]:
-                mid_str = old_str[0].split(' ')[0].replace('E','e')
-                #exp_str = mid_str[1].split(' ')[0]
-                print(mid_str)
-                new_str = "{:.2f}".format(mid_str)
+                new_str = str(float(old_str[0].split(' ')[0]))+' '+'ug/l'
+                line = line.replace(old_str,new_str)
                 print(new_str)
             print(line)
 
-            #line = line.replace(old_str, new_str)
-            #f2.write(line)
+            f1.write(line)
     #os.remove(file)
     #os.rename("%s.bak" % file, file)
 
