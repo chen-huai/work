@@ -4,7 +4,8 @@ import time
 import re
 import tkinter
 from tkinter import filedialog
-address=os.path.abspath('.')+'\\'
+import tkinter.messagebox
+address= os.path.abspath('.') + '\\'
 now = time.strftime('%Y%m%d')
 def reset():
     i = 0
@@ -38,9 +39,10 @@ def alter(file,file2):
             print(line)
             print(oldStr)
             if oldStr !=[]:
-                newStr = str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
+                newStr = '    ' + str( float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
                 print(newStr)
                 line = line.replace(oldStr[0],newStr)
             f2.write(line)
     os.rename("%s.bak" %file2,file2)
 reset()
+tkinter.messagebox.showinfo('已完成')
