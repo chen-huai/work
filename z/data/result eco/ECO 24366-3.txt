@@ -1,0 +1,56 @@
+
+
+                    Quantitation Report - Summary                   
+
+ 
+
+File Name    : 032SMPL.D
+File Path    : C:\ICPCHEM\1\DATA\19L25P01.B\
+Method       : C:\ICPCHEM\1\METHODS\TUV.M
+Calibration  : c:\ICPCHEM\1\CALIB\TUV.C
+Acq Time     : Dec 25 2019  04:55 pm 
+Sample Name  : ECO 24366/3
+Sample Type  : Sample
+Comments     :  
+Prep Dilution  : 1.000
+Auto Dilution  : Undiluted
+Total Dilution : 1.000
+Operator Name:  
+Acq Mode     : Spectrum
+Cal Title    :  
+Cal Type     : External Calibration Method
+Last Calib   : Dec 25 2019  04:56 pm
+Bkg File     : --------
+Bkg Rejected Masses: --------
+Interference Correction : OFF
+Blank File   : C:\ICPCHEM\1\DATA\19L25p01.B\001QBLK.D
+VIS Fit      : Point to Point
+Weighting Method: 1/(SD*SD)
+
+
+ Element  Mass ISTD    CPS or Ratio        Conc.          RSD(%) Time(sec)   Rep   VIS
+   Sc      45          30,532.22 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+   Cr      53          151,558.3 P        <0.000 ug/l    14.19     0.30        3      
+   Co      59          9,215.415 P     1.026E-01 ug/l     5.22     0.30        3      
+   Ni      60          71,698.38 P        <0.000 ug/l     3.96     0.30        3      
+   Cu      63          1,194,682 A         12.83 ug/l     4.88     0.30        3      
+
+   Ge      72          4,549.748 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+   As      75          30,276.33 P        <0.000 ug/l    37.44     0.30        3      
+   Se      82           228.8988 P        <0.000 ug/l   574.22     0.30        3      
+   Y       89          1,545.698 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+   Cd     111          2,721.472 P     3.974E-02 ug/l    44.94     0.30        3      
+
+   In     115           825.6123 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+   Sb     121          860,029.7 P         32.03 ug/l     0.18     0.30        3      
+   Ba     137          304,328.3 P         12.38 ug/l     1.21     0.30        3      
+   Tb     159           123.3387 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+   Hg     202           304.4596 P        <0.000 ug/l     0.78     0.30        3      
+
+   Pb     208          10,468.78 P     4.054E-02 ug/l     4.77     0.30        3      
+   Bi     209          15,199.19 P       [ 20.00 ug/l ]    ---     0.30      [ 3 ]   *
+ 
+
+End of Report
+
+                         Wed Dec 25 16:56:11 2019

@@ -23,7 +23,7 @@ def reset():
         if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
             os.makedirs(address+now)  # makedirs 创建文件时如果路径不存在会创建这个路径
         filePath2 = address + now + '\\' + fileName + fileType
-        print(1,filePath2)
+        #print(1,filePath2)
         alter(filePath,filePath2)
 def alter(file,file2):
     """
@@ -33,16 +33,16 @@ def alter(file,file2):
     :param newStr: 替换的字符串
     :return: None
     """
-    with open(file, "r", encoding="utf-8") as f1,open('%s.bak'%file2, "w", encoding="utf-8") as f2:
+    with open(file, "r", encoding="utf-8") as f1,open(file2, "w", encoding="utf-8") as f2:
         for line in f1:
             oldStr = re.findall("\d{1,2}.\d{1,4}E.*\d{1,4} ug/l",line)
-            print(line)
-            print(oldStr)
+            #print(line)
+            #print(oldStr)
             if oldStr !=[]:
-                newStr = '    ' + str( float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
-                print(newStr)
+                newStr = '    ' + str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
+                #print(newStr)
                 line = line.replace(oldStr[0],newStr)
             f2.write(line)
-    os.rename("%s.bak" %file2,file2)
+    #os.rename("%s.bak" %file2,file2)
 reset()
 tkinter.messagebox.showinfo('已完成')

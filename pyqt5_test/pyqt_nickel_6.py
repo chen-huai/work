@@ -302,7 +302,8 @@ class Ui_Dialog(object):
                     pyautogui.typewrite(['Enter'])
                     app.processEvents()
                     time.sleep(0.1)
-        self.label_3.setText("自动填写已经完成")
+            if self.lineEdit.text() != 'stop':
+                self.label_3.setText("自动填写已经完成")
 
     def get_batch(self):
         address = os.path.abspath('.')
