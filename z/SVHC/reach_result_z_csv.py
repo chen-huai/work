@@ -4,28 +4,39 @@ import os
 import os.path
 import time
 import easygui as g
-from openpyxl import Workbook
-from openpyxl import load_workbook
+from win32com.client import Dispatch
+import win32com.client as win32com
 import random
 import csv
 import tkinter
 now_1 = str(time.strftime('%Y'))
+t_1 = int(time.strftime('%Y'))
+t_2 = t_1-1
+now = str(t_1)
+last_time = str(t_2)
 def get_sample():
     i = 0
-    # path=tkinter.filedialog.askopenfilenames(initialdir='Z:/Inorganic_batch/Formaldehyde/batch/*.doc*',filetypes=[("wordfile", "*.doc*")])
-    path = g.fileopenbox(msg=None, title=None, default='Z:/Inorganic_batch/Formaldehyde/batch/*', filetypes=None)
-    print(path)
-    sequence_mm = []
-    for file in path:
-        print(file,1)
-        w = Dispatch('Word.Application')
-        w.Visible = 0
-        doc = w.Documents.Open(r'%s'%file, Encoding='utf-8')
-        a = doc.Content.Text
-        b = a.split('\r')
-        doc.Close()
+    path = g.fileopenbox(msg=None, title=None, default='Z:/Inorganic_batch/Formaldehyde/batch/*.doc', filetypes=None)
 
-
+    w = Dispatch('Word.Application')
+    w.Visible = 0
+    doc = w.Documents.Open(r'%s'%path)
+    a = doc.Content.Text
+    b = a.split('\r')
+    #print(b)
+    global lab_number,quality,volume
+    lab_number = []
+    quality = []
+    volume = []
+    i = 0
+    for i in range(len(b)):
+        if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + last_time not in b[i]) and ('/' + now not in b[i]) and (
+                'GB/T' not in b[i]) and ('D' not in b[i]):
+            if 'R-I' in b[i+5]:
+                lab_number.append(b[i])
+                quality.append(b[i+4])
+                volume.append(b[i+2])
+    print(lab_number,quality,volume)
 
 
 def get_list():  
@@ -39,48 +50,49 @@ def get_list():
     lists = []
     for l in lines:
         lists.append(l)
-    workbook = load_workbook(os.path.join(os.getcwd(),r'./SVHC.xlsx'))
-    sheets_1 = workbook.sheetnames
-    ws = workbook['%s'%sheets_1[1]]
+    excel = win32com.gencache.EnsureDispatch('Excel.Application')
+    excel.Visible = True
+    excel.Application.DisplayAlerts = True
+    workbook = excel.Workbooks.Open(os.path.join(os.getcwd(), r'./SVHC.xlsx'))
     elements = []
     rows = []
     n = 3
-    while ws.cell(row=n,column=1).value is not None:
-        elements.append(ws.cell(row=n,column=1).value)
+    while excel.Sheets("1").Cells(n, 1).Value is not None:
+        elements.append(excel.Sheets("1").Cells(n, 1).Value)
         rows.append(n)
         n += 1
-    print(elements, rows)
+
     for i in range(len(elements)):
         list = []
         m = 0
         for line in lists:
-            if ('%s'%lab_number in line[0]) and ('%s'%elements[i] in line[3]) and ('(ref)' not in line[3]):
+            if ('%s' % lab_number in line[0]) and ('%s' % elements[i] in line[4]) and ('(ref)' not in line[4]):
                 print(line)
                 list.append(line)
+
             m += 1
-        ws.cell(row=rows[i],column=2).value = elements[i]
+        excel.Sheets("1").Cells(rows[i], 2).Value = elements[i]
         if list != []:
-            if str(list[0][4]) == '未校正':
-                ws.cell(row=rows[i],column=3).value = '未校正'
-            elif str(list[0][4]) == '####':
-                ws.cell(row=rows[i],column=3).value = '超出'
+            if str(list[0][6]) == '未校正':
+                excel.Sheets("1").Cells(rows[i], 3).Value = '未校正'
+            elif str(list[0][6]) == '####':
+                excel.Sheets("1").Cells(rows[i], 3).Value = '超出'
             else:
-                ws.cell(row=rows[i],column=3).value = float(list[0][4])*volume/quality
+                excel.Sheets("1").Cells(rows[i], 3).Value = float(list[0][6]) * volume / quality
         else:
-            ws.cell(row=rows[i],column=3).value = '未走标准曲线'
-        if i == len(elements)-1:
-            ws.cell(1, 3).value = lab_number
+            excel.Sheets("1").Cells(rows[i], 3).Value = '未走标准曲线'
+        if i == len(elements) - 1:
             address = os.path.abspath('.')
-            workbook.save('%s\\SVHC %s.xlsx'%(address,name))
+            workbook.SaveAs('%s\\SVHC %s.xlsx' % (address, name))
+            excel.Application.Quit()
 
 get_sample()
-path=tkinter.filedialog.askopenfilenames(initialdir='Z:/Data/%s/66-01-2018-012 5110 ICP-OES/'%now_1,filetypes=[("csvfile", "*.csv")])
-get_list()
-action=g.ccbox('whether need to run the program again', choices=('continue','finsh'))
-while  action==1:
-    # get_sample()
-    get_list()
-    action=g.ccbox('whether need to run the program again', choices=('continue','finsh'))       
-else:    
-    os.startfile('.\\')
+path = tkinter.filedialog.askopenfilenames(initialdir='Z:/Data/%s/66-01-2018-012 5110 ICP-OES/'%now_1,filetypes=[("csvfile", "*.csv")])
 
+get_list()
+action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
+while action == 1:
+    get_list()
+    action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
+else:
+    os.startfile('.\\')
