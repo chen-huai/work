@@ -14,85 +14,109 @@ t_1 = int(time.strftime('%Y'))
 t_2 = t_1-1
 now = str(t_1)
 last_time = str(t_2)
-def get_sample():
+nowDate = time.strftime('%Y%m%d')
+def getSample():
     i = 0
-    path = g.fileopenbox(msg=None, title=None, default='Z:/Inorganic_batch/Formaldehyde/batch/*.doc', filetypes=None)
+    path = g.fileopenbox(msg=None, title=None, default='Z:/Inorganic_batch/Microwave/batch/*.doc', filetypes=None)
 
     w = Dispatch('Word.Application')
     w.Visible = 0
     doc = w.Documents.Open(r'%s'%path)
     a = doc.Content.Text
     b = a.split('\r')
-    #print(b)
-    global lab_number,quality,volume
-    lab_number = []
-    quality = []
-    volume = []
+    # print(b)
+    global labNumber
+    global qualityValue
+    global volumeValue
+    labNumber = []
+    qualityValue = []
+    volumeValue = []
     i = 0
     for i in range(len(b)):
         if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + last_time not in b[i]) and ('/' + now not in b[i]) and (
                 'GB/T' not in b[i]) and ('D' not in b[i]):
-            if 'R-I' in b[i+5]:
-                lab_number.append(b[i])
-                quality.append(b[i+4])
-                volume.append(b[i+2])
-    print(lab_number,quality,volume)
-
-
-def get_list():  
-    lab_number = input('please fill in the lab number:')
-    quality=float(input('please fill in the sample quality:'))
-    volume=float(input('please fill in the volume of the sample:'))
-    print ('begin')
-    print ('Wait for a moment')
-    name = lab_number.replace('/', '_')
-    lines = csv.reader(open('%s'%path,'rt',encoding='utf-8'))
-    lists = []
+            if 'R\x1eI' in b[i+5]:
+                labNumber.append(b[i])
+                qualityValue.append(b[i+4])
+                volumeValue.append(b[i+2])
+    # print(labNumber,qualityValue,volumeValue)
+def getResult():
+    path = tkinter.filedialog.askopenfilenames(initialdir='Z:/Data/%s/66-01-2018-012 5110 ICP-OES/' % now_1,
+                                               filetypes=[("csvfile", "*.csv")])
+    global resultLists
+    lines = csv.reader(open('%s' % path, 'rt', encoding='utf-8'))
+    resultLists = []
     for l in lines:
-        lists.append(l)
+        resultLists.append(l)
+
+def getList():
+    print('begin')
+    print('Wait for a moment')
     excel = win32com.gencache.EnsureDispatch('Excel.Application')
     excel.Visible = True
     excel.Application.DisplayAlerts = True
-    workbook = excel.Workbooks.Open(os.path.join(os.getcwd(), r'./SVHC.xlsx'))
+    wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'./SVHC.xlsx'))
     elements = []
-    rows = []
+    resultRows = []
     n = 3
     while excel.Sheets("1").Cells(n, 1).Value is not None:
         elements.append(excel.Sheets("1").Cells(n, 1).Value)
-        rows.append(n)
+        resultRows.append(n)
         n += 1
-
-    for i in range(len(elements)):
-        list = []
-        m = 0
-        for line in lists:
-            if ('%s' % lab_number in line[0]) and ('%s' % elements[i] in line[4]) and ('(ref)' not in line[4]):
-                print(line)
-                list.append(line)
-
-            m += 1
-        excel.Sheets("1").Cells(rows[i], 2).Value = elements[i]
-        if list != []:
-            if str(list[0][6]) == '未校正':
-                excel.Sheets("1").Cells(rows[i], 3).Value = '未校正'
-            elif str(list[0][6]) == '####':
-                excel.Sheets("1").Cells(rows[i], 3).Value = '超出'
+    for z in range(len(labNumber)):
+        wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'./SVHC.xlsx'))
+        name = labNumber[z].replace("/", '_')
+        i = 0
+        for i in range(len(elements)):
+            resultList = []
+            for line in resultLists:
+                if ('%s' % labNumber[z] in line[0]) and ('%s' % elements[i] in line[3]) and ('(ref)' not in line[3]):
+                    resultList.append(line)
+            excel.Sheets("1").Cells(resultRows[i], 2).Value = elements[i]
+            if resultList != []:
+                if str(resultList[0][4]) == '未校正':
+                    excel.Sheets("1").Cells(resultRows[i], 3).Value = '未校正'
+                elif str(resultList[0][4]) == '####':
+                    excel.Sheets("1").Cells(resultRows[i], 3).Value = '超出'
+                else:
+                    excel.Sheets("1").Cells(resultRows[i], 3).Value = float(resultList[0][4]) * int(volumeValue[z]) / float(qualityValue[z])
             else:
-                excel.Sheets("1").Cells(rows[i], 3).Value = float(list[0][6]) * volume / quality
-        else:
-            excel.Sheets("1").Cells(rows[i], 3).Value = '未走标准曲线'
-        if i == len(elements) - 1:
-            address = os.path.abspath('.')
-            workbook.SaveAs('%s\\SVHC %s.xlsx' % (address, name))
-            excel.Application.Quit()
+                excel.Sheets("1").Cells(resultRows[i], 3).Value = '未走标准曲线'
+            if i == len(elements) - 1:
+                excel.Sheets("1").Cells(1, 3).Value = labNumber[z]
+                address = os.path.abspath('.')
+                wb.SaveAs('%s\\SVHC %s.xlsx' % (address, name))
+                excel.Application.Quit()
 
-get_sample()
-path = tkinter.filedialog.askopenfilenames(initialdir='Z:/Data/%s/66-01-2018-012 5110 ICP-OES/'%now_1,filetypes=[("csvfile", "*.csv")])
-
-get_list()
+        workbookResult = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\\SVHC %s.xlsx' % (address, name)))
+        resultDcuOne = []
+        resultDcuTwo = []
+        resultDcuThree = []
+        resultDcuFour = []
+        resultDcuFive = []
+        resultDcuSix = []
+        m = 0
+        while excel.Sheets("DCU-Reasult").Cells(m, 1).Value is not None:
+            resultDcuOne.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuTwo.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuThree.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuFour.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuFive.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuSix.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            m +=1
+        fileName = address + nowDate + '\\' + name + '.txt'
+        with open(fileName, "w", encoding="utf-8") as fileTxt:
+            for i in len(resultDcuOne):
+                lineTxt = resultDcuOne[i] + '   ' + resultDcuTwo[i] + '    ' + resultDcuThree[i]+'   '+resultDcuFour[i] + ' ' + resultDcuFive[i] + '   ' + resultDcuSix[i]
+                fileTxt.write(lineTxt)
+        z += 1
+getSample()
+getResult()
+getList()
 action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
 while action == 1:
-    get_list()
+    getSample()
+    getList()
     action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
 else:
     os.startfile('.\\')
