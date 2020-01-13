@@ -59,10 +59,11 @@ def getList():
     elements = []
     resultRows = []
     n = 3
-    while excel.Sheets("1").Cells(n, 1).Value is not None:
-        elements.append(excel.Sheets("1").Cells(n, 1).Value)
+    while wb.Sheets("1").Cells(n, 1).Value is not None:
+        elements.append(wb.Sheets("1").Cells(n, 1).Value)
         resultRows.append(n)
         n += 1
+    # print(elements)
     for z in range(len(labNumber)):
         wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'./SVHC.xlsx'))
         name = labNumber[z].replace("/", '_')
@@ -72,21 +73,22 @@ def getList():
             for line in resultLists:
                 if ('%s' % labNumber[z] in line[0]) and ('%s' % elements[i] in line[3]) and ('(ref)' not in line[3]):
                     resultList.append(line)
-            excel.Sheets("1").Cells(resultRows[i], 2).Value = elements[i]
+            wb.Sheets("1").Cells(resultRows[i], 2).Value = elements[i]
             if resultList != []:
                 if str(resultList[0][4]) == '未校正':
-                    excel.Sheets("1").Cells(resultRows[i], 3).Value = '未校正'
+                    wb.Sheets("1").Cells(resultRows[i], 3).Value = '未校正'
                 elif str(resultList[0][4]) == '####':
-                    excel.Sheets("1").Cells(resultRows[i], 3).Value = '超出'
+                    wb.Sheets("1").Cells(resultRows[i], 3).Value = '超出'
                 else:
-                    excel.Sheets("1").Cells(resultRows[i], 3).Value = float(resultList[0][4]) * int(volumeValue[z]) / float(qualityValue[z])
+                    wb.Sheets("1").Cells(resultRows[i], 3).Value = float(resultList[0][4]) * int(volumeValue[z]) / float(qualityValue[z])
             else:
-                excel.Sheets("1").Cells(resultRows[i], 3).Value = '未走标准曲线'
+                wb.Sheets("1").Cells(resultRows[i], 3).Value = '未走标准曲线'
             if i == len(elements) - 1:
-                excel.Sheets("1").Cells(1, 3).Value = labNumber[z]
+                wb.Sheets("1").Cells(1, 3).Value = labNumber[z]
                 address = os.path.abspath('.')
                 wb.SaveAs('%s\\SVHC %s.xlsx' % (address, name))
                 excel.Application.Quit()
+                time.sleep(3)
 
         workbookResult = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\\SVHC %s.xlsx' % (address, name)))
         resultDcuOne = []
@@ -96,13 +98,13 @@ def getList():
         resultDcuFive = []
         resultDcuSix = []
         m = 0
-        while excel.Sheets("DCU-Reasult").Cells(m, 1).Value is not None:
-            resultDcuOne.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuTwo.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuThree.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuFour.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuFive.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuSix.append(excel.Sheets("DCU-Reasult").Cells(m, 1).Value)
+        while workbookResult.Sheets("DCU-Reasult").Cells(m, 1).Value is not None:
+            resultDcuOne.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 1).Value)
+            resultDcuTwo.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 2).Value)
+            resultDcuThree.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 3).Value)
+            resultDcuFour.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 4).Value)
+            resultDcuFive.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 5).Value)
+            resultDcuSix.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 6).Value)
             m +=1
         fileName = address + nowDate + '\\' + name + '.txt'
         with open(fileName, "w", encoding="utf-8") as fileTxt:
@@ -113,10 +115,10 @@ def getList():
 getSample()
 getResult()
 getList()
-action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
+action = g.ccbox('whether you need to run the program again', choices=('continue', 'finsh'))
 while action == 1:
     getSample()
     getList()
-    action = g.ccbox('whether need to run the program again', choices=('continue', 'finsh'))
+    action = g.ccbox('whether you need to run the program again', choices=('continue', 'finsh'))
 else:
     os.startfile('.\\')
