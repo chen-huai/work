@@ -87,9 +87,11 @@ def getList():
                 wb.Sheets("1").Cells(1, 3).Value = labNumber[z]
                 address = os.path.abspath('.')
                 wb.SaveAs('%s\\SVHC %s.xlsx' % (address, name))
-                excel.Application.Quit()
-                time.sleep(3)
 
+                time.sleep(1)
+        # excel = win32com.gencache.EnsureDispatch('Excel.Application')
+        # excel.Visible = True
+        # excel.Application.DisplayAlerts = True
         workbookResult = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\\SVHC %s.xlsx' % (address, name)))
         resultDcuOne = []
         resultDcuTwo = []
@@ -97,28 +99,36 @@ def getList():
         resultDcuFour = []
         resultDcuFive = []
         resultDcuSix = []
-        m = 0
-        while workbookResult.Sheets("DCU-Reasult").Cells(m, 1).Value is not None:
-            resultDcuOne.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 1).Value)
-            resultDcuTwo.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 2).Value)
-            resultDcuThree.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 3).Value)
-            resultDcuFour.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 4).Value)
-            resultDcuFive.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 5).Value)
-            resultDcuSix.append(workbookResult.Sheets("DCU-Reasult").Cells(m, 6).Value)
+        m = 1
+        while workbookResult.Sheets("DCU-Result").Cells(m, 1).Value is not None:
+            resultDcuOne.append(workbookResult.Sheets("DCU-Result").Cells(m, 1).Value)
+            resultDcuTwo.append(workbookResult.Sheets("DCU-Result").Cells(m, 2).Value)
+            resultDcuThree.append(workbookResult.Sheets("DCU-Result").Cells(m, 3).Value)
+            resultDcuFour.append(workbookResult.Sheets("DCU-Result").Cells(m, 4).Value)
+            resultDcuFive.append(workbookResult.Sheets("DCU-Result").Cells(m, 5).Value)
+            resultDcuSix.append(workbookResult.Sheets("DCU-Result").Cells(m, 6).Value)
             m +=1
-        fileName = address + nowDate + '\\' + name + '.txt'
+        excel.Application.Quit()
+        folder = os.path.exists(address + '\\' + nowDate)
+        if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+            os.makedirs(address + '\\' + nowDate)  # makedirs 创建文件时如果路径不存在会创建这个路径
+        fileName = address + '\\' + nowDate + '\\' + 'SVHC ' + name + '.txt'
         with open(fileName, "w", encoding="utf-8") as fileTxt:
-            for i in len(resultDcuOne):
-                lineTxt = resultDcuOne[i] + '   ' + resultDcuTwo[i] + '    ' + resultDcuThree[i]+'   '+resultDcuFour[i] + ' ' + resultDcuFive[i] + '   ' + resultDcuSix[i]
+            for i in range(len(resultDcuOne)):
+                lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
                 fileTxt.write(lineTxt)
+
         z += 1
 getSample()
 getResult()
 getList()
-action = g.ccbox('whether you need to run the program again', choices=('continue', 'finsh'))
+action = g.ccbox('是否需要继续运行此程序', choices=('运行', '取消'))
 while action == 1:
     getSample()
+    action = g.ccbox('是否需要重新导入结果数据', choices=('需要', '取消'))
+    if action == 1:
+        getResult()
     getList()
-    action = g.ccbox('whether you need to run the program again', choices=('continue', 'finsh'))
+    action = g.ccbox('是否需要继续运行此程序', choices=('运行', '取消'))
 else:
     os.startfile('.\\')
