@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>351</width>
+    <height>244</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Reach result</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normaloff>
+    <normalon>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normalon>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</iconset>
+  </property>
+  <property name="whatsThis">
+   <string/>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>331</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1" rowspan="6" colspan="2">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3" colspan="2">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="toolTip">
+       <string>选择需要的Reach Sample Batch</string>
+      </property>
+      <property name="text">
+       <string>选择Batch</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3" colspan="2">
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="toolTip">
+       <string>选择Reach分析的数据
+不同分析数据需重新选择</string>
+      </property>
+      <property name="text">
+       <string>选择结果数据</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>开始</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QLabel" name="label_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>结束</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QSpinBox" name="spinBox_2">
+      <property name="toolTip">
+       <string>第几个Sample ID结束
+0表示该Batch最后一个</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="5">
+     <widget class="QPushButton" name="pushButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Reach 结果转化界面</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="toolTip">
+       <string>从第几个Sample ID
+开始</string>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" rowspan="5">
+     <widget class="QTextBrowser" name="textBrowser"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="locale">
+       <locale language="Chinese" country="China"/>
+      </property>
+      <property name="text">
+       <string>信息</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3" colspan="2">
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="toolTip">
+       <string>开始转化
+该软件在哪
+结果转化在哪</string>
+      </property>
+      <property name="text">
+       <string>开始</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="3" colspan="2">
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="toolTip">
+       <string>停止转化
+慎重使用</string>
+      </property>
+      <property name="text">
+       <string>停止</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>278</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
