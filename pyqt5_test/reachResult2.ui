@@ -6,17 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>248</height>
+    <width>338</width>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Reach result</string>
+   <string>ICP Operate</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normaloff>
-    <normalon>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normalon>../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</iconset>
+    <normaloff>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normaloff>
+    <normalon>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normalon>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</iconset>
   </property>
   <property name="whatsThis">
    <string/>
@@ -31,80 +31,87 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
      <string>ICP</string>
     </attribute>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>11</x>
+       <y>13</y>
        <width>311</width>
        <height>201</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="3" column="2">
-       <widget class="QPushButton" name="pushButton_8">
-        <property name="text">
-         <string>ICP Result</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>ICP Batch:</string>
+         <string>Batch:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="lineEdit"/>
+      </item>
+      <item row="2" column="0">
        <widget class="QPushButton" name="pushButton_6">
+        <property name="toolTip">
+         <string>获取Sample ID</string>
+        </property>
         <property name="text">
          <string>ICP Batch</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEdit_4"/>
-      </item>
-      <item row="4" column="2">
-       <widget class="QPushButton" name="pushButton_9">
-        <property name="text">
-         <string>AAS Batch</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
-      </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_2"/>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEdit_3"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Nickel Batch:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
        <widget class="QPushButton" name="pushButton_7">
+        <property name="toolTip">
+         <string>获取Sample ID
+并按照ABC重复书写</string>
+        </property>
         <property name="text">
          <string>Nickel Batch</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_6">
+      <item row="2" column="2">
+       <widget class="QPushButton" name="pushButton_9">
+        <property name="toolTip">
+         <string>获取Sample ID
+并将‘+’改为‘-’</string>
+        </property>
+        <property name="statusTip">
+         <string>AAS仪器中有些Bug\n只能识别‘-’</string>
+        </property>
         <property name="text">
-         <string>ICP Result:</string>
+         <string>AAS Batch</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="pushButton_11">
+        <property name="toolTip">
+         <string>按中迅德要求生成</string>
+        </property>
+        <property name="text">
+         <string>ECO Z</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="pushButton_10">
+        <property name="toolTip">
+         <string>质检院结果转化</string>
+        </property>
+        <property name="statusTip">
+         <string>由于质检院结果是科学计数法\n导致结果有些无法读取</string>
+        </property>
+        <property name="text">
+         <string>ZJY Result</string>
         </property>
        </widget>
       </item>
@@ -124,27 +131,38 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_8">
+      <item row="3" column="1" rowspan="2">
+       <widget class="QPushButton" name="pushButton_13">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>按质检院Batch要求生成</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>AAS Batch:</string>
+         <string>ECO ZJY</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>ZJY Result</string>
+      <item row="3" column="2" rowspan="2">
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="lineEdit_5"/>
-      </item>
-      <item row="5" column="2">
-       <widget class="QPushButton" name="pushButton_10">
+        <property name="toolTip">
+         <string>ICP结果转化</string>
+        </property>
         <property name="text">
-         <string>ZJY Result</string>
+         <string>ICP Result</string>
         </property>
        </widget>
       </item>
@@ -305,10 +323,180 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Reach Information</string>
+    </attribute>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>331</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0" rowspan="4">
+       <widget class="QTextBrowser" name="textBrowser_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>物质详情</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QTextBrowser" name="textBrowser_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>物质信息</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spinBox_3">
+        <property name="toolTip">
+         <string>对应Lims编号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_12">
+        <property name="toolTip">
+         <string>查询编号下对应的物质信息</string>
+        </property>
+        <property name="statusTip">
+         <string>只有编号正确才能查询到信息</string>
+        </property>
+        <property name="text">
+         <string>查找</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_14">
+        <property name="toolTip">
+         <string>选择文件
+不选择默认</string>
+        </property>
+        <property name="text">
+         <string>选择文件</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
  <connections>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>305</x>
+     <y>232</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>332</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>58</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_12</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_14</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>291</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
   <connection>
    <sender>pushButton_6</sender>
    <signal>clicked()</signal>
@@ -316,12 +504,28 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>290</x>
-     <y>88</y>
+     <x>321</x>
+     <y>76</y>
     </hint>
     <hint type="destinationlabel">
      <x>330</x>
      <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_11</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>283</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>309</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -332,8 +536,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>273</x>
-     <y>130</y>
+     <x>321</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>330</x>
@@ -342,18 +546,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_8</sender>
+   <sender>pushButton_13</sender>
    <signal>clicked()</signal>
    <receiver>tabWidget</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>304</x>
-     <y>166</y>
+     <x>197</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel">
-     <x>328</x>
-     <y>167</y>
+     <x>198</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>
@@ -364,12 +584,28 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>305</x>
-     <y>212</y>
+     <x>321</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>329</x>
      <y>204</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
