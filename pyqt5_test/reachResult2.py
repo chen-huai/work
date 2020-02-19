@@ -211,7 +211,7 @@ class Ui_Form(object):
         self.pushButton_9.setStatusTip(_translate("Form", "AAS仪器中有些Bug\\n只能识别‘-’"))
         self.pushButton_9.setText(_translate("Form", "AAS Batch"))
         self.pushButton_11.setToolTip(_translate("Form", "按中迅德要求生成"))
-        self.pushButton_11.setText(_translate("Form", "ECO Z"))
+        self.pushButton_11.setText(_translate("Form", "ECO ZXD"))
         self.pushButton_10.setToolTip(_translate("Form", "质检院结果转化"))
         self.pushButton_10.setStatusTip(_translate("Form", "由于质检院结果是科学计数法\\n导致结果有些无法读取"))
         self.pushButton_10.setText(_translate("Form", "ZJY Result"))

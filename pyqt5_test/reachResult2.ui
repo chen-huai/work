@@ -15,8 +15,8 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normaloff>
-    <normalon>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normalon>../../../../../Users/OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</iconset>
+    <normaloff>../../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normaloff>
+    <normalon>../../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</normalon>../../../../OneDrive/chenhuai/python/图标/CH-logo/ch输出彩色ico.ico</iconset>
   </property>
   <property name="whatsThis">
    <string/>
@@ -37,7 +37,7 @@
     <attribute name="title">
      <string>ICP</string>
     </attribute>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -98,7 +98,7 @@
          <string>按中迅德要求生成</string>
         </property>
         <property name="text">
-         <string>ECO Z</string>
+         <string>ECO ZXD</string>
         </property>
        </widget>
       </item>
