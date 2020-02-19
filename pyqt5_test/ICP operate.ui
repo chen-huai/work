@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
-    <height>424</height>
+    <width>604</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,13 +35,13 @@
      <attribute name="title">
       <string>Operate</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
         <width>571</width>
-        <height>321</height>
+        <height>331</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -58,6 +58,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>由于AAS仪器结果导出不符合DCU格式，需要转化一下</string>
+         </property>
          <property name="text">
           <string>AAS Result</string>
          </property>
@@ -70,6 +73,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="statusTip">
+          <string>呈现Batch单号</string>
          </property>
         </widget>
        </item>
@@ -87,7 +93,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>按中迅德要求生成</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>获取Sample ID，按中迅德要求生成Batch单</string>
          </property>
          <property name="text">
           <string>ECO ZXD</string>
@@ -108,8 +117,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>停止转化
-慎重使用</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>停止Reach结果转化，慎重使用！！！</string>
          </property>
          <property name="text">
           <string>停止</string>
@@ -123,6 +134,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="statusTip">
+          <string>呈现结果数据信息</string>
          </property>
         </widget>
        </item>
@@ -141,6 +155,9 @@
          </property>
          <property name="toolTip">
           <string>ICP结果转化</string>
+         </property>
+         <property name="statusTip">
+          <string>将CSV转化成DCU使用的TXT格式</string>
          </property>
          <property name="text">
           <string>ICP Result</string>
@@ -188,6 +205,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>选择需要获取的Batch</string>
+         </property>
          <property name="text">
           <string>选择Batch</string>
          </property>
@@ -206,6 +226,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>由于质检院结果是科学计数法导致有些结果无法DCU，所以需要将结果转化</string>
+         </property>
          <property name="text">
           <string>ECO ZJY Result</string>
          </property>
@@ -223,6 +246,9 @@
           <font>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="statusTip">
+          <string>填写ICP的QC Chart</string>
          </property>
          <property name="text">
           <string>MM QC Chart</string>
@@ -263,6 +289,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>选择需要获取的Resutl数据</string>
+         </property>
          <property name="text">
           <string>选择Result</string>
          </property>
@@ -286,8 +315,11 @@
 该软件在哪
 结果转化在哪</string>
          </property>
+         <property name="statusTip">
+          <string>获取Sample ID和结果数据，并填入Reach结果Excel模板中 </string>
+         </property>
          <property name="text">
-          <string>开始</string>
+          <string>Reach Result</string>
          </property>
         </widget>
        </item>
@@ -307,6 +339,9 @@
          <property name="toolTip">
           <string>从第几个Sample ID
 开始</string>
+         </property>
+         <property name="statusTip">
+          <string>第几个Sample ID开始</string>
          </property>
          <property name="maximum">
           <number>999</number>
@@ -330,8 +365,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>第几个Sample ID结束
-0表示该Batch最后一个</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>第几个Sample ID结束，同时0表示该Batch最后一个</string>
          </property>
         </widget>
        </item>
@@ -352,7 +389,7 @@
           </font>
          </property>
          <property name="text">
-          <string>开始</string>
+          <string>起始</string>
          </property>
         </widget>
        </item>
@@ -373,7 +410,7 @@
           </font>
          </property>
          <property name="text">
-          <string>结束</string>
+          <string>结尾</string>
          </property>
         </widget>
        </item>
@@ -391,7 +428,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>获取Sample ID</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>获取Sample ID，并导出TXT</string>
          </property>
          <property name="text">
           <string>ICP Batch</string>
@@ -412,11 +452,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>获取Sample ID
-并将‘+’改为‘-’</string>
+          <string/>
          </property>
          <property name="statusTip">
-          <string>AAS仪器中有些Bug\n只能识别‘-’</string>
+          <string>由于AAS仪器中有些Bug只能识别‘-’，所以需获取Sample ID，并将‘+’改为‘-’</string>
          </property>
          <property name="text">
           <string>AAS Batch</string>
@@ -437,10 +476,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>质检院结果转化</string>
+          <string/>
          </property>
          <property name="statusTip">
-          <string>由于质检院结果是科学计数法\n导致结果有些无法读取</string>
+          <string>获取Sample ID，生成符合质检院的单号同时生产出打印编号</string>
          </property>
          <property name="text">
           <string>ECO ZJY</string>
@@ -461,8 +500,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>获取Sample ID
-并按照ABC重复书写</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>获取Sample ID，并填入Excel模板中</string>
          </property>
          <property name="text">
           <string>Nickel Batch</string>
@@ -492,7 +533,7 @@
         <x>9</x>
         <y>10</y>
         <width>571</width>
-        <height>311</height>
+        <height>331</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -744,7 +785,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>清零后，可开始新的填写。</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>清零后才可开始新的填写</string>
          </property>
          <property name="text">
           <string>清零</string>
@@ -765,7 +809,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>开始后，你将有几秒钟时间选择起始位置。</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>开始后，你将有几秒钟时间选择起始位置</string>
          </property>
          <property name="text">
           <string>开始
@@ -787,7 +834,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>内容出现Stop，无法填写内容。</string>
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>内容出现Stop，将自动停止填写内容</string>
          </property>
          <property name="text">
           <string>停止</string>
@@ -807,8 +857,11 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>选择需要获取的Batch</string>
+         </property>
          <property name="text">
-          <string>选择文件</string>
+          <string>选择Batch</string>
          </property>
         </widget>
        </item>
@@ -825,6 +878,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="statusTip">
+          <string>填写内容显示区域</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="1" colspan="3">
@@ -839,6 +895,9 @@
           <font>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="statusTip">
+          <string>内容重复填写的次数，Batch填写无效</string>
          </property>
          <property name="maximum">
           <number>999</number>
@@ -858,8 +917,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>603</width>
-     <height>23</height>
+     <width>604</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -867,6 +926,8 @@
      <string>菜单</string>
     </property>
     <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -879,10 +940,568 @@
     <string>Export</string>
    </property>
    <property name="statusTip">
-    <string>导出基础设置，可在Data/Operate/文件夹中查看</string>
+    <string>导出基础设置，可在C:/Data/Operate/文件夹中查看</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>退出程序</string>
    </property>
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_23</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_24</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_27</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_30</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_22</sender>
+   <signal>clicked()</signal>
+   <receiver>menubar</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_25</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>152</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_29</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>526</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>522</x>
+     <y>42</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_21</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>497</x>
+     <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_34</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>518</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_31</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_32</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>480</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_38</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_39</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>568</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_9</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_13</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>410</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_14</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>423</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>139</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_15</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_11</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>386</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_12</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_17</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>309</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_18</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>525</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>450</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>538</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_16</sender>
+   <signal>clicked()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport</sender>
+   <signal>triggered()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
