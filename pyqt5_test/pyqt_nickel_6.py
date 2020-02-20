@@ -254,36 +254,36 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.spinBox, 1, 1, 1, 2)
 
         self.retranslateUi(Dialog)
-        self.pushButton.clicked.connect(self.auto_write)
-        self.pushButton_2.clicked.connect(lambda: self.get_data(self.pushButton_2))
-        self.pushButton_3.clicked.connect(lambda: self.get_data(self.pushButton_3))
-        self.pushButton_4.clicked.connect(lambda: self.get_data(self.pushButton_4))
-        self.pushButton_5.clicked.connect(lambda: self.get_data(self.pushButton_5))
-        self.pushButton_6.clicked.connect(lambda: self.get_data(self.pushButton_6))
-        self.pushButton_7.clicked.connect(lambda: self.get_data(self.pushButton_7))
-        self.pushButton_8.clicked.connect(lambda: self.get_data(self.pushButton_8))
-        self.pushButton_9.clicked.connect(lambda: self.get_data(self.pushButton_9))
-        self.pushButton_10.clicked.connect(lambda: self.get_data(self.pushButton_10))
-        self.pushButton_11.clicked.connect(lambda: self.get_data(self.pushButton_11))
-        self.pushButton_12.clicked.connect(lambda: self.get_data(self.pushButton_12))
-        self.pushButton_13.clicked.connect(lambda: self.get_data(self.pushButton_13))
-        self.pushButton_14.clicked.connect(lambda: self.get_data(self.pushButton_14))
+        self.pushButton.clicked.connect(self.autoWrite)
+        self.pushButton_2.clicked.connect(lambda: self.getData(self.pushButton_2))
+        self.pushButton_3.clicked.connect(lambda: self.getData(self.pushButton_3))
+        self.pushButton_4.clicked.connect(lambda: self.getData(self.pushButton_4))
+        self.pushButton_5.clicked.connect(lambda: self.getData(self.pushButton_5))
+        self.pushButton_6.clicked.connect(lambda: self.getData(self.pushButton_6))
+        self.pushButton_7.clicked.connect(lambda: self.getData(self.pushButton_7))
+        self.pushButton_8.clicked.connect(lambda: self.getData(self.pushButton_8))
+        self.pushButton_9.clicked.connect(lambda: self.getData(self.pushButton_9))
+        self.pushButton_10.clicked.connect(lambda: self.getData(self.pushButton_10))
+        self.pushButton_11.clicked.connect(lambda: self.getData(self.pushButton_11))
+        self.pushButton_12.clicked.connect(lambda: self.getData(self.pushButton_12))
+        self.pushButton_13.clicked.connect(lambda: self.getData(self.pushButton_13))
+        self.pushButton_14.clicked.connect(lambda: self.getData(self.pushButton_14))
         self.pushButton_15.clicked.connect(self.lineEdit.clear)
-        self.pushButton_16.clicked.connect(self.stop_message)
-        self.pushButton_17.clicked.connect(lambda: self.get_data(self.pushButton_17))
+        self.pushButton_16.clicked.connect(self.stopMessage)
+        self.pushButton_17.clicked.connect(lambda: self.getData(self.pushButton_17))
         self.pushButton_18.clicked.connect(self.get_batch)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def get_data(self, pbt):
+    def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
 
-    def stop_message(self):
-        stopMessage = 'stop'
-        self.lineEdit.setText(stopMessage)
+    def stopMessage(self):
+        stopMessage1 = 'stop'
+        self.lineEdit.setText(stopMessage1)
         self.label_3.setText("已停止，请清零后重新开始!!!")
 
-    def auto_write(self):
+    def autoWrite(self):
         time.sleep(3)
         n = int(self.spinBox.text())
         if self.lineEdit.text()=='Sample ID':
