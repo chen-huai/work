@@ -558,7 +558,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.spinBox_4.setObjectName("spinBox_4")
         self.gridLayout.addWidget(self.spinBox_4, 3, 3, 1, 1)
         self.pushButton_26 = QtWidgets.QPushButton(self.tab_3)
-        #self.pushButton_26.setEnabled(False)
+        self.pushButton_26.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -609,6 +609,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
+        self.menuHelp = QtWidgets.QMenu(self.menubar)
+        self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -620,20 +622,34 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.actionExport.setObjectName("actionExport")
         self.actionExit = QtWidgets.QAction(MainWindow)
         self.actionExit.setObjectName("actionExit")
+        self.actionImport = QtWidgets.QAction(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.actionImport.setFont(font)
+        self.actionImport.setObjectName("actionImport")
+        self.actionHelp = QtWidgets.QAction(MainWindow)
+        self.actionHelp.setObjectName("actionHelp")
+        self.actionAuthor = QtWidgets.QAction(MainWindow)
+        self.actionAuthor.setObjectName("actionAuthor")
         self.menu.addAction(self.actionExport)
+        self.menu.addAction(self.actionImport)
         self.menu.addSeparator()
         self.menu.addAction(self.actionExit)
+        self.menuHelp.addAction(self.actionHelp)
+        self.menuHelp.addSeparator()
+        self.menuHelp.addAction(self.actionAuthor)
         self.menubar.addAction(self.menu.menuAction())
-
+        self.menubar.addAction(self.menuHelp.menuAction())
 
         # 需要拷贝部分
-        QFileDialog.setWindowIcon(self,icon)
+        QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         self.pushButton_23.clicked.connect(self.tabWidget.close)
         self.pushButton_24.clicked.connect(self.tabWidget.close)
+        self.pushButton_26.clicked.connect(self.randomAction)
         self.pushButton_27.clicked.connect(MainWindow.close)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
         self.pushButton_22.clicked.connect(self.menubar.close)
@@ -664,19 +680,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton.clicked.connect(self.autoWrite)
         self.pushButton_16.clicked.connect(self.stopMessage)
         self.actionExport.triggered.connect(self.createConfigContent)
+        self.actionImport.triggered.connect(self.getConfigContent)
         self.actionExit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    # 初始化，获取或生成配置文件
+        # 初始化，获取或生成配置文件
     def getConfig(self):
         global configFileUrl
         desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
-        configFileUrl = desktopUrl+'\\'+'config'
+        configFileUrl = desktopUrl + '\\' + 'config'
         # print(desktopUrl,1)
-        configFile = os.path.exists(configFileUrl+'\\'+'config.txt')
+        configFile = os.path.exists(configFileUrl + '\\' + 'config.txt')
         if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
 
-            reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.createConfigContent(self)
@@ -685,47 +702,97 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             Ui_MainWindow.getConfigContent(self)
 
-    # 获取配置文件内容
+        # 获取配置文件内容
+
     def getConfigContent(self):
-        f1 = open('%s/config.txt'%configFileUrl, "r", encoding="utf-8")
+        f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
         global configContent
-        configContentName=[]
-        configContent={}
-        i=0
+        configContent = {}
+        i = 0
         for line in f1:
             if line != '\n':
                 lineContent = line.split(':')
                 # print(lineContent)
-                # configContentName.append(lineContent[0])
-                # configContent.append(lineContent[1])
                 configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
-            i+=1
-        print(configContentName, configContent)
+            i += 1
+        # print(configContent)
         self.lineEdit_6.setText("配置获取成功")
 
-    # 生成默认配置文件
+        # 生成默认配置文件
+
     def createConfigContent(self):
-        configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL', 'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_File_Name', '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'AAS_Result_Input_URL', 'ECO_Result_Input_URL', 'ICP_QC_Chart_Input_URL', 'Reach_Result_Input_URL', 'Reach_Message_Input_URL', 'ICP_Result_Output_URL', 'AAS_Result_Output_URL', 'ECO_Result_Output_URL', 'ICP_QC_Chart_File_Name', 'Reach_Result_File_Name', 'Reach_Message_File_Name']
-        configContent = ['默认，可更改为自己需要的', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18']
+        configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL',
+                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_File_Name',
+                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'AAS_Result_Input_URL',
+                             'ECO_Result_Input_URL', 'ICP_QC_Chart_Input_URL', 'Reach_Result_Input_URL',
+                             'Reach_Message_Input_URL', 'ICP_Result_Output_URL', 'AAS_Result_Output_URL',
+                             'ECO_Result_Output_URL', 'ICP_QC_Chart_File_Name', 'Reach_Result_File_Name',
+                             'Reach_Message_File_Name']
+        configContent = ['默认，可更改为自己需要的', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
+                         '15', '16', '17', '18']
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
-        i=0
+        i = 0
         for i in range(len(configContentName)):
-            f1.write(configContentName[i]+':'+configContent[i]+'\n')
+            f1.write(configContentName[i] + ':' + configContent[i] + '\n')
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
 
-    # 自动填写-获取内容
+        # 自动填写-获取内容
+        # 获取Sample ID 、实验方法、质量、体积
+
+    def getBatch(self):
+        address = os.path.abspath('.')
+        now = int(time.strftime('%Y'))
+        last_time = now - 1
+        selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
+                                                      'C:\\Users\\chenhuai\\python\\work\\z\\data\\batch',
+                                                      'Wrod files(*.doc*)')
+
+        print(selectBatchFile)
+        if selectBatchFile[0] != []:
+            self.lineEdit_6.setText("正在抓取样品单号")
+            self.lineEdit.setText('Sample ID')
+            w = Dispatch('Word.Application')
+            w.Visible = 0
+            # win系统识别路径为“\”
+            global labNumber
+            global qualityValue
+            global volumeValue
+            labNumber = []
+            qualityValue = []
+            volumeValue = []
+            n = 0
+            for n in range(len(selectBatchFile[0])):
+                doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+                a = doc.Content.Text
+                b = a.split('\r')
+                doc.Close()
+                i = 0
+                for i in range(len(b)):
+                    if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
+                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]):
+                        labNumber.append(b[i])
+                        qualityValue.append(b[i + 4])
+                        volumeValue.append(b[i + 2])
+                        app.processEvents()
+                n+=1
+            self.lineEdit_6.setText("样品单号抓取完成")
+            w.Quit()
+            print(labNumber, qualityValue, volumeValue)
+
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
 
-    # 自动填写-停止
+        # 自动填写-停止
+
     def stopMessage(self):
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
         self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
 
-    # 自动填写 - 开始自动填写
+        # 自动填写 - 开始自动填写
+
     def autoWrite(self):
         time.sleep(3)
         n = int(self.spinBox.text())
@@ -734,6 +801,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             for each in labNumber:
                 if self.lineEdit.text() != 'stop':
                     pyautogui.typewrite('%s' % each, 0.0001)
+                    pyautogui.typewrite(['Enter'])
+                    app.processEvents()
+                    time.sleep(0.1)
+        elif self.lineEdit.text() == 'Random':
+            for i in range(n):
+                if self.lineEdit.text() != 'stop':
+                    pyautogui.typewrite('%s'%random.randint(int(self.spinBox_4.text()), int(self.spinBox_5.text())),0.0001)
                     pyautogui.typewrite(['Enter'])
                     app.processEvents()
                     time.sleep(0.1)
@@ -747,46 +821,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     time.sleep(0.1)
             if self.lineEdit.text() != 'stop':
                 self.lineEdit_6.setText("自动填写已经完成")
-
-    # 获取Sample ID 、实验方法、质量、体积
-    def getBatch(self):
-        address = os.path.abspath('.')
-        now = int(time.strftime('%Y'))
-        last_time = now - 1
-        selectBatchFile = QFileDialog.getOpenFileName(self, '选择Batch文件','C:\\Users\\chenhuai\\python\\work\\z\\data\\batch','Wrod files(*.doc*)')
-
-        print(selectBatchFile)
-        if selectBatchFile[0] != '':
-            self.lineEdit_6.setText("正在抓取样品单号")
-            self.lineEdit.setText('Sample ID')
-            w = Dispatch('Word.Application')
-            w.Visible = 0
-            # win系统识别路径为“\”
-            doc = w.Documents.Open(r"%s" % selectBatchFile[0].replace('/', '\\'))
-            a = doc.Content.Text
-            b = a.split('\r')
-            global labNumber
-            global qualityValue
-            global volumeValue
-            labNumber = []
-            qualityValue = []
-            volumeValue = []
-            doc.Close()
-            w.Quit()
-            i = 0
-            for i in range(len(b)):
-                if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-                        '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]):
-                    labNumber.append(b[i])
-                    qualityValue.append(b[i + 4])
-                    volumeValue.append(b[i + 2])
-                    app.processEvents()
-            self.lineEdit_6.setText("样品单号抓取完成")
-            # print(labNumber, qualityValue, volumeValue)
-
-
-
-
+    # 自动填写-随机数
+    def randomAction(self):
+        self.lineEdit.setText('Random')
+        self.lineEdit_6.setText("随时可以开始填写随机数")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -859,24 +897,34 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_16.setText(_translate("MainWindow", "停止"))
         self.spinBox_5.setStatusTip(_translate("MainWindow", "随机数最大值"))
         self.spinBox_4.setStatusTip(_translate("MainWindow", "随机数最小值"))
+        self.pushButton_26.setStatusTip(_translate("MainWindow", "点击后将以随机数的形式填写"))
         self.pushButton_26.setText(_translate("MainWindow", "随机数"))
         self.pushButton_15.setStatusTip(_translate("MainWindow", "清零后才可开始新的填写"))
         self.pushButton_15.setText(_translate("MainWindow", "清零"))
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
-        self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
+        self.pushButton.setText(_translate("MainWindow", "开始\n"
+"填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
         self.lineEdit_6.setText(_translate("MainWindow", "信息显示"))
-        self.menu.setTitle(_translate("MainWindow", "菜单"))
+        self.menu.setTitle(_translate("MainWindow", "File"))
+        self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionExport.setToolTip(_translate("MainWindow", "Export"))
-        self.actionExport.setStatusTip(_translate("MainWindow", "导出基础设置，可在用户桌面config文件夹中查看"))
+        self.actionExport.setStatusTip(_translate("MainWindow", "导出默认配置信息，可在用户桌面config文件夹中查看"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionExit.setStatusTip(_translate("MainWindow", "退出程序"))
+        self.actionImport.setText(_translate("MainWindow", "Import"))
+        self.actionImport.setStatusTip(_translate("MainWindow", "导入配置文件，当配置文件修改时请使用，配置文件可在用户桌面config文件夹中找到"))
+        self.actionHelp.setText(_translate("MainWindow", "Help"))
+        self.actionHelp.setStatusTip(_translate("MainWindow", "帮助提示"))
+        self.actionAuthor.setText(_translate("MainWindow", "Author"))
+        self.actionAuthor.setStatusTip(_translate("MainWindow", "关于作者"))
 
 if __name__ == "__main__":
     import sys
     import os
     import time
+    import random
     import pyautogui
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
