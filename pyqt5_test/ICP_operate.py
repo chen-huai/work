@@ -14,6 +14,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(493, 416)
+        global icon
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -557,7 +558,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.spinBox_4.setObjectName("spinBox_4")
         self.gridLayout.addWidget(self.spinBox_4, 3, 3, 1, 1)
         self.pushButton_26 = QtWidgets.QPushButton(self.tab_3)
-        self.pushButton_26.setEnabled(False)
+        #self.pushButton_26.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -624,6 +625,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menu.addAction(self.actionExit)
         self.menubar.addAction(self.menu.menuAction())
 
+
+        # 需要拷贝部分
+        QFileDialog.setWindowIcon(self,icon)
+        QMessageBox.setWindowIcon(self, icon)
+
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         self.pushButton_23.clicked.connect(self.tabWidget.close)
@@ -657,19 +663,69 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_18.clicked.connect(self.getBatch)
         self.pushButton.clicked.connect(self.autoWrite)
         self.pushButton_16.clicked.connect(self.stopMessage)
-        self.actionExport.triggered.connect(self.lineEdit.clear)
+        self.actionExport.triggered.connect(self.createConfigContent)
         self.actionExit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    # 初始化，获取或生成配置文件
+    def getConfig(self):
+        global configFileUrl
+        desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
+        configFileUrl = desktopUrl+'\\'+'config'
+        # print(desktopUrl,1)
+        configFile = os.path.exists(configFileUrl+'\\'+'config.txt')
+        if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
+
+            reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.createConfigContent(self)
+            else:
+                exit()
+        else:
+            Ui_MainWindow.getConfigContent(self)
+
+    # 获取配置文件内容
+    def getConfigContent(self):
+        f1 = open('%s/config.txt'%configFileUrl, "r", encoding="utf-8")
+        global configContent
+        configContentName=[]
+        configContent={}
+        i=0
+        for line in f1:
+            if line != '\n':
+                lineContent = line.split(':')
+                # print(lineContent)
+                # configContentName.append(lineContent[0])
+                # configContent.append(lineContent[1])
+                configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
+            i+=1
+        print(configContentName, configContent)
+        self.lineEdit_6.setText("配置获取成功")
+
+    # 生成默认配置文件
+    def createConfigContent(self):
+        configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL', 'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_File_Name', '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'AAS_Result_Input_URL', 'ECO_Result_Input_URL', 'ICP_QC_Chart_Input_URL', 'Reach_Result_Input_URL', 'Reach_Message_Input_URL', 'ICP_Result_Output_URL', 'AAS_Result_Output_URL', 'ECO_Result_Output_URL', 'ICP_QC_Chart_File_Name', 'Reach_Result_File_Name', 'Reach_Message_File_Name']
+        configContent = ['默认，可更改为自己需要的', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18']
+        f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
+        i=0
+        for i in range(len(configContentName)):
+            f1.write(configContentName[i]+':'+configContent[i]+'\n')
+            i += 1
+        self.lineEdit_6.setText("配置文件创建成功")
+
+    # 自动填写-获取内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
 
+    # 自动填写-停止
     def stopMessage(self):
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
         self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
 
+    # 自动填写 - 开始自动填写
     def autoWrite(self):
         time.sleep(3)
         n = int(self.spinBox.text())
@@ -692,14 +748,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             if self.lineEdit.text() != 'stop':
                 self.lineEdit_6.setText("自动填写已经完成")
 
+    # 获取Sample ID 、实验方法、质量、体积
     def getBatch(self):
         address = os.path.abspath('.')
         now = int(time.strftime('%Y'))
         last_time = now - 1
-        selectBatchFile = QFileDialog.getOpenFileName(self, '选择Batch文件',
-                                                      'C:\\Users\\chenhuai\\python\\work\\z\\data\\batch',
-                                                      'Wrod files(*.doc*)')
-        QFileDialog.setWindowIcon(icon)
+        selectBatchFile = QFileDialog.getOpenFileName(self, '选择Batch文件','C:\\Users\\chenhuai\\python\\work\\z\\data\\batch','Wrod files(*.doc*)')
+
         print(selectBatchFile)
         if selectBatchFile[0] != '':
             self.lineEdit_6.setText("正在抓取样品单号")
@@ -728,6 +783,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     app.processEvents()
             self.lineEdit_6.setText("样品单号抓取完成")
             # print(labNumber, qualityValue, volumeValue)
+
+
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -826,4 +885,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()  # ui是Ui_MainWindow()类的实例化对象
     ui.setupUi(MainWindow)  # 执行类中的setupUi方法，方法的参数是第二步中创建的QMainWindow
     MainWindow.show()  # 执行QMainWindow的show()方法，显示这个QMainWindow
+    ui.getConfig()
     sys.exit(app.exec_())  # 使用exit()或者点击关闭按钮退出QApplication
