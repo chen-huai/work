@@ -687,16 +687,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 初始化，获取或生成配置文件
     def getConfig(self):
         global configFileUrl
+        global desktopUrl
         desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
         configFileUrl = desktopUrl + '\\' + 'config'
         # print(desktopUrl,1)
         configFile = os.path.exists(configFileUrl + '\\' + 'config.txt')
         if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
-
             reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.createConfigContent(self)
+                Ui_MainWindow.getConfigContent(self)
+                self.lineEdit_6.setText("创建并导入配置成功")
             else:
                 exit()
         else:
@@ -711,7 +712,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         i = 0
         for line in f1:
             if line != '\n':
-                lineContent = line.split(':')
+                lineContent = line.split('|')
                 # print(lineContent)
                 configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
             i += 1
@@ -728,12 +729,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                              'Reach_Message_Input_URL', 'ICP_Result_Output_URL', 'AAS_Result_Output_URL',
                              'ECO_Result_Output_URL', 'ICP_QC_Chart_File_Name', 'Reach_Result_File_Name',
                              'Reach_Message_File_Name']
-        configContent = ['默认，可更改为自己需要的', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
+        configContent = ['默认，可更改为自己需要的', '1', '%s'%desktopUrl, '3', '4', '5', '默认，可更改为自己需要的', '7', '8', '9', '10', '11', '12', '13', '14',
                          '15', '16', '17', '18']
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
-            f1.write(configContentName[i] + ':' + configContent[i] + '\n')
+            f1.write(configContentName[i] + '|' + configContent[i] + '\n')
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
 
@@ -745,7 +746,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         now = int(time.strftime('%Y'))
         last_time = now - 1
         selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
-                                                      'C:\\Users\\chenhuai\\python\\work\\z\\data\\batch',
+                                                      '%s'%configContent['ICP_Batch_Input_URL'],
                                                       'Wrod files(*.doc*)')
 
         print(selectBatchFile)
@@ -780,6 +781,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             w.Quit()
             print(labNumber, qualityValue, volumeValue)
 
+    # 自动填写-内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
@@ -902,8 +904,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_15.setStatusTip(_translate("MainWindow", "清零后才可开始新的填写"))
         self.pushButton_15.setText(_translate("MainWindow", "清零"))
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
-        self.pushButton.setText(_translate("MainWindow", "开始\n"
-"填写"))
+        self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
         self.lineEdit_6.setText(_translate("MainWindow", "信息显示"))
         self.menu.setTitle(_translate("MainWindow", "File"))
