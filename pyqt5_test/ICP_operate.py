@@ -647,7 +647,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_25.clicked.connect(self.tabWidget.close)
         self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
         self.pushButton_21.clicked.connect(self.tabWidget.close)
-        self.pushButton_34.clicked.connect(self.tabWidget.close)
+        self.pushButton_34.clicked.connect(self.getResult)
         self.pushButton_31.clicked.connect(self.tabWidget.close)
         self.pushButton_32.clicked.connect(self.tabWidget.close)
         self.pushButton_38.clicked.connect(self.tabWidget.close)
@@ -786,6 +786,21 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("样品单号抓取完成")
             w.Quit()
             # print(labNumber, qualityValue, volumeValue)
+
+    # 获取结果文件
+    def getResult(self):
+        self.lineEdit_6.clear()
+        self.textBrowser.clear()
+        selectResultFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Result_Input_URL'],'CSV files(*.csv);;Text Files (*.txt)')
+        # print(selectBatchFile)
+        if selectResultFile[0] != []:
+            self.lineEdit_6.setText("正在抓取Result文件")
+            n = 0
+            for n in range(len(selectResultFile[0])):
+                fileName = os.path.split(selectResultFile[0][n])[1]
+                self.textBrowser.append('%s：%s' % (n + 1, fileName))
+            self.lineEdit_6.setText("完成Result文件抓取")
+
 
     # 自动填写-内容
     def getData(self, pbt):
