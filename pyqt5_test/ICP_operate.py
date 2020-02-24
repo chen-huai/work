@@ -684,6 +684,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def getConfig(self):
         global configFileUrl
         global desktopUrl
+        global now
+        global last_time
+        global today
+        now = int(time.strftime('%Y'))
+        last_time = now - 1
+        today = time.strftime('%Y%m%d')
         desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
         configFileUrl = desktopUrl + '\\' + 'config'
         # print(desktopUrl,1)
@@ -691,6 +697,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
             reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
             if reply == QMessageBox.Yes:
+                os.makedirs(configFileUrl)
                 Ui_MainWindow.createConfigContent(self)
                 Ui_MainWindow.getConfigContent(self)
                 self.lineEdit_6.setText("创建并导入配置成功")
@@ -719,15 +726,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def createConfigContent(self):
         configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL',
-                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_File_Name',
-                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'AAS_Result_Input_URL',
-                             'ECO_Result_Input_URL', 'ICP_QC_Chart_Input_URL', 'Reach_Result_Input_URL',
-                             'Reach_Message_Input_URL', 'ICP_Result_Output_URL', 'AAS_Result_Output_URL',
-                             'ECO_Result_Output_URL', 'ICP_QC_Chart_File_Name', 'Reach_Result_File_Name',
-                             'Reach_Message_File_Name']
-        configContent = ['默认，可更改为自己需要的', '1', '%s' % desktopUrl, '3', '4', '5', '默认，可更改为自己需要的', '7', '8', '9', '10',
-                         '11', '12', '13', '14',
-                         '15', '16', '17', '18']
+                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_Batch_Input_URL','Nickel_File_Name',
+                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'ICP_Result_Output_URL','AAS_Result_Input_URL',
+                             'AAS_Result_Output_URL','ECO_Result_Input_URL','ECO_Result_Output_URL','ICP_QC_Chart_Input_URL',
+                             'ICP_QC_Chart_File_Name','Reach_Result_Input_URL','Reach_Result_File_Name','Reach_Message_Input_URL','Reach_Message_File_Name']
+        configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl, 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO', 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
+                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm','默认，可更改为自己需要的', 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'Z:\\QC Chart\\%s' % now,
+                         'QC Chart_Heavy Metal -66-01-2018-012.xlsx','Z:\\Inorganic_batch\\Microwave\\Result\\Reach','SVHC-DCU.xlsx','Z:\\Inorganic\\Program\\Reach_Result\\Raw_data','TUV_SUD_REACH_SVHC_Candidate_List.xlsx']
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
@@ -742,8 +748,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         #address = os.path.abspath('.')
         self.lineEdit_6.clear()
         self.textBrowser_3.clear()
-        now = int(time.strftime('%Y'))
-        last_time = now - 1
         selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],'Wrod files(*.doc*)')
         # print(selectBatchFile)
         if selectBatchFile[0] != []:
@@ -905,8 +909,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_15.setStatusTip(_translate("MainWindow", "清零后才可开始新的填写"))
         self.pushButton_15.setText(_translate("MainWindow", "清零"))
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
-        self.pushButton.setText(_translate("MainWindow", "开始\n"
-"填写"))
+        self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
         self.menu.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
