@@ -691,13 +691,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         last_time = now - 1
         today = time.strftime('%Y%m%d')
         desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
-        configFileUrl = desktopUrl + '\\' + 'config'
-        # print(desktopUrl,1)
-        configFile = os.path.exists(configFileUrl + '\\' + 'config.txt')
+        configFileUrl = '%s/config'%desktopUrl
+        configFile = os.path.exists('%s/config.txt'%configFileUrl)
+        # print(desktopUrl,configFileUrl,configFile)
         if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
             reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                os.makedirs(configFileUrl)
+                if not os.path.exists(configFileUrl):
+                    os.makedirs(configFileUrl)
                 Ui_MainWindow.createConfigContent(self)
                 Ui_MainWindow.getConfigContent(self)
                 self.lineEdit_6.setText("创建并导入配置成功")
@@ -786,6 +787,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("样品单号抓取完成")
             w.Quit()
             # print(labNumber, qualityValue, volumeValue)
+        else:
+            self.lineEdit_6.setText("请重新选择Batch文件")
 
     # 获取结果文件
     def getResult(self):
@@ -800,7 +803,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 fileName = os.path.split(selectResultFile[0][n])[1]
                 self.textBrowser.append('%s：%s' % (n + 1, fileName))
             self.lineEdit_6.setText("完成Result文件抓取")
-
+        else:
+            self.lineEdit_6.setText("请重新选择Result文件")
 
     # 自动填写-内容
     def getData(self, pbt):
@@ -946,7 +950,7 @@ if __name__ == "__main__":
     import time
     import random
     import pyautogui
-    from win32com.client import Dispatch
+    #from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
