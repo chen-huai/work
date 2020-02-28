@@ -632,7 +632,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 
 
-        # 需要拷贝部分
+# 需要拷贝部分
         QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
 
@@ -663,7 +663,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_10.clicked.connect(lambda: self.getData(self.pushButton_10))
         self.pushButton_2.clicked.connect(lambda: self.getData(self.pushButton_2))
         self.pushButton_3.clicked.connect(lambda: self.getData(self.pushButton_3))
-        self.pushButton_15.clicked.connect(self.lineEdit.clear)
+        self.pushButton_15.clicked.connect(self.clearContent)
         self.pushButton_11.clicked.connect(lambda: self.getData(self.pushButton_11))
         self.pushButton_12.clicked.connect(lambda: self.getData(self.pushButton_12))
         self.pushButton_17.clicked.connect(lambda: self.getData(self.pushButton_17))
@@ -755,7 +755,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("正在抓取样品单号")
             if messages == 'Auto':
                 self.lineEdit.clear()
-                self.lineEdit.asetText('Sample ID')
+                self.lineEdit.setText('Sample ID')
             w = Dispatch('Word.Application')
             w.Visible = 0
             # win系统识别路径为“\”
@@ -810,6 +810,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
+        self.lineEdit_6.setText("内容已填写，可随时开始")
+
+    def clearContent(self):
+        self.lineEdit.clear()
+        self.lineEdit_6.setText("已清零，请重新填写内容")
+
 
         # 自动填写-停止
 
@@ -854,6 +860,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def randomAction(self):
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "ICP操作界面"))
@@ -950,7 +957,7 @@ if __name__ == "__main__":
     import time
     import random
     import pyautogui
-    #from win32com.client import Dispatch
+    from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
