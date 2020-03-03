@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ICP_operate.ui'
+# Form implementation generated from reading ui file 'ICP_Operate_All.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -13,8 +13,7 @@ from PyQt5.QtCore import *
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(511, 442)
-        global icon
+        MainWindow.resize(534, 442)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -33,6 +32,29 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tab.setObjectName("tab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.tab)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.pushButton_28 = QtWidgets.QPushButton(self.tab)
+        self.pushButton_28.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_28.sizePolicy().hasHeightForWidth())
+        self.pushButton_28.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_28.setFont(font)
+        self.pushButton_28.setObjectName("pushButton_28")
+        self.gridLayout_2.addWidget(self.pushButton_28, 0, 0, 1, 1)
+        self.pushButton_29 = QtWidgets.QPushButton(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_29.sizePolicy().hasHeightForWidth())
+        self.pushButton_29.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_29.setFont(font)
+        self.pushButton_29.setObjectName("pushButton_29")
+        self.gridLayout_2.addWidget(self.pushButton_29, 0, 1, 1, 1)
         self.pushButton_22 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -45,6 +67,84 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_22.setToolTip("")
         self.pushButton_22.setObjectName("pushButton_22")
         self.gridLayout_2.addWidget(self.pushButton_22, 0, 2, 1, 1)
+        self.pushButton_23 = QtWidgets.QPushButton(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_23.sizePolicy().hasHeightForWidth())
+        self.pushButton_23.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_23.setFont(font)
+        self.pushButton_23.setToolTip("")
+        self.pushButton_23.setObjectName("pushButton_23")
+        self.gridLayout_2.addWidget(self.pushButton_23, 0, 3, 1, 1)
+        self.textBrowser_3 = QtWidgets.QTextBrowser(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_3.sizePolicy().hasHeightForWidth())
+        self.textBrowser_3.setSizePolicy(sizePolicy)
+        self.textBrowser_3.setObjectName("textBrowser_3")
+        self.gridLayout_2.addWidget(self.textBrowser_3, 1, 0, 4, 2)
+        self.pushButton_24 = QtWidgets.QPushButton(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_24.sizePolicy().hasHeightForWidth())
+        self.pushButton_24.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_24.setFont(font)
+        self.pushButton_24.setToolTip("")
+        self.pushButton_24.setObjectName("pushButton_24")
+        self.gridLayout_2.addWidget(self.pushButton_24, 1, 2, 1, 1)
+        self.pushButton_25 = QtWidgets.QPushButton(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_25.sizePolicy().hasHeightForWidth())
+        self.pushButton_25.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_25.setFont(font)
+        self.pushButton_25.setToolTip("")
+        self.pushButton_25.setObjectName("pushButton_25")
+        self.gridLayout_2.addWidget(self.pushButton_25, 2, 2, 1, 1)
+        self.line = QtWidgets.QFrame(self.tab)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.line.setFont(font)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.gridLayout_2.addWidget(self.line, 3, 2, 1, 2)
+        self.pushButton_35 = QtWidgets.QPushButton(self.tab)
+        self.pushButton_35.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_35.sizePolicy().hasHeightForWidth())
+        self.pushButton_35.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_35.setFont(font)
+        self.pushButton_35.setObjectName("pushButton_35")
+        self.gridLayout_2.addWidget(self.pushButton_35, 4, 2, 1, 1)
+        self.pushButton_36 = QtWidgets.QPushButton(self.tab)
+        self.pushButton_36.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_36.sizePolicy().hasHeightForWidth())
+        self.pushButton_36.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_36.setFont(font)
+        self.pushButton_36.setObjectName("pushButton_36")
+        self.gridLayout_2.addWidget(self.pushButton_36, 4, 3, 1, 1)
         self.pushButton_33 = QtWidgets.QPushButton(self.tab)
         self.pushButton_33.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -68,65 +168,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_34.setFont(font)
         self.pushButton_34.setObjectName("pushButton_34")
         self.gridLayout_2.addWidget(self.pushButton_34, 5, 1, 1, 1)
-        self.pushButton_29 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_29.sizePolicy().hasHeightForWidth())
-        self.pushButton_29.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_29.setFont(font)
-        self.pushButton_29.setObjectName("pushButton_29")
-        self.gridLayout_2.addWidget(self.pushButton_29, 0, 1, 1, 1)
-        self.pushButton_28 = QtWidgets.QPushButton(self.tab)
-        self.pushButton_28.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_28.sizePolicy().hasHeightForWidth())
-        self.pushButton_28.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_28.setFont(font)
-        self.pushButton_28.setObjectName("pushButton_28")
-        self.gridLayout_2.addWidget(self.pushButton_28, 0, 0, 1, 1)
-        self.pushButton_21 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_21.sizePolicy().hasHeightForWidth())
-        self.pushButton_21.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_21.setFont(font)
-        self.pushButton_21.setToolTip("")
-        self.pushButton_21.setObjectName("pushButton_21")
-        self.gridLayout_2.addWidget(self.pushButton_21, 1, 3, 2, 1)
-        self.pushButton_39 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_39.sizePolicy().hasHeightForWidth())
-        self.pushButton_39.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_39.setFont(font)
-        self.pushButton_39.setToolTip("")
-        self.pushButton_39.setObjectName("pushButton_39")
-        self.gridLayout_2.addWidget(self.pushButton_39, 8, 3, 1, 1)
-        self.pushButton_38 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_38.sizePolicy().hasHeightForWidth())
-        self.pushButton_38.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_38.setFont(font)
-        self.pushButton_38.setToolTip("")
-        self.pushButton_38.setObjectName("pushButton_38")
-        self.gridLayout_2.addWidget(self.pushButton_38, 8, 2, 1, 1)
         self.spinBox_3 = QtWidgets.QSpinBox(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -140,19 +181,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.spinBox_3.setMaximum(999999999)
         self.spinBox_3.setProperty("value", 1)
         self.spinBox_3.setObjectName("spinBox_3")
-        self.gridLayout_2.addWidget(self.spinBox_3, 7, 2, 1, 1)
-        self.pushButton_36 = QtWidgets.QPushButton(self.tab)
-        self.pushButton_36.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_36.sizePolicy().hasHeightForWidth())
-        self.pushButton_36.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_36.setFont(font)
-        self.pushButton_36.setObjectName("pushButton_36")
-        self.gridLayout_2.addWidget(self.pushButton_36, 6, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.spinBox_3, 5, 2, 1, 1)
         self.spinBox_2 = QtWidgets.QSpinBox(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -165,7 +194,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.spinBox_2.setToolTip("")
         self.spinBox_2.setMaximum(999999999)
         self.spinBox_2.setObjectName("spinBox_2")
-        self.gridLayout_2.addWidget(self.spinBox_2, 7, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.spinBox_2, 5, 3, 1, 1)
         self.textBrowser = QtWidgets.QTextBrowser(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -177,29 +206,18 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.textBrowser.setFont(font)
         self.textBrowser.setObjectName("textBrowser")
         self.gridLayout_2.addWidget(self.textBrowser, 6, 0, 3, 2)
-        self.pushButton_35 = QtWidgets.QPushButton(self.tab)
-        self.pushButton_35.setEnabled(False)
+        self.pushButton_38 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_35.sizePolicy().hasHeightForWidth())
-        self.pushButton_35.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_38.sizePolicy().hasHeightForWidth())
+        self.pushButton_38.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.pushButton_35.setFont(font)
-        self.pushButton_35.setObjectName("pushButton_35")
-        self.gridLayout_2.addWidget(self.pushButton_35, 6, 2, 1, 1)
-        self.pushButton_31 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_31.sizePolicy().hasHeightForWidth())
-        self.pushButton_31.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_31.setFont(font)
-        self.pushButton_31.setObjectName("pushButton_31")
-        self.gridLayout_2.addWidget(self.pushButton_31, 4, 2, 1, 1)
+        self.pushButton_38.setFont(font)
+        self.pushButton_38.setToolTip("")
+        self.pushButton_38.setObjectName("pushButton_38")
+        self.gridLayout_2.addWidget(self.pushButton_38, 6, 2, 1, 1)
         self.pushButton_27 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -211,19 +229,18 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_27.setFont(font)
         self.pushButton_27.setToolTip("")
         self.pushButton_27.setObjectName("pushButton_27")
-        self.gridLayout_2.addWidget(self.pushButton_27, 4, 3, 1, 1)
-        self.pushButton_25 = QtWidgets.QPushButton(self.tab)
+        self.gridLayout_2.addWidget(self.pushButton_27, 6, 3, 1, 1)
+        self.pushButton_31 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_25.sizePolicy().hasHeightForWidth())
-        self.pushButton_25.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_31.sizePolicy().hasHeightForWidth())
+        self.pushButton_31.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.pushButton_25.setFont(font)
-        self.pushButton_25.setToolTip("")
-        self.pushButton_25.setObjectName("pushButton_25")
-        self.gridLayout_2.addWidget(self.pushButton_25, 2, 2, 1, 1)
+        self.pushButton_31.setFont(font)
+        self.pushButton_31.setObjectName("pushButton_31")
+        self.gridLayout_2.addWidget(self.pushButton_31, 7, 2, 1, 1)
         self.pushButton_30 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -234,7 +251,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(10)
         self.pushButton_30.setFont(font)
         self.pushButton_30.setObjectName("pushButton_30")
-        self.gridLayout_2.addWidget(self.pushButton_30, 5, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_30, 7, 3, 1, 1)
+        self.comboBox = QtWidgets.QComboBox(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
+        self.comboBox.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.comboBox.setFont(font)
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.gridLayout_2.addWidget(self.comboBox, 8, 2, 1, 1)
         self.pushButton_32 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -245,49 +275,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(10)
         self.pushButton_32.setFont(font)
         self.pushButton_32.setObjectName("pushButton_32")
-        self.gridLayout_2.addWidget(self.pushButton_32, 5, 2, 1, 1)
-        self.pushButton_24 = QtWidgets.QPushButton(self.tab)
+        self.gridLayout_2.addWidget(self.pushButton_32, 8, 3, 1, 1)
+        self.pushButton_21 = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_24.sizePolicy().hasHeightForWidth())
-        self.pushButton_24.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_21.sizePolicy().hasHeightForWidth())
+        self.pushButton_21.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.pushButton_24.setFont(font)
-        self.pushButton_24.setToolTip("")
-        self.pushButton_24.setObjectName("pushButton_24")
-        self.gridLayout_2.addWidget(self.pushButton_24, 1, 2, 1, 1)
-        self.pushButton_23 = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_23.sizePolicy().hasHeightForWidth())
-        self.pushButton_23.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_23.setFont(font)
-        self.pushButton_23.setToolTip("")
-        self.pushButton_23.setObjectName("pushButton_23")
-        self.gridLayout_2.addWidget(self.pushButton_23, 0, 3, 1, 1)
-        self.line = QtWidgets.QFrame(self.tab)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setWeight(50)
-        self.line.setFont(font)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.gridLayout_2.addWidget(self.line, 3, 2, 1, 2)
-        self.textBrowser_3 = QtWidgets.QTextBrowser(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textBrowser_3.sizePolicy().hasHeightForWidth())
-        self.textBrowser_3.setSizePolicy(sizePolicy)
-        self.textBrowser_3.setObjectName("textBrowser_3")
-        self.gridLayout_2.addWidget(self.textBrowser_3, 1, 0, 4, 2)
+        self.pushButton_21.setFont(font)
+        self.pushButton_21.setToolTip("")
+        self.pushButton_21.setObjectName("pushButton_21")
+        self.gridLayout_2.addWidget(self.pushButton_21, 1, 3, 2, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -322,15 +322,18 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_37.setSizePolicy(sizePolicy)
         self.pushButton_37.setObjectName("pushButton_37")
         self.gridLayout_3.addWidget(self.pushButton_37, 1, 2, 1, 1)
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_2)
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.gridLayout_3.addWidget(self.textBrowser_2, 2, 0, 1, 3)
         self.lineEdit_5 = QtWidgets.QLineEdit(self.tab_2)
         self.lineEdit_5.setEnabled(False)
         self.lineEdit_5.setText("")
         self.lineEdit_5.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_5.setObjectName("lineEdit_5")
-        self.gridLayout_3.addWidget(self.lineEdit_5, 1, 0, 1, 2)
-        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_2)
-        self.textBrowser_2.setObjectName("textBrowser_2")
-        self.gridLayout_3.addWidget(self.textBrowser_2, 2, 0, 1, 3)
+        self.gridLayout_3.addWidget(self.lineEdit_5, 1, 0, 1, 1)
+        self.pushButton_50 = QtWidgets.QPushButton(self.tab_2)
+        self.pushButton_50.setObjectName("pushButton_50")
+        self.gridLayout_3.addWidget(self.pushButton_50, 1, 1, 1, 1)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -579,6 +582,169 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton.setObjectName("pushButton")
         self.gridLayout.addWidget(self.pushButton, 4, 4, 2, 1)
         self.tabWidget.addTab(self.tab_3, "")
+        self.tab_4 = QtWidgets.QWidget()
+        self.tab_4.setObjectName("tab_4")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.tab_4)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.pushButton_39 = QtWidgets.QPushButton(self.tab_4)
+        self.pushButton_39.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_39.sizePolicy().hasHeightForWidth())
+        self.pushButton_39.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_39.setFont(font)
+        self.pushButton_39.setObjectName("pushButton_39")
+        self.gridLayout_5.addWidget(self.pushButton_39, 0, 0, 1, 1)
+        self.pushButton_41 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_41.sizePolicy().hasHeightForWidth())
+        self.pushButton_41.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_41.setFont(font)
+        self.pushButton_41.setObjectName("pushButton_41")
+        self.gridLayout_5.addWidget(self.pushButton_41, 0, 1, 1, 1)
+        self.line_3 = QtWidgets.QFrame(self.tab_4)
+        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_3.setObjectName("line_3")
+        self.gridLayout_5.addWidget(self.line_3, 0, 2, 3, 1)
+        self.pushButton_44 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_44.sizePolicy().hasHeightForWidth())
+        self.pushButton_44.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_44.setFont(font)
+        self.pushButton_44.setObjectName("pushButton_44")
+        self.gridLayout_5.addWidget(self.pushButton_44, 0, 3, 1, 1)
+        self.textBrowser_4 = QtWidgets.QTextBrowser(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_4.sizePolicy().hasHeightForWidth())
+        self.textBrowser_4.setSizePolicy(sizePolicy)
+        self.textBrowser_4.setObjectName("textBrowser_4")
+        self.gridLayout_5.addWidget(self.textBrowser_4, 1, 0, 2, 2)
+        self.pushButton_46 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_46.sizePolicy().hasHeightForWidth())
+        self.pushButton_46.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_46.setFont(font)
+        self.pushButton_46.setObjectName("pushButton_46")
+        self.gridLayout_5.addWidget(self.pushButton_46, 1, 3, 1, 1)
+        self.pushButton_45 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_45.sizePolicy().hasHeightForWidth())
+        self.pushButton_45.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_45.setFont(font)
+        self.pushButton_45.setObjectName("pushButton_45")
+        self.gridLayout_5.addWidget(self.pushButton_45, 2, 3, 1, 1)
+        self.line_2 = QtWidgets.QFrame(self.tab_4)
+        self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.gridLayout_5.addWidget(self.line_2, 3, 0, 1, 4)
+        self.pushButton_42 = QtWidgets.QPushButton(self.tab_4)
+        self.pushButton_42.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_42.sizePolicy().hasHeightForWidth())
+        self.pushButton_42.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_42.setFont(font)
+        self.pushButton_42.setObjectName("pushButton_42")
+        self.gridLayout_5.addWidget(self.pushButton_42, 4, 0, 1, 1)
+        self.pushButton_43 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_43.sizePolicy().hasHeightForWidth())
+        self.pushButton_43.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_43.setFont(font)
+        self.pushButton_43.setObjectName("pushButton_43")
+        self.gridLayout_5.addWidget(self.pushButton_43, 4, 1, 1, 1)
+        self.line_4 = QtWidgets.QFrame(self.tab_4)
+        self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_4.setObjectName("line_4")
+        self.gridLayout_5.addWidget(self.line_4, 4, 2, 4, 1)
+        self.comboBox_2 = QtWidgets.QComboBox(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox_2.sizePolicy().hasHeightForWidth())
+        self.comboBox_2.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.comboBox_2.setFont(font)
+        self.comboBox_2.setObjectName("comboBox_2")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.gridLayout_5.addWidget(self.comboBox_2, 4, 3, 1, 1)
+        self.textBrowser_5 = QtWidgets.QTextBrowser(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_5.sizePolicy().hasHeightForWidth())
+        self.textBrowser_5.setSizePolicy(sizePolicy)
+        self.textBrowser_5.setObjectName("textBrowser_5")
+        self.gridLayout_5.addWidget(self.textBrowser_5, 5, 0, 3, 2)
+        self.pushButton_47 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_47.sizePolicy().hasHeightForWidth())
+        self.pushButton_47.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_47.setFont(font)
+        self.pushButton_47.setObjectName("pushButton_47")
+        self.gridLayout_5.addWidget(self.pushButton_47, 5, 3, 1, 1)
+        self.pushButton_49 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_49.sizePolicy().hasHeightForWidth())
+        self.pushButton_49.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_49.setFont(font)
+        self.pushButton_49.setObjectName("pushButton_49")
+        self.gridLayout_5.addWidget(self.pushButton_49, 6, 3, 1, 1)
+        self.pushButton_48 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_48.sizePolicy().hasHeightForWidth())
+        self.pushButton_48.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_48.setFont(font)
+        self.pushButton_48.setObjectName("pushButton_48")
+        self.gridLayout_5.addWidget(self.pushButton_48, 7, 3, 1, 1)
+        self.tabWidget.addTab(self.tab_4, "")
         self.verticalLayout.addWidget(self.tabWidget)
         self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_6.setEnabled(False)
@@ -594,7 +760,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.gridLayout_4.addLayout(self.verticalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 511, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 534, 22))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -631,15 +797,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menuHelp.menuAction())
 
 
-
-# 需要拷贝部分
+        # 需要拷贝部分
         QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         self.pushButton_23.clicked.connect(self.aasBatch)
-        self.pushButton_24.clicked.connect(self.tabWidget.close)
+        self.pushButton_24.clicked.connect(self.ecoZxd)
         self.pushButton_26.clicked.connect(self.randomAction)
         self.pushButton_27.clicked.connect(MainWindow.close)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
@@ -677,6 +842,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.actionImport.triggered.connect(self.lineEdit.clear)
         self.actionHelp.triggered.connect(self.lineEdit.clear)
         self.actionAuthor.triggered.connect(self.lineEdit.clear)
+        self.pushButton_26.clicked.connect(self.spinBox_4.clear)
+        self.pushButton_50.clicked.connect(self.tabWidget.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # 初始化，获取或生成配置文件
@@ -691,8 +858,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         last_time = now - 1
         today = time.strftime('%Y%m%d')
         desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
-        configFileUrl = '%s/config'%desktopUrl
-        configFile = os.path.exists('%s/config.txt'%configFileUrl)
+        configFileUrl = '%s/config' % desktopUrl
+        configFile = os.path.exists('%s/config.txt' % configFileUrl)
         # print(desktopUrl,configFileUrl,configFile)
         if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
             reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
@@ -727,14 +894,27 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def createConfigContent(self):
         configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL',
-                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_Batch_Input_URL','Nickel_File_Name',
-                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'ICP_Result_Output_URL','AAS_Result_Input_URL',
-                             'AAS_Result_Output_URL','ECO_Result_Input_URL','ECO_Result_Output_URL','ICP_QC_Chart_Input_URL',
-                             'ICP_QC_Chart_File_Name','Reach_Result_Input_URL','Reach_Result_File_Name','Reach_Message_Input_URL','Reach_Message_File_Name']
-        configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl, 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO', 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
-                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm','默认，可更改为自己需要的', 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'Z:\\QC Chart\\%s' % now,
-                         'QC Chart_Heavy Metal -66-01-2018-012.xlsx','Z:\\Inorganic_batch\\Microwave\\Result\\Reach','SVHC-DCU.xlsx','Z:\\Inorganic\\Program\\Reach_Result\\Raw_data','TUV_SUD_REACH_SVHC_Candidate_List.xlsx']
+                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_Batch_Input_URL',
+                             'Nickel_File_Name',
+                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'ICP_Result_Output_URL',
+                             'AAS_Result_Input_URL',
+                             'AAS_Result_Output_URL', 'ECO_Result_Input_URL', 'ECO_Result_Output_URL',
+                             'ICP_QC_Chart_Input_URL',
+                             'ICP_QC_Chart_File_Name', 'Reach_Result_Input_URL', 'Reach_Result_File_Name',
+                             'Reach_Message_Input_URL', 'Reach_Message_File_Name']
+        configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
+                         'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
+                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
+                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm', '默认，可更改为自己需要的',
+                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+                         'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
+                         'Z:\\QC Chart\\%s' % now,
+                         'QC Chart_Heavy Metal -66-01-2018-012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+                         'SVHC-DCU.xlsx', 'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
+                         'TUV_SUD_REACH_SVHC_Candidate_List.xlsx']
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
@@ -745,11 +925,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 自动填写-获取内容
         # 获取Sample ID 、实验方法、质量、体积
 
-    def getBatch(self,messages):
-        #address = os.path.abspath('.')
+    def getBatch(self, messages):
+        # address = os.path.abspath('.')
         self.lineEdit_6.clear()
         self.textBrowser_3.clear()
-        selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],'Wrod files(*.doc*)')
+        selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],
+                                                       'Wrod files(*.doc*)')
         # print(selectBatchFile)
         if selectBatchFile[0] != []:
             self.lineEdit_6.setText("正在抓取样品单号")
@@ -762,18 +943,23 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             global labNumber
             global qualityValue
             global volumeValue
+            global analyteList
+            global batchNum
             labNumber = []
             qualityValue = []
             volumeValue = []
+            analyteList = []
+            batchNum = []
             n = 0
             for n in range(len(selectBatchFile[0])):
                 if messages == 'ICP':
                     fileName = os.path.split(selectBatchFile[0][n])[1]
-                    self.textBrowser_3.append('%s：%s' % (n+1,fileName))
+                    self.textBrowser_3.append('%s：%s' % (n + 1, fileName))
                     app.processEvents()
                 doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
                 a = doc.Content.Text
                 b = a.split('\r')
+                # print(b)
                 doc.Close()
                 i = 0
                 for i in range(len(b)):
@@ -782,11 +968,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
+                        analyteList.append(b[i + 5])
+                        batchNum.append(b[4])
                         app.processEvents()
                 n += 1
             self.lineEdit_6.setText("样品单号抓取完成")
             w.Quit()
             # print(labNumber, qualityValue, volumeValue)
+            # print(batchNum)
         else:
             self.lineEdit_6.setText("请重新选择Batch文件")
 
@@ -794,7 +983,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def getResult(self):
         self.lineEdit_6.clear()
         self.textBrowser.clear()
-        selectResultFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Result_Input_URL'],'CSV files(*.csv);;Text Files (*.txt)')
+        selectResultFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Result_Input_URL'],
+                                                        'CSV files(*.csv);;Text Files (*.txt)')
         # print(selectBatchFile)
         if selectResultFile[0] != []:
             self.lineEdit_6.setText("正在抓取Result文件")
@@ -807,7 +997,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请重新选择Result文件")
 
     def icpBatch(self):
-        f1 = open('%s/ICP %s.txt' % (desktopUrl,today), "w", encoding="utf-8")
+        f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
         i = 0
         for i in range(len(labNumber)):
             f1.write(labNumber[i] + '\n')
@@ -815,23 +1005,89 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.lineEdit_6.setText("ICP Sample ID转化完成")
 
     def aasBatch(self):
-        f1 = open('%s/AAS %s.txt' % (desktopUrl,today), "w", encoding="utf-8")
+        f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
         i = 0
         for i in range(len(labNumber)):
-            f1.write(labNumber[i].replace('+','-') + '\n')
+            f1.write(labNumber[i].replace('+', '-') + '\n')
             i += 1
         self.lineEdit_6.setText("AAS Sample ID转化完成")
 
     def nickelBatch(self):
         pass
+
     def ecoZjy(self):
         pass
+
+    # ECO中迅德模板生成
     def ecoZxd(self):
-        pass
+        ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'] , today))
+        excel = win32com.gencache.EnsureDispatch('Excel.Application')
+        excel.Visible = True
+        if not ecoFile:
+            wb = excel.Workbooks.Add()
+            ws = wb.Worksheets('Sheet1')
+            ws.Cells(1, 1).Value = 'No.'
+            ws.Cells(1, 2).Value = 'Sample No.'
+            ws.Cells(1, 3).Value = 'Analyte'
+            ws.Cells(1, 4).Value = 'Weight'
+            ws.Cells(1, 5).Value = 'Volume'
+            ws.Cells(1, 6).Value = 'DF'
+            ws.Cells(1, 7).Value = 'Batch No'
+            ws.Cells(2, 1).Value = 1
+            ws.Cells(2, 2).Value = 'BLK'
+            ws.Cells(2, 6).Value = 5
+            i = 0
+            n = 3
+            for i in range(len(labNumber)):
+                ws.Cells(n, 1).Value = '%s'%(i+1)
+                ws.Cells(n, 2).Value = '%s'%labNumber[i]
+                ws.Cells(n, 3).Value = '%s'%analyteList[i]
+                ws.Cells(n, 4).Value = '%s'%qualityValue[i]
+                ws.Cells(n, 5).Value = '%s'%volumeValue[i]
+                ws.Cells(n, 6).Value = 5
+                ws.Cells(n, 7).Value = '%s'%batchNum[i]
+                n += 1
+                i += 1
+        else:
+            excel.Application.DisplayAlerts = True
+            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'],today)))
+            ws = wb.Worksheets('Sheet1')
+            i = 0
+            n = 1
+            while ws.Cells(n, 1).Value is not None:
+                n += 1
+            for i in range(len(labNumber)):
+                ws.Cells(n, 1).Value = '%s' %(int(n)-1)
+                ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                ws.Cells(n, 6).Value = 5
+                ws.Cells(n, 7).Value = '%s' % batchNum[i]
+                n += 1
+                i += 1
+        list1 = ['Analyte','Sb','As','Cd','Cr','Co','Cu','Pb','Hg','Ni','Ba','Se','Mn','Zn','Al','Ti','Zr']
+        list2 = ['RL',0.5,0.2,0.1,0.5,0.5,0.5,0.2,0.02,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+        list3 = ['DL',2,2,0.2,2,2,2,2,0.2,2,2,2,2,2,2,2,2]
+        i = 0
+        for i in range(len(list1)):
+            ws.Cells(n, 2).Value = '%s' % list1[i]
+            ws.Cells(n, 3).Value = '%s' % list2[i]
+            ws.Cells(n, 4).Value = '%s' % list3[i]
+            if i == 0:
+                ws.Cells(n, 5).Value = 'UV'
+                ws.Cells(n, 6).Value = 'Unit'
+                ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+            else:
+                ws.Cells(n, 5).Value = '10%'
+                ws.Cells(n, 6).Value = 'mg/kg'
+                ws.Cells(n, 7).Value = 'ug/L'
+            i +=1
+            n +=1
+        wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'] , today))
 
 
-
-    # 自动填写-内容
+        # 自动填写-内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
@@ -841,8 +1097,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.lineEdit.clear()
         self.lineEdit_6.setText("已清零，请重新填写内容")
 
-
         # 自动填写-停止
+
     def stopMessage(self):
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
@@ -884,51 +1140,55 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def randomAction(self):
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ICP操作界面"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "操作界面"))
         MainWindow.setStatusTip(_translate("MainWindow", "作者：Frank Chen"))
+        self.pushButton_28.setText(_translate("MainWindow", "信息："))
+        self.pushButton_29.setStatusTip(_translate("MainWindow", "选择需要获取的Batch"))
+        self.pushButton_29.setText(_translate("MainWindow", "选择Batch"))
         self.pushButton_22.setStatusTip(_translate("MainWindow", "获取Sample ID，并填入Excel模板中"))
         self.pushButton_22.setText(_translate("MainWindow", "Nickel Batch"))
+        self.pushButton_23.setStatusTip(_translate("MainWindow", "由于AAS仪器中有些Bug只能识别‘-’，所以需获取Sample ID，并将‘+’改为‘-’"))
+        self.pushButton_23.setText(_translate("MainWindow", "AAS Batch"))
+        self.textBrowser_3.setStatusTip(_translate("MainWindow", "选择Barch的文件信息"))
+        self.pushButton_24.setStatusTip(_translate("MainWindow", "获取Sample ID，按中迅德要求生成Batch单"))
+        self.pushButton_24.setText(_translate("MainWindow", "ECO ZXD"))
+        self.pushButton_25.setStatusTip(_translate("MainWindow", "获取Sample ID，生成符合质检院的单号同时生产出打印编号"))
+        self.pushButton_25.setText(_translate("MainWindow", "ECO ZJY"))
+        self.pushButton_35.setText(_translate("MainWindow", "起始编号"))
+        self.pushButton_36.setText(_translate("MainWindow", "结尾编号"))
         self.pushButton_33.setText(_translate("MainWindow", "信息："))
         self.pushButton_34.setStatusTip(_translate("MainWindow", "选择需要获取的Resutl数据"))
         self.pushButton_34.setText(_translate("MainWindow", "选择Result"))
-        self.pushButton_29.setStatusTip(_translate("MainWindow", "选择需要获取的Batch"))
-        self.pushButton_29.setText(_translate("MainWindow", "选择Batch"))
-        self.pushButton_28.setText(_translate("MainWindow", "信息："))
-        self.pushButton_21.setStatusTip(_translate("MainWindow", "获取Sample ID，并导出TXT"))
-        self.pushButton_21.setText(_translate("MainWindow", "ICP Batch"))
-        self.pushButton_39.setStatusTip(_translate("MainWindow", "停止Reach结果转化，慎重使用！！！"))
-        self.pushButton_39.setText(_translate("MainWindow", "停止"))
+        self.spinBox_3.setStatusTip(_translate("MainWindow", "Reach结果第几个开始生成"))
+        self.spinBox_2.setStatusTip(_translate("MainWindow", "Reach结果第几个结束，同时0表示该Batch最后一个"))
+        self.textBrowser.setStatusTip(_translate("MainWindow", "选择Result的文件信息"))
         self.pushButton_38.setStatusTip(_translate("MainWindow", "获取Sample ID和结果数据，并填入Reach结果Excel模板中 "))
         self.pushButton_38.setText(_translate("MainWindow", "Reach Result"))
-        self.spinBox_3.setStatusTip(_translate("MainWindow", "Reach结果第几个开始生成"))
-        self.pushButton_36.setText(_translate("MainWindow", "结尾编号"))
-        self.spinBox_2.setStatusTip(_translate("MainWindow", "Reach结果第几个结束，同时0表示该Batch最后一个"))
-        self.pushButton_35.setText(_translate("MainWindow", "起始编号"))
-        self.pushButton_31.setStatusTip(_translate("MainWindow", "由于AAS仪器结果导出不符合DCU格式，需要转化一下"))
-        self.pushButton_31.setText(_translate("MainWindow", "AAS Result"))
         self.pushButton_27.setStatusTip(_translate("MainWindow", "将CSV转化成DCU使用的TXT格式"))
         self.pushButton_27.setText(_translate("MainWindow", "ICP Result"))
-        self.pushButton_25.setStatusTip(_translate("MainWindow", "获取Sample ID，生成符合质检院的单号同时生产出打印编号"))
-        self.pushButton_25.setText(_translate("MainWindow", "ECO ZJY"))
+        self.pushButton_31.setStatusTip(_translate("MainWindow", "由于AAS仪器结果导出不符合DCU格式，需要转化一下"))
+        self.pushButton_31.setText(_translate("MainWindow", "AAS Result"))
         self.pushButton_30.setStatusTip(_translate("MainWindow", "填写ICP的QC Chart"))
         self.pushButton_30.setText(_translate("MainWindow", "MM QC Chart"))
+        self.comboBox.setStatusTip(_translate("MainWindow", "Result数据的选择路径"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "URL:ICP Result"))
+        self.comboBox.setItemText(1, _translate("MainWindow", "URL:ECO ZJY Result"))
         self.pushButton_32.setStatusTip(_translate("MainWindow", "由于质检院结果是科学计数法导致有些结果无法DCU，所以需要将结果转化"))
         self.pushButton_32.setText(_translate("MainWindow", "ECO ZJY Result"))
-        self.pushButton_24.setStatusTip(_translate("MainWindow", "获取Sample ID，按中迅德要求生成Batch单"))
-        self.pushButton_24.setText(_translate("MainWindow", "ECO ZXD"))
-        self.pushButton_23.setStatusTip(_translate("MainWindow", "由于AAS仪器中有些Bug只能识别‘-’，所以需获取Sample ID，并将‘+’改为‘-’"))
-        self.pushButton_23.setText(_translate("MainWindow", "AAS Batch"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Operate"))
+        self.pushButton_21.setStatusTip(_translate("MainWindow", "获取Sample ID，并导出TXT"))
+        self.pushButton_21.setText(_translate("MainWindow", "ICP Batch"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "ICP Operate"))
         self.lineEdit_4.setStatusTip(_translate("MainWindow", "输入Reach物质的内容"))
         self.pushButton_40.setText(_translate("MainWindow", "物质编号"))
         self.spinBox_6.setStatusTip(_translate("MainWindow", "Reach中Lims中的物质编号"))
         self.pushButton_37.setStatusTip(_translate("MainWindow", "根据内容或编号查找Reach物质的信息"))
         self.pushButton_37.setText(_translate("MainWindow", "搜索"))
-        self.lineEdit_5.setStatusTip(_translate("MainWindow", "物质中文名字显示区域"))
         self.textBrowser_2.setStatusTip(_translate("MainWindow", "物质信息显示区域"))
+        self.lineEdit_5.setStatusTip(_translate("MainWindow", "物质中文名字显示区域"))
+        self.pushButton_50.setStatusTip(_translate("MainWindow", "获取Reach物质信息"))
+        self.pushButton_50.setText(_translate("MainWindow", "获取"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Reach Message"))
         self.pushButton_19.setText(_translate("MainWindow", "内容："))
         self.lineEdit.setStatusTip(_translate("MainWindow", "填写内容显示区域"))
@@ -961,6 +1221,32 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
         self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
+        self.pushButton_39.setText(_translate("MainWindow", "信息："))
+        self.pushButton_41.setStatusTip(_translate("MainWindow", "选择需要获取的Batch"))
+        self.pushButton_41.setText(_translate("MainWindow", "选择Batch"))
+        self.pushButton_44.setStatusTip(_translate("MainWindow", "获取Sample ID以甲醛格式生成TXT格式"))
+        self.pushButton_44.setText(_translate("MainWindow", "Formal Batch"))
+        self.textBrowser_4.setStatusTip(_translate("MainWindow", "选择Barch的文件信息"))
+        self.pushButton_46.setStatusTip(_translate("MainWindow", "获取Sample ID以六价铬格式生成TXT格式"))
+        self.pushButton_46.setText(_translate("MainWindow", "Cr VI Batch"))
+        self.pushButton_45.setStatusTip(_translate("MainWindow", "获取Sample ID以pH格式生成CSV格式"))
+        self.pushButton_45.setText(_translate("MainWindow", "pH Batch"))
+        self.pushButton_42.setText(_translate("MainWindow", "信息："))
+        self.pushButton_43.setStatusTip(_translate("MainWindow", "选择Result文件"))
+        self.pushButton_43.setText(_translate("MainWindow", "选择Result"))
+        self.comboBox_2.setStatusTip(_translate("MainWindow", "Result数据的选择路径"))
+        self.comboBox_2.setItemText(0, _translate("MainWindow", "URL:Formal Result"))
+        self.comboBox_2.setItemText(1, _translate("MainWindow", "URL:pH 2014 Result"))
+        self.comboBox_2.setItemText(2, _translate("MainWindow", "URL:pH 2018 Result"))
+        self.comboBox_2.setItemText(3, _translate("MainWindow", "URL:Cr VI Result"))
+        self.textBrowser_5.setStatusTip(_translate("MainWindow", "选择Result的文件信息"))
+        self.pushButton_47.setStatusTip(_translate("MainWindow", "填写甲醛QC Chart"))
+        self.pushButton_47.setText(_translate("MainWindow", "Formal QC"))
+        self.pushButton_49.setStatusTip(_translate("MainWindow", "填写六价铬QC Chart"))
+        self.pushButton_49.setText(_translate("MainWindow", "Cr VI QC"))
+        self.pushButton_48.setStatusTip(_translate("MainWindow", "填写pH QC Chart"))
+        self.pushButton_48.setText(_translate("MainWindow", "pH QC"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "UV Operate"))
         self.menu.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionExport.setText(_translate("MainWindow", "Export"))
@@ -982,6 +1268,7 @@ if __name__ == "__main__":
     import random
     import pyautogui
     from win32com.client import Dispatch
+    import win32com.client as win32com
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
