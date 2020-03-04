@@ -1078,7 +1078,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def ecoZjy(self):
         if self.lineEdit_6.text() == '样品单号抓取完成':
-            ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
             excel = win32com.gencache.EnsureDispatch('Excel.Application')
             excel.Visible = True
             if not ecoFile:
@@ -1106,83 +1106,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
                     n += 1
                     i += 1
-            else:
-                excel.Application.DisplayAlerts = True
-                wb = excel.Workbooks.Open(
-                    os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
-                ws = wb.Worksheets('Sheet1')
-                i = 0
-                n = 1
-                while ws.Cells(n, 1).Value is not None:
-                    n += 1
-                for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
-                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                    ws.Cells(n, 5).NumberFormat = "0"
-                    ws.Cells(n, 6).Value = 5
-                    ws.Cells(n, 7).Value = '%s' % batchNum[i]
-                    n += 1
-                    i += 1
-            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
-                     'Ti', 'Zr']
-            list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
-            i = 0
-            for i in range(len(list1)):
-                ws.Cells(n, 2).Value = '%s' % list1[i]
-                ws.Cells(n, 3).Value = '%s' % list2[i]
-                ws.Cells(n, 4).Value = '%s' % list3[i]
-                if i == 0:
-                    ws.Cells(n, 5).Value = 'UV'
-                    ws.Cells(n, 6).Value = 'Unit'
-                    ws.Cells(n, 7).Value = 'Unit (Raw Data)'
-                else:
-                    ws.Cells(n, 5).Value = '10%'
-                    ws.Cells(n, 6).Value = 'mg/kg'
-                    ws.Cells(n, 7).Value = 'ug/L'
-                i += 1
-                n += 1
-            wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            self.textBrowser.append("ECO中迅德Batch转化完成")
-            self.lineEdit_6.setText("ECO中迅德Batch转化完成")
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
-
-    # ECO中迅德模板生成
-    def ecoZxd(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
-            ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            excel = win32com.gencache.EnsureDispatch('Excel.Application')
-            excel.Visible = True
-            if not ecoFile:
-                excel.Workbooks.Add()
-                ws = excel.Worksheets('Sheet1')
-                ws.Cells(1, 1).Value = 'No.'
-                ws.Cells(1, 2).Value = 'Sample No.'
-                ws.Cells(1, 3).Value = 'Analyte'
-                ws.Cells(1, 4).Value = 'Weight'
-                ws.Cells(1, 5).Value = 'Volume'
-                ws.Cells(1, 6).Value = 'DF'
-                ws.Cells(1, 7).Value = 'Batch No'
-                ws.Cells(2, 1).Value = 1
-                ws.Cells(2, 2).Value = 'BLK'
-                ws.Cells(2, 6).Value = 5
-                i = 0
-                n = 3
-                for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (i + 2)
-                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                    ws.Cells(n, 6).Value = 5
-                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
-                    n += 1
-                    i += 1
-                excel.Worksheets.Add()
+                wb.Worksheets.Add()
                 ws2 = excel.Worksheets('Sheet2')
                 ws2.Cells(1, 1).Value = 1
                 ws2.Cells(1, 2).Value = 'BLK'
@@ -1213,11 +1137,25 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws.Cells(n, 7).Value = '%s' % batchNum[i]
                     n += 1
                     i += 1
+                ws2 = excel.Worksheets('Sheet2')
+                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 2).Value = 'BLK'
+                i = 0
+                n = 1
+                while ws2.Cells(n, 1).Value is not None:
+                    n += 1
+                for i in range(len(labNumber)):
+                    ws2.Cells(n, 1).Value = '%s' % (n)
+                    ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    n += 1
+                    i += 1
+
             list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
                      'Ti', 'Zr']
             list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
             list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
             i = 0
+            n += 2
             for i in range(len(list1)):
                 ws.Cells(n, 2).Value = '%s' % list1[i]
                 ws.Cells(n, 3).Value = '%s' % list2[i]
@@ -1233,7 +1171,117 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 i += 1
                 n += 1
             wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            self.textBrowser.append("ECO中迅德Batch转化完成")
+            self.textBrowser_3.append("ECO质检院Batch转化完成")
+            self.lineEdit_6.setText("ECO质检院Batch转化完成")
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
+
+    # ECO中迅德模板生成
+    def ecoZxd(self):
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            excel = win32com.gencache.EnsureDispatch('Excel.Application')
+            excel.Visible = True
+            if not ecoFile:
+                wb=excel.Workbooks.Add()
+                ws = wb.Worksheets('Sheet1')
+                ws.Cells(1, 1).Value = 'No.'
+                ws.Cells(1, 2).Value = 'Sample No.'
+                ws.Cells(1, 3).Value = 'Analyte'
+                ws.Cells(1, 4).Value = 'Weight'
+                ws.Cells(1, 5).Value = 'Volume'
+                ws.Cells(1, 6).Value = 'DF'
+                ws.Cells(1, 7).Value = 'Batch No'
+                ws.Cells(2, 1).Value = 1
+                ws.Cells(2, 2).Value = 'BLK'
+                ws.Cells(2, 6).Value = 5
+                i = 0
+                n = 3
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    n += 1
+                    i += 1
+                wb.Worksheets.Add()
+                ws2 = excel.Worksheets('Sheet2')
+                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 2).Value = 'BLK'
+                i = 0
+                n = 2
+                for i in range(len(labNumber)):
+                    ws2.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws2.Cells(n, 1).column_width = 5  # 设置第4列 列宽。
+                    ws2.Cells(n, 1).row_height = 20  # 设置第1行 行高
+                    ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws2.Cells(n, 2).column_width = 5  # 设置第4列 列宽。
+                    ws2.Cells(n, 2).row_height = 20  # 设置第1行 行高
+                    n += 1
+                    i += 1
+            else:
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
+                ws = wb.Worksheets('Sheet1')
+                i = 0
+                n = 1
+                while ws.Cells(n, 1).Value is not None:
+                    n += 1
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 5).NumberFormat = "0"
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    n += 1
+                    i += 1
+                ws2 = excel.Worksheets('Sheet2')
+                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 2).Value = 'BLK'
+                i = 0
+                n = 1
+                while ws2.Cells(n, 1).Value is not None:
+                    n += 1
+                for i in range(len(labNumber)):
+                    ws2.Cells(n, 1).Value = '%s' % (n)
+                    ws2.Cells(n, 1).column_width = 5    # 设置第4列 列宽。
+                    ws2.Cells(n, 1).row_height = 20     # 设置第1行 行高
+                    ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws2.Cells(n, 2).column_width = 5    # 设置第4列 列宽。
+                    ws2.Cells(n, 2).row_height = 20     # 设置第1行 行高
+                    n += 1
+                    i += 1
+            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
+                     'Ti', 'Zr']
+            list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+            i = 0
+            n +=2
+            for i in range(len(list1)):
+                ws.Cells(n, 2).Value = '%s' % list1[i]
+                ws.Cells(n, 3).Value = '%s' % list2[i]
+                ws.Cells(n, 4).Value = '%s' % list3[i]
+                if i == 0:
+                    ws.Cells(n, 5).Value = 'UV'
+                    ws.Cells(n, 6).Value = 'Unit'
+                    ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+                else:
+                    ws.Cells(n, 5).Value = '10%'
+                    ws.Cells(n, 6).Value = 'mg/kg'
+                    ws.Cells(n, 7).Value = 'ug/L'
+                i += 1
+                n += 1
+            if not ecoFile:
+                wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            else:
+                wb.SaveAs()
+            self.textBrowser_3.append("ECO中迅德Batch转化完成")
             self.lineEdit_6.setText("ECO中迅德Batch转化完成")
         else:
             self.lineEdit_6.setText("请先导入Batch")
