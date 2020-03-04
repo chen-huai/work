@@ -1,0 +1,112 @@
+Concentration Analysis Report,,,
+,,,
+Report time                      ,1/6/2020 2:56:16 PM                                                                ,,
+Method                           ,D:\UV-VIS\Method\Cr (VI)- ISO17075.MCN                                             ,,
+Batch name                       ,D:\UV-VIS\Concentration\2020\20200106-CR.BCN                                       ,,
+Application                      ,Concentration 4.20(468)                                                            ,,
+Operator                         ,coco                                                                               ,,
+,,,
+Instrument Settings,,,
+Instrument                       ,Cary 100                                                                           ,,
+Instrument version no.           ,12,,
+Wavelength (nm)                  ,540,,
+Ordinate Mode                    ,Abs                                                                                ,,
+SBW (nm)                         ,1.5,,
+Ave Time (sec)                   ,0.1,,
+Beam mode                        ,Double auto select                                                                 ,,
+Beam interchange                 ,Normal                                                                             ,,
+Replicates                       ,1,,
+Standard/Sample averaging        ,OFF                                                                                ,,
+Weight and volume corrections    ,OFF                                                                                ,,
+Fit type                         ,Linear                                                                             ,,
+Min R2                           ,0.95,,
+Concentration units              ,mg/L                                                                               ,,
+,,,
+Comments:,,,
+,,,
+Calibration,,,
+Collection time                  ,1/6/2020 2:22:23 PM                                                                ,,
+,,,
+      Standard       ,Concentration , F  ,Readings 
+                     ,    mg/L      ,    ,         
+____________________________________________________,,,
+Std 1                ,0.003,    ,0.0122
+Std 2                ,0.008,    ,0.0337
+Std 3                ,0.02,    ,0.0802
+Std 4                ,0.04,    ,0.1593
+Std 5                ,0.06,    ,0.2373
+Std 6                ,0.08,    ,0.3067
+,,,
+Calibration eqn                ,Abs = 3.84434*Conc +0.00302                                                      ,,
+Correlation Coefficient        ,0.99942,,
+Calibration time               ,1/6/2020 2:56:16 PM                                                              ,,
+,,,
+Analysis,,,
+Collection time                ,1/6/2020 2:24:49 PM                                                              ,,
+ReCalculation Time             ,1/6/2020 2:56:16 PM                                                              ,,
+,,,
+       Sample        ,Concentration , F  ,Readings 
+                     ,    mg/L      ,    ,         
+____________________________________________________,,,
+BLK                  ,-0.002,    ,-0.0065
+BLK+DPC              ,0,    ,0.0022
+BLK SPIKE            ,-0.003,    ,-0.0086
+BLK SPIKE+DPC        ,0.041,    ,0.1619
+SS A0047/69          ,-0.002,    ,-0.0057
+SS A0047/69+D        ,0.019,    ,0.0758
+B 24918/1            ,0.004,    ,0.0191
+B 24918/1+D          ,0.007,    ,0.0285
+AS 0150/1            ,0.029,    ,0.1134
+AS 0150/1+D          ,0.032,    ,0.1246
+A 0047/6             ,0.004,    ,0.0173
+A 0047/6+DG          ,0.009,    ,0.0379
+A 0047/37            ,0.024,    ,0.0969
+A 0047/37+D          ,0.031,    ,0.124
+A 0047/69            ,-0.002,    ,-0.0036
+A 0047/69+D          ,0.003,    ,0.0152
+A 0047/99            ,0,    ,0.0041
+A 0047/99+D          ,0.005,    ,0.0206
+0113/2               ,0.006,    ,0.0264
+0113/2+DG            ,0.008,    ,0.0322
+0113/11              ,0.023,    ,0.0897
+0113/11+D            ,0.029,    ,0.1156
+A 0138/1             ,0.005,    ,0.0228
+A 0138/1+D           ,0.008,    ,0.035
+A 0138/2             ,0.023,    ,0.0917
+A 0138/2+D           ,0.026,    ,0.1047
+A 0138/3             ,-0.002,    ,-0.0038
+A 0138/3+D           ,0.029,    ,0.1131
+A 0202/2             ,0.044,    ,0.1741
+A 0202/2+D           ,0.05,    ,0.1939
+0202/2               ,0.054,    ,0.2099
+0202/2+D             ,0.058,    ,0.2255
+A 0205/2             ,0.002,    ,0.0102
+A 0205/2+D           ,0.01,    ,0.0416
+QC                   ,0.043,    ,0.1685
+0205/2               ,0.002,    ,0.009
+0205/2+D             ,0.004,    ,0.0185
+A 0206/2             ,0.001,    ,0.0068
+A 0206/2+DG          ,0.006,    ,0.0259
+0206/2               ,0.004,    ,0.0174
+0206/2+DG            ,0.005,    ,0.0233
+A 0207/2             ,0.012,    ,0.0487
+A 0207/2+D           ,0.016,    ,0.066
+A 0207/8             ,0.015,    ,0.0611
+A 0207/8+D           ,0.022,    ,0.0887
+0207/2               ,0.014,    ,0.0571
+0207/2+D             ,0.017,    ,0.0674
+0207/8               ,0.015,    ,0.0614
+0207/8+D             ,0.019,    ,0.0775
+A 0210/2             ,0.007,    ,0.0316
+A 0210/2+DG          ,0.01,    ,0.0418
+A 0210/14            ,0.003,    ,0.014
+A 0210/14+D          ,0.009,    ,0.037
+0210/2               ,0.005,    ,0.0229
+0210/2+DG            ,0.008,    ,0.0343
+0210/14              ,0.005,    ,0.0208
+0210/14+D            ,0.009,    ,0.038
+QC                   ,0.042,    ,0.1649
+,,,
+Results Flags Legend,,,
+U = Uncalibrated               ,O = Overrange                                                                    ,,
+N = Not used in calibration    ,R = Repeat reading                                                               ,,

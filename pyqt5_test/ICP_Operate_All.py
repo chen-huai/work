@@ -809,10 +809,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_27.clicked.connect(MainWindow.close)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
         self.pushButton_22.clicked.connect(self.menubar.close)
-        self.pushButton_25.clicked.connect(self.tabWidget.close)
+        self.pushButton_25.clicked.connect(self.ecoZjy)
         self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
+        self.pushButton_41.clicked.connect(lambda: self.getBatch('UV'))
         self.pushButton_21.clicked.connect(self.icpBatch)
-        self.pushButton_34.clicked.connect(self.getResult)
+        self.pushButton_34.clicked.connect(lambda: self.getResult('ICP'))
+        self.pushButton_43.clicked.connect(lambda: self.getResult('UV'))
         self.pushButton_31.clicked.connect(self.tabWidget.close)
         self.pushButton_32.clicked.connect(self.tabWidget.close)
         self.pushButton_38.clicked.connect(self.tabWidget.close)
@@ -883,7 +885,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         i = 0
         for line in f1:
             if line != '\n':
-                lineContent = line.split('|')
+                lineContent = line.split('||||||')
                 # print(lineContent)
                 configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
             i += 1
@@ -901,7 +903,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                              'AAS_Result_Output_URL', 'ECO_Result_Input_URL', 'ECO_Result_Output_URL',
                              'ICP_QC_Chart_Input_URL',
                              'ICP_QC_Chart_File_Name', 'Reach_Result_Input_URL', 'Reach_Result_File_Name',
-                             'Reach_Message_Input_URL', 'Reach_Message_File_Name']
+                             'Reach_Message_Input_URL', 'Reach_Message_File_Name','选择UV_Batch的输入路径和结果输出路径',
+                             'UV_Batch_Input_URL','UV_Batch_Output_URL','UV_Rusult_Output_URL',
+                             '选择UV_Result的输入路径和结果输出路径','UV_QC_Chart_Input_URL','Formal_QC_Chart_File_Name',
+                             'Cr_VI_QC_Chart_File_Name','pH2014_QC_Chart_File_Name','pH2018_QC_Chart_File_Name',
+                             'Formal_Result_Input_URL','Cr_VI_Result_Input_URL','pH2014_Result_Input_URL',
+                             'pH2018_Result_Input_URL']
         configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
                          'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
                          'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
@@ -914,11 +921,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                          'Z:\\QC Chart\\%s' % now,
                          'QC Chart_Heavy Metal -66-01-2018-012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
                          'SVHC-DCU.xlsx', 'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
-                         'TUV_SUD_REACH_SVHC_Candidate_List.xlsx']
+                         'TUV_SUD_REACH_SVHC_Candidate_List.xlsx','默认，可更改为自己需要的',
+                         'Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Result',
+                         '默认，可更改为自己需要的','Z:\\QC Chart\\%s'% now,'QC Chart_HCHO_66-01-2016-051 CARY60.xlsx',
+                         'QC Chart_Cr_66-01-2013-011 CARY100.xlsx','QC Chart_pH_66-01-2014-015.xlsx',
+                         'QC Chart_pH_66-01-2018-006.xlsx','Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal'% now,
+                         'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data'% now,'Z:\\Data\\%s\\66-01-2014-015 pH'% now,
+                         'Z:\\Data\\%s\\66-01-2018-006 pH'% now]
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
-            f1.write(configContentName[i] + '|' + configContent[i] + '\n')
+            f1.write(configContentName[i] + '||||||' + configContent[i] + '\n')
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
 
@@ -929,11 +942,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
         self.textBrowser_3.clear()
-        selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],
+        if messages == 'ICP':
+            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],
                                                        'Wrod files(*.doc*)')
+        elif messages == 'UV':
+            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['UV_Batch_Input_URL'],
+                                                       'Wrod files(*.doc*)')
+        else:
+            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
+                                                           '%s' % configContent['ICP_Batch_Input_URL'],
+                                                           'Wrod files(*.doc*)')
         # print(selectBatchFile)
         if selectBatchFile[0] != []:
             self.lineEdit_6.setText("正在抓取样品单号")
+            self.textBrowser_3.append("正在抓取样品单号")
             if messages == 'Auto':
                 self.lineEdit.clear()
                 self.lineEdit.setText('Sample ID')
@@ -972,6 +994,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         batchNum.append(b[4])
                         app.processEvents()
                 n += 1
+            self.textBrowser_3.append("样品单号抓取完成")
             self.lineEdit_6.setText("样品单号抓取完成")
             w.Quit()
             # print(labNumber, qualityValue, volumeValue)
@@ -980,112 +1003,240 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请重新选择Batch文件")
 
     # 获取结果文件
-    def getResult(self):
+    def getResult(self,messages):
         self.lineEdit_6.clear()
         self.textBrowser.clear()
-        selectResultFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Result_Input_URL'],
-                                                        'CSV files(*.csv);;Text Files (*.txt)')
-        # print(selectBatchFile)
+
+        if messages == 'ICP':
+            if (self.comboBox.currentText() == 'URL:ICP Result'):
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件', '%s' % configContent['ICP_Result_Input_URL'],
+                                                            'CSV files(*.csv)')
+            elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['ECO_Result_Input_URL'],
+                                                                'Text Files (*.txt)')
+        elif messages == 'UV':
+            if self.comboBox_2.currentText() == 'URL:Formal Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['Formal_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:pH 2014 Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['pH2014_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:pH 2018 Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['pH2018_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:Cr VI Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['Cr_VI_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+
+        # print(1,selectBatchFile[0])
         if selectResultFile[0] != []:
             self.lineEdit_6.setText("正在抓取Result文件")
+            self.textBrowser.append("正在抓取Result文件")
             n = 0
             for n in range(len(selectResultFile[0])):
                 fileName = os.path.split(selectResultFile[0][n])[1]
                 self.textBrowser.append('%s：%s' % (n + 1, fileName))
+            self.textBrowser.append("完成Result文件抓取")
             self.lineEdit_6.setText("完成Result文件抓取")
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
     def icpBatch(self):
-        f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
-        i = 0
-        for i in range(len(labNumber)):
-            f1.write(labNumber[i] + '\n')
-            i += 1
-        self.lineEdit_6.setText("ICP Sample ID转化完成")
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
+            i = 0
+            for i in range(len(labNumber)):
+                f1.write(labNumber[i] + '\n')
+                i += 1
+            self.lineEdit_6.setText("ICP Sample ID转化完成")
+
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
 
     def aasBatch(self):
-        f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
-        i = 0
-        for i in range(len(labNumber)):
-            f1.write(labNumber[i].replace('+', '-') + '\n')
-            i += 1
-        self.lineEdit_6.setText("AAS Sample ID转化完成")
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
+            i = 0
+            for i in range(len(labNumber)):
+                f1.write(labNumber[i].replace('+', '-') + '\n')
+                i += 1
+            self.lineEdit_6.setText("AAS Sample ID转化完成")
+
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
 
     def nickelBatch(self):
-        pass
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            pass
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
 
     def ecoZjy(self):
-        pass
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            excel = win32com.gencache.EnsureDispatch('Excel.Application')
+            excel.Visible = True
+            if not ecoFile:
+                wb = excel.Workbooks.Add()
+                ws = wb.Worksheets('Sheet1')
+                ws.Cells(1, 1).Value = 'No.'
+                ws.Cells(1, 2).Value = 'Sample No.'
+                ws.Cells(1, 3).Value = 'Analyte'
+                ws.Cells(1, 4).Value = 'Weight'
+                ws.Cells(1, 5).Value = 'Volume'
+                ws.Cells(1, 6).Value = 'DF'
+                ws.Cells(1, 7).Value = 'Batch No'
+                ws.Cells(2, 1).Value = 1
+                ws.Cells(2, 2).Value = 'BLK'
+                ws.Cells(2, 6).Value = 5
+                i = 0
+                n = 3
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    n += 1
+                    i += 1
+            else:
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(
+                    os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
+                ws = wb.Worksheets('Sheet1')
+                i = 0
+                n = 1
+                while ws.Cells(n, 1).Value is not None:
+                    n += 1
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 5).NumberFormat = "0"
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i]
+                    n += 1
+                    i += 1
+            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
+                     'Ti', 'Zr']
+            list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+            i = 0
+            for i in range(len(list1)):
+                ws.Cells(n, 2).Value = '%s' % list1[i]
+                ws.Cells(n, 3).Value = '%s' % list2[i]
+                ws.Cells(n, 4).Value = '%s' % list3[i]
+                if i == 0:
+                    ws.Cells(n, 5).Value = 'UV'
+                    ws.Cells(n, 6).Value = 'Unit'
+                    ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+                else:
+                    ws.Cells(n, 5).Value = '10%'
+                    ws.Cells(n, 6).Value = 'mg/kg'
+                    ws.Cells(n, 7).Value = 'ug/L'
+                i += 1
+                n += 1
+            wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            self.textBrowser.append("ECO中迅德Batch转化完成")
+            self.lineEdit_6.setText("ECO中迅德Batch转化完成")
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
 
     # ECO中迅德模板生成
     def ecoZxd(self):
-        ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'] , today))
-        excel = win32com.gencache.EnsureDispatch('Excel.Application')
-        excel.Visible = True
-        if not ecoFile:
-            wb = excel.Workbooks.Add()
-            ws = wb.Worksheets('Sheet1')
-            ws.Cells(1, 1).Value = 'No.'
-            ws.Cells(1, 2).Value = 'Sample No.'
-            ws.Cells(1, 3).Value = 'Analyte'
-            ws.Cells(1, 4).Value = 'Weight'
-            ws.Cells(1, 5).Value = 'Volume'
-            ws.Cells(1, 6).Value = 'DF'
-            ws.Cells(1, 7).Value = 'Batch No'
-            ws.Cells(2, 1).Value = 1
-            ws.Cells(2, 2).Value = 'BLK'
-            ws.Cells(2, 6).Value = 5
-            i = 0
-            n = 3
-            for i in range(len(labNumber)):
-                ws.Cells(n, 1).Value = '%s'%(i+1)
-                ws.Cells(n, 2).Value = '%s'%labNumber[i]
-                ws.Cells(n, 3).Value = '%s'%analyteList[i]
-                ws.Cells(n, 4).Value = '%s'%qualityValue[i]
-                ws.Cells(n, 5).Value = '%s'%volumeValue[i]
-                ws.Cells(n, 6).Value = 5
-                ws.Cells(n, 7).Value = '%s'%batchNum[i]
-                n += 1
-                i += 1
-        else:
-            excel.Application.DisplayAlerts = True
-            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'],today)))
-            ws = wb.Worksheets('Sheet1')
-            i = 0
-            n = 1
-            while ws.Cells(n, 1).Value is not None:
-                n += 1
-            for i in range(len(labNumber)):
-                ws.Cells(n, 1).Value = '%s' %(int(n)-1)
-                ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                ws.Cells(n, 6).Value = 5
-                ws.Cells(n, 7).Value = '%s' % batchNum[i]
-                n += 1
-                i += 1
-        list1 = ['Analyte','Sb','As','Cd','Cr','Co','Cu','Pb','Hg','Ni','Ba','Se','Mn','Zn','Al','Ti','Zr']
-        list2 = ['RL',0.5,0.2,0.1,0.5,0.5,0.5,0.2,0.02,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
-        list3 = ['DL',2,2,0.2,2,2,2,2,0.2,2,2,2,2,2,2,2,2]
-        i = 0
-        for i in range(len(list1)):
-            ws.Cells(n, 2).Value = '%s' % list1[i]
-            ws.Cells(n, 3).Value = '%s' % list2[i]
-            ws.Cells(n, 4).Value = '%s' % list3[i]
-            if i == 0:
-                ws.Cells(n, 5).Value = 'UV'
-                ws.Cells(n, 6).Value = 'Unit'
-                ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+        if self.lineEdit_6.text() == '样品单号抓取完成':
+            ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            excel = win32com.gencache.EnsureDispatch('Excel.Application')
+            excel.Visible = True
+            if not ecoFile:
+                excel.Workbooks.Add()
+                ws = excel.Worksheets('Sheet1')
+                ws.Cells(1, 1).Value = 'No.'
+                ws.Cells(1, 2).Value = 'Sample No.'
+                ws.Cells(1, 3).Value = 'Analyte'
+                ws.Cells(1, 4).Value = 'Weight'
+                ws.Cells(1, 5).Value = 'Volume'
+                ws.Cells(1, 6).Value = 'DF'
+                ws.Cells(1, 7).Value = 'Batch No'
+                ws.Cells(2, 1).Value = 1
+                ws.Cells(2, 2).Value = 'BLK'
+                ws.Cells(2, 6).Value = 5
+                i = 0
+                n = 3
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    n += 1
+                    i += 1
+                excel.Worksheets.Add()
+                ws2 = excel.Worksheets('Sheet2')
+                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 2).Value = 'BLK'
+                i = 0
+                n = 2
+                for i in range(len(labNumber)):
+                    ws2.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    n += 1
+                    i += 1
             else:
-                ws.Cells(n, 5).Value = '10%'
-                ws.Cells(n, 6).Value = 'mg/kg'
-                ws.Cells(n, 7).Value = 'ug/L'
-            i +=1
-            n +=1
-        wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'] , today))
-
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(
+                    os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
+                ws = wb.Worksheets('Sheet1')
+                i = 0
+                n = 1
+                while ws.Cells(n, 1).Value is not None:
+                    n += 1
+                for i in range(len(labNumber)):
+                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
+                    ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                    ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                    ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                    ws.Cells(n, 5).NumberFormat = "0"
+                    ws.Cells(n, 6).Value = 5
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i]
+                    n += 1
+                    i += 1
+            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
+                     'Ti', 'Zr']
+            list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+            list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+            i = 0
+            for i in range(len(list1)):
+                ws.Cells(n, 2).Value = '%s' % list1[i]
+                ws.Cells(n, 3).Value = '%s' % list2[i]
+                ws.Cells(n, 4).Value = '%s' % list3[i]
+                if i == 0:
+                    ws.Cells(n, 5).Value = 'UV'
+                    ws.Cells(n, 6).Value = 'Unit'
+                    ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+                else:
+                    ws.Cells(n, 5).Value = '10%'
+                    ws.Cells(n, 6).Value = 'mg/kg'
+                    ws.Cells(n, 7).Value = 'ug/L'
+                i += 1
+                n += 1
+            wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            self.textBrowser.append("ECO中迅德Batch转化完成")
+            self.lineEdit_6.setText("ECO中迅德Batch转化完成")
+        else:
+            self.lineEdit_6.setText("请先导入Batch")
 
         # 自动填写-内容
     def getData(self, pbt):
