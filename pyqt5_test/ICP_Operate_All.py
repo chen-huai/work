@@ -1078,12 +1078,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def ecoZjy(self):
         if self.lineEdit_6.text() == '样品单号抓取完成':
-            ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            self.textBrowser_3.append("正在ECO质检院Batch转化")
+            self.lineEdit_6.setText("正在ECO质检院Batch转化")
+            app.processEvents()
+            ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
             excel = win32com.gencache.EnsureDispatch('Excel.Application')
-            excel.Visible = True
+            excel.Visible = 0
             if not ecoFile:
                 wb = excel.Workbooks.Add()
                 ws = wb.Worksheets('Sheet1')
+                ws.Columns(1).ColumnWidth = 3  # 列宽。
+                ws.Columns(2).ColumnWidth = 12.5  # 列宽。
+                ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+                ws.Columns(4).ColumnWidth = 6.5  # 列宽。
+                ws.Columns(5).ColumnWidth = 6.6  # 列宽。
+                ws.Columns(6).ColumnWidth = 6  # 列宽。
+                ws.Columns(7).ColumnWidth = 20  # 列宽。
                 ws.Cells(1, 1).Value = 'No.'
                 ws.Cells(1, 2).Value = 'Sample No.'
                 ws.Cells(1, 3).Value = 'Analyte'
@@ -1094,68 +1104,96 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 ws.Cells(2, 1).Value = 1
                 ws.Cells(2, 2).Value = 'BLK'
                 ws.Cells(2, 6).Value = 5
+                m = 0
+                for m in range(2):
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
+                        ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
+                        x += 1
+                    m += 1
                 i = 0
                 n = 3
                 for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws.Cells(n, 1).Value = '%s' % (n - 1)
                     ws.Cells(n, 2).Value = '%s' % labNumber[i]
                     ws.Cells(n, 3).Value = '%s' % analyteList[i]
                     ws.Cells(n, 4).Value = '%s' % qualityValue[i]
                     ws.Cells(n, 5).Value = '%s' % volumeValue[i]
                     ws.Cells(n, 6).Value = 5
                     ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
                     n += 1
                     i += 1
                 wb.Worksheets.Add()
                 ws2 = excel.Worksheets('Sheet2')
-                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 1).Value = '1.'
+                ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
                 ws2.Cells(1, 2).Value = 'BLK'
+                ws2.Cells(1, 2).HorizontalAlignment = -4108
+                ws2.Rows(1).RowHeight = 33.8  # 行高
+                ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
+                ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
                 i = 0
                 n = 2
                 for i in range(len(labNumber)):
-                    ws2.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws2.Rows(n).RowHeight = 33.8  # 行高
+                    ws2.Cells(n, 1).Value = '%s.' % n
+                    ws2.Cells(n, 1).HorizontalAlignment = -4108
                     ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws2.Cells(n, 2).HorizontalAlignment = -4108
                     n += 1
                     i += 1
             else:
-                excel.Application.DisplayAlerts = True
+                # excel.Application.DisplayAlerts = True
                 wb = excel.Workbooks.Open(
-                    os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
+                    os.path.join(os.getcwd(), r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
                 ws = wb.Worksheets('Sheet1')
                 i = 0
                 n = 1
                 while ws.Cells(n, 1).Value is not None:
                     n += 1
                 for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
+                    ws.Cells(n, 1).Value = '%s' % (n - 1)
                     ws.Cells(n, 2).Value = '%s' % labNumber[i]
                     ws.Cells(n, 3).Value = '%s' % analyteList[i]
                     ws.Cells(n, 4).Value = '%s' % qualityValue[i]
                     ws.Cells(n, 5).Value = '%s' % volumeValue[i]
                     ws.Cells(n, 5).NumberFormat = "0"
                     ws.Cells(n, 6).Value = 5
-                    ws.Cells(n, 7).Value = '%s' % batchNum[i]
+                    ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
                     n += 1
                     i += 1
                 ws2 = excel.Worksheets('Sheet2')
-                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 1).Value = '1.'
                 ws2.Cells(1, 2).Value = 'BLK'
                 i = 0
                 n = 1
                 while ws2.Cells(n, 1).Value is not None:
                     n += 1
                 for i in range(len(labNumber)):
-                    ws2.Cells(n, 1).Value = '%s' % (n)
+                    ws2.Rows(n).RowHeight = 33.8  # 行高
+                    ws2.Cells(n, 1).Value = '%s.' % n
+                    ws2.Cells(n, 1).HorizontalAlignment = -4108
                     ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                    ws2.Cells(n, 2).HorizontalAlignment = -4108
                     n += 1
                     i += 1
-
             list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
                      'Ti', 'Zr']
             list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
             list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
             i = 0
-            n += 2
+            n += 1
             for i in range(len(list1)):
                 ws.Cells(n, 2).Value = '%s' % list1[i]
                 ws.Cells(n, 3).Value = '%s' % list2[i]
@@ -1168,9 +1206,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws.Cells(n, 5).Value = '10%'
                     ws.Cells(n, 6).Value = 'mg/kg'
                     ws.Cells(n, 7).Value = 'ug/L'
+                x = 1
+                for m in range(6):
+                    ws.Cells(n, x + 1).BorderAround(1, 2)
+                    ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                    x += 1
                 i += 1
                 n += 1
-            wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            # if not ecoFile:
+            wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            # else:
+            #     wb.SaveAs()
             self.textBrowser_3.append("ECO质检院Batch转化完成")
             self.lineEdit_6.setText("ECO质检院Batch转化完成")
         else:
@@ -1179,12 +1225,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     # ECO中迅德模板生成
     def ecoZxd(self):
         if self.lineEdit_6.text() == '样品单号抓取完成':
+            self.textBrowser_3.append("正在ECO中迅德Batch转化")
+            self.lineEdit_6.setText("正在ECO中迅德Batch转化")
+            app.processEvents()
             ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
             excel = win32com.gencache.EnsureDispatch('Excel.Application')
-            excel.Visible = True
+            excel.Visible = 0
             if not ecoFile:
                 wb=excel.Workbooks.Add()
                 ws = wb.Worksheets('Sheet1')
+                ws.Columns(1).ColumnWidth = 3  # 列宽。
+                ws.Columns(2).ColumnWidth = 12.5  # 列宽。
+                ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+                ws.Columns(4).ColumnWidth = 6.5  # 列宽。
+                ws.Columns(5).ColumnWidth = 6.6  # 列宽。
+                ws.Columns(6).ColumnWidth = 6  # 列宽。
+                ws.Columns(7).ColumnWidth = 20  # 列宽。
                 ws.Cells(1, 1).Value = 'No.'
                 ws.Cells(1, 2).Value = 'Sample No.'
                 ws.Cells(1, 3).Value = 'Analyte'
@@ -1195,35 +1251,52 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 ws.Cells(2, 1).Value = 1
                 ws.Cells(2, 2).Value = 'BLK'
                 ws.Cells(2, 6).Value = 5
+                m = 0
+                for m in range(2):
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(m + 1, x + 1).BorderAround(1,2)  # 表格边框
+                        ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
+                        x += 1
+                    m += 1
                 i = 0
                 n = 3
                 for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (i + 2)
+                    ws.Cells(n, 1).Value = '%s' % (n - 1)
                     ws.Cells(n, 2).Value = '%s' % labNumber[i]
                     ws.Cells(n, 3).Value = '%s' % analyteList[i]
                     ws.Cells(n, 4).Value = '%s' % qualityValue[i]
                     ws.Cells(n, 5).Value = '%s' % volumeValue[i]
                     ws.Cells(n, 6).Value = 5
                     ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
                     n += 1
                     i += 1
                 wb.Worksheets.Add()
                 ws2 = excel.Worksheets('Sheet2')
-                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 1).Value = '1.'
+                ws2.Cells(1, 1).HorizontalAlignment = -4108 #居中
                 ws2.Cells(1, 2).Value = 'BLK'
+                ws2.Cells(1, 2).HorizontalAlignment = -4108
+                ws2.Rows(1).RowHeight = 33.8  # 行高
+                ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
+                ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
                 i = 0
                 n = 2
                 for i in range(len(labNumber)):
-                    ws2.Cells(n, 1).Value = '%s' % (i + 2)
-                    ws2.Cells(n, 1).column_width = 5  # 设置第4列 列宽。
-                    ws2.Cells(n, 1).row_height = 20  # 设置第1行 行高
+                    ws2.Rows(n).RowHeight = 33.8  # 行高
+                    ws2.Cells(n, 1).Value = '%s.' % n
+                    ws2.Cells(n, 1).HorizontalAlignment = -4108
                     ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                    ws2.Cells(n, 2).column_width = 5  # 设置第4列 列宽。
-                    ws2.Cells(n, 2).row_height = 20  # 设置第1行 行高
+                    ws2.Cells(n, 2).HorizontalAlignment = -4108
                     n += 1
                     i += 1
             else:
-                excel.Application.DisplayAlerts = True
+                # excel.Application.DisplayAlerts = True
                 wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
                 ws = wb.Worksheets('Sheet1')
                 i = 0
@@ -1231,7 +1304,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 while ws.Cells(n, 1).Value is not None:
                     n += 1
                 for i in range(len(labNumber)):
-                    ws.Cells(n, 1).Value = '%s' % (int(n) - 1)
+                    ws.Cells(n, 1).Value = '%s' % (n - 1)
                     ws.Cells(n, 2).Value = '%s' % labNumber[i]
                     ws.Cells(n, 3).Value = '%s' % analyteList[i]
                     ws.Cells(n, 4).Value = '%s' % qualityValue[i]
@@ -1239,22 +1312,26 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws.Cells(n, 5).NumberFormat = "0"
                     ws.Cells(n, 6).Value = 5
                     ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                    x = 0
+                    for x in range(7):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
                     n += 1
                     i += 1
                 ws2 = excel.Worksheets('Sheet2')
-                ws2.Cells(1, 1).Value = 1
+                ws2.Cells(1, 1).Value = '1.'
                 ws2.Cells(1, 2).Value = 'BLK'
                 i = 0
                 n = 1
                 while ws2.Cells(n, 1).Value is not None:
                     n += 1
                 for i in range(len(labNumber)):
-                    ws2.Cells(n, 1).Value = '%s' % (n)
-                    ws2.Cells(n, 1).column_width = 5    # 设置第4列 列宽。
-                    ws2.Cells(n, 1).row_height = 20     # 设置第1行 行高
+                    ws2.Rows(n).RowHeight = 33.8  # 行高
+                    ws2.Cells(n, 1).Value = '%s.' % n
+                    ws2.Cells(n, 1).HorizontalAlignment = -4108
                     ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                    ws2.Cells(n, 2).column_width = 5    # 设置第4列 列宽。
-                    ws2.Cells(n, 2).row_height = 20     # 设置第1行 行高
+                    ws2.Cells(n, 2).HorizontalAlignment = -4108
                     n += 1
                     i += 1
             list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
@@ -1262,7 +1339,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
             list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
             i = 0
-            n +=2
+            n +=1
             for i in range(len(list1)):
                 ws.Cells(n, 2).Value = '%s' % list1[i]
                 ws.Cells(n, 3).Value = '%s' % list2[i]
@@ -1275,12 +1352,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws.Cells(n, 5).Value = '10%'
                     ws.Cells(n, 6).Value = 'mg/kg'
                     ws.Cells(n, 7).Value = 'ug/L'
+                x = 1
+                for m in range(6):
+                    ws.Cells(n, x + 1).BorderAround(1, 2)
+                    ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                    x += 1
                 i += 1
                 n += 1
-            if not ecoFile:
-                wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            else:
-                wb.SaveAs()
+            # if not ecoFile:
+            wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
+            # else:
+            #     wb.SaveAs()
             self.textBrowser_3.append("ECO中迅德Batch转化完成")
             self.lineEdit_6.setText("ECO中迅德Batch转化完成")
         else:
