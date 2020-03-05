@@ -1047,19 +1047,29 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请重新选择Result文件")
 
     def icpBatch(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成"):
             f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
+            self.textBrowser_3.append("正在微波Batch转化")
+            app.processEvents()
             i = 0
             for i in range(len(labNumber)):
-                f1.write(labNumber[i] + '\n')
-                i += 1
+                print(analyteList[i],qualityValue[i])
+                if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
+                    f1.write('%sA'%labNumber[i] + '\n')
+                    f1.write('%sB'%labNumber[i] + '\n')
+                    f1.write('%sC'%labNumber[i] + '\n')
+                    i += 1
+                else:
+                    f1.write(labNumber[i] + '\n')
+                    i += 1
+            self.textBrowser_3.append("完成微波Batch转化")
             self.lineEdit_6.setText("ICP Sample ID转化完成")
 
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
     def aasBatch(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成"):
             f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
             i = 0
             for i in range(len(labNumber)):
@@ -1071,13 +1081,51 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请先导入Batch")
 
     def nickelBatch(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
-            pass
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("完成镍释放Batch转化") or ("ICP Sample ID转化完成"):
+            self.textBrowser_3.append("正在镍释放Batch转化")
+            self.lineEdit_6.setText("正在镍释放Batch转化")
+            app.processEvents()
+            excel = win32com.gencache.EnsureDispatch('Excel.Application')
+            excel.Visible = 0
+            excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+            wb = excel.Workbooks.Open(
+                os.path.join(os.getcwd(), r'%s/%s' % (configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
+            ws = wb.Worksheets('Data')
+            n = 2
+            num = []
+            while ws.Cells(n, 1).Value is not None:
+                num.append(ws.Cells(n, 1).Value)
+                n += 1
+            i = 0
+            m = 1
+            n = 2
+            for each in labNumber:
+                if i < len(labNumber):
+                    if (i+1)%num[-1] != 0:
+                        ws.Cells(n, 2).Value = each
+                        n += 1
+                        i += 1
+                    else:
+                        ws.Cells(n, 2).Value = each
+                        wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
+                        n = 2
+                        i += 1
+                        m += 1
+                        wb = excel.Workbooks.Open(
+                            os.path.join(os.getcwd(), r'%s/%s' % (
+                            configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
+                        ws = wb.Worksheets('Data')
+            if (i+1)%num[-1] != 1:
+                wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
+            excel.Quit()
+            self.textBrowser_3.append("完成镍释放Batch转化")
+            self.lineEdit_6.setText("完成镍释放Batch转化")
+
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
     def ecoZjy(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成'):
             self.textBrowser_3.append("正在ECO质检院Batch转化")
             self.lineEdit_6.setText("正在ECO质检院Batch转化")
             app.processEvents()
@@ -1214,7 +1262,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     # ECO中迅德模板生成
     def ecoZxd(self):
-        if self.lineEdit_6.text() == '样品单号抓取完成':
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成'):
             self.textBrowser_3.append("正在ECO中迅德Batch转化")
             self.lineEdit_6.setText("正在ECO中迅德Batch转化")
             app.processEvents()
