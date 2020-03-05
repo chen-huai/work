@@ -808,7 +808,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_26.clicked.connect(self.randomAction)
         self.pushButton_27.clicked.connect(MainWindow.close)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
-        self.pushButton_22.clicked.connect(self.menubar.close)
+        self.pushButton_22.clicked.connect(self.nickelBatch)
         self.pushButton_25.clicked.connect(self.ecoZjy)
         self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
         self.pushButton_41.clicked.connect(lambda: self.getBatch('UV'))
@@ -1149,7 +1149,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     n += 1
                     i += 1
             else:
-                # excel.Application.DisplayAlerts = True
+                excel.Application.DisplayAlerts = False#False为另存为自动保存，True为弹出提示保存
                 wb = excel.Workbooks.Open(
                     os.path.join(os.getcwd(), r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
                 ws = wb.Worksheets('Sheet1')
@@ -1188,37 +1188,27 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws2.Cells(n, 2).HorizontalAlignment = -4108
                     n += 1
                     i += 1
-            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
-                     'Ti', 'Zr']
-            list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+            list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
+            list2 = ['MDL(ug/L)', 2,0.8,0.4,2,2,2,0.8,0.08,2,2,2]
+            list3 = ['Limit(mg/kg)','<5','<0.2','<0.1','<1','<1','<25','0.8','<0.02','<1','<1000','<500']
             i = 0
             n += 1
             for i in range(len(list1)):
                 ws.Cells(n, 2).Value = '%s' % list1[i]
                 ws.Cells(n, 3).Value = '%s' % list2[i]
                 ws.Cells(n, 4).Value = '%s' % list3[i]
-                if i == 0:
-                    ws.Cells(n, 5).Value = 'UV'
-                    ws.Cells(n, 6).Value = 'Unit'
-                    ws.Cells(n, 7).Value = 'Unit (Raw Data)'
-                else:
-                    ws.Cells(n, 5).Value = '10%'
-                    ws.Cells(n, 6).Value = 'mg/kg'
-                    ws.Cells(n, 7).Value = 'ug/L'
                 x = 1
-                for m in range(6):
+                for m in range(3):
                     ws.Cells(n, x + 1).BorderAround(1, 2)
                     ws.Cells(n, x + 1).HorizontalAlignment = -4108
                     x += 1
                 i += 1
                 n += 1
-            # if not ecoFile:
             wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            # else:
-            #     wb.SaveAs()
+            excel.Quit()
             self.textBrowser_3.append("ECO质检院Batch转化完成")
             self.lineEdit_6.setText("ECO质检院Batch转化完成")
+            app.processEvents()
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
@@ -1296,7 +1286,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     n += 1
                     i += 1
             else:
-                # excel.Application.DisplayAlerts = True
+                excel.Application.DisplayAlerts = False
                 wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today)))
                 ws = wb.Worksheets('Sheet1')
                 i = 0
@@ -1359,12 +1349,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     x += 1
                 i += 1
                 n += 1
-            # if not ecoFile:
             wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Output_URL'], today))
-            # else:
-            #     wb.SaveAs()
+            excel.Quit()
             self.textBrowser_3.append("ECO中迅德Batch转化完成")
             self.lineEdit_6.setText("ECO中迅德Batch转化完成")
+            app.processEvents()
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
