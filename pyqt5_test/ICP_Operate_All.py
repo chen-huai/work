@@ -806,7 +806,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_23.clicked.connect(self.aasBatch)
         self.pushButton_24.clicked.connect(self.ecoZxd)
         self.pushButton_26.clicked.connect(self.randomAction)
-        self.pushButton_27.clicked.connect(MainWindow.close)
+        self.pushButton_27.clicked.connect(self.icpResultToCsv)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
         self.pushButton_22.clicked.connect(self.nickelBatch)
         self.pushButton_25.clicked.connect(self.ecoZjy)
@@ -1002,52 +1002,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Batch文件")
 
-    # 获取结果文件
-    def getResult(self,messages):
-        self.lineEdit_6.clear()
-        self.textBrowser.clear()
-
-        if messages == 'ICP':
-            if (self.comboBox.currentText() == 'URL:ICP Result'):
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件', '%s' % configContent['ICP_Result_Input_URL'],
-                                                            'CSV files(*.csv)')
-            elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
-                                                                '%s' % configContent['ECO_Result_Input_URL'],
-                                                                'Text Files (*.txt)')
-        elif messages == 'UV':
-            if self.comboBox_2.currentText() == 'URL:Formal Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
-                                                                '%s' % configContent['Formal_Result_Input_URL'],
-                                                                'CSV files(*.csv)')
-            elif self.comboBox_2.currentText() == 'URL:pH 2014 Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
-                                                                '%s' % configContent['pH2014_Result_Input_URL'],
-                                                                'CSV files(*.csv)')
-            elif self.comboBox_2.currentText() == 'URL:pH 2018 Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
-                                                                '%s' % configContent['pH2018_Result_Input_URL'],
-                                                                'CSV files(*.csv)')
-            elif self.comboBox_2.currentText() == 'URL:Cr VI Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
-                                                                '%s' % configContent['Cr_VI_Result_Input_URL'],
-                                                                'CSV files(*.csv)')
-
-        # print(1,selectBatchFile[0])
-        if selectResultFile[0] != []:
-            self.lineEdit_6.setText("正在抓取Result文件")
-            self.textBrowser.append("正在抓取Result文件")
-            n = 0
-            for n in range(len(selectResultFile[0])):
-                fileName = os.path.split(selectResultFile[0][n])[1]
-                self.textBrowser.append('%s：%s' % (n + 1, fileName))
-            self.textBrowser.append("完成Result文件抓取")
-            self.lineEdit_6.setText("完成Result文件抓取")
-        else:
-            self.lineEdit_6.setText("请重新选择Result文件")
-
+    # ICP仪器使用
     def icpBatch(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成"):
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成") or ("请确认Batch方法是镍释放"):
             f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
             self.textBrowser_3.append("正在微波Batch转化")
             app.processEvents()
@@ -1068,6 +1025,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
+    # AAS仪器使用
     def aasBatch(self):
         if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成"):
             f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
@@ -1076,56 +1034,60 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 f1.write(labNumber[i].replace('+', '-') + '\n')
                 i += 1
             self.lineEdit_6.setText("AAS Sample ID转化完成")
-
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
+    # 镍释放
     def nickelBatch(self):
         if self.lineEdit_6.text() == ('样品单号抓取完成') or ("完成镍释放Batch转化") or ("ICP Sample ID转化完成"):
-            self.textBrowser_3.append("正在镍释放Batch转化")
-            self.lineEdit_6.setText("正在镍释放Batch转化")
-            app.processEvents()
-            excel = win32com.gencache.EnsureDispatch('Excel.Application')
-            excel.Visible = 0
-            excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
-            wb = excel.Workbooks.Open(
-                os.path.join(os.getcwd(), r'%s/%s' % (configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
-            ws = wb.Worksheets('Data')
-            n = 2
-            num = []
-            while ws.Cells(n, 1).Value is not None:
-                num.append(ws.Cells(n, 1).Value)
-                n += 1
-            i = 0
-            m = 1
-            n = 2
-            for each in labNumber:
-                if i < len(labNumber):
-                    if (i+1)%num[-1] != 0:
-                        ws.Cells(n, 2).Value = each
-                        n += 1
-                        i += 1
-                    else:
-                        ws.Cells(n, 2).Value = each
-                        wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
-                        n = 2
-                        i += 1
-                        m += 1
-                        wb = excel.Workbooks.Open(
-                            os.path.join(os.getcwd(), r'%s/%s' % (
-                            configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
-                        ws = wb.Worksheets('Data')
-            if (i+1)%num[-1] != 1:
-                wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
-            excel.Quit()
-            self.textBrowser_3.append("完成镍释放Batch转化")
-            self.lineEdit_6.setText("完成镍释放Batch转化")
-
+            if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
+                self.textBrowser_3.append("正在镍释放Batch转化")
+                self.lineEdit_6.setText("正在镍释放Batch转化")
+                app.processEvents()
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = 0
+                excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+                wb = excel.Workbooks.Open(
+                    os.path.join(os.getcwd(), r'%s/%s' % (configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
+                ws = wb.Worksheets('Data')
+                n = 2
+                num = []
+                while ws.Cells(n, 1).Value is not None:
+                    num.append(ws.Cells(n, 1).Value)
+                    n += 1
+                i = 0
+                m = 1
+                n = 2
+                for each in labNumber:
+                    if i < len(labNumber):
+                        if (i+1)%num[-1] != 0:
+                            ws.Cells(n, 2).Value = each
+                            n += 1
+                            i += 1
+                        else:
+                            ws.Cells(n, 2).Value = each
+                            wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
+                            n = 2
+                            i += 1
+                            m += 1
+                            wb = excel.Workbooks.Open(
+                                os.path.join(os.getcwd(), r'%s/%s' % (
+                                configContent['Nickel_Batch_Input_URL'], configContent['Nickel_File_Name'])))
+                            ws = wb.Worksheets('Data')
+                if (i+1)%num[-1] != 1:
+                    wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Output_URL'],today,m))
+                excel.Quit()
+                self.textBrowser_3.append("完成镍释放Batch转化")
+                self.lineEdit_6.setText("完成镍释放Batch转化")
+            else:
+                self.textBrowser_3.append("请确认Batch方法是镍释放")
+                self.lineEdit_6.setText("请确认Batch方法是镍释放")
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
+    # ECO质检院模板生成
     def ecoZjy(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成'):
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成') or ("请确认Batch方法是镍释放"):
             self.textBrowser_3.append("正在ECO质检院Batch转化")
             self.lineEdit_6.setText("正在ECO质检院Batch转化")
             app.processEvents()
@@ -1262,7 +1224,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     # ECO中迅德模板生成
     def ecoZxd(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成'):
+        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成') or ("请确认Batch方法是镍释放"):
             self.textBrowser_3.append("正在ECO中迅德Batch转化")
             self.lineEdit_6.setText("正在ECO中迅德Batch转化")
             app.processEvents()
@@ -1405,6 +1367,68 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请先导入Batch")
 
+    # 获取结果文件
+    def getResult(self, messages):
+        global selectResultFile
+        self.lineEdit_6.clear()
+        self.textBrowser.clear()
+        if messages == 'ICP':
+            if (self.comboBox.currentText() == 'URL:ICP Result'):
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['ICP_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['ECO_Result_Input_URL'],
+                                                                'Text Files (*.txt)')
+        elif messages == 'UV':
+            if self.comboBox_2.currentText() == 'URL:Formal Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['Formal_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:pH 2014 Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['pH2014_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:pH 2018 Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['pH2018_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+            elif self.comboBox_2.currentText() == 'URL:Cr VI Result':
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                                                                '%s' % configContent['Cr_VI_Result_Input_URL'],
+                                                                'CSV files(*.csv)')
+        # print(1,selectBatchFile[0])
+        if selectResultFile[0] != []:
+            self.lineEdit_6.setText("正在抓取Result文件")
+            self.textBrowser.append("正在抓取Result文件")
+            app.processEvents()
+            n = 0
+            for n in range(len(selectResultFile[0])):
+                fileName = os.path.split(selectResultFile[0][n])[1]
+                self.textBrowser.append('%s：%s' % (n + 1, fileName))
+            self.textBrowser.append("完成Result文件抓取")
+            self.lineEdit_6.setText("完成Result文件抓取")
+        else:
+            self.lineEdit_6.setText("请重新选择Result文件")
+
+    def icpResultToCsv(self):
+        if self.lineEdit_6.text() ==("完成Result文件抓取") or ("完成ICP文件转换为TXT") or ('样品单号抓取完成'):
+            for fileUrl in selectResultFile[0]:
+                self.textBrowser.append("正在进行ICP文件转换为TXT")
+                self.lineEdit_6.setText("正在进行ICP文件转换为TXT")
+                fileName = os.path.split(fileUrl)[1]
+                app.processEvents()
+                csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
+                csvFile = csvFile.drop(['C'], axis=1)
+                csvLine = csvFile.iloc[0]  # 获取行索引为1数据
+                csvLine.replace(['标签','类型','元素标签','浓度','单位'],['Solution Label','Type','Element','Soln Conc','Units'],inplace=True)
+                csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Output_URL'],fileName),sep='\t',index=None,header=None)
+                self.textBrowser.append("完成ICP文件转换为TXT")
+                self.lineEdit_6.setText("完成ICP文件转换为TXT")
+        else:
+            self.lineEdit_6.setText("请重新选择Result文件")
+
         # 自动填写-内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
@@ -1458,6 +1482,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def randomAction(self):
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "操作界面"))
@@ -1585,8 +1610,9 @@ if __name__ == "__main__":
     import time
     import random
     import pyautogui
-    from win32com.client import Dispatch
+    import pandas as pd
     import win32com.client as win32com
+    from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
