@@ -817,7 +817,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_43.clicked.connect(lambda: self.getResult('UV'))
         self.pushButton_31.clicked.connect(self.tabWidget.close)
         self.pushButton_32.clicked.connect(self.tabWidget.close)
-        self.pushButton_38.clicked.connect(self.tabWidget.close)
+        self.pushButton_38.clicked.connect(self.reachResult)
         self.pushButton_39.clicked.connect(self.tabWidget.close)
         self.pushButton_7.clicked.connect(lambda: self.getData(self.pushButton_7))
         self.pushButton_8.clicked.connect(lambda: self.getData(self.pushButton_8))
@@ -878,6 +878,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         # 获取配置文件内容
 
+
     def getConfigContent(self):
         f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
         global configContent
@@ -902,7 +903,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                              'AAS_Result_Input_URL',
                              'AAS_Result_Output_URL', 'ECO_Result_Input_URL', 'ECO_Result_Output_URL',
                              'ICP_QC_Chart_Input_URL',
-                             'ICP_QC_Chart_File_Name', 'Reach_Result_Input_URL', 'Reach_Result_File_Name',
+                             'ICP_QC_Chart_File_Name', 'Reach_Result_Input_URL', 'Reach_Result_File_Name','Reach_Result_Output_URL',
                              'Reach_Message_Input_URL', 'Reach_Message_File_Name','选择UV_Batch的输入路径和结果输出路径',
                              'UV_Batch_Input_URL','UV_Batch_Output_URL','UV_Rusult_Output_URL',
                              '选择UV_Result的输入路径和结果输出路径','UV_QC_Chart_Input_URL','Formal_QC_Chart_File_Name',
@@ -920,7 +921,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                          'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
                          'Z:\\QC Chart\\%s' % now,
                          'QC Chart_Heavy Metal -66-01-2018-012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-                         'SVHC-DCU.xlsx', 'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
+                         'SVHC-DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
                          'TUV_SUD_REACH_SVHC_Candidate_List.xlsx','默认，可更改为自己需要的',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Result',
                          '默认，可更改为自己需要的','Z:\\QC Chart\\%s'% now,'QC Chart_HCHO_66-01-2016-051 CARY60.xlsx',
@@ -1374,28 +1375,28 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.textBrowser.clear()
         if messages == 'ICP':
             if (self.comboBox.currentText() == 'URL:ICP Result'):
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择ICP-Result文件',
                                                                 '%s' % configContent['ICP_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
             elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
                                                                 '%s' % configContent['ECO_Result_Input_URL'],
                                                                 'Text Files (*.txt)')
         elif messages == 'UV':
             if self.comboBox_2.currentText() == 'URL:Formal Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Formal-Result文件',
                                                                 '%s' % configContent['Formal_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
             elif self.comboBox_2.currentText() == 'URL:pH 2014 Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择pH2014-Result文件',
                                                                 '%s' % configContent['pH2014_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
             elif self.comboBox_2.currentText() == 'URL:pH 2018 Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择pH2018-Result文件',
                                                                 '%s' % configContent['pH2018_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
             elif self.comboBox_2.currentText() == 'URL:Cr VI Result':
-                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Result文件',
+                selectResultFile = QFileDialog.getOpenFileNames(self, '选择Cr VI-Result文件',
                                                                 '%s' % configContent['Cr_VI_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
         # print(1,selectBatchFile[0])
@@ -1412,6 +1413,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
+    # ICP结果转化为TXT
     def icpResultToCsv(self):
         if self.lineEdit_6.text() ==("完成Result文件抓取") or ("完成ICP文件转换为TXT") or ('样品单号抓取完成'):
             for fileUrl in selectResultFile[0]:
@@ -1430,24 +1432,133 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请重新选择Result文件")
 
         # 自动填写-内容
+
+    def reachResult(self):
+        if labNumber==[]:
+            self.lineEdit_6.setText("请重新选择Batch文件")
+        elif selectResultFile[0]==[]:
+            self.lineEdit_6.setText("请重新选择Result文件")
+        else:
+            self.textBrowser.append("正在进行Reach结果转换为TXT")
+            self.lineEdit_6.setText("正在进行Reach结果转换为TXT")
+            app.processEvents()
+            excel = win32com.gencache.EnsureDispatch('Excel.Application')
+            excel.Visible = 0
+            excel.Application.DisplayAlerts = True
+            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s'%(configContent['Reach_Result_Input_URL'],configContent['Reach_Result_File_Name'])))
+            ws=wb.Worksheets('Data')
+            elements = []
+            resultRows = []
+            n = 2
+            while ws.Cells(n, 1).Value is not None:
+                elements.append(ws.Cells(n, 3).Value)
+                resultRows.append(n)
+                n += 1
+            # print(elements)
+            resultLabnumber = []
+            resultQualityValue = []
+            resultVolumeValue = []
+            i = 0
+            for each in labNumber:
+                if 'R\x1eI' in analyteList[i]:
+                    resultLabnumber.append(each)
+                    resultQualityValue.append(qualityValue[i])
+                    resultVolumeValue.append(volumeValue[i])
+                    i += 1
+            # print(resultLabnumber)
+            startNum = int(self.spinBox_3.text())
+            endNum = int(self.spinBox_2.text())
+            if resultLabnumber == []:
+                self.textBrowser.append("确认Batch含有Reach方法")
+            else:
+                rusultList = []
+                rusultList2 = []
+                rusultList3 = []
+                rusultList4 = {}
+                for fileUrl in selectResultFile[0]:
+                    csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
+                    csvFile.drop(['B','C','F','G','H'], axis=1,inplace=True)
+                    csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
+                    csvFile = csvFile[csvFile['D'].isin(elements)]
+                    rusultList = list(csvFile['A'])
+                    rusultList2 = list(csvFile['D'])
+                    rusultList3 = list(csvFile['E'])
+                for num,each in enumerate(rusultList):
+                    rusultList4['%s-%s'%(rusultList[num],rusultList2[num])] = rusultList3[num]
+                if endNum == 0 or endNum > len(resultLabnumber) :
+                    m = len(resultLabnumber)-startNum+1
+                else:
+                    m = endNum-startNum+1
+                # print(m)
+                n = startNum - 1
+                # print(rusultList4)
+                # print(elements)
+                for i in range(m):
+                    name = labNumber[n].replace("/", '_')
+                    self.textBrowser.append("%s:%s"%(n+1,labNumber[n]))
+                    app.processEvents()
+                    ws.Cells(2,2).Value = labNumber[n]
+                    x = 0
+                    for e in range(len(elements)):
+                        # print(labNumber[n],elements[x])
+                        if '%s-%s'%(labNumber[n],elements[x]) in rusultList4.keys():
+                            if str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '未校正':
+                                ws.Cells(resultRows[x], 4).Value = '未校正'
+                            elif str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '####':
+                                ws.Cells(resultRows[x], 4).Value = '超出'
+                            else:
+                                ws.Cells(resultRows[x], 4).Value = float(rusultList4['%s-%s'%(labNumber[n],elements[x])]) * int(
+                                    resultVolumeValue[n]) / float(resultQualityValue[n])
+                        else:
+                            ws.Cells(resultRows[x], 4).Value = '未走标准曲线'
+                        x+=1
+                    ws1= wb.Sheets("DCU-Result")
+                    resultDcuOne = []
+                    resultDcuTwo = []
+                    resultDcuThree = []
+                    resultDcuFour = []
+                    resultDcuFive = []
+                    resultDcuSix = []
+                    m = 1
+                    while ws1.Cells(m, 1).Value is not None:
+                        resultDcuOne.append(ws1.Cells(m, 1).Value)
+                        resultDcuTwo.append(ws1.Cells(m, 2).Value)
+                        resultDcuThree.append(ws1.Cells(m, 3).Value)
+                        resultDcuFour.append(ws1.Cells(m, 4).Value)
+                        resultDcuFive.append(ws1.Cells(m, 5).Value)
+                        resultDcuSix.append(ws1.Cells(m, 6).Value)
+                        m += 1
+                    folder = os.path.exists(configContent['Reach_Result_Output_URL'] + '\\' + today)
+                    if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+                        os.makedirs(configContent['Reach_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                    fileName = configContent['Reach_Result_Output_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
+                    with open(fileName, "w", encoding="utf-8") as fileTxt:
+                        for i in range(len(resultDcuOne)):
+                            lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
+                            fileTxt.write(lineTxt)
+                    wb.SaveAs('%s/SVHC %s'%(configContent['Reach_Result_Output_URL'],name))
+                    n+=1
+                excel.Quit()
+                self.textBrowser.append("完成Reach结果转换为TXT")
+                self.lineEdit_6.setText("完成Reach结果转换为TXT")
+    # 自动填写-填写内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
         self.lineEdit_6.setText("内容已填写，可随时开始")
 
+    # 自动填写-清除内容
     def clearContent(self):
         self.lineEdit.clear()
         self.lineEdit_6.setText("已清零，请重新填写内容")
 
-        # 自动填写-停止
-
+    # 自动填写-停止
     def stopMessage(self):
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
         self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
 
-        # 自动填写 - 开始自动填写
-
+    # 自动填写 - 开始自动填写
     def autoWrite(self):
         time.sleep(3)
         n = int(self.spinBox.text())
