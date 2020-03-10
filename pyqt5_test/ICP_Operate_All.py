@@ -807,7 +807,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_24.clicked.connect(self.ecoZxd)
         self.pushButton_26.clicked.connect(self.randomAction)
         self.pushButton_27.clicked.connect(self.icpResultToCsv)
-        self.pushButton_30.clicked.connect(self.tabWidget.close)
+        self.pushButton_30.clicked.connect(self.icpQc)
         self.pushButton_22.clicked.connect(self.nickelBatch)
         self.pushButton_25.clicked.connect(self.ecoZjy)
         self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
@@ -815,7 +815,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_21.clicked.connect(self.icpBatch)
         self.pushButton_34.clicked.connect(lambda: self.getResult('ICP'))
         self.pushButton_43.clicked.connect(lambda: self.getResult('UV'))
-        self.pushButton_31.clicked.connect(self.tabWidget.close)
+        self.pushButton_31.clicked.connect(self.aasResult)
         self.pushButton_32.clicked.connect(self.tabWidget.close)
         self.pushButton_38.clicked.connect(self.reachResult)
         self.pushButton_39.clicked.connect(self.tabWidget.close)
@@ -848,8 +848,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_50.clicked.connect(self.tabWidget.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # 初始化，获取或生成配置文件
-
+    # 初始化，获取或生成配置文件
     def getConfig(self):
         global configFileUrl
         global desktopUrl
@@ -876,9 +875,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             Ui_MainWindow.getConfigContent(self)
 
-        # 获取配置文件内容
-
-
+    # 获取配置文件内容
     def getConfigContent(self):
         f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
         global configContent
@@ -893,8 +890,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # print(configContent)
         self.lineEdit_6.setText("配置获取成功")
 
-        # 生成默认配置文件
-
+    # 生成默认配置文件
     def createConfigContent(self):
         configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL',
                              'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_Batch_Input_URL',
@@ -936,9 +932,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
 
-        # 自动填写-获取内容
-        # 获取Sample ID 、实验方法、质量、体积
-
+    # 自动填写-获取内容
+    # 获取Sample ID 、实验方法、质量、体积
     def getBatch(self, messages):
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
@@ -1235,6 +1230,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             if not ecoFile:
                 wb=excel.Workbooks.Add()
                 ws = wb.Worksheets('Sheet1')
+                # 创建Batch单号
                 ws.Columns(1).ColumnWidth = 3  # 列宽。
                 ws.Columns(2).ColumnWidth = 12.5  # 列宽。
                 ws.Columns(3).ColumnWidth = 14.5  # 列宽。
@@ -1277,6 +1273,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         x += 1
                     n += 1
                     i += 1
+                # 创建打印标签
                 wb.Worksheets.Add()
                 ws2 = excel.Worksheets('Sheet2')
                 ws2.Cells(1, 1).Value = '1.'
@@ -1400,6 +1397,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                                                 '%s' % configContent['Cr_VI_Result_Input_URL'],
                                                                 'CSV files(*.csv)')
         # print(1,selectBatchFile[0])
+        # 仅获取选择文件的路径
         if selectResultFile[0] != []:
             self.lineEdit_6.setText("正在抓取Result文件")
             self.textBrowser.append("正在抓取Result文件")
@@ -1431,8 +1429,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
-        # 自动填写-内容
-
+    # Reach结果转化为TXT
     def reachResult(self):
         if labNumber==[]:
             self.lineEdit_6.setText("请重新选择Batch文件")
@@ -1445,16 +1442,18 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             excel = win32com.gencache.EnsureDispatch('Excel.Application')
             excel.Visible = 0
             excel.Application.DisplayAlerts = True
-            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s'%(configContent['Reach_Result_Input_URL'],configContent['Reach_Result_File_Name'])))
-            ws=wb.Worksheets('Data')
+            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (configContent['Reach_Result_Input_URL'],configContent['Reach_Result_File_Name'])))
+            ws = wb.Worksheets('Data')
             elements = []
             resultRows = []
             n = 2
+            # 获取需要测试元素
             while ws.Cells(n, 1).Value is not None:
                 elements.append(ws.Cells(n, 3).Value)
                 resultRows.append(n)
                 n += 1
             # print(elements)
+            # 获取是Reach的Sample ID
             resultLabnumber = []
             resultQualityValue = []
             resultVolumeValue = []
@@ -1466,6 +1465,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     resultVolumeValue.append(volumeValue[i])
                     i += 1
             # print(resultLabnumber)
+            # 获取Sample的结果
             startNum = int(self.spinBox_3.text())
             endNum = int(self.spinBox_2.text())
             if resultLabnumber == []:
@@ -1480,18 +1480,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     csvFile.drop(['B','C','F','G','H'], axis=1,inplace=True)
                     csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
                     csvFile = csvFile[csvFile['D'].isin(elements)]
-                    rusultList = list(csvFile['A'])
-                    rusultList2 = list(csvFile['D'])
-                    rusultList3 = list(csvFile['E'])
+                    rusultList += list(csvFile['A'])
+                    rusultList2 += list(csvFile['D'])
+                    rusultList3 += list(csvFile['E'])
                 for num,each in enumerate(rusultList):
                     rusultList4['%s-%s'%(rusultList[num],rusultList2[num])] = rusultList3[num]
+                #填写excel模板文件
                 if endNum == 0 or endNum > len(resultLabnumber) :
                     m = len(resultLabnumber)-startNum+1
                 else:
                     m = endNum-startNum+1
                 # print(m)
                 n = startNum - 1
-                # print(rusultList4)
+                print(rusultList4)
                 # print(elements)
                 for i in range(m):
                     name = labNumber[n].replace("/", '_')
@@ -1511,8 +1512,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                     resultVolumeValue[n]) / float(resultQualityValue[n])
                         else:
                             ws.Cells(resultRows[x], 4).Value = '未走标准曲线'
-                        x+=1
-                    ws1= wb.Sheets("DCU-Result")
+                        x += 1
+                    # 将excel数据重新填写txt文件中
+                    ws1 = wb.Sheets("DCU-Result")
                     resultDcuOne = []
                     resultDcuTwo = []
                     resultDcuThree = []
@@ -1536,11 +1538,90 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         for i in range(len(resultDcuOne)):
                             lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
                             fileTxt.write(lineTxt)
-                    wb.SaveAs('%s/SVHC %s'%(configContent['Reach_Result_Output_URL'],name))
-                    n+=1
+                    wb.SaveAs('%s\\%s\\SVHC %s'%(configContent['Reach_Result_Output_URL'],today,name))
+                    n += 1
                 excel.Quit()
                 self.textBrowser.append("完成Reach结果转换为TXT")
                 self.lineEdit_6.setText("完成Reach结果转换为TXT")
+
+    # AAS结果转化还不需要用到
+    def aasResult(self):
+        self.textBrowser.append("暂时不需要用到，后续再开发")
+
+    def icpQc(self):
+        excel = win32com.gencache.EnsureDispatch('Excel.Application')
+        excel.Visible = True
+        excel.Application.DisplayAlerts = True
+        wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+        configContent['ICP_QC_Chart_Input_URL'], configContent['ICP_QC_Chart_File_Name'])))
+        ws = wb.Worksheets('Data')
+        material = []
+        resultRows = {}
+        elements = []
+        n = 2
+        # 获取需要测试元素
+        while ws.Cells(n, 1).Value is not None:
+            material.append(ws.Cells(n, 2).Value)
+            elements.append(ws.Cells(n, 3).Value)
+            resultRows['%s-%s'%(ws.Cells(n, 2).Value,ws.Cells(n, 3).Value)] = n
+            n += 1
+        # print(elements)
+        # 获取所需数据
+        rusultList = []
+        rusultList2 = []
+        rusultList3 = []
+        e = str()
+        m = []
+        for each in set(material):
+            m.append(each)
+        for each in m:
+            if each == m[-1]:
+                e = e + each
+            else:
+                e = e + each + '|'
+        for fileUrl in selectResultFile[0]:#遍历结果选择文件
+            fileDate = os.path.split(fileUrl)[1].split('-')[0]
+            self.textBrowser.append("正在进行%s QC填写"%fileDate)
+            self.lineEdit_6.setText("正在进行%s QC填写"%fileDate)
+            app.processEvents()
+            # 获取相关结果数据
+            csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+            csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
+            csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
+            csvFile = csvFile[csvFile['D'].isin(set(elements))]
+            rusultList = list(csvFile['A'])
+            rusultList2 = list(csvFile['D'])
+            rusultList3 = list(csvFile['E'])
+            print(resultRows)
+            for num in resultRows:
+                print(num,resultRows[num])
+                if 'Date' in num:#跳过填写日期的行
+                    continue
+                else:
+                    c = 6
+                    while ws.Cells(resultRows[num], c).Value is not None:
+                        c += 1
+                    for i in range(len(rusultList)):#遍历结果列表
+                        list1 = rusultList[i].split(',')
+                        if '%s-%s'%(list1[0],rusultList2[i]) in num:
+                            if i+1<len(rusultList):
+                                # 相同的元素测试验证并跳过
+                                if '%s-%s'%(rusultList[i],rusultList2[i]) == '%s-%s'%(rusultList[i+1],rusultList2[i+1]):
+                                    continue
+                            if ',' in rusultList[i]:#将需要计算的挑选出来
+                                if len(list1) == 3:
+                                    # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+                                    ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])
+                                elif len(list1) == 2:
+                                    ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)/float(list1[1])
+                            else:
+                                if 'Date-%s'%rusultList[i] in resultRows.keys():#根据是否含有该索引填写日期
+                                    ws.Cells(resultRows['Date-%s'%rusultList[i]], c).Value = fileDate
+                                ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = rusultList3[i]
+                            c += 1
+            self.textBrowser.append("完成%s QC填写"%fileDate)
+        self.lineEdit_6.setText("完成QC填写")
+
     # 自动填写-填写内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
