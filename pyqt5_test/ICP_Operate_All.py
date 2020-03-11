@@ -806,7 +806,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_23.clicked.connect(self.aasBatch)
         self.pushButton_24.clicked.connect(self.ecoZxd)
         self.pushButton_26.clicked.connect(self.randomAction)
-        self.pushButton_27.clicked.connect(self.icpResultToCsv)
+        self.pushButton_27.clicked.connect(self.icpResultToTxt)
         self.pushButton_30.clicked.connect(self.icpQc)
         self.pushButton_22.clicked.connect(self.nickelBatch)
         self.pushButton_25.clicked.connect(self.ecoZjy)
@@ -840,12 +840,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.actionExport.triggered.connect(self.createConfigContent)
         self.actionImport.triggered.connect(self.getConfigContent)
         self.actionExit.triggered.connect(MainWindow.close)
-        self.pushButton_37.clicked.connect(self.spinBox_6.clear)
+        self.pushButton_37.clicked.connect(self.searchReachMessage)
         self.actionImport.triggered.connect(self.lineEdit.clear)
         self.actionHelp.triggered.connect(self.lineEdit.clear)
         self.actionAuthor.triggered.connect(self.lineEdit.clear)
         self.pushButton_26.clicked.connect(self.spinBox_4.clear)
-        self.pushButton_50.clicked.connect(self.tabWidget.close)
+        self.pushButton_50.clicked.connect(self.getReachMessage)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # 初始化，获取或生成配置文件
@@ -855,6 +855,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         global now
         global last_time
         global today
+        # getBatch里的
+        global labNumber
+        global qualityValue
+        global volumeValue
+        global analyteList
+        global batchNum
+        # getResult里的
+        global selectResultFile
+        # getReachMessage
+        global reachLimsNo
+        global reachEnglish
+        global reachChinese
+        global reachCas
+        global reachPurpose
         now = int(time.strftime('%Y'))
         last_time = now - 1
         today = time.strftime('%Y%m%d')
@@ -958,11 +972,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             w = Dispatch('Word.Application')
             w.Visible = 0
             # win系统识别路径为“\”
-            global labNumber
-            global qualityValue
-            global volumeValue
-            global analyteList
-            global batchNum
             labNumber = []
             qualityValue = []
             volumeValue = []
@@ -1412,7 +1421,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("请重新选择Result文件")
 
     # ICP结果转化为TXT
-    def icpResultToCsv(self):
+    def icpResultToTxt(self):
         if self.lineEdit_6.text() ==("完成Result文件抓取") or ("完成ICP文件转换为TXT") or ('样品单号抓取完成'):
             for fileUrl in selectResultFile[0]:
                 self.textBrowser.append("正在进行ICP文件转换为TXT")
@@ -1624,13 +1633,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def resultZjyToTxt(self):
         for files in selectResultFile[0]:  # 遍历所有文件
-            print(os.path.split(files))
+            # print(os.path.split(files))
             fileName = os.path.split(files)[1]  # 文件名
             self.textBrowser.append("正在进行%s ECO ZJY转换" % fileName)
             app.processEvents()
             filePath = files
             folder = os.path.exists(configContent['ECO_Result_Output_URL'] + '\\' + today)
-            print(folder)
+            # print(folder)
             if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
                 os.makedirs(configContent['ECO_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
             filePath2 = configContent['ECO_Result_Output_URL'] + '\\' + today + '\\' + fileName
@@ -1647,6 +1656,90 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
             app.processEvents()
         self.lineEdit_6.setText("完成ECO ZJY转换")
+
+
+    def getReachMessage(self):
+        global reachLimsNo
+        global reachEnglish
+        global reachChinese
+        global reachCas
+        global reachPurpose
+        file = configContent['Reach_Message_Input_URL']+'\\'+ configContent['Reach_Message_File_Name']
+        reachMessage = pd.read_csv(file, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G'])
+        reachLimsNo = list(reachMessage['B'])
+        reachEnglish = list(reachMessage['C'])
+        reachChinese = list(reachMessage['D'])
+        reachCas = list(reachMessage['F'])
+        reachPurpose = list(reachMessage['G'])
+        self.lineEdit_6.setText("Reach信息获取成功")
+
+    def searchReachMessage(self):
+        try:
+            reachLimsNo
+        except NameError:
+            self.lineEdit_6.setText("请点击获取Reach信息")
+        else:
+            reachContent = self.lineEdit_4.text()
+            reachNum = self.spinBox_6.text()
+            # print(type(reachContent),1,type(reachNum))
+            if (reachContent == '') and (reachNum == '0'):
+                self.lineEdit_6.setText("请输入需要查找Reach英文内容或者编号")
+            else:
+                m='F'
+                if reachContent =='':
+                    for n in range(len(reachLimsNo)):
+                        if float(reachNum) == float(reachLimsNo[n]):
+                            m = 'T'
+                elif reachNum == '0':
+                    for n in range(len(reachEnglish)):
+                        if (reachContent in reachEnglish[n]):
+                            m = 'T'
+                else:#两者都不为空时匹配
+                    for n in range(len(reachEnglish)):
+                        if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
+                            m='T'
+                print(m)
+                if m == 'T':
+                    for i in range(len(reachEnglish)):
+                        # print(reachNum,reachLimsNo[i])
+                        if reachContent == '':
+                            if float(reachNum) == float(reachLimsNo[i]):
+                                self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
+                                self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
+                                self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
+                                self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
+                                self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
+                                self.textBrowser_2.append('--------------------------')
+                                self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+                                app.processEvents()
+                        elif reachNum == '0':
+                            if reachContent in reachEnglish[i]:
+                                self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
+                                self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
+                                self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
+                                self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
+                                self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
+                                self.textBrowser_2.append('--------------------------')
+                                self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+                                app.processEvents()
+                        else:
+                            if (reachContent in reachEnglish[i]) and (float(reachNum) == reachLimsNo[i]):
+                                self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
+                                self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
+                                self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
+                                self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
+                                self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
+                                self.textBrowser_2.append('--------------------------')
+                                self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+                                app.processEvents()
+                else:
+                    self.textBrowser_2.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
+                    self.textBrowser_2.append('--------------------------')
+                self.lineEdit_6.setText("搜索完成")
+
+
+
+
     # 自动填写-填写内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
