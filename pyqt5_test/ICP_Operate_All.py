@@ -945,13 +945,23 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             f1.write(configContentName[i] + '||||||' + configContent[i] + '\n')
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
-
+        QMessageBox.information(self, "提示信息", "默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可。",QMessageBox.Yes)
     # 自动填写-获取内容
     # 获取Sample ID 、实验方法、质量、体积
     def getBatch(self, messages):
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
         self.textBrowser_3.clear()
+        global labNumber
+        global qualityValue
+        global volumeValue
+        global analyteList
+        global batchNum
+        labNumber = []
+        qualityValue = []
+        volumeValue = []
+        analyteList = []
+        batchNum = []
         if messages == 'ICP':
             selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],
                                                        'Wrod files(*.doc*)')
@@ -966,17 +976,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         if selectBatchFile[0] != []:
             self.lineEdit_6.setText("正在抓取样品单号")
             self.textBrowser_3.append("正在抓取样品单号")
+            self.textBrowser_3.append("样品单号抓取完成后才可以开始下一步骤！！！")
             if messages == 'Auto':
                 self.lineEdit.clear()
                 self.lineEdit.setText('Sample ID')
             w = Dispatch('Word.Application')
             w.Visible = 0
             # win系统识别路径为“\”
-            labNumber = []
-            qualityValue = []
-            volumeValue = []
-            analyteList = []
-            batchNum = []
             n = 0
             for n in range(len(selectBatchFile[0])):
                 if messages == 'ICP':
@@ -1009,9 +1015,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     # ICP仪器使用
     def icpBatch(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成") or ("请确认Batch方法是镍释放"):
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'ICP')
+                self.textBrowser_3.append("请重新点击Batch-ICP按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+        else:
             f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
-            self.textBrowser_3.append("正在微波Batch转化")
+            self.textBrowser_3.append("正在微波Batch-ICP转化")
             app.processEvents()
             i = 0
             for i in range(len(labNumber)):
@@ -1024,27 +1041,49 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 else:
                     f1.write(labNumber[i] + '\n')
                     i += 1
-            self.textBrowser_3.append("完成微波Batch转化")
+            self.textBrowser_3.append("完成微波ICP Batch转化")
             self.lineEdit_6.setText("ICP Sample ID转化完成")
 
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
 
     # AAS仪器使用
     def aasBatch(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("ICP Sample ID转化完成") or ("完成镍释放Batch转化") or ("AAS Sample ID转化完成"):
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'ICP')
+                self.textBrowser_3.append("请重新点击AAS Batch按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+        else:
             f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
+            self.textBrowser_3.append("正在微波Batch-AAS转化")
+            app.processEvents()
             i = 0
             for i in range(len(labNumber)):
                 f1.write(labNumber[i].replace('+', '-') + '\n')
                 i += 1
+            self.textBrowser_3.append("完成微波Batch-AAS转化")
             self.lineEdit_6.setText("AAS Sample ID转化完成")
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
+
 
     # 镍释放
     def nickelBatch(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ("完成镍释放Batch转化") or ("ICP Sample ID转化完成"):
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'ICP')
+                self.textBrowser_3.append("请重新点击Nickel Batch按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+        else:
             if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
                 self.textBrowser_3.append("正在镍释放Batch转化")
                 self.lineEdit_6.setText("正在镍释放Batch转化")
@@ -1087,12 +1126,21 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             else:
                 self.textBrowser_3.append("请确认Batch方法是镍释放")
                 self.lineEdit_6.setText("请确认Batch方法是镍释放")
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
 
     # ECO质检院模板生成
     def ecoZjy(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成') or ("请确认Batch方法是镍释放"):
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'ICP')
+                self.textBrowser_3.append("请重新点击ECO ZJY按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+        else:
             self.textBrowser_3.append("正在ECO质检院Batch转化")
             self.lineEdit_6.setText("正在ECO质检院Batch转化")
             app.processEvents()
@@ -1224,12 +1272,21 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser_3.append("ECO质检院Batch转化完成")
             self.lineEdit_6.setText("ECO质检院Batch转化完成")
             app.processEvents()
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
 
     # ECO中迅德模板生成
     def ecoZxd(self):
-        if self.lineEdit_6.text() == ('样品单号抓取完成') or ('ECO质检院Batch转化完成') or ('ECO中迅德Batch转化完成') or ("请确认Batch方法是镍释放"):
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self,'ICP')
+                self.textBrowser_3.append("请重新点击ECO ZXD按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+        else:
             self.textBrowser_3.append("正在ECO中迅德Batch转化")
             self.lineEdit_6.setText("正在ECO中迅德Batch转化")
             app.processEvents()
@@ -1371,8 +1428,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser_3.append("ECO中迅德Batch转化完成")
             self.lineEdit_6.setText("ECO中迅德Batch转化完成")
             app.processEvents()
-        else:
-            self.lineEdit_6.setText("请先导入Batch")
 
     # 获取结果文件
     def getResult(self, messages):
@@ -1422,240 +1477,331 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     # ICP结果转化为TXT
     def icpResultToTxt(self):
-        if self.lineEdit_6.text() ==("完成Result文件抓取") or ("完成ICP文件转换为TXT") or ('样品单号抓取完成'):
-            for fileUrl in selectResultFile[0]:
-                self.textBrowser.append("正在进行ICP文件转换为TXT")
-                self.lineEdit_6.setText("正在进行ICP文件转换为TXT")
-                fileName = os.path.split(fileUrl)[1]
-                app.processEvents()
-                csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
-                csvFile = csvFile.drop(['C'], axis=1)
-                csvLine = csvFile.iloc[0]  # 获取行索引为1数据
-                csvLine.replace(['标签','类型','元素标签','浓度','单位'],['Solution Label','Type','Element','Soln Conc','Units'],inplace=True)
-                csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Output_URL'],fileName),sep='\t',index=None,header=None)
-                self.textBrowser.append("完成ICP文件转换为TXT")
-                self.lineEdit_6.setText("完成ICP文件转换为TXT")
+        try:
+            selectResultFile[0]
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self, 'ICP')
+                self.textBrowser.append("请重新点击ICP Result按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                self.textBrowser.append("请重新选择ICP Result数据文件")
         else:
-            self.lineEdit_6.setText("请重新选择Result文件")
+            if selectResultFile[0] == []:
+                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.Yes)
+                if reply == QMessageBox.Yes:
+                    Ui_MainWindow.getResult(self, 'ICP')
+                    self.textBrowser.append("请重新点击ICP Result按钮开始数据处理")
+                else:
+                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                    self.textBrowser.append("请重新选择ICP Result数据文件")
+            else:
+                for fileUrl in selectResultFile[0]:
+                    self.textBrowser.append("正在进行ICP文件转换为TXT")
+                    self.lineEdit_6.setText("正在进行ICP文件转换为TXT")
+                    fileName = os.path.split(fileUrl)[1]
+                    app.processEvents()
+                    csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
+                    csvFile = csvFile.drop(['C'], axis=1)
+                    csvLine = csvFile.iloc[0]  # 获取行索引为1数据
+                    csvLine.replace(['标签','类型','元素标签','浓度','单位'],['Solution Label','Type','Element','Soln Conc','Units'],inplace=True)
+                    csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Output_URL'],fileName),sep='\t',index=None,header=None)
+                    self.textBrowser.append("完成ICP文件转换为TXT")
+                    self.lineEdit_6.setText("完成ICP文件转换为TXT")
 
     # Reach结果转化为TXT
     def reachResult(self):
-        if labNumber==[]:
-            self.lineEdit_6.setText("请重新选择Batch文件")
-        elif selectResultFile[0]==[]:
-            self.lineEdit_6.setText("请重新选择Result文件")
-        else:
-            self.textBrowser.append("正在进行Reach结果转换为TXT")
-            self.lineEdit_6.setText("正在进行Reach结果转换为TXT")
-            app.processEvents()
-            excel = win32com.gencache.EnsureDispatch('Excel.Application')
-            excel.Visible = 0
-            excel.Application.DisplayAlerts = True
-            wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (configContent['Reach_Result_Input_URL'],configContent['Reach_Result_File_Name'])))
-            ws = wb.Worksheets('Data')
-            elements = []
-            resultRows = []
-            n = 2
-            # 获取需要测试元素
-            while ws.Cells(n, 1).Value is not None:
-                elements.append(ws.Cells(n, 3).Value)
-                resultRows.append(n)
-                n += 1
-            # print(elements)
-            # 获取是Reach的Sample ID
-            resultLabnumber = []
-            resultQualityValue = []
-            resultVolumeValue = []
-            i = 0
-            for each in labNumber:
-                if 'R\x1eI' in analyteList[i]:
-                    resultLabnumber.append(each)
-                    resultQualityValue.append(qualityValue[i])
-                    resultVolumeValue.append(volumeValue[i])
-                    i += 1
-            # print(resultLabnumber)
-            # 获取Sample的结果
-            startNum = int(self.spinBox_3.text())
-            endNum = int(self.spinBox_2.text())
-            if resultLabnumber == []:
-                self.textBrowser.append("确认Batch含有Reach方法")
+        try:
+            labNumber
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self,'ICP')
+                self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
             else:
-                rusultList = []
-                rusultList2 = []
-                rusultList3 = []
-                rusultList4 = {}
-                for fileUrl in selectResultFile[0]:
-                    csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
-                    csvFile.drop(['B','C','F','G','H'], axis=1,inplace=True)
-                    csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
-                    csvFile = csvFile[csvFile['D'].isin(elements)]
-                    rusultList += list(csvFile['A'])
-                    rusultList2 += list(csvFile['D'])
-                    rusultList3 += list(csvFile['E'])
-                for num,each in enumerate(rusultList):
-                    rusultList4['%s-%s'%(rusultList[num],rusultList2[num])] = rusultList3[num]
-                #填写excel模板文件
-                if endNum == 0 or endNum > len(resultLabnumber) :
-                    m = len(resultLabnumber)-startNum+1
+                self.lineEdit_6.setText("请重新选择Reach Batch数据文件")
+                self.textBrowser_3.append("请重新选择Reach Batch数据文件")
+        try:
+            selectResultFile[0]
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self,'ICP')
+                self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
+            else:
+                self.lineEdit_6.setText("请重新选择Reach Result数据文件")
+                self.textBrowser.append("请重新选择Reach Result数据文件")
+        else:
+            if selectResultFile[0] == []:
+                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.Yes)
+                if reply == QMessageBox.Yes:
+                    Ui_MainWindow.getResult(self, 'ICP')
+                    self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
                 else:
-                    m = endNum-startNum+1
-                # print(m)
-                n = startNum - 1
-                print(rusultList4)
-                # print(elements)
-                for i in range(m):
-                    name = labNumber[n].replace("/", '_')
-                    self.textBrowser.append("%s:%s"%(n+1,labNumber[n]))
-                    app.processEvents()
-                    ws.Cells(2,2).Value = labNumber[n]
-                    x = 0
-                    for e in range(len(elements)):
-                        # print(labNumber[n],elements[x])
-                        if '%s-%s'%(labNumber[n],elements[x]) in rusultList4.keys():
-                            if str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '未校正':
-                                ws.Cells(resultRows[x], 4).Value = '未校正'
-                            elif str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '####':
-                                ws.Cells(resultRows[x], 4).Value = '超出'
-                            else:
-                                ws.Cells(resultRows[x], 4).Value = float(rusultList4['%s-%s'%(labNumber[n],elements[x])]) * int(
-                                    resultVolumeValue[n]) / float(resultQualityValue[n])
-                        else:
-                            ws.Cells(resultRows[x], 4).Value = '未走标准曲线'
-                        x += 1
-                    # 将excel数据重新填写txt文件中
-                    ws1 = wb.Sheets("DCU-Result")
-                    resultDcuOne = []
-                    resultDcuTwo = []
-                    resultDcuThree = []
-                    resultDcuFour = []
-                    resultDcuFive = []
-                    resultDcuSix = []
-                    m = 1
-                    while ws1.Cells(m, 1).Value is not None:
-                        resultDcuOne.append(ws1.Cells(m, 1).Value)
-                        resultDcuTwo.append(ws1.Cells(m, 2).Value)
-                        resultDcuThree.append(ws1.Cells(m, 3).Value)
-                        resultDcuFour.append(ws1.Cells(m, 4).Value)
-                        resultDcuFive.append(ws1.Cells(m, 5).Value)
-                        resultDcuSix.append(ws1.Cells(m, 6).Value)
-                        m += 1
-                    folder = os.path.exists(configContent['Reach_Result_Output_URL'] + '\\' + today)
-                    if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-                        os.makedirs(configContent['Reach_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
-                    fileName = configContent['Reach_Result_Output_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
-                    with open(fileName, "w", encoding="utf-8") as fileTxt:
-                        for i in range(len(resultDcuOne)):
-                            lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
-                            fileTxt.write(lineTxt)
-                    wb.SaveAs('%s\\%s\\SVHC %s'%(configContent['Reach_Result_Output_URL'],today,name))
+                    self.lineEdit_6.setText("请重新选择Reach Result数据文件")
+                    self.textBrowser.append("请重新选择Reach Result数据文件")
+            else:
+                self.textBrowser.append("正在进行Reach结果转换为TXT")
+                self.lineEdit_6.setText("正在进行Reach结果转换为TXT")
+                app.processEvents()
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = 0
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (configContent['Reach_Result_Input_URL'],configContent['Reach_Result_File_Name'])))
+                ws = wb.Worksheets('Data')
+                elements = []
+                resultRows = []
+                n = 2
+                # 获取需要测试元素
+                while ws.Cells(n, 1).Value is not None:
+                    elements.append(ws.Cells(n, 3).Value)
+                    resultRows.append(n)
                     n += 1
-                excel.Quit()
-                self.textBrowser.append("完成Reach结果转换为TXT")
-                self.lineEdit_6.setText("完成Reach结果转换为TXT")
+                # print(elements)
+                # 获取是Reach的Sample ID
+                resultLabnumber = []
+                resultQualityValue = []
+                resultVolumeValue = []
+                i = 0
+                for each in labNumber:
+                    if 'R\x1eI' in analyteList[i]:
+                        resultLabnumber.append(each)
+                        resultQualityValue.append(qualityValue[i])
+                        resultVolumeValue.append(volumeValue[i])
+                        i += 1
+                # print(resultLabnumber)
+                # 获取Sample的结果
+                startNum = int(self.spinBox_3.text())
+                endNum = int(self.spinBox_2.text())
+                if resultLabnumber == []:
+                    self.textBrowser.append("确认Batch含有Reach方法")
+                else:
+                    rusultList = []
+                    rusultList2 = []
+                    rusultList3 = []
+                    rusultList4 = {}
+                    for fileUrl in selectResultFile[0]:
+                        csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
+                        csvFile.drop(['B','C','F','G','H'], axis=1,inplace=True)
+                        csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
+                        csvFile = csvFile[csvFile['D'].isin(elements)]
+                        rusultList += list(csvFile['A'])
+                        rusultList2 += list(csvFile['D'])
+                        rusultList3 += list(csvFile['E'])
+                    for num,each in enumerate(rusultList):
+                        rusultList4['%s-%s'%(rusultList[num],rusultList2[num])] = rusultList3[num]
+                    #填写excel模板文件
+                    if endNum == 0 or endNum > len(resultLabnumber) :
+                        m = len(resultLabnumber)-startNum+1
+                    else:
+                        m = endNum-startNum+1
+                    # print(m)
+                    n = startNum - 1
+                    # print(rusultList4)
+                    # print(elements)
+                    for i in range(m):
+                        name = labNumber[n].replace("/", '_')
+                        self.textBrowser.append("%s:%s"%(n+1,labNumber[n]))
+                        app.processEvents()
+                        ws.Cells(2,2).Value = labNumber[n]
+                        x = 0
+                        for e in range(len(elements)):
+                            # print(labNumber[n],elements[x])
+                            if '%s-%s'%(labNumber[n],elements[x]) in rusultList4.keys():
+                                if str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '未校正':
+                                    ws.Cells(resultRows[x], 4).Value = '未校正'
+                                elif str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '####':
+                                    ws.Cells(resultRows[x], 4).Value = '超出'
+                                else:
+                                    ws.Cells(resultRows[x], 4).Value = float(rusultList4['%s-%s'%(labNumber[n],elements[x])]) * int(
+                                        resultVolumeValue[n]) / float(resultQualityValue[n])
+                            else:
+                                ws.Cells(resultRows[x], 4).Value = '未走标准曲线'
+                            x += 1
+                        # 将excel数据重新填写txt文件中
+                        ws1 = wb.Sheets("DCU-Result")
+                        resultDcuOne = []
+                        resultDcuTwo = []
+                        resultDcuThree = []
+                        resultDcuFour = []
+                        resultDcuFive = []
+                        resultDcuSix = []
+                        m = 1
+                        while ws1.Cells(m, 1).Value is not None:
+                            resultDcuOne.append(ws1.Cells(m, 1).Value)
+                            resultDcuTwo.append(ws1.Cells(m, 2).Value)
+                            resultDcuThree.append(ws1.Cells(m, 3).Value)
+                            resultDcuFour.append(ws1.Cells(m, 4).Value)
+                            resultDcuFive.append(ws1.Cells(m, 5).Value)
+                            resultDcuSix.append(ws1.Cells(m, 6).Value)
+                            m += 1
+                        folder = os.path.exists(configContent['Reach_Result_Output_URL'] + '\\' + today)
+                        if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+                            os.makedirs(configContent['Reach_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                        fileName = configContent['Reach_Result_Output_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
+                        with open(fileName, "w", encoding="utf-8") as fileTxt:
+                            for i in range(len(resultDcuOne)):
+                                lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
+                                fileTxt.write(lineTxt)
+                        wb.SaveAs('%s\\%s\\SVHC %s'%(configContent['Reach_Result_Output_URL'],today,name))
+                        n += 1
+                    excel.Quit()
+                    self.textBrowser.append("完成Reach结果转换为TXT")
+                    self.lineEdit_6.setText("完成Reach结果转换为TXT")
 
     # AAS结果转化还不需要用到
     def aasResult(self):
         self.textBrowser.append("暂时不需要用到，后续再开发")
 
     def icpQc(self):
-        excel = win32com.gencache.EnsureDispatch('Excel.Application')
-        excel.Visible = True
-        excel.Application.DisplayAlerts = True
-        wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-        configContent['ICP_QC_Chart_Input_URL'], configContent['ICP_QC_Chart_File_Name'])))
-        ws = wb.Worksheets('Data')
-        material = []
-        resultRows = {}
-        elements = []
-        n = 2
-        # 获取需要测试元素
-        while ws.Cells(n, 1).Value is not None:
-            material.append(ws.Cells(n, 2).Value)
-            elements.append(ws.Cells(n, 3).Value)
-            resultRows['%s-%s'%(ws.Cells(n, 2).Value,ws.Cells(n, 3).Value)] = n
-            n += 1
-        # print(elements)
-        # 获取所需数据
-        rusultList = []
-        rusultList2 = []
-        rusultList3 = []
-        e = str()
-        m = []
-        for each in set(material):
-            m.append(each)
-        for each in m:
-            if each == m[-1]:
-                e = e + each
+        try:
+            selectResultFile
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self,'ICP')
+                self.textBrowser.append("请重新点击MM QC Chart按钮开始数据处理")
             else:
-                e = e + each + '|'
-        for fileUrl in selectResultFile[0]:#遍历结果选择文件
-            fileDate = os.path.split(fileUrl)[1].split('-')[0]
-            self.textBrowser.append("正在进行%s QC填写"%fileDate)
-            self.lineEdit_6.setText("正在进行%s QC填写"%fileDate)
-            app.processEvents()
-            # 获取相关结果数据
-            csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
-            csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
-            csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
-            csvFile = csvFile[csvFile['D'].isin(set(elements))]
-            rusultList = list(csvFile['A'])
-            rusultList2 = list(csvFile['D'])
-            rusultList3 = list(csvFile['E'])
-            # print(resultRows)
-            for num in resultRows:
-                # print(num,resultRows[num])
-                if 'Date' in num:#跳过填写日期的行
-                    continue
+                self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                self.textBrowser.append("请重新选择ICP Result数据文件")
+        else:
+            if selectResultFile[0] == []:
+                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.Yes)
+                if reply == QMessageBox.Yes:
+                    Ui_MainWindow.getResult(self, 'ICP')
+                    self.textBrowser.append("请重新点击MM QC Chart按钮开始数据处理")
                 else:
-                    c = 6
-                    while ws.Cells(resultRows[num], c).Value is not None:
-                        c += 1
-                    for i in range(len(rusultList)):#遍历结果列表
-                        list1 = rusultList[i].split(',')
-                        if '%s-%s'%(list1[0],rusultList2[i]) in num:
-                            if i+1<len(rusultList):
-                                # 相同的元素测试验证并跳过
-                                if '%s-%s'%(rusultList[i],rusultList2[i]) == '%s-%s'%(rusultList[i+1],rusultList2[i+1]):
-                                    continue
-                            if ',' in rusultList[i]:#将需要计算的挑选出来
-                                if len(list1) == 3:
-                                    # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
-                                    ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])
-                                elif len(list1) == 2:
-                                    ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)/float(list1[1])
-                            else:
-                                if 'Date-%s'%rusultList[i] in resultRows.keys():#根据是否含有该索引填写日期
-                                    ws.Cells(resultRows['Date-%s'%rusultList[i]], c).Value = fileDate
-                                ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = rusultList3[i]
-                            c += 1
-            self.textBrowser.append("完成%s QC填写"%fileDate)
-        self.lineEdit_6.setText("完成QC填写")
+                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                    self.textBrowser.append("请重新选择ICP Result数据文件")
+            else:
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = True
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+                configContent['ICP_QC_Chart_Input_URL'], configContent['ICP_QC_Chart_File_Name'])))
+                ws = wb.Worksheets('Data')
+                material = []
+                resultRows = {}
+                elements = []
+                n = 2
+                # 获取需要测试元素
+                while ws.Cells(n, 1).Value is not None:
+                    material.append(ws.Cells(n, 2).Value)
+                    elements.append(ws.Cells(n, 3).Value)
+                    resultRows['%s-%s'%(ws.Cells(n, 2).Value,ws.Cells(n, 3).Value)] = n
+                    n += 1
+                # print(elements)
+                # 获取所需数据
+                rusultList = []
+                rusultList2 = []
+                rusultList3 = []
+                e = str()
+                m = []
+                for each in set(material):
+                    m.append(each)
+                for each in m:
+                    if each == m[-1]:
+                        e = e + each
+                    else:
+                        e = e + each + '|'
+                for fileUrl in selectResultFile[0]:#遍历结果选择文件
+                    fileDate = os.path.split(fileUrl)[1].split('-')[0]
+                    self.textBrowser.append("正在进行%s QC填写"%fileDate)
+                    self.lineEdit_6.setText("正在进行%s QC填写"%fileDate)
+                    app.processEvents()
+                    # 获取相关结果数据
+                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+                    csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
+                    csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
+                    csvFile = csvFile[csvFile['D'].isin(set(elements))]
+                    rusultList = list(csvFile['A'])
+                    rusultList2 = list(csvFile['D'])
+                    rusultList3 = list(csvFile['E'])
+                    # print(resultRows)
+                    for num in resultRows:
+                        # print(num,resultRows[num])
+                        if 'Date' in num:#跳过填写日期的行
+                            continue
+                        else:
+                            c = 6
+                            while ws.Cells(resultRows[num], c).Value is not None:
+                                c += 1
+                            for i in range(len(rusultList)):#遍历结果列表
+                                list1 = rusultList[i].split(',')
+                                if '%s-%s'%(list1[0],rusultList2[i]) in num:
+                                    if i+1<len(rusultList):
+                                        # 相同的元素测试验证并跳过
+                                        if '%s-%s'%(rusultList[i],rusultList2[i]) == '%s-%s'%(rusultList[i+1],rusultList2[i+1]):
+                                            continue
+                                    if ',' in rusultList[i]:#将需要计算的挑选出来
+                                        if len(list1) == 3:
+                                            # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])
+                                        elif len(list1) == 2:
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)/float(list1[1])
+                                    else:
+                                        if 'Date-%s'%rusultList[i] in resultRows.keys():#根据是否含有该索引填写日期
+                                            ws.Cells(resultRows['Date-%s'%rusultList[i]], c).Value = fileDate
+                                        ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = rusultList3[i]
+                                    c += 1
+                    self.textBrowser.append("完成%s QC填写"%fileDate)
+                self.lineEdit_6.setText("完成QC填写")
+
 
     def resultZjyToTxt(self):
-        for files in selectResultFile[0]:  # 遍历所有文件
-            # print(os.path.split(files))
-            fileName = os.path.split(files)[1]  # 文件名
-            self.textBrowser.append("正在进行%s ECO ZJY转换" % fileName)
-            app.processEvents()
-            filePath = files
-            folder = os.path.exists(configContent['ECO_Result_Output_URL'] + '\\' + today)
-            # print(folder)
-            if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-                os.makedirs(configContent['ECO_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
-            filePath2 = configContent['ECO_Result_Output_URL'] + '\\' + today + '\\' + fileName
-            with open(filePath, "r", encoding="utf-8") as f1, open(filePath2, "w", encoding="utf-8") as f2:
-                for line in f1:
-                    oldStr = re.findall("\d{1,2}.\d{1,4}E.*\d{1,4} ug/l", line)
-                    # print(line)
-                    # print(oldStr)
-                    if oldStr != []:
-                        newStr = '    ' + str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
-                        # print(newStr)
-                        line = line.replace(oldStr[0], newStr)
-                    f2.write(line)
-            self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
-            app.processEvents()
-        self.lineEdit_6.setText("完成ECO ZJY转换")
+        try:
+            selectResultFile[0]
+        except NameError:
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self,'ICP')
+            else:
+                self.lineEdit_6.setText("请重新选择ECO ZJY Result数据文件")
+                self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据")
+        else:
+            if selectResultFile[0] == []:
+                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.Yes)
+                if reply == QMessageBox.Yes:
+                    Ui_MainWindow.getResult(self, 'ICP')
+                    self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据处理")
+                else:
+                    self.lineEdit_6.setText("请重新选择Result数据文件")
+                    self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据")
+            else:
+                for files in selectResultFile[0]:  # 遍历所有文件
+                    # print(os.path.split(files))
+                    fileName = os.path.split(files)[1]  # 文件名
+                    self.textBrowser.append("正在进行%s ECO ZJY转换" % fileName)
+                    app.processEvents()
+                    filePath = files
+                    folder = os.path.exists(configContent['ECO_Result_Output_URL'] + '\\' + today)
+                    # print(folder)
+                    if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+                        os.makedirs(configContent['ECO_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                    filePath2 = configContent['ECO_Result_Output_URL'] + '\\' + today + '\\' + fileName
+                    with open(filePath, "r", encoding="utf-8") as f1, open(filePath2, "w", encoding="utf-8") as f2:
+                        for line in f1:
+                            oldStr = re.findall("\d{1,2}.\d{1,4}E.*\d{1,4} ug/l", line)
+                            # print(line)
+                            # print(oldStr)
+                            if oldStr != []:
+                                newStr = '    ' + str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
+                                # print(newStr)
+                                line = line.replace(oldStr[0], newStr)
+                            f2.write(line)
+                    self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
+                    app.processEvents()
+                self.lineEdit_6.setText("完成ECO ZJY转换")
 
 
     def getReachMessage(self):
@@ -1677,7 +1823,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             reachLimsNo
         except NameError:
-            self.lineEdit_6.setText("请点击获取Reach信息")
+            reply = QMessageBox.question(self, '信息', '是否需要获取Reach信息文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getReachMessage(self)
+                self.lineEdit_6.setText("请继续点击搜索按钮以搜索Reach信息")
+            else:
+                self.lineEdit_6.setText("请点击获取按钮以取得Reach信息")
         else:
             reachContent = self.lineEdit_4.text()
             reachNum = self.spinBox_6.text()
