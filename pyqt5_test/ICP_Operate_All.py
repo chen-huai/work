@@ -816,7 +816,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_34.clicked.connect(lambda: self.getResult('ICP'))
         self.pushButton_43.clicked.connect(lambda: self.getResult('UV'))
         self.pushButton_31.clicked.connect(self.aasResult)
-        self.pushButton_32.clicked.connect(self.tabWidget.close)
+        self.pushButton_32.clicked.connect(self.resultZjyToTxt)
         self.pushButton_38.clicked.connect(self.reachResult)
         self.pushButton_39.clicked.connect(self.tabWidget.close)
         self.pushButton_7.clicked.connect(lambda: self.getData(self.pushButton_7))
@@ -1592,9 +1592,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             rusultList = list(csvFile['A'])
             rusultList2 = list(csvFile['D'])
             rusultList3 = list(csvFile['E'])
-            print(resultRows)
+            # print(resultRows)
             for num in resultRows:
-                print(num,resultRows[num])
+                # print(num,resultRows[num])
                 if 'Date' in num:#跳过填写日期的行
                     continue
                 else:
@@ -1622,6 +1622,31 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser.append("完成%s QC填写"%fileDate)
         self.lineEdit_6.setText("完成QC填写")
 
+    def resultZjyToTxt(self):
+        for files in selectResultFile[0]:  # 遍历所有文件
+            print(os.path.split(files))
+            fileName = os.path.split(files)[1]  # 文件名
+            self.textBrowser.append("正在进行%s ECO ZJY转换" % fileName)
+            app.processEvents()
+            filePath = files
+            folder = os.path.exists(configContent['ECO_Result_Output_URL'] + '\\' + today)
+            print(folder)
+            if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+                os.makedirs(configContent['ECO_Result_Output_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+            filePath2 = configContent['ECO_Result_Output_URL'] + '\\' + today + '\\' + fileName
+            with open(filePath, "r", encoding="utf-8") as f1, open(filePath2, "w", encoding="utf-8") as f2:
+                for line in f1:
+                    oldStr = re.findall("\d{1,2}.\d{1,4}E.*\d{1,4} ug/l", line)
+                    # print(line)
+                    # print(oldStr)
+                    if oldStr != []:
+                        newStr = '    ' + str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
+                        # print(newStr)
+                        line = line.replace(oldStr[0], newStr)
+                    f2.write(line)
+            self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
+            app.processEvents()
+        self.lineEdit_6.setText("完成ECO ZJY转换")
     # 自动填写-填写内容
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
@@ -1803,6 +1828,7 @@ if __name__ == "__main__":
     import random
     import pyautogui
     import pandas as pd
+    import re
     import win32com.client as win32com
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
