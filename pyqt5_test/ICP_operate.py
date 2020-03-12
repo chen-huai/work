@@ -981,6 +981,9 @@ if __name__ == "__main__":
     import time
     import random
     import pyautogui
+    import pandas as pd
+    import re
+    import win32com.client as win32com
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app

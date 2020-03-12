@@ -527,30 +527,7 @@
           <string>Reach Message</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="lineEdit_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="statusTip">
-             <string>输入Reach物质的内容</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_40">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>物质编号</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
+          <item row="0" column="3">
            <widget class="QSpinBox" name="spinBox_6">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -566,7 +543,24 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="0" column="2">
+           <widget class="QPushButton" name="pushButton_40">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>物质编号</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="4">
+           <widget class="QTextBrowser" name="textBrowser_2">
+            <property name="statusTip">
+             <string>物质信息显示区域</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
            <widget class="QPushButton" name="pushButton_37">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -579,13 +573,6 @@
             </property>
             <property name="text">
              <string>搜索</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QTextBrowser" name="textBrowser_2">
-            <property name="statusTip">
-             <string>物质信息显示区域</string>
             </property>
            </widget>
           </item>
@@ -606,12 +593,35 @@
            </widget>
           </item>
           <item row="1" column="1">
+           <widget class="QPushButton" name="pushButton_51">
+            <property name="statusTip">
+             <string>将所有之前查找的信息清除</string>
+            </property>
+            <property name="text">
+             <string>清零</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
            <widget class="QPushButton" name="pushButton_50">
             <property name="statusTip">
              <string>获取Reach物质信息</string>
             </property>
             <property name="text">
              <string>获取</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLineEdit" name="lineEdit_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>输入Reach物质的内容</string>
             </property>
            </widget>
           </item>
@@ -1056,6 +1066,47 @@
           <string>UV Operate</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="3">
+           <widget class="QPushButton" name="pushButton_44">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID以甲醛格式生成TXT格式</string>
+            </property>
+            <property name="text">
+             <string>Formal Batch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="2" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>选择Barch的文件信息</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" rowspan="3">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton_39">
             <property name="enabled">
@@ -1098,15 +1149,8 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2" rowspan="3">
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="pushButton_44">
+          <item row="8" column="3">
+           <widget class="QPushButton" name="pushButton_48">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1119,44 +1163,10 @@
              </font>
             </property>
             <property name="statusTip">
-             <string>获取Sample ID以甲醛格式生成TXT格式</string>
+             <string>填写pH QC Chart</string>
             </property>
             <property name="text">
-             <string>Formal Batch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" rowspan="2" colspan="2">
-           <widget class="QTextBrowser" name="textBrowser_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="statusTip">
-             <string>选择Barch的文件信息</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="pushButton_46">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID以六价铬格式生成TXT格式</string>
-            </property>
-            <property name="text">
-             <string>Cr VI Batch</string>
+             <string>pH QC 2014</string>
             </property>
            </widget>
           </item>
@@ -1209,6 +1219,13 @@
             </property>
            </widget>
           </item>
+          <item row="4" column="2" rowspan="5">
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="1">
            <widget class="QPushButton" name="pushButton_43">
             <property name="sizePolicy">
@@ -1230,10 +1247,24 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2" rowspan="4">
-           <widget class="Line" name="line_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="1" column="3">
+           <widget class="QPushButton" name="pushButton_46">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID以六价铬格式生成TXT格式</string>
+            </property>
+            <property name="text">
+             <string>Cr VI Batch</string>
             </property>
            </widget>
           </item>
@@ -1275,7 +1306,7 @@
             </item>
            </widget>
           </item>
-          <item row="5" column="0" rowspan="3" colspan="2">
+          <item row="5" column="0" rowspan="4" colspan="2">
            <widget class="QTextBrowser" name="textBrowser_5">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
@@ -1331,7 +1362,7 @@
            </widget>
           </item>
           <item row="7" column="3">
-           <widget class="QPushButton" name="pushButton_48">
+           <widget class="QPushButton" name="pushButton_52">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1341,13 +1372,12 @@
             <property name="font">
              <font>
               <pointsize>12</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
-            <property name="statusTip">
-             <string>填写pH QC Chart</string>
-            </property>
             <property name="text">
-             <string>pH QC</string>
+             <string>pH QC 2018</string>
             </property>
            </widget>
           </item>
@@ -2086,6 +2116,166 @@
     <hint type="destinationlabel">
      <x>373</x>
      <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_51</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_2</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_41</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_4</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_43</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_5</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_44</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_4</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_46</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_4</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>436</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_45</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_4</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>325</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_47</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_5</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>431</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_49</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_5</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>416</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_52</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_5</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>380</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>325</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_48</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser_5</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>330</y>
     </hint>
    </hints>
   </connection>

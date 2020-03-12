@@ -14,6 +14,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(534, 442)
+        global icon
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -293,18 +294,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tab_2.setObjectName("tab_2")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.tab_2)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.tab_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
-        self.lineEdit_4.setSizePolicy(sizePolicy)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.gridLayout_3.addWidget(self.lineEdit_4, 0, 0, 1, 1)
-        self.pushButton_40 = QtWidgets.QPushButton(self.tab_2)
-        self.pushButton_40.setEnabled(False)
-        self.pushButton_40.setObjectName("pushButton_40")
-        self.gridLayout_3.addWidget(self.pushButton_40, 0, 1, 1, 1)
         self.spinBox_6 = QtWidgets.QSpinBox(self.tab_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -313,7 +302,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.spinBox_6.setSizePolicy(sizePolicy)
         self.spinBox_6.setMaximum(999999999)
         self.spinBox_6.setObjectName("spinBox_6")
-        self.gridLayout_3.addWidget(self.spinBox_6, 0, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.spinBox_6, 0, 3, 1, 1)
+        self.pushButton_40 = QtWidgets.QPushButton(self.tab_2)
+        self.pushButton_40.setEnabled(False)
+        self.pushButton_40.setObjectName("pushButton_40")
+        self.gridLayout_3.addWidget(self.pushButton_40, 0, 2, 1, 1)
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_2)
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.gridLayout_3.addWidget(self.textBrowser_2, 2, 0, 1, 4)
         self.pushButton_37 = QtWidgets.QPushButton(self.tab_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -321,19 +317,27 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         sizePolicy.setHeightForWidth(self.pushButton_37.sizePolicy().hasHeightForWidth())
         self.pushButton_37.setSizePolicy(sizePolicy)
         self.pushButton_37.setObjectName("pushButton_37")
-        self.gridLayout_3.addWidget(self.pushButton_37, 1, 2, 1, 1)
-        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_2)
-        self.textBrowser_2.setObjectName("textBrowser_2")
-        self.gridLayout_3.addWidget(self.textBrowser_2, 2, 0, 1, 3)
+        self.gridLayout_3.addWidget(self.pushButton_37, 1, 3, 1, 1)
         self.lineEdit_5 = QtWidgets.QLineEdit(self.tab_2)
         self.lineEdit_5.setEnabled(False)
         self.lineEdit_5.setText("")
         self.lineEdit_5.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.gridLayout_3.addWidget(self.lineEdit_5, 1, 0, 1, 1)
+        self.pushButton_51 = QtWidgets.QPushButton(self.tab_2)
+        self.pushButton_51.setObjectName("pushButton_51")
+        self.gridLayout_3.addWidget(self.pushButton_51, 1, 1, 1, 1)
         self.pushButton_50 = QtWidgets.QPushButton(self.tab_2)
         self.pushButton_50.setObjectName("pushButton_50")
-        self.gridLayout_3.addWidget(self.pushButton_50, 1, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.pushButton_50, 1, 2, 1, 1)
+        self.lineEdit_4 = QtWidgets.QLineEdit(self.tab_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
+        self.lineEdit_4.setSizePolicy(sizePolicy)
+        self.lineEdit_4.setObjectName("lineEdit_4")
+        self.gridLayout_3.addWidget(self.lineEdit_4, 0, 0, 1, 2)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -586,6 +590,30 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tab_4.setObjectName("tab_4")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.tab_4)
         self.gridLayout_5.setObjectName("gridLayout_5")
+        self.pushButton_44 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_44.sizePolicy().hasHeightForWidth())
+        self.pushButton_44.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_44.setFont(font)
+        self.pushButton_44.setObjectName("pushButton_44")
+        self.gridLayout_5.addWidget(self.pushButton_44, 0, 3, 1, 1)
+        self.textBrowser_4 = QtWidgets.QTextBrowser(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_4.sizePolicy().hasHeightForWidth())
+        self.textBrowser_4.setSizePolicy(sizePolicy)
+        self.textBrowser_4.setObjectName("textBrowser_4")
+        self.gridLayout_5.addWidget(self.textBrowser_4, 1, 0, 2, 2)
+        self.line_3 = QtWidgets.QFrame(self.tab_4)
+        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_3.setObjectName("line_3")
+        self.gridLayout_5.addWidget(self.line_3, 0, 2, 3, 1)
         self.pushButton_39 = QtWidgets.QPushButton(self.tab_4)
         self.pushButton_39.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -609,41 +637,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_41.setFont(font)
         self.pushButton_41.setObjectName("pushButton_41")
         self.gridLayout_5.addWidget(self.pushButton_41, 0, 1, 1, 1)
-        self.line_3 = QtWidgets.QFrame(self.tab_4)
-        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_3.setObjectName("line_3")
-        self.gridLayout_5.addWidget(self.line_3, 0, 2, 3, 1)
-        self.pushButton_44 = QtWidgets.QPushButton(self.tab_4)
+        self.pushButton_48 = QtWidgets.QPushButton(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_44.sizePolicy().hasHeightForWidth())
-        self.pushButton_44.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_48.sizePolicy().hasHeightForWidth())
+        self.pushButton_48.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.pushButton_44.setFont(font)
-        self.pushButton_44.setObjectName("pushButton_44")
-        self.gridLayout_5.addWidget(self.pushButton_44, 0, 3, 1, 1)
-        self.textBrowser_4 = QtWidgets.QTextBrowser(self.tab_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textBrowser_4.sizePolicy().hasHeightForWidth())
-        self.textBrowser_4.setSizePolicy(sizePolicy)
-        self.textBrowser_4.setObjectName("textBrowser_4")
-        self.gridLayout_5.addWidget(self.textBrowser_4, 1, 0, 2, 2)
-        self.pushButton_46 = QtWidgets.QPushButton(self.tab_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_46.sizePolicy().hasHeightForWidth())
-        self.pushButton_46.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.pushButton_46.setFont(font)
-        self.pushButton_46.setObjectName("pushButton_46")
-        self.gridLayout_5.addWidget(self.pushButton_46, 1, 3, 1, 1)
+        self.pushButton_48.setFont(font)
+        self.pushButton_48.setObjectName("pushButton_48")
+        self.gridLayout_5.addWidget(self.pushButton_48, 8, 3, 1, 1)
         self.pushButton_45 = QtWidgets.QPushButton(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -672,6 +676,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_42.setFont(font)
         self.pushButton_42.setObjectName("pushButton_42")
         self.gridLayout_5.addWidget(self.pushButton_42, 4, 0, 1, 1)
+        self.line_4 = QtWidgets.QFrame(self.tab_4)
+        self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_4.setObjectName("line_4")
+        self.gridLayout_5.addWidget(self.line_4, 4, 2, 5, 1)
         self.pushButton_43 = QtWidgets.QPushButton(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -683,11 +692,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_43.setFont(font)
         self.pushButton_43.setObjectName("pushButton_43")
         self.gridLayout_5.addWidget(self.pushButton_43, 4, 1, 1, 1)
-        self.line_4 = QtWidgets.QFrame(self.tab_4)
-        self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_4.setObjectName("line_4")
-        self.gridLayout_5.addWidget(self.line_4, 4, 2, 4, 1)
+        self.pushButton_46 = QtWidgets.QPushButton(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_46.sizePolicy().hasHeightForWidth())
+        self.pushButton_46.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_46.setFont(font)
+        self.pushButton_46.setObjectName("pushButton_46")
+        self.gridLayout_5.addWidget(self.pushButton_46, 1, 3, 1, 1)
         self.comboBox_2 = QtWidgets.QComboBox(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -710,7 +725,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         sizePolicy.setHeightForWidth(self.textBrowser_5.sizePolicy().hasHeightForWidth())
         self.textBrowser_5.setSizePolicy(sizePolicy)
         self.textBrowser_5.setObjectName("textBrowser_5")
-        self.gridLayout_5.addWidget(self.textBrowser_5, 5, 0, 3, 2)
+        self.gridLayout_5.addWidget(self.textBrowser_5, 5, 0, 4, 2)
         self.pushButton_47 = QtWidgets.QPushButton(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -733,17 +748,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_49.setFont(font)
         self.pushButton_49.setObjectName("pushButton_49")
         self.gridLayout_5.addWidget(self.pushButton_49, 6, 3, 1, 1)
-        self.pushButton_48 = QtWidgets.QPushButton(self.tab_4)
+        self.pushButton_52 = QtWidgets.QPushButton(self.tab_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_48.sizePolicy().hasHeightForWidth())
-        self.pushButton_48.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_52.sizePolicy().hasHeightForWidth())
+        self.pushButton_52.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.pushButton_48.setFont(font)
-        self.pushButton_48.setObjectName("pushButton_48")
-        self.gridLayout_5.addWidget(self.pushButton_48, 7, 3, 1, 1)
+        font.setBold(False)
+        font.setWeight(50)
+        self.pushButton_52.setFont(font)
+        self.pushButton_52.setObjectName("pushButton_52")
+        self.gridLayout_5.addWidget(self.pushButton_52, 7, 3, 1, 1)
         self.tabWidget.addTab(self.tab_4, "")
         self.verticalLayout.addWidget(self.tabWidget)
         self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
@@ -797,6 +814,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menuHelp.menuAction())
 
 
+
         # 需要拷贝部分
         QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
@@ -846,6 +864,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.actionAuthor.triggered.connect(self.showAuthorMessage)
         self.pushButton_26.clicked.connect(self.spinBox_4.clear)
         self.pushButton_50.clicked.connect(self.getReachMessage)
+        self.pushButton_51.clicked.connect(self.textBrowser_2.clear)
+        self.pushButton_41.clicked.connect(self.textBrowser_4.clear)
+        self.pushButton_43.clicked.connect(self.textBrowser_5.clear)
+        self.pushButton_44.clicked.connect(self.textBrowser_4.clear)
+        self.pushButton_46.clicked.connect(self.textBrowser_4.clear)
+        self.pushButton_45.clicked.connect(self.textBrowser_4.clear)
+        self.pushButton_47.clicked.connect(self.textBrowser_5.clear)
+        self.pushButton_49.clicked.connect(self.textBrowser_5.clear)
+        self.pushButton_52.clicked.connect(self.textBrowser_5.clear)
+        self.pushButton_48.clicked.connect(self.textBrowser_5.clear)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # 初始化，获取或生成配置文件
@@ -914,12 +943,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                              'AAS_Result_Import_URL',
                              'AAS_Result_Export_URL', 'ECO_Result_Import_URL', 'ECO_Result_Export_URL',
                              'ICP_QC_Chart_Import_URL',
-                             'ICP_QC_Chart_File_Name', 'Reach_Result_Import_URL', 'Reach_Result_File_Name','Reach_Result_Export_URL',
-                             'Reach_Message_Import_URL', 'Reach_Message_File_Name','选择UV_Batch的输入路径和结果输出路径',
-                             'UV_Batch_Import_URL','UV_Batch_Export_URL','UV_Rusult_Export_URL',
-                             '选择UV_Result的输入路径和结果输出路径','UV_QC_Chart_Import_URL','Formal_QC_Chart_File_Name',
-                             'Cr_VI_QC_Chart_File_Name','pH2014_QC_Chart_File_Name','pH2018_QC_Chart_File_Name',
-                             'Formal_Result_Import_URL','Cr_VI_Result_Import_URL','pH2014_Result_Import_URL',
+                             'ICP_QC_Chart_File_Name', 'Reach_Result_Import_URL', 'Reach_Result_File_Name',
+                             'Reach_Result_Export_URL',
+                             'Reach_Message_Import_URL', 'Reach_Message_File_Name', '选择UV_Batch的输入路径和结果输出路径',
+                             'UV_Batch_Import_URL', 'UV_Batch_Export_URL', 'UV_Rusult_Export_URL',
+                             '选择UV_Result的输入路径和结果输出路径', 'UV_QC_Chart_Import_URL', 'Formal_QC_Chart_File_Name',
+                             'Cr_VI_QC_Chart_File_Name', 'pH2014_QC_Chart_File_Name', 'pH2018_QC_Chart_File_Name',
+                             'Formal_Result_Import_URL', 'Cr_VI_Result_Import_URL', 'pH2014_Result_Import_URL',
                              'pH2018_Result_Import_URL']
         configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
                          'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
@@ -932,37 +962,42 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                          'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
                          'Z:\\QC Chart\\%s' % now,
                          'QC Chart_Heavy Metal -66-01-2018-012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-                         'SVHC-DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
-                         'REACH_SVHC_Candidate_List.csv','默认，可更改为自己需要的',
-                         'Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Batch','Z:\\Inorganic_batch\\Formaldehyde\\Result',
-                         '默认，可更改为自己需要的','Z:\\QC Chart\\%s'% now,'QC Chart_HCHO_66-01-2016-051 CARY60.xlsx',
-                         'QC Chart_Cr_66-01-2013-011 CARY100.xlsx','QC Chart_pH_66-01-2014-015.xlsx',
-                         'QC Chart_pH_66-01-2018-006.xlsx','Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal'% now,
-                         'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data'% now,'Z:\\Data\\%s\\66-01-2014-015 pH'% now,
-                         'Z:\\Data\\%s\\66-01-2018-006 pH'% now]
+                         'SVHC-DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+                         'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
+                         'REACH_SVHC_Candidate_List.csv', '默认，可更改为自己需要的',
+                         'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
+                         'Z:\\Inorganic_batch\\Formaldehyde\\Result',
+                         '默认，可更改为自己需要的', 'Z:\\QC Chart\\%s' % now, 'QC Chart_HCHO_66-01-2016-051 CARY60.xlsx',
+                         'QC Chart_Cr_66-01-2013-011 CARY100.xlsx', 'QC Chart_pH_66-01-2014-015.xlsx',
+                         'QC Chart_pH_66-01-2018-006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
+                         'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now,
+                         'Z:\\Data\\%s\\66-01-2014-015 pH' % now,
+                         'Z:\\Data\\%s\\66-01-2018-006 pH' % now]
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
             f1.write(configContentName[i] + '||||||' + configContent[i] + '\n')
             i += 1
         self.lineEdit_6.setText("配置文件创建成功")
-        QMessageBox.information(self, "提示信息", "默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",QMessageBox.Yes)
+        QMessageBox.information(self, "提示信息",
+                                "默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
+                                QMessageBox.Yes)
 
     # 重新导出默认配置文件
     def exportConfig(self):
-            reply = QMessageBox.question(self, '信息', '确认是否要创建默认配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                Ui_MainWindow.createConfigContent(self)
-            else:
-                QMessageBox.information(self, "提示信息", "没有创建默认配置文件，保留原有的配置文件", QMessageBox.Yes)
+        reply = QMessageBox.question(self, '信息', '确认是否要创建默认配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+        if reply == QMessageBox.Yes:
+            Ui_MainWindow.createConfigContent(self)
+        else:
+            QMessageBox.information(self, "提示信息", "没有创建默认配置文件，保留原有的配置文件", QMessageBox.Yes)
 
     # 重新导入配置文件
     def importConfig(self):
-            reply = QMessageBox.question(self, '信息', '确认是否要导入配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                Ui_MainWindow.getConfigContent(self)
-            else:
-                QMessageBox.information(self, "提示信息", "没有重新导入配置文件，将按照原有的配置文件操作",QMessageBox.Yes)
+        reply = QMessageBox.question(self, '信息', '确认是否要导入配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+        if reply == QMessageBox.Yes:
+            Ui_MainWindow.getConfigContent(self)
+        else:
+            QMessageBox.information(self, "提示信息", "没有重新导入配置文件，将按照原有的配置文件操作", QMessageBox.Yes)
 
     def showAuthorMessage(self):
         QMessageBox.about(self, "关于",
@@ -984,11 +1019,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         analyteList = []
         batchNum = []
         if messages == 'ICP':
-            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Import_URL'],
-                                                       'Wrod files(*.doc*)')
+            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
+                                                           '%s' % configContent['ICP_Batch_Import_URL'],
+                                                           'Wrod files(*.doc*)')
         elif messages == 'UV':
-            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['UV_Batch_Import_URL'],
-                                                       'Wrod files(*.doc*)')
+            selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
+                                                           '%s' % configContent['UV_Batch_Import_URL'],
+                                                           'Wrod files(*.doc*)')
         else:
             selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
                                                            '%s' % configContent['ICP_Batch_Import_URL'],
@@ -1055,9 +1092,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             for i in range(len(labNumber)):
                 # print(analyteList[i],qualityValue[i])
                 if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
-                    f1.write('%sA'%labNumber[i] + '\n')
-                    f1.write('%sB'%labNumber[i] + '\n')
-                    f1.write('%sC'%labNumber[i] + '\n')
+                    f1.write('%sA' % labNumber[i] + '\n')
+                    f1.write('%sB' % labNumber[i] + '\n')
+                    f1.write('%sC' % labNumber[i] + '\n')
                     i += 1
                 else:
                     f1.write(labNumber[i] + '\n')
@@ -1129,7 +1166,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     excel.Visible = 0
                     excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
                     wb = excel.Workbooks.Open(
-                        os.path.join(os.getcwd(), r'%s/%s' % (configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+                        os.path.join(os.getcwd(), r'%s/%s' % (
+                        configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
                     ws = wb.Worksheets('Data')
                     n = 2
                     num = []
@@ -1141,22 +1179,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     n = 2
                     for each in labNumber:
                         if i < len(labNumber):
-                            if (i+1)%num[-1] != 0:
+                            if (i + 1) % num[-1] != 0:
                                 ws.Cells(n, 2).Value = each
                                 n += 1
                                 i += 1
                             else:
                                 ws.Cells(n, 2).Value = each
-                                wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'],today,m))
+                                wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
                                 n = 2
                                 i += 1
                                 m += 1
                                 wb = excel.Workbooks.Open(
                                     os.path.join(os.getcwd(), r'%s/%s' % (
-                                    configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+                                        configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
                                 ws = wb.Worksheets('Data')
-                    if (i+1)%num[-1] != 1:
-                        wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'],today,m))
+                    if (i + 1) % num[-1] != 1:
+                        wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
                     excel.Quit()
                     self.textBrowser_3.append("完成镍释放Batch转化")
                     self.lineEdit_6.setText("完成镍释放Batch转化")
@@ -1259,9 +1297,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         n += 1
                         i += 1
                 else:
-                    excel.Application.DisplayAlerts = False#False为另存为自动保存，True为弹出提示保存
+                    excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
                     wb = excel.Workbooks.Open(
-                        os.path.join(os.getcwd(), r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
+                        os.path.join(os.getcwd(),
+                                     r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
                     ws = wb.Worksheets('Sheet1')
                     i = 0
                     n = 1
@@ -1299,8 +1338,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         n += 1
                         i += 1
                 list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
-                list2 = ['MDL(ug/L)', 2,0.8,0.4,2,2,2,0.8,0.08,2,2,2]
-                list3 = ['Limit(mg/kg)','<5','<0.2','<0.1','<1','<1','<25','0.8','<0.02','<1','<1000','<500']
+                list2 = ['MDL(ug/L)', 2, 0.8, 0.4, 2, 2, 2, 0.8, 0.08, 2, 2, 2]
+                list3 = ['Limit(mg/kg)', '<5', '<0.2', '<0.1', '<1', '<1', '<25', '0.8', '<0.02', '<1', '<1000', '<500']
                 i = 0
                 n += 1
                 for i in range(len(list1)):
@@ -1329,7 +1368,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                Ui_MainWindow.getBatch(self,'ICP')
+                Ui_MainWindow.getBatch(self, 'ICP')
                 self.textBrowser_3.append("请重新点击ECO ZXD按钮开始数据处理")
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
@@ -1351,7 +1390,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 excel = win32com.gencache.EnsureDispatch('Excel.Application')
                 excel.Visible = 0
                 if not ecoFile:
-                    wb=excel.Workbooks.Add()
+                    wb = excel.Workbooks.Add()
                     ws = wb.Worksheets('Sheet1')
                     # 创建Batch单号
                     ws.Columns(1).ColumnWidth = 3  # 列宽。
@@ -1375,7 +1414,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     for m in range(2):
                         x = 0
                         for x in range(7):
-                            ws.Cells(m + 1, x + 1).BorderAround(1,2)  # 表格边框
+                            ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
                             ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
                             x += 1
                         m += 1
@@ -1400,7 +1439,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     wb.Worksheets.Add()
                     ws2 = excel.Worksheets('Sheet2')
                     ws2.Cells(1, 1).Value = '1.'
-                    ws2.Cells(1, 1).HorizontalAlignment = -4108 #居中
+                    ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
                     ws2.Cells(1, 2).Value = 'BLK'
                     ws2.Cells(1, 2).HorizontalAlignment = -4108
                     ws2.Rows(1).RowHeight = 33.8  # 行高
@@ -1418,7 +1457,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         i += 1
                 else:
                     excel.Application.DisplayAlerts = False
-                    wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
+                    wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (
+                    configContent['ECO_Batch_Export_URL'], today)))
                     ws = wb.Worksheets('Sheet1')
                     i = 0
                     n = 1
@@ -1460,7 +1500,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
                 list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
                 i = 0
-                n +=1
+                n += 1
                 for i in range(len(list1)):
                     ws.Cells(n, 2).Value = '%s' % list1[i]
                     ws.Cells(n, 3).Value = '%s' % list2[i]
@@ -1570,11 +1610,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.lineEdit_6.setText("正在进行ICP文件转换为TXT")
                     fileName = os.path.split(fileUrl)[1]
                     app.processEvents()
-                    csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
+                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
                     csvFile = csvFile.drop(['C'], axis=1)
                     csvLine = csvFile.iloc[0]  # 获取行索引为1数据
-                    csvLine.replace(['标签','类型','元素标签','浓度','单位'],['Solution Label','Type','Element','Soln Conc','Units'],inplace=True)
-                    csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Export_URL'],fileName),sep='\t',index=None,header=None)
+                    csvLine.replace(['标签', '类型', '元素标签', '浓度', '单位'],
+                                    ['Solution Label', 'Type', 'Element', 'Soln Conc', 'Units'], inplace=True)
+                    csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Export_URL'], fileName), sep='\t',
+                                   index=None, header=None)
                     self.textBrowser.append("完成ICP文件转换为TXT")
                     self.lineEdit_6.setText("完成ICP文件转换为TXT")
 
@@ -1587,7 +1629,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                Ui_MainWindow.getBatch(self,'ICP')
+                Ui_MainWindow.getBatch(self, 'ICP')
                 self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
             else:
                 self.lineEdit_6.setText("请重新选择Reach Batch数据文件")
@@ -1599,7 +1641,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                Ui_MainWindow.getResult(self,'ICP')
+                Ui_MainWindow.getResult(self, 'ICP')
                 self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
             else:
                 self.lineEdit_6.setText("请重新选择Reach Result数据文件")
@@ -1618,7 +1660,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             file = configContent['Reach_Result_Import_URL'] + '\\' + configContent['Reach_Result_File_Name']
             folder1 = os.path.exists(file)
             if not folder1:
-                QMessageBox.information(self, "无Reach模板", "没有Reach结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Result_Import_URL,Reach_Result_File_Name\nReach结果模板的文件路径、文件名称和Excel格式",QMessageBox.Yes)
+                QMessageBox.information(self, "无Reach模板",
+                                        "没有Reach结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Result_Import_URL,Reach_Result_File_Name\nReach结果模板的文件路径、文件名称和Excel格式",
+                                        QMessageBox.Yes)
             # 判断Reach存储路径是否存在
             fileUrl = configContent['Reach_Result_Export_URL']
             folder2 = os.path.exists(fileUrl)
@@ -1635,7 +1679,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 excel = win32com.gencache.EnsureDispatch('Excel.Application')
                 excel.Visible = 0
                 excel.Application.DisplayAlerts = True
-                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (configContent['Reach_Result_Import_URL'],configContent['Reach_Result_File_Name'])))
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+                configContent['Reach_Result_Import_URL'], configContent['Reach_Result_File_Name'])))
                 ws = wb.Worksheets('Data')
                 elements = []
                 resultRows = []
@@ -1662,7 +1707,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 startNum = int(self.spinBox_3.text())
                 endNum = int(self.spinBox_2.text())
                 if resultLabnumber == []:
-                    reply = QMessageBox.question(self, '信息', 'Batch中没有Reach方法，是否需要重新选择Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                    reply = QMessageBox.question(self, '信息', 'Batch中没有Reach方法，是否需要重新选择Batch数据文件',
+                                                 QMessageBox.Yes | QMessageBox.No,
                                                  QMessageBox.Yes)
                     if reply == QMessageBox.Yes:
                         Ui_MainWindow.getBatch(self, 'ICP')
@@ -1676,39 +1722,40 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     rusultList3 = []
                     rusultList4 = {}
                     for fileUrl in selectResultFile[0]:
-                        csvFile = pd.read_csv(fileUrl,header=0,names=['A','B','C','D','E','F','G','H'])
-                        csvFile.drop(['B','C','F','G','H'], axis=1,inplace=True)
+                        csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+                        csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
                         csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
                         csvFile = csvFile[csvFile['D'].isin(elements)]
                         rusultList += list(csvFile['A'])
                         rusultList2 += list(csvFile['D'])
                         rusultList3 += list(csvFile['E'])
-                    for num,each in enumerate(rusultList):
-                        rusultList4['%s-%s'%(rusultList[num],rusultList2[num])] = rusultList3[num]
-                    #填写excel模板文件
-                    if endNum == 0 or endNum > len(resultLabnumber) :
-                        m = len(resultLabnumber)-startNum+1
+                    for num, each in enumerate(rusultList):
+                        rusultList4['%s-%s' % (rusultList[num], rusultList2[num])] = rusultList3[num]
+                    # 填写excel模板文件
+                    if endNum == 0 or endNum > len(resultLabnumber):
+                        m = len(resultLabnumber) - startNum + 1
                     else:
-                        m = endNum-startNum+1
+                        m = endNum - startNum + 1
                     # print(m)
                     n = startNum - 1
                     # print(rusultList4)
                     # print(elements)
                     for i in range(m):
                         name = labNumber[n].replace("/", '_')
-                        self.textBrowser.append("%s:%s"%(n+1,labNumber[n]))
+                        self.textBrowser.append("%s:%s" % (n + 1, labNumber[n]))
                         app.processEvents()
-                        ws.Cells(2,2).Value = labNumber[n]
+                        ws.Cells(2, 2).Value = labNumber[n]
                         x = 0
                         for e in range(len(elements)):
                             # print(labNumber[n],elements[x])
-                            if '%s-%s'%(labNumber[n],elements[x]) in rusultList4.keys():
-                                if str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '未校正':
+                            if '%s-%s' % (labNumber[n], elements[x]) in rusultList4.keys():
+                                if str(rusultList4['%s-%s' % (labNumber[n], elements[x])]) == '未校正':
                                     ws.Cells(resultRows[x], 4).Value = '未校正'
-                                elif str(rusultList4['%s-%s'%(labNumber[n],elements[x])]) == '####':
+                                elif str(rusultList4['%s-%s' % (labNumber[n], elements[x])]) == '####':
                                     ws.Cells(resultRows[x], 4).Value = '超出'
                                 else:
-                                    ws.Cells(resultRows[x], 4).Value = float(rusultList4['%s-%s'%(labNumber[n],elements[x])]) * int(
+                                    ws.Cells(resultRows[x], 4).Value = float(
+                                        rusultList4['%s-%s' % (labNumber[n], elements[x])]) * int(
                                         resultVolumeValue[n]) / float(resultQualityValue[n])
                             else:
                                 ws.Cells(resultRows[x], 4).Value = '未走标准曲线'
@@ -1732,13 +1779,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             m += 1
                         folder = os.path.exists(configContent['Reach_Result_Export_URL'] + '\\' + today)
                         if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-                            os.makedirs(configContent['Reach_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
-                        fileName = configContent['Reach_Result_Export_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
+                            os.makedirs(
+                                configContent['Reach_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                        fileName = configContent[
+                                       'Reach_Result_Export_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
                         with open(fileName, "w", encoding="utf-8") as fileTxt:
                             for i in range(len(resultDcuOne)):
-                                lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
+                                lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(
+                                    resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(
+                                    resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
                                 fileTxt.write(lineTxt)
-                        wb.SaveAs('%s\\%s\\SVHC %s'%(configContent['Reach_Result_Export_URL'],today,name))
+                        wb.SaveAs('%s\\%s\\SVHC %s' % (configContent['Reach_Result_Export_URL'], today, name))
                         n += 1
                     excel.Quit()
                     self.textBrowser.append("完成Reach结果转换为TXT")
@@ -1757,7 +1808,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                Ui_MainWindow.getResult(self,'ICP')
+                Ui_MainWindow.getResult(self, 'ICP')
                 self.textBrowser.append("请重新点击MM QC Chart按钮开始数据处理")
             else:
                 self.lineEdit_6.setText("请重新选择ICP Result数据文件")
@@ -1776,7 +1827,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             file = configContent['ICP_QC_Chart_Import_URL'] + '\\' + configContent['ICP_QC_Chart_File_Name']
             folder = os.path.exists(file)
             if not folder:
-                QMessageBox.information(self, "无ICP QC模板", "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nICP_QC_Chart_Import_URL,ICP_QC_Chart_File_Name\nICP QC Chart的文件路径、文件名称和Excel格式",
+                QMessageBox.information(self, "无ICP QC模板",
+                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nICP_QC_Chart_Import_URL,ICP_QC_Chart_File_Name\nICP QC Chart的文件路径、文件名称和Excel格式",
                                         QMessageBox.Yes)
                 self.textBrowser.append("请更改配置文件并导入后，重新点击MM QC Chart按钮开始数据处理")
             else:
@@ -1784,7 +1836,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 excel.Visible = True
                 excel.Application.DisplayAlerts = True
                 wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-                configContent['ICP_QC_Chart_Import_URL'], configContent['ICP_QC_Chart_File_Name'])))
+                    configContent['ICP_QC_Chart_Import_URL'], configContent['ICP_QC_Chart_File_Name'])))
                 ws = wb.Worksheets('Data')
                 material = []
                 resultRows = {}
@@ -1794,7 +1846,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 while ws.Cells(n, 1).Value is not None:
                     material.append(ws.Cells(n, 2).Value)
                     elements.append(ws.Cells(n, 3).Value)
-                    resultRows['%s-%s'%(ws.Cells(n, 2).Value,ws.Cells(n, 3).Value)] = n
+                    resultRows['%s-%s' % (ws.Cells(n, 2).Value, ws.Cells(n, 3).Value)] = n
                     n += 1
                 # print(elements)
                 # 获取所需数据
@@ -1810,10 +1862,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         e = e + each
                     else:
                         e = e + each + '|'
-                for fileUrl in selectResultFile[0]:#遍历结果选择文件
+                for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
                     fileDate = os.path.split(fileUrl)[1].split('-')[0]
-                    self.textBrowser.append("正在进行%s QC填写"%fileDate)
-                    self.lineEdit_6.setText("正在进行%s QC填写"%fileDate)
+                    self.textBrowser.append("正在进行%s QC填写" % fileDate)
+                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
                     app.processEvents()
                     # 获取相关结果数据
                     csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
@@ -1826,31 +1878,36 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     # print(resultRows)
                     for num in resultRows:
                         # print(num,resultRows[num])
-                        if 'Date' in num:#跳过填写日期的行
+                        if 'Date' in num:  # 跳过填写日期的行
                             continue
                         else:
                             c = 6
                             while ws.Cells(resultRows[num], c).Value is not None:
                                 c += 1
-                            for i in range(len(rusultList)):#遍历结果列表
+                            for i in range(len(rusultList)):  # 遍历结果列表
                                 list1 = rusultList[i].split(',')
-                                if '%s-%s'%(list1[0],rusultList2[i]) in num:
-                                    if i+1<len(rusultList):
+                                if '%s-%s' % (list1[0], rusultList2[i]) in num:
+                                    if i + 1 < len(rusultList):
                                         # 相同的元素测试验证并跳过
-                                        if '%s-%s'%(rusultList[i],rusultList2[i]) == '%s-%s'%(rusultList[i+1],rusultList2[i+1]):
+                                        if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
+                                        rusultList[i + 1], rusultList2[i + 1]):
                                             continue
-                                    if ',' in rusultList[i]:#将需要计算的挑选出来
+                                    if ',' in rusultList[i]:  # 将需要计算的挑选出来
                                         if len(list1) == 3:
                                             # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
-                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(
+                                                rusultList3[i]) * int(float(list1[1]) * 250) * float(list1[2]) / float(
+                                                list1[1])
                                         elif len(list1) == 2:
-                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(rusultList3[i])*int(float(list1[1])*250)/float(list1[1])
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(
+                                                rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
                                     else:
-                                        if 'Date-%s'%rusultList[i] in resultRows.keys():#根据是否含有该索引填写日期
-                                            ws.Cells(resultRows['Date-%s'%rusultList[i]], c).Value = fileDate
-                                        ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = rusultList3[i]
+                                        if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
+                                        ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
+                                        rusultList3[i]
                                     c += 1
-                    self.textBrowser.append("完成%s QC填写"%fileDate)
+                    self.textBrowser.append("完成%s QC填写" % fileDate)
                 self.lineEdit_6.setText("完成QC填写")
 
     # 质检院结果科学计数法转化为自然数法
@@ -1862,7 +1919,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
-                Ui_MainWindow.getResult(self,'ICP')
+                Ui_MainWindow.getResult(self, 'ICP')
             else:
                 self.lineEdit_6.setText("请重新选择ECO ZJY Result数据文件")
                 self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据")
@@ -1889,7 +1946,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     # print(os.path.split(files))
                     fileName = os.path.split(files)[1]  # 文件名
                     if fileName.split('.')[-1] != 'txt':
-                        reply = QMessageBox.question(self, '信息', 'Result文件不是ECO质检院的TXT结果文件，\n是否需要获取ECO质检院Result数据文件，TXT格式', QMessageBox.Yes | QMessageBox.No,
+                        reply = QMessageBox.question(self, '信息',
+                                                     'Result文件不是ECO质检院的TXT结果文件，\n是否需要获取ECO质检院Result数据文件，TXT格式',
+                                                     QMessageBox.Yes | QMessageBox.No,
                                                      QMessageBox.Yes)
                         if reply == QMessageBox.Yes:
                             Ui_MainWindow.getResult(self, 'ICP')
@@ -1904,7 +1963,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         folder = os.path.exists(configContent['ECO_Result_Export_URL'] + '\\' + today)
                         # print(folder)
                         if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-                            os.makedirs(configContent['ECO_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                            os.makedirs(
+                                configContent['ECO_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
                         filePath2 = configContent['ECO_Result_Export_URL'] + '\\' + today + '\\' + fileName
                         with open(filePath, "r", encoding="utf-8") as f1, open(filePath2, "w", encoding="utf-8") as f2:
                             for line in f1:
@@ -1927,10 +1987,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         global reachChinese
         global reachCas
         global reachPurpose
-        file = configContent['Reach_Message_Import_URL']+'\\'+ configContent['Reach_Message_File_Name']
+        file = configContent['Reach_Message_Import_URL'] + '\\' + configContent['Reach_Message_File_Name']
         folder = os.path.exists(file)
         if not folder:
-            QMessageBox.information(self, "无Reach信息模板", "没有Reach信息文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式", QMessageBox.Yes)
+            QMessageBox.information(self, "无Reach信息模板",
+                                    "没有Reach信息文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式",
+                                    QMessageBox.Yes)
         else:
             reachMessage = pd.read_csv(file, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G'])
             reachLimsNo = list(reachMessage['B'])
@@ -1945,7 +2007,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             reachLimsNo
         except NameError:
-            reply = QMessageBox.question(self, '信息', '是否需要获取Reach信息文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            reply = QMessageBox.question(self, '信息', '是否需要获取Reach信息文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getReachMessage(self)
                 self.lineEdit_6.setText("请继续点击搜索按钮以搜索Reach信息")
@@ -1958,8 +2021,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             if (reachContent == '') and (reachNum == '0'):
                 self.lineEdit_6.setText("请输入需要查找Reach英文内容或者编号")
             else:
-                m='F'
-                if reachContent =='':
+                m = 'F'
+                if reachContent == '':
                     for n in range(len(reachLimsNo)):
                         if float(reachNum) == float(reachLimsNo[n]):
                             m = 'T'
@@ -1967,10 +2030,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     for n in range(len(reachEnglish)):
                         if (reachContent in reachEnglish[n]):
                             m = 'T'
-                else:#两者都不为空时匹配
+                else:  # 两者都不为空时匹配
                     for n in range(len(reachEnglish)):
                         if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
-                            m='T'
+                            m = 'T'
                 print(m)
                 if m == 'T':
                     for i in range(len(reachEnglish)):
@@ -2046,8 +2109,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             elif self.lineEdit.text() == 'Random':
                 for i in range(n):
                     if self.lineEdit.text() != 'stop':
-                        pyautogui.typewrite('%s' % random.randint(int(self.spinBox_4.text()), int(self.spinBox_5.text())),
-                                            0.0001)
+                        pyautogui.typewrite(
+                            '%s' % random.randint(int(self.spinBox_4.text()), int(self.spinBox_5.text())),
+                            0.0001)
                         pyautogui.typewrite(['Enter'])
                         app.processEvents()
                         time.sleep(0.1)
@@ -2066,7 +2130,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def randomAction(self):
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "操作界面"))
@@ -2107,15 +2170,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_21.setStatusTip(_translate("MainWindow", "获取Sample ID，并导出TXT"))
         self.pushButton_21.setText(_translate("MainWindow", "ICP Batch"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "ICP Operate"))
-        self.lineEdit_4.setStatusTip(_translate("MainWindow", "输入Reach物质的内容"))
-        self.pushButton_40.setText(_translate("MainWindow", "物质编号"))
         self.spinBox_6.setStatusTip(_translate("MainWindow", "Reach中Lims中的物质编号"))
+        self.pushButton_40.setText(_translate("MainWindow", "物质编号"))
+        self.textBrowser_2.setStatusTip(_translate("MainWindow", "物质信息显示区域"))
         self.pushButton_37.setStatusTip(_translate("MainWindow", "根据内容或编号查找Reach物质的信息"))
         self.pushButton_37.setText(_translate("MainWindow", "搜索"))
-        self.textBrowser_2.setStatusTip(_translate("MainWindow", "物质信息显示区域"))
         self.lineEdit_5.setStatusTip(_translate("MainWindow", "物质中文名字显示区域"))
+        self.pushButton_51.setStatusTip(_translate("MainWindow", "将所有之前查找的信息清除"))
+        self.pushButton_51.setText(_translate("MainWindow", "清零"))
         self.pushButton_50.setStatusTip(_translate("MainWindow", "获取Reach物质信息"))
         self.pushButton_50.setText(_translate("MainWindow", "获取"))
+        self.lineEdit_4.setStatusTip(_translate("MainWindow", "输入Reach物质的内容"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Reach Message"))
         self.pushButton_19.setText(_translate("MainWindow", "内容："))
         self.lineEdit.setStatusTip(_translate("MainWindow", "填写内容显示区域"))
@@ -2148,19 +2213,21 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
         self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
-        self.pushButton_39.setText(_translate("MainWindow", "信息："))
-        self.pushButton_41.setStatusTip(_translate("MainWindow", "选择需要获取的Batch"))
-        self.pushButton_41.setText(_translate("MainWindow", "选择Batch"))
         self.pushButton_44.setStatusTip(_translate("MainWindow", "获取Sample ID以甲醛格式生成TXT格式"))
         self.pushButton_44.setText(_translate("MainWindow", "Formal Batch"))
         self.textBrowser_4.setStatusTip(_translate("MainWindow", "选择Barch的文件信息"))
-        self.pushButton_46.setStatusTip(_translate("MainWindow", "获取Sample ID以六价铬格式生成TXT格式"))
-        self.pushButton_46.setText(_translate("MainWindow", "Cr VI Batch"))
+        self.pushButton_39.setText(_translate("MainWindow", "信息："))
+        self.pushButton_41.setStatusTip(_translate("MainWindow", "选择需要获取的Batch"))
+        self.pushButton_41.setText(_translate("MainWindow", "选择Batch"))
+        self.pushButton_48.setStatusTip(_translate("MainWindow", "填写pH QC Chart"))
+        self.pushButton_48.setText(_translate("MainWindow", "pH QC 2014"))
         self.pushButton_45.setStatusTip(_translate("MainWindow", "获取Sample ID以pH格式生成CSV格式"))
         self.pushButton_45.setText(_translate("MainWindow", "pH Batch"))
         self.pushButton_42.setText(_translate("MainWindow", "信息："))
         self.pushButton_43.setStatusTip(_translate("MainWindow", "选择Result文件"))
         self.pushButton_43.setText(_translate("MainWindow", "选择Result"))
+        self.pushButton_46.setStatusTip(_translate("MainWindow", "获取Sample ID以六价铬格式生成TXT格式"))
+        self.pushButton_46.setText(_translate("MainWindow", "Cr VI Batch"))
         self.comboBox_2.setStatusTip(_translate("MainWindow", "Result数据的选择路径"))
         self.comboBox_2.setItemText(0, _translate("MainWindow", "URL:Formal Result"))
         self.comboBox_2.setItemText(1, _translate("MainWindow", "URL:pH 2014 Result"))
@@ -2171,8 +2238,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_47.setText(_translate("MainWindow", "Formal QC"))
         self.pushButton_49.setStatusTip(_translate("MainWindow", "填写六价铬QC Chart"))
         self.pushButton_49.setText(_translate("MainWindow", "Cr VI QC"))
-        self.pushButton_48.setStatusTip(_translate("MainWindow", "填写pH QC Chart"))
-        self.pushButton_48.setText(_translate("MainWindow", "pH QC"))
+        self.pushButton_52.setText(_translate("MainWindow", "pH QC 2018"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "UV Operate"))
         self.menu.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
