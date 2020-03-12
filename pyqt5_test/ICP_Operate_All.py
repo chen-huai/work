@@ -867,14 +867,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_51.clicked.connect(self.textBrowser_2.clear)
         self.pushButton_41.clicked.connect(self.textBrowser_4.clear)
         self.pushButton_43.clicked.connect(self.textBrowser_5.clear)
-        self.pushButton_44.clicked.connect(self.textBrowser_4.clear)
-        self.pushButton_46.clicked.connect(self.textBrowser_4.clear)
-        self.pushButton_45.clicked.connect(self.textBrowser_4.clear)
-        self.pushButton_47.clicked.connect(self.textBrowser_5.clear)
-        self.pushButton_49.clicked.connect(self.textBrowser_5.clear)
-        self.pushButton_52.clicked.connect(self.textBrowser_5.clear)
-        self.pushButton_48.clicked.connect(self.textBrowser_5.clear)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.pushButton_44.clicked.connect(self.formalBatch)
+        self.pushButton_46.clicked.connect(self.phBatch)
+        self.pushButton_45.clicked.connect(self.crBatch)
+        self.pushButton_47.clicked.connect(self.uvQc)
+        self.pushButton_49.clicked.connect(self.uvQc)
+        self.pushButton_52.clicked.connect(self.phQc)
+        self.pushButton_48.clicked.connect(self.phQc)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # 初始化，获取或生成配置文件
@@ -954,22 +953,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
                          'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
                          'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
-                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm', '默认，可更改为自己需要的',
+                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm', '有条件最好改为跟默认配置一致',
                          'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
                          'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
                          'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
                          'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
                          'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
                          'Z:\\QC Chart\\%s' % now,
-                         'QC Chart_Heavy Metal -66-01-2018-012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-                         'SVHC-DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+                         'QC_Chart_Heavy_Metal_66_01_2018_012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+                         'SVHC_DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
                          'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
-                         'REACH_SVHC_Candidate_List.csv', '默认，可更改为自己需要的',
+                         'REACH_SVHC_Candidate_List.csv', '"||||||"六根，少了或者多了都无法读取配置文件',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Result',
-                         '默认，可更改为自己需要的', 'Z:\\QC Chart\\%s' % now, 'QC Chart_HCHO_66-01-2016-051 CARY60.xlsx',
-                         'QC Chart_Cr_66-01-2013-011 CARY100.xlsx', 'QC Chart_pH_66-01-2014-015.xlsx',
-                         'QC Chart_pH_66-01-2018-006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
+                         '默认，可更改为自己需要的', 'Z:\\QC Chart\\%s' % now, 'QC_Chart_HCHO_66_01_2016_051_CARY60.xlsx',
+                         'QC_Chart_Cr_66_01_2013_011_CARY100.xlsx', 'QC_Chart _pH_66_01_2014_015.xlsx',
+                         'QC_Chart _pH_66_01_2018_006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
                          'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now,
                          'Z:\\Data\\%s\\66-01-2014-015 pH' % now,
                          'Z:\\Data\\%s\\66-01-2018-006 pH' % now]
@@ -2072,6 +2071,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_2.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
                     self.textBrowser_2.append('--------------------------')
                 self.lineEdit_6.setText("搜索完成")
+
+    def formalBatch(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+    def crBatch(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+    def phBatch(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+    def uvQc(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+    def phQc(self):
+        self.lineEdit_6.setText("别急，还在开发中")
 
     # 自动填写-填写内容
     def getData(self, pbt):
