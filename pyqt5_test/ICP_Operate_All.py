@@ -962,7 +962,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                          'Z:\\QC Chart\\%s' % now,
                          'QC_Chart_Heavy_Metal_66_01_2018_012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
                          'SVHC_DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-                         'Z:\\Inorganic\\Program\\Reach_Result\\Raw_data',
+                         'Z:\Inorganic\Program\1.Inorganic Operate\1.New edition\2.Model',
                          'REACH_SVHC_Candidate_List.csv', '"||||||"六根，少了或者多了都无法读取配置文件',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Result',
@@ -1099,6 +1099,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     f1.write(labNumber[i] + '\n')
                     i += 1
             self.textBrowser_3.append("完成微波ICP Batch转化")
+            self.textBrowser_3.append("生成路径：%s" % desktopUrl)
             self.lineEdit_6.setText("ICP Sample ID转化完成")
 
     # AAS仪器使用
@@ -1123,6 +1124,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 f1.write(labNumber[i].replace('+', '-') + '\n')
                 i += 1
             self.textBrowser_3.append("完成微波Batch-AAS转化")
+            self.textBrowser_3.append("生成路径：%s" % desktopUrl)
             self.lineEdit_6.setText("AAS Sample ID转化完成")
 
     # 镍释放
@@ -1145,7 +1147,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             folder1 = os.path.exists(file)
             if not folder1:
                 QMessageBox.information(self, "无镍释放模板",
-                                        "没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Import_URL,Nickel_File_Name\nReach结果模板的文件路径、文件名称和Excel格式",
+                                        "没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Import_URL,Nickel_File_Name\n镍释放结果模板的文件路径、文件名称和Excel格式",
                                         QMessageBox.Yes)
             # 判断镍释放存储路径是否存在
             fileUrl = configContent['Nickel_Batch_Export_URL']
@@ -1203,6 +1205,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
                     excel.Quit()
                     self.textBrowser_3.append("完成镍释放Batch转化")
+                    self.textBrowser_3.append("生成路径：%s" % configContent['Nickel_Batch_Export_URL'])
                     self.lineEdit_6.setText("完成镍释放Batch转化")
                 else:
                     self.textBrowser_3.append("请确认Batch方法是镍释放")
@@ -1362,6 +1365,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
                 excel.Quit()
                 self.textBrowser_3.append("ECO质检院Batch转化完成")
+                self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
                 self.lineEdit_6.setText("ECO质检院Batch转化完成")
                 app.processEvents()
 
@@ -1529,6 +1533,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
                 excel.Quit()
                 self.textBrowser_3.append("ECO中迅德Batch转化完成")
+                self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
                 self.lineEdit_6.setText("ECO中迅德Batch转化完成")
                 app.processEvents()
 
@@ -1625,6 +1630,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         csvFile.to_csv('%s/%s.txt' % (configContent['ICP_Result_Export_URL'], fileName), sep='\t',
                                        index=None, header=None)
                         self.textBrowser.append("完成ICP文件转换为TXT")
+                        self.textBrowser.append("生成路径：%s" % configContent['ICP_Result_Export_URL'])
                         self.lineEdit_6.setText("完成ICP文件转换为TXT")
 
     # Reach结果转化为TXT
@@ -1809,6 +1815,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             n += 1
                         excel.Quit()
                         self.textBrowser.append("完成Reach结果转换为TXT")
+                        self.textBrowser.append("生成路径：%s\\%s" % (configContent['Reach_Result_Export_URL'],today))
                         self.lineEdit_6.setText("完成Reach结果转换为TXT")
 
     # AAS结果转化还不需要用到
@@ -2002,6 +2009,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 f2.write(line)
                         self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
                         app.processEvents()
+                    self.textBrowser.append("生成路径：%s\\%s" % (configContent['ECO_Result_Export_URL'], today))
                     self.lineEdit_6.setText("完成ECO ZJY转换")
 
     # 获取Reach信息
