@@ -14,8 +14,8 @@
    <string>操作界面</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>icon/ch.ico</normaloff>icon/ch.ico</iconset>
+   <iconset resource="icon/chicon.qrc">
+    <normaloff>:/chicon.qrc</normaloff>:/chicon.qrc</iconset>
   </property>
   <property name="statusTip">
    <string>作者：Frank Chen</string>
@@ -1493,7 +1493,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icon/chicon.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_23</sender>

@@ -16,7 +16,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         MainWindow.resize(534, 442)
         global icon
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -813,8 +813,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
-
-
         # 需要拷贝部分
         QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
@@ -876,7 +874,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_48.clicked.connect(self.phQc)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    # 初始化，获取或生成配置文件
+        # 初始化，获取或生成配置文件
+
     def getConfig(self):
         global configFileUrl
         global desktopUrl
@@ -917,7 +916,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             Ui_MainWindow.getConfigContent(self)
 
-    # 获取配置文件内容
+        # 获取配置文件内容
+
     def getConfigContent(self):
         f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
         global configContent
@@ -932,7 +932,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # print(configContent)
         self.lineEdit_6.setText("配置获取成功")
 
-    # 生成默认配置文件
+        # 生成默认配置文件
+
     def createConfigContent(self):
 
         configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Import_URL', 'ICP_Batch_Export_URL',
@@ -982,7 +983,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 "默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
                                 QMessageBox.Yes)
 
-    # 重新导出默认配置文件
+        # 重新导出默认配置文件
+
     def exportConfig(self):
         reply = QMessageBox.question(self, '信息', '确认是否要创建默认配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if reply == QMessageBox.Yes:
@@ -990,7 +992,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             QMessageBox.information(self, "提示信息", "没有创建默认配置文件，保留原有的配置文件", QMessageBox.Yes)
 
-    # 重新导入配置文件
+        # 重新导入配置文件
+
     def importConfig(self):
         reply = QMessageBox.question(self, '信息', '确认是否要导入配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if reply == QMessageBox.Yes:
@@ -1002,7 +1005,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         QMessageBox.about(self, "关于",
                           "人生苦短，码上行乐。\n\n\n        ----Frank Chen")
 
-    # 获取Sample ID 、实验方法、质量、体积
+        # 获取Sample ID 、实验方法、质量、体积
+
     def getBatch(self, messages):
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
@@ -1070,7 +1074,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Batch文件")
 
-    # ICP仪器使用
+        # ICP仪器使用
+
     def icpBatch(self):
         try:
             labNumber
@@ -1102,7 +1107,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser_3.append("生成路径：%s" % desktopUrl)
             self.lineEdit_6.setText("ICP Sample ID转化完成")
 
-    # AAS仪器使用
+        # AAS仪器使用
+
     def aasBatch(self):
         try:
             labNumber
@@ -1127,7 +1133,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser_3.append("生成路径：%s" % desktopUrl)
             self.lineEdit_6.setText("AAS Sample ID转化完成")
 
-    # 镍释放
+        # 镍释放
+
     def nickelBatch(self):
         # 判断是否有选择Batch文件
         try:
@@ -1168,15 +1175,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
                     wb = excel.Workbooks.Open(
                         os.path.join(os.getcwd(), r'%s/%s' % (
-                        configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+                            configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
                     ws = wb.Worksheets('Data')
                     x = 1
                     oneRow = []
                     while ws.Cells(1, x).Value is not None:
                         oneRow.append(ws.Cells(1, x).Value)
                         x += 1
-                    sampleColumn = int(oneRow.index('Sample ID'))+1
-                    noColumn = int(oneRow.index('No.'))+1
+                    sampleColumn = int(oneRow.index('Sample ID')) + 1
+                    noColumn = int(oneRow.index('No.')) + 1
                     n = 2
                     num = []
                     while ws.Cells(n, noColumn).Value is not None:
@@ -1211,7 +1218,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_3.append("请确认Batch方法是镍释放")
                     self.lineEdit_6.setText("请确认Batch方法是镍释放")
 
-    # ECO质检院模板生成
+        # ECO质检院模板生成
+
     def ecoZjy(self):
         # 判断是否选择了Batch文件
         try:
@@ -1369,7 +1377,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("ECO质检院Batch转化完成")
                 app.processEvents()
 
-    # ECO中迅德模板生成
+        # ECO中迅德模板生成
+
     def ecoZxd(self):
         # 判断是否选择了Batch文件
         try:
@@ -1468,7 +1477,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 else:
                     excel.Application.DisplayAlerts = False
                     wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (
-                    configContent['ECO_Batch_Export_URL'], today)))
+                        configContent['ECO_Batch_Export_URL'], today)))
                     ws = wb.Worksheets('Sheet1')
                     i = 0
                     n = 1
@@ -1537,7 +1546,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("ECO中迅德Batch转化完成")
                 app.processEvents()
 
-    # 获取结果文件
+        # 获取结果文件
+
     def getResult(self, messages):
         global selectResultFile
         self.lineEdit_6.clear()
@@ -1583,7 +1593,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
-    # ICP结果转化为TXT
+        # ICP结果转化为TXT
+
     def icpResultToTxt(self):
         # 判断是否选择了Result文件
         try:
@@ -1633,7 +1644,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         self.textBrowser.append("生成路径：%s" % configContent['ICP_Result_Export_URL'])
                         self.lineEdit_6.setText("完成ICP文件转换为TXT")
 
-    # Reach结果转化为TXT
+        # Reach结果转化为TXT
+
     def reachResult(self):
         # 判断是否选择了Batch文件
         try:
@@ -1694,16 +1706,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     excel.Visible = 0
                     excel.Application.DisplayAlerts = True
                     wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-                    configContent['Reach_Result_Import_URL'], configContent['Reach_Result_File_Name'])))
+                        configContent['Reach_Result_Import_URL'], configContent['Reach_Result_File_Name'])))
                     ws = wb.Worksheets('Data')
                     oneRow = []
                     x = 1
                     while ws.Cells(1, x).Value is not None:
                         oneRow.append(ws.Cells(1, x).Value)
-                        x +=1
-                    sampleColumn = int(oneRow.index('Sample ID'))+1
-                    elementColumn = int(oneRow.index('Element'))+1
-                    concColumn = int(oneRow.index('Sample Conc.'))+1
+                        x += 1
+                    sampleColumn = int(oneRow.index('Sample ID')) + 1
+                    elementColumn = int(oneRow.index('Element')) + 1
+                    concColumn = int(oneRow.index('Sample Conc.')) + 1
                     elements = []
                     resultRows = []
                     n = 2
@@ -1802,7 +1814,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             folder = os.path.exists(configContent['Reach_Result_Export_URL'] + '\\' + today)
                             if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
                                 os.makedirs(
-                                    configContent['Reach_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                                    configContent[
+                                        'Reach_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
                             fileName = configContent[
                                            'Reach_Result_Export_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
                             with open(fileName, "w", encoding="utf-8") as fileTxt:
@@ -1815,14 +1828,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             n += 1
                         excel.Quit()
                         self.textBrowser.append("完成Reach结果转换为TXT")
-                        self.textBrowser.append("生成路径：%s\\%s" % (configContent['Reach_Result_Export_URL'],today))
+                        self.textBrowser.append("生成路径：%s\\%s" % (configContent['Reach_Result_Export_URL'], today))
                         self.lineEdit_6.setText("完成Reach结果转换为TXT")
 
-    # AAS结果转化还不需要用到
+        # AAS结果转化还不需要用到
+
     def aasResult(self):
         self.textBrowser.append("暂时不需要用到，后续再开发")
 
-    # ICP QC 填写
+        # ICP QC 填写
+
     def icpQc(self):
         # 判断是否选择了Result文件
         try:
@@ -1867,8 +1882,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     while ws.Cells(1, x).Value is not None:
                         oneRow.append(ws.Cells(1, x).Value)
                         x += 1
-                    materialColumn = int(oneRow.index('Material'))+1
-                    sampleColumn = int(oneRow.index('Element'))+1
+                    materialColumn = int(oneRow.index('Material')) + 1
+                    sampleColumn = int(oneRow.index('Element')) + 1
                     material = []
                     resultRows = {}
                     elements = []
@@ -1921,27 +1936,31 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                         if i + 1 < len(rusultList):
                                             # 相同的元素测试验证并跳过
                                             if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
-                                            rusultList[i + 1], rusultList2[i + 1]):
+                                                    rusultList[i + 1], rusultList2[i + 1]):
                                                 continue
                                         if ',' in rusultList[i]:  # 将需要计算的挑选出来
                                             if len(list1) == 3:
                                                 # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
-                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(
-                                                    rusultList3[i]) * int(float(list1[1]) * 250) * float(list1[2]) / float(
+                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+                                                         c).Value = float(
+                                                    rusultList3[i]) * int(float(list1[1]) * 250) * float(
+                                                    list1[2]) / float(
                                                     list1[1])
                                             elif len(list1) == 2:
-                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])], c).Value = float(
+                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+                                                         c).Value = float(
                                                     rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
                                         else:
                                             if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
                                                 ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
                                             ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-                                            rusultList3[i]
+                                                rusultList3[i]
                                         c += 1
                         self.textBrowser.append("完成%s QC填写" % fileDate)
                     self.lineEdit_6.setText("完成QC填写")
 
-    # 质检院结果科学计数法转化为自然数法
+        # 质检院结果科学计数法转化为自然数法
+
     def resultZjyToTxt(self):
         # 判断是否选择了Result文件
         try:
@@ -2012,7 +2031,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser.append("生成路径：%s\\%s" % (configContent['ECO_Result_Export_URL'], today))
                     self.lineEdit_6.setText("完成ECO ZJY转换")
 
-    # 获取Reach信息
+        # 获取Reach信息
+
     def getReachMessage(self):
         global reachLimsNo
         global reachEnglish
@@ -2034,7 +2054,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reachPurpose = list(reachMessage['G'])
             self.lineEdit_6.setText("Reach信息获取成功")
 
-    # 搜索Reach信息提示
+        # 搜索Reach信息提示
+
     def searchReachMessage(self):
         try:
             reachLimsNo
@@ -2107,33 +2128,41 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def formalBatch(self):
         self.lineEdit_6.setText("别急，还在开发中")
+
     def crBatch(self):
         self.lineEdit_6.setText("别急，还在开发中")
+
     def phBatch(self):
         self.lineEdit_6.setText("别急，还在开发中")
+
     def uvQc(self):
         self.lineEdit_6.setText("别急，还在开发中")
+
     def phQc(self):
         self.lineEdit_6.setText("别急，还在开发中")
 
-    # 自动填写-填写内容
+        # 自动填写-填写内容
+
     def getData(self, pbt):
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
         self.lineEdit_6.setText("内容已填写，可随时开始")
 
-    # 自动填写-清除内容
+        # 自动填写-清除内容
+
     def clearContent(self):
         self.lineEdit.clear()
         self.lineEdit_6.setText("已清零，请重新填写内容")
 
-    # 自动填写-停止
+        # 自动填写-停止
+
     def stopMessage(self):
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
         self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
 
-    # 自动填写 - 开始自动填写
+        # 自动填写 - 开始自动填写
+
     def autoWrite(self):
         if self.lineEdit.text() == '' or self.lineEdit.text() == 'stop':
             QMessageBox.information(self, "提示信息", "自动填写中无内容或内容为‘stop’，请清零并填写内容",
@@ -2169,10 +2198,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 if self.lineEdit.text() != 'stop':
                     self.lineEdit_6.setText("自动填写已经完成")
 
-    # 自动填写-随机数
+        # 自动填写-随机数
+
     def randomAction(self):
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "操作界面"))
@@ -2305,6 +2336,7 @@ if __name__ == "__main__":
     import pyautogui
     import pandas as pd
     import re
+    import chicon
     import win32com.client as win32com
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
