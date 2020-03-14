@@ -1731,12 +1731,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     resultVolumeValue = []
                     i = 0
                     for each in labNumber:
+                        # print(labNumber[i], analyteList[i],i)
                         if 'R\x1eI' in analyteList[i]:
                             resultLabnumber.append(each)
                             resultQualityValue.append(qualityValue[i])
                             resultVolumeValue.append(volumeValue[i])
-                            i += 1
-                    # print(resultLabnumber)
+                        i += 1
+                    # print(resultLabnumber, analyteList[i])
                     # 获取Sample的结果
                     startNum = int(self.spinBox_3.text())
                     endNum = int(self.spinBox_2.text())
@@ -2336,7 +2337,7 @@ if __name__ == "__main__":
     import pyautogui
     import pandas as pd
     import re
-    import chicon
+    import chicon #引用图标
     import win32com.client as win32com
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
