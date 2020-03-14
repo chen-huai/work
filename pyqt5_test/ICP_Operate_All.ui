@@ -14,8 +14,8 @@
    <string>操作界面</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icon/chicon.qrc">
-    <normaloff>:/chicon.qrc</normaloff>:/chicon.qrc</iconset>
+   <iconset>
+    <normaloff>icon/ch.ico</normaloff>icon/ch.ico</iconset>
   </property>
   <property name="statusTip">
    <string>作者：Frank Chen</string>
@@ -79,6 +79,17 @@
             <property name="text">
              <string>选择Batch</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="0" column="2">
@@ -103,6 +114,17 @@
             <property name="text">
              <string>Nickel Batch</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="0" column="3">
@@ -126,6 +148,17 @@
             </property>
             <property name="text">
              <string>AAS Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -164,6 +197,17 @@
             <property name="text">
              <string>ECO ZXD</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="2" column="2">
@@ -187,6 +231,17 @@
             </property>
             <property name="text">
              <string>ECO ZJY</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -286,6 +341,17 @@
             <property name="text">
              <string>选择Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="5" column="2">
@@ -379,6 +445,17 @@
             <property name="text">
              <string>Reach Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="6" column="3">
@@ -403,6 +480,17 @@
             <property name="text">
              <string>ICP Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="7" column="2">
@@ -424,6 +512,17 @@
             <property name="text">
              <string>AAS Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="7" column="3">
@@ -444,6 +543,17 @@
             </property>
             <property name="text">
              <string>MM QC Chart</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -494,6 +604,17 @@
             <property name="text">
              <string>ECO ZJY Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="1" column="3" rowspan="2">
@@ -517,6 +638,17 @@
             </property>
             <property name="text">
              <string>ICP Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -574,6 +706,17 @@
             <property name="text">
              <string>搜索</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/search.png</normaloff>
+              <normalon>:/search.png</normalon>
+              <disabledoff>:/search.png</disabledoff>
+              <disabledon>:/search.png</disabledon>
+              <activeoff>:/search.png</activeoff>
+              <activeon>:/search.png</activeon>
+              <selectedoff>:/search.png</selectedoff>
+              <selectedon>:/search.png</selectedon>icon/search.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="1" column="0">
@@ -600,6 +743,17 @@
             <property name="text">
              <string>清零</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/clean.png</normaloff>
+              <normalon>icon/clean.png</normalon>
+              <disabledoff>icon/clean.png</disabledoff>
+              <disabledon>icon/clean.png</disabledon>
+              <activeoff>icon/clean.png</activeoff>
+              <activeon>icon/clean.png</activeon>
+              <selectedoff>icon/clean.png</selectedoff>
+              <selectedon>icon/clean.png</selectedon>icon/clean.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="1" column="2">
@@ -609,6 +763,17 @@
             </property>
             <property name="text">
              <string>获取</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/message.png</normaloff>
+              <normalon>:/message.png</normalon>
+              <disabledoff>:/message.png</disabledoff>
+              <disabledon>:/message.png</disabledon>
+              <activeoff>:/message.png</activeoff>
+              <activeon>:/message.png</activeon>
+              <selectedoff>:/message.png</selectedoff>
+              <selectedon>:/message.png</selectedon>icon/message.png</iconset>
             </property>
            </widget>
           </item>
@@ -927,6 +1092,17 @@
             <property name="text">
              <string>选择Batch</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="5" column="3">
@@ -950,6 +1126,17 @@
             </property>
             <property name="text">
              <string>停止</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/stop.png</normaloff>
+              <normalon>:/stop.png</normalon>
+              <disabledoff>:/stop.png</disabledoff>
+              <disabledon>:/stop.png</disabledon>
+              <activeoff>:/stop.png</activeoff>
+              <activeon>:/stop.png</activeon>
+              <selectedoff>:/stop.png</selectedoff>
+              <selectedon>:/stop.png</selectedon>icon/stop.png</iconset>
             </property>
            </widget>
           </item>
@@ -1008,6 +1195,17 @@
             <property name="text">
              <string>随机数</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/random.png</normaloff>
+              <normalon>:/random.png</normalon>
+              <disabledoff>:/random.png</disabledoff>
+              <disabledon>:/random.png</disabledon>
+              <activeoff>:/random.png</activeoff>
+              <activeon>:/random.png</activeon>
+              <selectedoff>:/random.png</selectedoff>
+              <selectedon>:/random.png</selectedon>icon/random.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="2" column="4" rowspan="2">
@@ -1031,6 +1229,17 @@
             </property>
             <property name="text">
              <string>清零</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/clean.png</normaloff>
+              <normalon>:/clean.png</normalon>
+              <disabledoff>:/clean.png</disabledoff>
+              <disabledon>:/clean.png</disabledon>
+              <activeoff>:/clean.png</activeoff>
+              <activeon>:/clean.png</activeon>
+              <selectedoff>:/clean.png</selectedoff>
+              <selectedon>:/clean.png</selectedon>icon/clean.png</iconset>
             </property>
            </widget>
           </item>
@@ -1056,6 +1265,17 @@
             <property name="text">
              <string>开始
 填写</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/star.png</normaloff>
+              <normalon>:/star.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/star.png</iconset>
             </property>
            </widget>
           </item>
@@ -1084,6 +1304,17 @@
             </property>
             <property name="text">
              <string>Formal Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -1147,6 +1378,17 @@
             <property name="text">
              <string>选择Batch</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="8" column="3">
@@ -1168,6 +1410,17 @@
             <property name="text">
              <string>pH QC 2014</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="2" column="3">
@@ -1188,6 +1441,17 @@
             </property>
             <property name="text">
              <string>pH Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -1245,6 +1509,17 @@
             <property name="text">
              <string>选择Result</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="1" column="3">
@@ -1265,6 +1540,17 @@
             </property>
             <property name="text">
              <string>Cr VI Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -1338,6 +1624,17 @@
             <property name="text">
              <string>Formal QC</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="6" column="3">
@@ -1359,6 +1656,17 @@
             <property name="text">
              <string>Cr VI QC</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
+            </property>
            </widget>
           </item>
           <item row="7" column="3">
@@ -1378,6 +1686,17 @@
             </property>
             <property name="text">
              <string>pH QC 2018</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/click.png</normaloff>
+              <normalon>:/click.png</normalon>
+              <disabledoff>:/click.png</disabledoff>
+              <disabledon>:/click.png</disabledon>
+              <activeoff>:/click.png</activeoff>
+              <activeon>:/click.png</activeon>
+              <selectedoff>:/click.png</selectedoff>
+              <selectedon>:/click.png</selectedon>icon/click.png</iconset>
             </property>
            </widget>
           </item>
@@ -1440,6 +1759,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExport">
+   <property name="icon">
+    <iconset>
+     <normaloff>icon/export.png</normaloff>
+     <normalon>:/export.png</normalon>
+     <disabledoff>:/export.png</disabledoff>
+     <disabledon>:/export.png</disabledon>
+     <activeoff>:/export.png</activeoff>
+     <activeon>:/export.png</activeon>
+     <selectedoff>:/export.png</selectedoff>
+     <selectedon>:/export.png</selectedon>icon/export.png</iconset>
+   </property>
    <property name="text">
     <string>Export</string>
    </property>
@@ -1454,8 +1784,22 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>icon/exit.png</normaloff>
+     <normalon>:/exit.png</normalon>
+     <disabledoff>:/exit.png</disabledoff>
+     <disabledon>:/exit.png</disabledon>
+     <activeoff>:/exit.png</activeoff>
+     <activeon>:/exit.png</activeon>
+     <selectedoff>:/exit.png</selectedoff>
+     <selectedon>:/exit.png</selectedon>icon/exit.png</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
@@ -1464,6 +1808,17 @@
    </property>
   </action>
   <action name="actionImport">
+   <property name="icon">
+    <iconset>
+     <normaloff>icon/import.png</normaloff>
+     <normalon>:/import.png</normalon>
+     <disabledoff>:/import.png</disabledoff>
+     <disabledon>:/import.png</disabledon>
+     <activeoff>:/import.png</activeoff>
+     <activeon>:/import.png</activeon>
+     <selectedoff>:/import.png</selectedoff>
+     <selectedon>:/import.png</selectedon>icon/import.png</iconset>
+   </property>
    <property name="text">
     <string>Import</string>
    </property>
@@ -1475,8 +1830,22 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset>
+     <normaloff>icon/help.png</normaloff>
+     <normalon>:/help.png</normalon>
+     <disabledoff>:/help.png</disabledoff>
+     <disabledon>:/help.png</disabledon>
+     <activeoff>:/help.png</activeoff>
+     <activeon>:/help.png</activeon>
+     <selectedoff>:/help.png</selectedoff>
+     <selectedon>:/help.png</selectedon>icon/help.png</iconset>
+   </property>
    <property name="text">
     <string>Help</string>
    </property>
@@ -1485,6 +1854,17 @@
    </property>
   </action>
   <action name="actionAuthor">
+   <property name="icon">
+    <iconset>
+     <normaloff>icon/author.png</normaloff>
+     <normalon>icon/author.png</normalon>
+     <disabledoff>icon/author.png</disabledoff>
+     <disabledon>icon/author.png</disabledon>
+     <activeoff>icon/author.png</activeoff>
+     <activeon>icon/author.png</activeon>
+     <selectedoff>icon/author.png</selectedoff>
+     <selectedon>icon/author.png</selectedon>icon/author.png</iconset>
+   </property>
    <property name="text">
     <string>Author</string>
    </property>

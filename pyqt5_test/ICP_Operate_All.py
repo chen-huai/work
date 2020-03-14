@@ -1736,8 +1736,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             resultLabnumber.append(each)
                             resultQualityValue.append(qualityValue[i])
                             resultVolumeValue.append(volumeValue[i])
+                            # print(resultLabnumber, analyteList[i])
                         i += 1
-                    # print(resultLabnumber, analyteList[i])
+
                     # 获取Sample的结果
                     startNum = int(self.spinBox_3.text())
                     endNum = int(self.spinBox_2.text())
@@ -1776,21 +1777,21 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         # print(rusultList4)
                         # print(elements)
                         for i in range(m):
-                            name = labNumber[n].replace("/", '_')
-                            self.textBrowser.append("%s:%s" % (n + 1, labNumber[n]))
+                            name = resultLabnumber[n].replace("/", '_')
+                            self.textBrowser.append("%s:%s" % (n + 1, resultLabnumber[n]))
                             app.processEvents()
-                            ws.Cells(2, sampleColumn).Value = labNumber[n]
+                            ws.Cells(2, sampleColumn).Value = resultLabnumber[n]
                             x = 0
                             for e in range(len(elements)):
-                                # print(labNumber[n],elements[x])
-                                if '%s-%s' % (labNumber[n], elements[x]) in rusultList4.keys():
-                                    if str(rusultList4['%s-%s' % (labNumber[n], elements[x])]) == '未校正':
+                                # print(resultLabnumber[n],elements[x])
+                                if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
+                                    if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
                                         ws.Cells(resultRows[x], concColumn).Value = '未校正'
-                                    elif str(rusultList4['%s-%s' % (labNumber[n], elements[x])]) == '####':
+                                    elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
                                         ws.Cells(resultRows[x], concColumn).Value = '超出'
                                     else:
                                         ws.Cells(resultRows[x], concColumn).Value = float(
-                                            rusultList4['%s-%s' % (labNumber[n], elements[x])]) * int(
+                                            rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
                                             resultVolumeValue[n]) / float(resultQualityValue[n])
                                 else:
                                     ws.Cells(resultRows[x], concColumn).Value = '未走标准曲线'
