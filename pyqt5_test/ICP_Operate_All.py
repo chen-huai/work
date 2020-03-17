@@ -860,7 +860,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.actionImport.triggered.connect(self.lineEdit.clear)
         self.actionHelp.triggered.connect(self.lineEdit.clear)
         self.actionAuthor.triggered.connect(self.showAuthorMessage)
-        self.pushButton_26.clicked.connect(self.spinBox_4.clear)
         self.pushButton_50.clicked.connect(self.getReachMessage)
         self.pushButton_51.clicked.connect(self.textBrowser_2.clear)
         self.pushButton_41.clicked.connect(self.textBrowser_4.clear)
