@@ -1298,8 +1298,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws2 = excel.Worksheets('Sheet2')
                     ws2.Cells(1, 1).Value = '1.'
                     ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
+                    ws2.Cells(1, 1).Font.Size = 12
+                    ws2.Cells(1, 1).Font.Bold = True
                     ws2.Cells(1, 2).Value = 'BLK'
                     ws2.Cells(1, 2).HorizontalAlignment = -4108
+                    ws2.Cells(1, 2).Font.Size = 12
+                    ws2.Cells(1, 2).Font.Bold = True
                     ws2.Rows(1).RowHeight = 33.8  # 行高
                     ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
                     ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
@@ -1309,8 +1313,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         ws2.Rows(n).RowHeight = 33.8  # 行高
                         ws2.Cells(n, 1).Value = '%s.' % n
                         ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
                         ws2.Cells(n, 2).Value = '%s' % labNumber[i]
                         ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
                         n += 1
                         i += 1
                 else:
@@ -1340,8 +1348,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         n += 1
                         i += 1
                     ws2 = excel.Worksheets('Sheet2')
-                    ws2.Cells(1, 1).Value = '1.'
-                    ws2.Cells(1, 2).Value = 'BLK'
                     i = 0
                     n = 1
                     while ws2.Cells(n, 1).Value is not None:
@@ -1350,8 +1356,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         ws2.Rows(n).RowHeight = 33.8  # 行高
                         ws2.Cells(n, 1).Value = '%s.' % n
                         ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
                         ws2.Cells(n, 2).Value = '%s' % labNumber[i]
                         ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
                         n += 1
                         i += 1
                 list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
@@ -1459,8 +1469,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     ws2 = excel.Worksheets('Sheet2')
                     ws2.Cells(1, 1).Value = '1.'
                     ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
+                    ws2.Cells(1, 1).Font.Size = 12
+                    ws2.Cells(1, 1).Font.Bold = True
                     ws2.Cells(1, 2).Value = 'BLK'
                     ws2.Cells(1, 2).HorizontalAlignment = -4108
+                    ws2.Cells(1, 2).Font.Size = 12
+                    ws2.Cells(1, 2).Font.Bold = True
                     ws2.Rows(1).RowHeight = 33.8  # 行高
                     ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
                     ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
@@ -1470,8 +1484,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         ws2.Rows(n).RowHeight = 33.8  # 行高
                         ws2.Cells(n, 1).Value = '%s.' % n
                         ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
                         ws2.Cells(n, 2).Value = '%s' % labNumber[i]
                         ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
                         n += 1
                         i += 1
                 else:
@@ -1500,8 +1518,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         n += 1
                         i += 1
                     ws2 = excel.Worksheets('Sheet2')
-                    ws2.Cells(1, 1).Value = '1.'
-                    ws2.Cells(1, 2).Value = 'BLK'
                     i = 0
                     n = 1
                     while ws2.Cells(n, 1).Value is not None:
@@ -1510,8 +1526,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         ws2.Rows(n).RowHeight = 33.8  # 行高
                         ws2.Cells(n, 1).Value = '%s.' % n
                         ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
                         ws2.Cells(n, 2).Value = '%s' % labNumber[i]
                         ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
                         n += 1
                         i += 1
                 list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
