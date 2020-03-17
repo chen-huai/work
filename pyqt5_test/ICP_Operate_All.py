@@ -2067,12 +2067,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                     "没有Reach信息文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式",
                                     QMessageBox.Yes)
         else:
-            reachMessage = pd.read_csv(file, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G'])
-            reachLimsNo = list(reachMessage['B'])
-            reachEnglish = list(reachMessage['C'])
-            reachChinese = list(reachMessage['D'])
-            reachCas = list(reachMessage['F'])
-            reachPurpose = list(reachMessage['G'])
+            reachMessage = pd.read_csv(file)
+            reachLimsNo = list(reachMessage['Lims No.'])
+            reachEnglish = list(reachMessage['物质名称(英文)'])
+            reachChinese = list(reachMessage['物质名称(中文)'])
+            reachCas = list(reachMessage['CAS 号码'])
+            reachPurpose = list(reachMessage['可能用途'])
             self.lineEdit_6.setText("Reach信息获取成功")
 
         # 搜索Reach信息提示
@@ -2108,7 +2108,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     for n in range(len(reachEnglish)):
                         if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
                             m = 'T'
-                print(m)
+                # print(m)
                 if m == 'T':
                     for i in range(len(reachEnglish)):
                         # print(reachNum,reachLimsNo[i])
@@ -2133,7 +2133,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
                                 app.processEvents()
                         else:
-                            if (reachContent in reachEnglish[i]) and (float(reachNum) == reachLimsNo[i]):
+                            if (reachContent in reachEnglish[i]) and (float(reachNum) == float(reachLimsNo[i])):
                                 self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
                                 self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
                                 self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
