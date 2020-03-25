@@ -1094,6 +1094,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             i = 0
             for i in range(len(labNumber)):
                 # print(analyteList[i],qualityValue[i])
+                if i<len(labNumber)-1:
+                    if batchNum[i] != batchNum[i-1]:
+                        f1.write('\n')
                 if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
                     f1.write('%sA' % labNumber[i] + '\n')
                     f1.write('%sB' % labNumber[i] + '\n')
@@ -1566,6 +1569,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 app.processEvents()
 
         # 获取结果文件
+
+    def formalBatch(self):
+        for each in analyteList:
+            if ('14184' or '2912') in each:
+                pass
+            elif '1041' in each:
+                pass
+
+    def crBatch(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+
+    def phBatch(self):
+        self.lineEdit_6.setText("别急，还在开发中")
 
     def getResult(self, messages):
         global selectResultFile
@@ -2043,8 +2059,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 # print(line)
                                 # print(oldStr)
                                 if oldStr != []:
-                                    newStr = '    ' + str(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
-                                    # print(newStr)
+                                    newStr = '    ' + '%f'%(float(oldStr[0].split(' ')[0])) + ' ' + 'ug/l'
+                                    # print(newStr,oldStr[0].split(' ')[0],'%f'%(float(oldStr[0].split(' ')[0])))
                                     line = line.replace(oldStr[0], newStr)
                                 f2.write(line)
                         self.textBrowser.append("完成%s ECO ZJY转换" % fileName)
@@ -2146,15 +2162,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_2.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
                     self.textBrowser_2.append('--------------------------')
                 self.lineEdit_6.setText("搜索完成")
-
-    def formalBatch(self):
-        self.lineEdit_6.setText("别急，还在开发中")
-
-    def crBatch(self):
-        self.lineEdit_6.setText("别急，还在开发中")
-
-    def phBatch(self):
-        self.lineEdit_6.setText("别急，还在开发中")
 
     def uvQc(self):
         self.lineEdit_6.setText("别急，还在开发中")
