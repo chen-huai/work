@@ -863,8 +863,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_50.clicked.connect(self.getReachMessage)
         self.pushButton_51.clicked.connect(self.formalBatch)
         self.pushButton_44.clicked.connect(self.formalBatch)
-        self.pushButton_46.clicked.connect(self.phBatch)
-        self.pushButton_45.clicked.connect(self.crBatch)
+        self.pushButton_46.clicked.connect(self.crBatch)
+        self.pushButton_45.clicked.connect(self.phBatch)
         self.pushButton_47.clicked.connect(self.uvQc)
         self.pushButton_49.clicked.connect(self.uvQc)
         self.pushButton_52.clicked.connect(self.phQc)
@@ -885,6 +885,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         global volumeValue
         global analyteList
         global batchNum
+        global selectBatchFile
         # getResult里的
         global selectResultFile
         # getReachMessage
@@ -1007,12 +1008,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def getBatch(self, messages):
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
-
         global labNumber
         global qualityValue
         global volumeValue
         global analyteList
         global batchNum
+        global selectBatchFile
         labNumber = []
         qualityValue = []
         volumeValue = []
@@ -1090,45 +1091,47 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser_3.append("请重新点击ICP Batch按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_3.append("请重新选择Batch数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击ICP Batch按钮开始数据处理")
+                m = 'N'
+        if m == 'Y':
+            f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
+            self.textBrowser_3.append("正在微波Batch-ICP转化")
+            app.processEvents()
+            i = 0
+            for i in range(len(labNumber)):
+                # print(analyteList[i],qualityValue[i])
+                if i<len(labNumber)-1:
+                    if batchNum[i] != batchNum[i-1]:
+                        f1.write('\n')
+                if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
+                    f1.write('%sA' % labNumber[i] + '\n')
+                    f1.write('%sB' % labNumber[i] + '\n')
+                    f1.write('%sC' % labNumber[i] + '\n')
+                    i += 1
                 else:
-                    self.lineEdit_6.setText("请重新选择ICP Batch数据文件")
-                    self.textBrowser.append("请重新选择ICP Batch数据文件")
-            else:
-                f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
-                self.textBrowser_3.append("正在微波Batch-ICP转化")
-                app.processEvents()
-                i = 0
-                for i in range(len(labNumber)):
-                    # print(analyteList[i],qualityValue[i])
-                    if i<len(labNumber)-1:
-                        if batchNum[i] != batchNum[i-1]:
-                            f1.write('\n')
-                    if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
-                        f1.write('%sA' % labNumber[i] + '\n')
-                        f1.write('%sB' % labNumber[i] + '\n')
-                        f1.write('%sC' % labNumber[i] + '\n')
-                        i += 1
-                    else:
-                        f1.write(labNumber[i] + '\n')
-                        i += 1
-                self.textBrowser_3.append("完成微波ICP Batch转化")
-                self.textBrowser_3.append("生成路径：%s" % desktopUrl)
-                self.lineEdit_6.setText("ICP Sample ID转化完成")
+                    f1.write(labNumber[i] + '\n')
+                    i += 1
+            self.textBrowser_3.append("完成微波ICP Batch转化")
+            self.textBrowser_3.append("生成路径：%s" % desktopUrl)
+            self.lineEdit_6.setText("ICP Sample ID转化完成")
 
         # AAS仪器使用
 
@@ -1136,25 +1139,28 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser_3.append("请重新点击AAS Batch按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_3.append("请重新选择Batch数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击AAS Batch按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择AAS Batch数据文件")
-                    self.textBrowser.append("请重新选择AAS Batch数据文件")
-            else:
+                m = 'N'
+        if m =='Y':
                 f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
                 self.textBrowser_3.append("正在微波Batch-AAS转化")
                 app.processEvents()
@@ -1173,93 +1179,96 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser_3.append("请重新点击Nickel Batch按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_3.append("请重新选择Batch数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击Nickel Batch按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择Nickel Batch数据文件")
-                    self.textBrowser.append("请重新选择Nickel Batch数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断是否有镍释放的模板文件
+            file = configContent['Nickel_Batch_Import_URL'] + '\\' + configContent['Nickel_File_Name']
+            folder1 = os.path.exists(file)
+            if not folder1:
+                QMessageBox.information(self, "无镍释放模板",
+                                        "没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Import_URL,Nickel_File_Name\n镍释放结果模板的文件路径、文件名称和Excel格式",
+                                        QMessageBox.Yes)
+            # 判断镍释放存储路径是否存在
+            fileUrl = configContent['Nickel_Batch_Export_URL']
+            folder2 = os.path.exists(fileUrl)
+            if not folder2:
+                QMessageBox.information(self, "镍释放路径错误",
+                                        "没有镍释放存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Export_URL",
+                                        QMessageBox.Yes)
+            if (not folder1) or (not folder2):
+                self.textBrowser_3.append("请更改配置文件并导入后，重新点击Nickel Batch按钮开始数据处理")
             else:
-                # 判断是否有镍释放的模板文件
-                file = configContent['Nickel_Batch_Import_URL'] + '\\' + configContent['Nickel_File_Name']
-                folder1 = os.path.exists(file)
-                if not folder1:
-                    QMessageBox.information(self, "无镍释放模板",
-                                            "没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Import_URL,Nickel_File_Name\n镍释放结果模板的文件路径、文件名称和Excel格式",
-                                            QMessageBox.Yes)
-                # 判断镍释放存储路径是否存在
-                fileUrl = configContent['Nickel_Batch_Export_URL']
-                folder2 = os.path.exists(fileUrl)
-                if not folder2:
-                    QMessageBox.information(self, "镍释放路径错误",
-                                            "没有镍释放存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Export_URL",
-                                            QMessageBox.Yes)
-                if (not folder1) or (not folder2):
-                    self.textBrowser_3.append("请更改配置文件并导入后，重新点击Nickel Batch按钮开始数据处理")
+                if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
+                    self.textBrowser_3.append("正在镍释放Batch转化")
+                    self.lineEdit_6.setText("正在镍释放Batch转化")
+                    app.processEvents()
+                    excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                    excel.Visible = 0
+                    excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+                    wb = excel.Workbooks.Open(
+                        os.path.join(os.getcwd(), r'%s/%s' % (
+                            configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+                    ws = wb.Worksheets('Data')
+                    x = 1
+                    oneRow = []
+                    while ws.Cells(1, x).Value is not None:
+                        oneRow.append(ws.Cells(1, x).Value)
+                        x += 1
+                    sampleColumn = int(oneRow.index('Sample ID')) + 1
+                    noColumn = int(oneRow.index('No.')) + 1
+                    n = 2
+                    num = []
+                    while ws.Cells(n, noColumn).Value is not None:
+                        num.append(ws.Cells(n, noColumn).Value)
+                        n += 1
+                    i = 0
+                    m = 1
+                    n = 2
+                    for each in labNumber:
+                        if i < len(labNumber):
+                            if (i + 1) % num[-1] != 0:
+                                ws.Cells(n, sampleColumn).Value = each
+                                n += 1
+                                i += 1
+                            else:
+                                ws.Cells(n, sampleColumn).Value = each
+                                wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
+                                n = 2
+                                i += 1
+                                m += 1
+                                wb = excel.Workbooks.Open(
+                                    os.path.join(os.getcwd(), r'%s/%s' % (
+                                        configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+                                ws = wb.Worksheets('Data')
+                    if (i + 1) % num[-1] != 1:
+                        wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
+                    excel.Quit()
+                    self.textBrowser_3.append("完成镍释放Batch转化")
+                    self.textBrowser_3.append("生成路径：%s" % configContent['Nickel_Batch_Export_URL'])
+                    self.lineEdit_6.setText("完成镍释放Batch转化")
                 else:
-                    if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
-                        self.textBrowser_3.append("正在镍释放Batch转化")
-                        self.lineEdit_6.setText("正在镍释放Batch转化")
-                        app.processEvents()
-                        excel = win32com.gencache.EnsureDispatch('Excel.Application')
-                        excel.Visible = 0
-                        excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
-                        wb = excel.Workbooks.Open(
-                            os.path.join(os.getcwd(), r'%s/%s' % (
-                                configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
-                        ws = wb.Worksheets('Data')
-                        x = 1
-                        oneRow = []
-                        while ws.Cells(1, x).Value is not None:
-                            oneRow.append(ws.Cells(1, x).Value)
-                            x += 1
-                        sampleColumn = int(oneRow.index('Sample ID')) + 1
-                        noColumn = int(oneRow.index('No.')) + 1
-                        n = 2
-                        num = []
-                        while ws.Cells(n, noColumn).Value is not None:
-                            num.append(ws.Cells(n, noColumn).Value)
-                            n += 1
-                        i = 0
-                        m = 1
-                        n = 2
-                        for each in labNumber:
-                            if i < len(labNumber):
-                                if (i + 1) % num[-1] != 0:
-                                    ws.Cells(n, sampleColumn).Value = each
-                                    n += 1
-                                    i += 1
-                                else:
-                                    ws.Cells(n, sampleColumn).Value = each
-                                    wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
-                                    n = 2
-                                    i += 1
-                                    m += 1
-                                    wb = excel.Workbooks.Open(
-                                        os.path.join(os.getcwd(), r'%s/%s' % (
-                                            configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
-                                    ws = wb.Worksheets('Data')
-                        if (i + 1) % num[-1] != 1:
-                            wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
-                        excel.Quit()
-                        self.textBrowser_3.append("完成镍释放Batch转化")
-                        self.textBrowser_3.append("生成路径：%s" % configContent['Nickel_Batch_Export_URL'])
-                        self.lineEdit_6.setText("完成镍释放Batch转化")
-                    else:
-                        self.textBrowser_3.append("请确认Batch方法是镍释放")
-                        self.lineEdit_6.setText("请确认Batch方法是镍释放")
+                    self.textBrowser_3.append("请确认Batch方法是镍释放")
+                    self.lineEdit_6.setText("请确认Batch方法是镍释放")
 
         # ECO质检院模板生成
 
@@ -1268,177 +1277,180 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser_3.append("请重新点击ECO ZJY按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_3.append("请重新选择Batch数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击ECO Batch按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择ECO Batch数据文件")
-                    self.textBrowser.append("请重新选择ECO Batch数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断ECO存储路径是否存在
+            fileUrl = configContent['ECO_Batch_Export_URL']
+            folder = os.path.exists(fileUrl)
+            if not folder:
+                QMessageBox.information(self, "ECO存储路劲出错",
+                                        "没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Batch_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO ZJY按钮开始数据处理")
             else:
-                # 判断ECO存储路径是否存在
-                fileUrl = configContent['ECO_Batch_Export_URL']
-                folder = os.path.exists(fileUrl)
-                if not folder:
-                    QMessageBox.information(self, "ECO存储路劲出错",
-                                            "没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Batch_Export_URL",
-                                            QMessageBox.Yes)
-                    self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO ZJY按钮开始数据处理")
-                else:
-                    self.textBrowser_3.append("正在ECO质检院Batch转化")
-                    self.lineEdit_6.setText("正在ECO质检院Batch转化")
-                    app.processEvents()
-                    ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
-                    excel = win32com.gencache.EnsureDispatch('Excel.Application')
-                    excel.Visible = 0
-                    if not ecoFile:
-                        wb = excel.Workbooks.Add()
-                        ws = wb.Worksheets('Sheet1')
-                        ws.Columns(1).ColumnWidth = 3  # 列宽。
-                        ws.Columns(2).ColumnWidth = 12.5  # 列宽。
-                        ws.Columns(3).ColumnWidth = 14.5  # 列宽。
-                        ws.Columns(4).ColumnWidth = 6.5  # 列宽。
-                        ws.Columns(5).ColumnWidth = 6.6  # 列宽。
-                        ws.Columns(6).ColumnWidth = 6  # 列宽。
-                        ws.Columns(7).ColumnWidth = 20  # 列宽。
-                        ws.Cells(1, 1).Value = 'No.'
-                        ws.Cells(1, 2).Value = 'Sample No.'
-                        ws.Cells(1, 3).Value = 'Analyte'
-                        ws.Cells(1, 4).Value = 'Weight'
-                        ws.Cells(1, 5).Value = 'Volume'
-                        ws.Cells(1, 6).Value = 'DF'
-                        ws.Cells(1, 7).Value = 'Batch No'
-                        ws.Cells(2, 1).Value = 1
-                        ws.Cells(2, 2).Value = 'BLK'
-                        ws.Cells(2, 6).Value = 5
-                        m = 0
-                        for m in range(2):
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
-                                ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            m += 1
-                        i = 0
-                        n = 3
-                        for i in range(len(labNumber)):
-                            ws.Cells(n, 1).Value = '%s' % (n - 1)
-                            ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                            ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                            ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                            ws.Cells(n, 6).Value = 5
-                            ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(n, x + 1).BorderAround(1, 2)
-                                ws.Cells(n, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            n += 1
-                            i += 1
-                        wb.Worksheets.Add()
-                        ws2 = excel.Worksheets('Sheet2')
-                        ws2.Cells(1, 1).Value = '1.'
-                        ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
-                        ws2.Cells(1, 1).Font.Size = 12
-                        ws2.Cells(1, 1).Font.Bold = True
-                        ws2.Cells(1, 2).Value = 'BLK'
-                        ws2.Cells(1, 2).HorizontalAlignment = -4108
-                        ws2.Cells(1, 2).Font.Size = 12
-                        ws2.Cells(1, 2).Font.Bold = True
-                        ws2.Rows(1).RowHeight = 33.8  # 行高
-                        ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
-                        ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
-                        i = 0
-                        n = 2
-                        for i in range(len(labNumber)):
-                            ws2.Rows(n).RowHeight = 33.8  # 行高
-                            ws2.Cells(n, 1).Value = '%s.' % n
-                            ws2.Cells(n, 1).HorizontalAlignment = -4108
-                            ws2.Cells(n, 1).Font.Size = 12
-                            ws2.Cells(n, 1).Font.Bold = True
-                            ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws2.Cells(n, 2).HorizontalAlignment = -4108
-                            ws2.Cells(n, 2).Font.Size = 12
-                            ws2.Cells(n, 2).Font.Bold = True
-                            n += 1
-                            i += 1
-                    else:
-                        excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
-                        wb = excel.Workbooks.Open(
-                            os.path.join(os.getcwd(),
-                                         r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
-                        ws = wb.Worksheets('Sheet1')
-                        i = 0
-                        n = 1
-                        while ws.Cells(n, 1).Value is not None:
-                            n += 1
-                        for i in range(len(labNumber)):
-                            ws.Cells(n, 1).Value = '%s' % (n - 1)
-                            ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                            ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                            ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                            ws.Cells(n, 5).NumberFormat = "0"
-                            ws.Cells(n, 6).Value = 5
-                            ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(n, x + 1).BorderAround(1, 2)
-                                ws.Cells(n, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            n += 1
-                            i += 1
-                        ws2 = excel.Worksheets('Sheet2')
-                        i = 0
-                        n = 1
-                        while ws2.Cells(n, 1).Value is not None:
-                            n += 1
-                        for i in range(len(labNumber)):
-                            ws2.Rows(n).RowHeight = 33.8  # 行高
-                            ws2.Cells(n, 1).Value = '%s.' % n
-                            ws2.Cells(n, 1).HorizontalAlignment = -4108
-                            ws2.Cells(n, 1).Font.Size = 12
-                            ws2.Cells(n, 1).Font.Bold = True
-                            ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws2.Cells(n, 2).HorizontalAlignment = -4108
-                            ws2.Cells(n, 2).Font.Size = 12
-                            ws2.Cells(n, 2).Font.Bold = True
-                            n += 1
-                            i += 1
-                    list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
-                    list2 = ['MDL(ug/L)', 2, 0.8, 0.4, 2, 2, 2, 0.8, 0.08, 2, 2, 2]
-                    list3 = ['Limit(mg/kg)', '<5', '<0.2', '<0.1', '<1', '<1', '<25', '0.8', '<0.02', '<1', '<1000', '<500']
+                self.textBrowser_3.append("正在ECO质检院Batch转化")
+                self.lineEdit_6.setText("正在ECO质检院Batch转化")
+                app.processEvents()
+                ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = 0
+                if not ecoFile:
+                    wb = excel.Workbooks.Add()
+                    ws = wb.Worksheets('Sheet1')
+                    ws.Columns(1).ColumnWidth = 3  # 列宽。
+                    ws.Columns(2).ColumnWidth = 12.5  # 列宽。
+                    ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+                    ws.Columns(4).ColumnWidth = 6.5  # 列宽。
+                    ws.Columns(5).ColumnWidth = 6.6  # 列宽。
+                    ws.Columns(6).ColumnWidth = 6  # 列宽。
+                    ws.Columns(7).ColumnWidth = 20  # 列宽。
+                    ws.Cells(1, 1).Value = 'No.'
+                    ws.Cells(1, 2).Value = 'Sample No.'
+                    ws.Cells(1, 3).Value = 'Analyte'
+                    ws.Cells(1, 4).Value = 'Weight'
+                    ws.Cells(1, 5).Value = 'Volume'
+                    ws.Cells(1, 6).Value = 'DF'
+                    ws.Cells(1, 7).Value = 'Batch No'
+                    ws.Cells(2, 1).Value = 1
+                    ws.Cells(2, 2).Value = 'BLK'
+                    ws.Cells(2, 6).Value = 5
+                    m = 0
+                    for m in range(2):
+                        x = 0
+                        for x in range(7):
+                            ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
+                            ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
+                            x += 1
+                        m += 1
                     i = 0
-                    n += 1
-                    for i in range(len(list1)):
-                        ws.Cells(n, 2).Value = '%s' % list1[i]
-                        ws.Cells(n, 3).Value = '%s' % list2[i]
-                        ws.Cells(n, 4).Value = '%s' % list3[i]
-                        x = 1
-                        for m in range(3):
+                    n = 3
+                    for i in range(len(labNumber)):
+                        ws.Cells(n, 1).Value = '%s' % (n - 1)
+                        ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                        ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                        ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                        ws.Cells(n, 6).Value = 5
+                        ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                        x = 0
+                        for x in range(7):
                             ws.Cells(n, x + 1).BorderAround(1, 2)
                             ws.Cells(n, x + 1).HorizontalAlignment = -4108
                             x += 1
-                        i += 1
                         n += 1
-                    wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
-                    excel.Quit()
-                    self.textBrowser_3.append("ECO质检院Batch转化完成")
-                    self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
-                    self.lineEdit_6.setText("ECO质检院Batch转化完成")
-                    app.processEvents()
+                        i += 1
+                    wb.Worksheets.Add()
+                    ws2 = excel.Worksheets('Sheet2')
+                    ws2.Cells(1, 1).Value = '1.'
+                    ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
+                    ws2.Cells(1, 1).Font.Size = 12
+                    ws2.Cells(1, 1).Font.Bold = True
+                    ws2.Cells(1, 2).Value = 'BLK'
+                    ws2.Cells(1, 2).HorizontalAlignment = -4108
+                    ws2.Cells(1, 2).Font.Size = 12
+                    ws2.Cells(1, 2).Font.Bold = True
+                    ws2.Rows(1).RowHeight = 33.8  # 行高
+                    ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
+                    ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
+                    i = 0
+                    n = 2
+                    for i in range(len(labNumber)):
+                        ws2.Rows(n).RowHeight = 33.8  # 行高
+                        ws2.Cells(n, 1).Value = '%s.' % n
+                        ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
+                        ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
+                        n += 1
+                        i += 1
+                else:
+                    excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+                    wb = excel.Workbooks.Open(
+                        os.path.join(os.getcwd(),
+                                     r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
+                    ws = wb.Worksheets('Sheet1')
+                    i = 0
+                    n = 1
+                    while ws.Cells(n, 1).Value is not None:
+                        n += 1
+                    for i in range(len(labNumber)):
+                        ws.Cells(n, 1).Value = '%s' % (n - 1)
+                        ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                        ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                        ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                        ws.Cells(n, 5).NumberFormat = "0"
+                        ws.Cells(n, 6).Value = 5
+                        ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                        x = 0
+                        for x in range(7):
+                            ws.Cells(n, x + 1).BorderAround(1, 2)
+                            ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                            x += 1
+                        n += 1
+                        i += 1
+                    ws2 = excel.Worksheets('Sheet2')
+                    i = 0
+                    n = 1
+                    while ws2.Cells(n, 1).Value is not None:
+                        n += 1
+                    for i in range(len(labNumber)):
+                        ws2.Rows(n).RowHeight = 33.8  # 行高
+                        ws2.Cells(n, 1).Value = '%s.' % n
+                        ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
+                        ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
+                        n += 1
+                        i += 1
+                list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
+                list2 = ['MDL(ug/L)', 2, 0.8, 0.4, 2, 2, 2, 0.8, 0.08, 2, 2, 2]
+                list3 = ['Limit(mg/kg)', '<5', '<0.2', '<0.1', '<1', '<1', '<25', '0.8', '<0.02', '<1', '<1000', '<500']
+                i = 0
+                n += 1
+                for i in range(len(list1)):
+                    ws.Cells(n, 2).Value = '%s' % list1[i]
+                    ws.Cells(n, 3).Value = '%s' % list2[i]
+                    ws.Cells(n, 4).Value = '%s' % list3[i]
+                    x = 1
+                    for m in range(3):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
+                    i += 1
+                    n += 1
+                wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+                excel.Quit()
+                self.textBrowser_3.append("ECO质检院Batch转化完成")
+                self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
+                self.lineEdit_6.setText("ECO质检院Batch转化完成")
+                app.processEvents()
 
         # ECO中迅德模板生成
 
@@ -1447,187 +1459,188 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser_3.append("请重新点击ECO ZXD按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_3.append("请重新选择Batch数据文件")
-        else:
-            if selectResultFile[0] == [] and labNumber[0] == '':
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击ECO Batch按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择ECO Batch数据文件")
-                    self.textBrowser.append("请重新选择ECO Batch数据文件")
+        if m == 'Y':
+            # 判断ECO存储路径是否存在
+            fileUrl = configContent['ECO_Batch_Export_URL']
+            folder = os.path.exists(fileUrl)
+            if not folder:
+                QMessageBox.information(self, "ECO存储路劲出错",
+                                        "没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Batch_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO ZXD按钮开始数据处理")
             else:
-                # 判断ECO存储路径是否存在
-                fileUrl = configContent['ECO_Batch_Export_URL']
-                folder = os.path.exists(fileUrl)
-                if not folder:
-                    QMessageBox.information(self, "ECO存储路劲出错",
-                                            "没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Batch_Export_URL",
-                                            QMessageBox.Yes)
-                    self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO ZXD按钮开始数据处理")
-                else:
-                    self.textBrowser_3.append("正在ECO中迅德Batch转化")
-                    self.lineEdit_6.setText("正在ECO中迅德Batch转化")
-                    app.processEvents()
-                    ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
-                    excel = win32com.gencache.EnsureDispatch('Excel.Application')
-                    excel.Visible = 0
-                    if not ecoFile:
-                        wb = excel.Workbooks.Add()
-                        ws = wb.Worksheets('Sheet1')
-                        # 创建Batch单号
-                        ws.Columns(1).ColumnWidth = 3  # 列宽。
-                        ws.Columns(2).ColumnWidth = 12.5  # 列宽。
-                        ws.Columns(3).ColumnWidth = 14.5  # 列宽。
-                        ws.Columns(4).ColumnWidth = 6.5  # 列宽。
-                        ws.Columns(5).ColumnWidth = 6.6  # 列宽。
-                        ws.Columns(6).ColumnWidth = 6  # 列宽。
-                        ws.Columns(7).ColumnWidth = 20  # 列宽。
-                        ws.Cells(1, 1).Value = 'No.'
-                        ws.Cells(1, 2).Value = 'Sample No.'
-                        ws.Cells(1, 3).Value = 'Analyte'
-                        ws.Cells(1, 4).Value = 'Weight'
-                        ws.Cells(1, 5).Value = 'Volume'
-                        ws.Cells(1, 6).Value = 'DF'
-                        ws.Cells(1, 7).Value = 'Batch No'
-                        ws.Cells(2, 1).Value = 1
-                        ws.Cells(2, 2).Value = 'BLK'
-                        ws.Cells(2, 6).Value = 5
-                        m = 0
-                        for m in range(2):
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
-                                ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            m += 1
-                        i = 0
-                        n = 3
-                        for i in range(len(labNumber)):
-                            ws.Cells(n, 1).Value = '%s' % (n - 1)
-                            ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                            ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                            ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                            ws.Cells(n, 6).Value = 5
-                            ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(n, x + 1).BorderAround(1, 2)
-                                ws.Cells(n, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            n += 1
-                            i += 1
-                        # 创建打印标签
-                        wb.Worksheets.Add()
-                        ws2 = excel.Worksheets('Sheet2')
-                        ws2.Cells(1, 1).Value = '1.'
-                        ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
-                        ws2.Cells(1, 1).Font.Size = 12
-                        ws2.Cells(1, 1).Font.Bold = True
-                        ws2.Cells(1, 2).Value = 'BLK'
-                        ws2.Cells(1, 2).HorizontalAlignment = -4108
-                        ws2.Cells(1, 2).Font.Size = 12
-                        ws2.Cells(1, 2).Font.Bold = True
-                        ws2.Rows(1).RowHeight = 33.8  # 行高
-                        ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
-                        ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
-                        i = 0
-                        n = 2
-                        for i in range(len(labNumber)):
-                            ws2.Rows(n).RowHeight = 33.8  # 行高
-                            ws2.Cells(n, 1).Value = '%s.' % n
-                            ws2.Cells(n, 1).HorizontalAlignment = -4108
-                            ws2.Cells(n, 1).Font.Size = 12
-                            ws2.Cells(n, 1).Font.Bold = True
-                            ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws2.Cells(n, 2).HorizontalAlignment = -4108
-                            ws2.Cells(n, 2).Font.Size = 12
-                            ws2.Cells(n, 2).Font.Bold = True
-                            n += 1
-                            i += 1
-                    else:
-                        excel.Application.DisplayAlerts = False
-                        wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (
-                            configContent['ECO_Batch_Export_URL'], today)))
-                        ws = wb.Worksheets('Sheet1')
-                        i = 0
-                        n = 1
-                        while ws.Cells(n, 1).Value is not None:
-                            n += 1
-                        for i in range(len(labNumber)):
-                            ws.Cells(n, 1).Value = '%s' % (n - 1)
-                            ws.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws.Cells(n, 3).Value = '%s' % analyteList[i]
-                            ws.Cells(n, 4).Value = '%s' % qualityValue[i]
-                            ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-                            ws.Cells(n, 5).NumberFormat = "0"
-                            ws.Cells(n, 6).Value = 5
-                            ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
-                            x = 0
-                            for x in range(7):
-                                ws.Cells(n, x + 1).BorderAround(1, 2)
-                                ws.Cells(n, x + 1).HorizontalAlignment = -4108
-                                x += 1
-                            n += 1
-                            i += 1
-                        ws2 = excel.Worksheets('Sheet2')
-                        i = 0
-                        n = 1
-                        while ws2.Cells(n, 1).Value is not None:
-                            n += 1
-                        for i in range(len(labNumber)):
-                            ws2.Rows(n).RowHeight = 33.8  # 行高
-                            ws2.Cells(n, 1).Value = '%s.' % n
-                            ws2.Cells(n, 1).HorizontalAlignment = -4108
-                            ws2.Cells(n, 1).Font.Size = 12
-                            ws2.Cells(n, 1).Font.Bold = True
-                            ws2.Cells(n, 2).Value = '%s' % labNumber[i]
-                            ws2.Cells(n, 2).HorizontalAlignment = -4108
-                            ws2.Cells(n, 2).Font.Size = 12
-                            ws2.Cells(n, 2).Font.Bold = True
-                            n += 1
-                            i += 1
-                    list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
-                             'Ti', 'Zr']
-                    list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-                    list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+                self.textBrowser_3.append("正在ECO中迅德Batch转化")
+                self.lineEdit_6.setText("正在ECO中迅德Batch转化")
+                app.processEvents()
+                ecoFile = os.path.exists('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = 0
+                if not ecoFile:
+                    wb = excel.Workbooks.Add()
+                    ws = wb.Worksheets('Sheet1')
+                    # 创建Batch单号
+                    ws.Columns(1).ColumnWidth = 3  # 列宽。
+                    ws.Columns(2).ColumnWidth = 12.5  # 列宽。
+                    ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+                    ws.Columns(4).ColumnWidth = 6.5  # 列宽。
+                    ws.Columns(5).ColumnWidth = 6.6  # 列宽。
+                    ws.Columns(6).ColumnWidth = 6  # 列宽。
+                    ws.Columns(7).ColumnWidth = 20  # 列宽。
+                    ws.Cells(1, 1).Value = 'No.'
+                    ws.Cells(1, 2).Value = 'Sample No.'
+                    ws.Cells(1, 3).Value = 'Analyte'
+                    ws.Cells(1, 4).Value = 'Weight'
+                    ws.Cells(1, 5).Value = 'Volume'
+                    ws.Cells(1, 6).Value = 'DF'
+                    ws.Cells(1, 7).Value = 'Batch No'
+                    ws.Cells(2, 1).Value = 1
+                    ws.Cells(2, 2).Value = 'BLK'
+                    ws.Cells(2, 6).Value = 5
+                    m = 0
+                    for m in range(2):
+                        x = 0
+                        for x in range(7):
+                            ws.Cells(m + 1, x + 1).BorderAround(1, 2)  # 表格边框
+                            ws.Cells(m + 1, x + 1).HorizontalAlignment = -4108
+                            x += 1
+                        m += 1
                     i = 0
-                    n += 1
-                    for i in range(len(list1)):
-                        ws.Cells(n, 2).Value = '%s' % list1[i]
-                        ws.Cells(n, 3).Value = '%s' % list2[i]
-                        ws.Cells(n, 4).Value = '%s' % list3[i]
-                        if i == 0:
-                            ws.Cells(n, 5).Value = 'UV'
-                            ws.Cells(n, 6).Value = 'Unit'
-                            ws.Cells(n, 7).Value = 'Unit (Raw Data)'
-                        else:
-                            ws.Cells(n, 5).Value = '10%'
-                            ws.Cells(n, 6).Value = 'mg/kg'
-                            ws.Cells(n, 7).Value = 'ug/L'
-                        x = 1
-                        for m in range(6):
+                    n = 3
+                    for i in range(len(labNumber)):
+                        ws.Cells(n, 1).Value = '%s' % (n - 1)
+                        ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                        ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                        ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                        ws.Cells(n, 6).Value = 5
+                        ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                        x = 0
+                        for x in range(7):
                             ws.Cells(n, x + 1).BorderAround(1, 2)
                             ws.Cells(n, x + 1).HorizontalAlignment = -4108
                             x += 1
-                        i += 1
                         n += 1
-                    wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
-                    excel.Quit()
-                    self.textBrowser_3.append("ECO中迅德Batch转化完成")
-                    self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
-                    self.lineEdit_6.setText("ECO中迅德Batch转化完成")
-                    app.processEvents()
+                        i += 1
+                    # 创建打印标签
+                    wb.Worksheets.Add()
+                    ws2 = excel.Worksheets('Sheet2')
+                    ws2.Cells(1, 1).Value = '1.'
+                    ws2.Cells(1, 1).HorizontalAlignment = -4108  # 居中
+                    ws2.Cells(1, 1).Font.Size = 12
+                    ws2.Cells(1, 1).Font.Bold = True
+                    ws2.Cells(1, 2).Value = 'BLK'
+                    ws2.Cells(1, 2).HorizontalAlignment = -4108
+                    ws2.Cells(1, 2).Font.Size = 12
+                    ws2.Cells(1, 2).Font.Bold = True
+                    ws2.Rows(1).RowHeight = 33.8  # 行高
+                    ws2.Columns(1).ColumnWidth = 2.8  # 列宽。
+                    ws2.Columns(2).ColumnWidth = 15.2  # 列宽。
+                    i = 0
+                    n = 2
+                    for i in range(len(labNumber)):
+                        ws2.Rows(n).RowHeight = 33.8  # 行高
+                        ws2.Cells(n, 1).Value = '%s.' % n
+                        ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
+                        ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
+                        n += 1
+                        i += 1
+                else:
+                    excel.Application.DisplayAlerts = False
+                    wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s/ECO ZXD %s.xlsx' % (
+                        configContent['ECO_Batch_Export_URL'], today)))
+                    ws = wb.Worksheets('Sheet1')
+                    i = 0
+                    n = 1
+                    while ws.Cells(n, 1).Value is not None:
+                        n += 1
+                    for i in range(len(labNumber)):
+                        ws.Cells(n, 1).Value = '%s' % (n - 1)
+                        ws.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws.Cells(n, 3).Value = '%s' % analyteList[i]
+                        ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+                        ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+                        ws.Cells(n, 5).NumberFormat = "0"
+                        ws.Cells(n, 6).Value = 5
+                        ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+                        x = 0
+                        for x in range(7):
+                            ws.Cells(n, x + 1).BorderAround(1, 2)
+                            ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                            x += 1
+                        n += 1
+                        i += 1
+                    ws2 = excel.Worksheets('Sheet2')
+                    i = 0
+                    n = 1
+                    while ws2.Cells(n, 1).Value is not None:
+                        n += 1
+                    for i in range(len(labNumber)):
+                        ws2.Rows(n).RowHeight = 33.8  # 行高
+                        ws2.Cells(n, 1).Value = '%s.' % n
+                        ws2.Cells(n, 1).HorizontalAlignment = -4108
+                        ws2.Cells(n, 1).Font.Size = 12
+                        ws2.Cells(n, 1).Font.Bold = True
+                        ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+                        ws2.Cells(n, 2).HorizontalAlignment = -4108
+                        ws2.Cells(n, 2).Font.Size = 12
+                        ws2.Cells(n, 2).Font.Bold = True
+                        n += 1
+                        i += 1
+                list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se', 'Mn', 'Zn', 'Al',
+                         'Ti', 'Zr']
+                list2 = ['RL', 0.5, 0.2, 0.1, 0.5, 0.5, 0.5, 0.2, 0.02, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+                list3 = ['DL', 2, 2, 0.2, 2, 2, 2, 2, 0.2, 2, 2, 2, 2, 2, 2, 2, 2]
+                i = 0
+                n += 1
+                for i in range(len(list1)):
+                    ws.Cells(n, 2).Value = '%s' % list1[i]
+                    ws.Cells(n, 3).Value = '%s' % list2[i]
+                    ws.Cells(n, 4).Value = '%s' % list3[i]
+                    if i == 0:
+                        ws.Cells(n, 5).Value = 'UV'
+                        ws.Cells(n, 6).Value = 'Unit'
+                        ws.Cells(n, 7).Value = 'Unit (Raw Data)'
+                    else:
+                        ws.Cells(n, 5).Value = '10%'
+                        ws.Cells(n, 6).Value = 'mg/kg'
+                        ws.Cells(n, 7).Value = 'ug/L'
+                    x = 1
+                    for m in range(6):
+                        ws.Cells(n, x + 1).BorderAround(1, 2)
+                        ws.Cells(n, x + 1).HorizontalAlignment = -4108
+                        x += 1
+                    i += 1
+                    n += 1
+                wb.SaveAs('%s/ECO ZXD %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+                excel.Quit()
+                self.textBrowser_3.append("ECO中迅德Batch转化完成")
+                self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
+                self.lineEdit_6.setText("ECO中迅德Batch转化完成")
+                app.processEvents()
 
         # 获取结果文件
 
@@ -1635,15 +1648,26 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m =='N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'UV')
-                self.textBrowser_4.append("请重新点击Formal Batch按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_4.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_4.append("请重新选择Batch数据文件")
-        else:
+        if m == 'Y':
             self.textBrowser_4.append("样品单号正在生成Formal格式")
             self.lineEdit_6.setText("样品单号正在生成Formal格式")
             n = 3
@@ -1689,7 +1713,53 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("完成样品单号Formal-Batch")
 
     def crBatch(self):
-        self.lineEdit_6.setText("别急，还在开发中")
+        try:
+            labNumber
+        except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'UV')
+                if labNumber == []:
+                    self.textBrowser_4.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_4.append("请重新选择Batch数据文件")
+        if m == 'Y':
+            self.textBrowser_4.append("样品单号正在生成Cr VI格式")
+            self.lineEdit_6.setText("样品单号正在生成Cr VI格式")
+            n = 1
+            fileName = '%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today)
+            if not os.path.exists(fileName):
+                file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                file.write('BLK\n')
+                file.write('BLK+DPC\n')
+                file.write('BS\n')
+                file.write('BS+DPC\n')
+                file.write('SS\n')
+                file.write('SS+DPC\n')
+                n = 3
+            for each in labNumber:
+                file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                file.write('%s\n'%each)
+                file.write('%s+D\n'%each)
+                n += 1
+                if n % 20 == 0:
+                    file.write('QC\n')
+            file.write('QC\n')
+        self.textBrowser_4.append("完成样品单号Cr VI-Batch")
+        self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
+        self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
 
     def phBatch(self):
         self.lineEdit_6.setText("别急，还在开发中")
@@ -1746,25 +1816,28 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             selectResultFile[0]
         except NameError:
+           m = 'N'
+        else:
+            if selectResultFile[0] == []:
+              m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getResult(self, 'ICP')
-                self.textBrowser.append("请重新点击ICP Result按钮开始数据处理")
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                    self.textBrowser.append("请重新选择ICP Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择ICP Result数据文件")
                 self.textBrowser.append("请重新选择ICP Result数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击ICP Result按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
-                    self.textBrowser.append("请重新选择ICP Result数据文件")
-            else:
+                m = 'N'
+        if m == 'Y':
                 # 判断ICP存储路径是否存在
                 fileUrl = configContent['ICP_Result_Export_URL']
                 folder = os.path.exists(fileUrl)
@@ -1797,37 +1870,53 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             labNumber
         except NameError:
+            m3 = 'N'
+        else:
+            if labNumber == []:
+                m3 = 'N'
+            else:
+                m3 = 'Y'
+        if m3 == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getBatch(self, 'ICP')
-                self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
+                if labNumber == []:
+                    self.textBrowser_3.append("请重新选择Batch数据文件")
+                    m3 = 'N'
+                else:
+                    m3 = 'Y'
             else:
-                self.lineEdit_6.setText("请重新选择Reach Batch数据文件")
-                self.textBrowser_3.append("请重新选择Reach Batch数据文件")
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_3.append("请重新选择Batch数据文件")
+                m3 = 'N'
         # 判断是否选择了Result文件
         try:
             selectResultFile[0]
         except NameError:
+            m4 = 'N'
+        else:
+            if selectResultFile[0] == []:
+                m4 = 'N'
+            else:
+                m4 = 'Y'
+        if m4 == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getResult(self, 'ICP')
-                self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
-            else:
-                self.lineEdit_6.setText("请重新选择Reach Result数据文件")
-                self.textBrowser.append("请重新选择Reach Result数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击Reach Result按钮开始数据处理")
+                if selectResultFile[0] == []:
+                    self.textBrowser.append("请重新选择Result数据文件")
+                    self.lineEdit_6.setText("请重新选择Result数据文件")
+                    m4 = 'N'
                 else:
-                    self.lineEdit_6.setText("请重新选择Reach Result数据文件")
-                    self.textBrowser.append("请重新选择Reach Result数据文件")
+                    m4 = 'Y'
             else:
+                self.lineEdit_6.setText("请重新选择Result数据文件")
+                self.textBrowser.append("请重新选择Result数据文件")
+                m4 = 'N'
+        # 判断是否有Batch和Result文件
+        if m3 == 'Y' and m4 == 'Y':
                 # 判断是否有Reach模板
                 file = configContent['Reach_Result_Import_URL'] + '\\' + configContent['Reach_Result_File_Name']
                 folder1 = os.path.exists(file)
@@ -1988,124 +2077,128 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def icpQc(self):
         # 判断是否选择了Result文件
+        # 判断是否选择了Result文件
         try:
-            selectResultFile
+            selectResultFile[0]
         except NameError:
+            m = 'N'
+        else:
+            if selectResultFile[0] == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
             reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
                                          QMessageBox.Yes)
             if reply == QMessageBox.Yes:
                 Ui_MainWindow.getResult(self, 'ICP')
-                self.textBrowser.append("请重新点击MM QC Chart按钮开始数据处理")
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                    self.textBrowser.append("请重新选择ICP Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择ICP Result数据文件")
                 self.textBrowser.append("请重新选择ICP Result数据文件")
-        else:
-            if selectResultFile[0] == []:
-                reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                             QMessageBox.Yes)
-                if reply == QMessageBox.Yes:
-                    Ui_MainWindow.getResult(self, 'ICP')
-                    self.textBrowser.append("请重新点击MM QC Chart按钮开始数据处理")
-                else:
-                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
-                    self.textBrowser.append("请重新选择ICP Result数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断ICP QC模板是否存在
+            file = configContent['ICP_QC_Chart_Import_URL'] + '\\' + configContent['ICP_QC_Chart_File_Name']
+            folder = os.path.exists(file)
+            if not folder:
+                QMessageBox.information(self, "无ICP QC模板",
+                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nICP_QC_Chart_Import_URL,ICP_QC_Chart_File_Name\nICP QC Chart的文件路径、文件名称和Excel格式",
+                                        QMessageBox.Yes)
+                self.textBrowser.append("请更改配置文件并导入后，重新点击MM QC Chart按钮开始数据处理")
             else:
-                # 判断ICP QC模板是否存在
-                file = configContent['ICP_QC_Chart_Import_URL'] + '\\' + configContent['ICP_QC_Chart_File_Name']
-                folder = os.path.exists(file)
-                if not folder:
-                    QMessageBox.information(self, "无ICP QC模板",
-                                            "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nICP_QC_Chart_Import_URL,ICP_QC_Chart_File_Name\nICP QC Chart的文件路径、文件名称和Excel格式",
-                                            QMessageBox.Yes)
-                    self.textBrowser.append("请更改配置文件并导入后，重新点击MM QC Chart按钮开始数据处理")
-                else:
-                    excel = win32com.gencache.EnsureDispatch('Excel.Application')
-                    excel.Visible = True
-                    excel.Application.DisplayAlerts = True
-                    wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-                        configContent['ICP_QC_Chart_Import_URL'], configContent['ICP_QC_Chart_File_Name'])))
-                    ws = wb.Worksheets('Data')
-                    x = 1
-                    oneRow = []
-                    while ws.Cells(1, x).Value is not None:
-                        oneRow.append(ws.Cells(1, x).Value)
-                        x += 1
-                    materialColumn = int(oneRow.index('Material')) + 1
-                    sampleColumn = int(oneRow.index('Element')) + 1
-                    material = []
-                    resultRows = {}
-                    elements = []
-                    n = 2
-                    # 获取需要测试元素
-                    while ws.Cells(n, materialColumn).Value is not None:
-                        material.append(ws.Cells(n, materialColumn).Value)
-                        elements.append(ws.Cells(n, sampleColumn).Value)
-                        resultRows['%s-%s' % (ws.Cells(n, materialColumn).Value, ws.Cells(n, sampleColumn).Value)] = n
-                        n += 1
-                    # print(elements)
-                    # 获取所需数据
-                    rusultList = []
-                    rusultList2 = []
-                    rusultList3 = []
-                    e = str()
-                    m = []
-                    for each in set(material):
-                        m.append(each)
-                    for each in m:
-                        if each == m[-1]:
-                            e = e + each
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = True
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+                    configContent['ICP_QC_Chart_Import_URL'], configContent['ICP_QC_Chart_File_Name'])))
+                ws = wb.Worksheets('Data')
+                x = 1
+                oneRow = []
+                while ws.Cells(1, x).Value is not None:
+                    oneRow.append(ws.Cells(1, x).Value)
+                    x += 1
+                materialColumn = int(oneRow.index('Material')) + 1
+                sampleColumn = int(oneRow.index('Element')) + 1
+                material = []
+                resultRows = {}
+                elements = []
+                n = 2
+                # 获取需要测试元素
+                while ws.Cells(n, materialColumn).Value is not None:
+                    material.append(ws.Cells(n, materialColumn).Value)
+                    elements.append(ws.Cells(n, sampleColumn).Value)
+                    resultRows['%s-%s' % (ws.Cells(n, materialColumn).Value, ws.Cells(n, sampleColumn).Value)] = n
+                    n += 1
+                # print(elements)
+                # 获取所需数据
+                rusultList = []
+                rusultList2 = []
+                rusultList3 = []
+                e = str()
+                m = []
+                for each in set(material):
+                    m.append(each)
+                for each in m:
+                    if each == m[-1]:
+                        e = e + each
+                    else:
+                        e = e + each + '|'
+                for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+                    fileDate = os.path.split(fileUrl)[1].split('-')[0]
+                    self.textBrowser.append("正在进行%s QC填写" % fileDate)
+                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+                    app.processEvents()
+                    # 获取相关结果数据
+                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+                    csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
+                    csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
+                    csvFile = csvFile[csvFile['D'].isin(set(elements))]
+                    rusultList = list(csvFile['A'])
+                    rusultList2 = list(csvFile['D'])
+                    rusultList3 = list(csvFile['E'])
+                    # print(resultRows)
+                    for num in resultRows:
+                        # print(num,resultRows[num])
+                        if 'Date' in num:  # 跳过填写日期的行
+                            continue
                         else:
-                            e = e + each + '|'
-                    for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
-                        fileDate = os.path.split(fileUrl)[1].split('-')[0]
-                        self.textBrowser.append("正在进行%s QC填写" % fileDate)
-                        self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
-                        app.processEvents()
-                        # 获取相关结果数据
-                        csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
-                        csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
-                        csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
-                        csvFile = csvFile[csvFile['D'].isin(set(elements))]
-                        rusultList = list(csvFile['A'])
-                        rusultList2 = list(csvFile['D'])
-                        rusultList3 = list(csvFile['E'])
-                        # print(resultRows)
-                        for num in resultRows:
-                            # print(num,resultRows[num])
-                            if 'Date' in num:  # 跳过填写日期的行
-                                continue
-                            else:
-                                c = 6
-                                while ws.Cells(resultRows[num], c).Value is not None:
+                            c = 6
+                            while ws.Cells(resultRows[num], c).Value is not None:
+                                c += 1
+                            for i in range(len(rusultList)):  # 遍历结果列表
+                                list1 = rusultList[i].split(',')
+                                if '%s-%s' % (list1[0], rusultList2[i]) in num:
+                                    if i + 1 < len(rusultList):
+                                        # 相同的元素测试验证并跳过
+                                        if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
+                                                rusultList[i + 1], rusultList2[i + 1]):
+                                            continue
+                                    if ',' in rusultList[i]:  # 将需要计算的挑选出来
+                                        if len(list1) == 3:
+                                            # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+                                                     c).Value = float(
+                                                rusultList3[i]) * int(float(list1[1]) * 250) * float(
+                                                list1[2]) / float(
+                                                list1[1])
+                                        elif len(list1) == 2:
+                                            ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+                                                     c).Value = float(
+                                                rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
+                                    else:
+                                        if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
+                                        ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
+                                            rusultList3[i]
                                     c += 1
-                                for i in range(len(rusultList)):  # 遍历结果列表
-                                    list1 = rusultList[i].split(',')
-                                    if '%s-%s' % (list1[0], rusultList2[i]) in num:
-                                        if i + 1 < len(rusultList):
-                                            # 相同的元素测试验证并跳过
-                                            if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
-                                                    rusultList[i + 1], rusultList2[i + 1]):
-                                                continue
-                                        if ',' in rusultList[i]:  # 将需要计算的挑选出来
-                                            if len(list1) == 3:
-                                                # float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
-                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
-                                                         c).Value = float(
-                                                    rusultList3[i]) * int(float(list1[1]) * 250) * float(
-                                                    list1[2]) / float(
-                                                    list1[1])
-                                            elif len(list1) == 2:
-                                                ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
-                                                         c).Value = float(
-                                                    rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
-                                        else:
-                                            if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
-                                                ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-                                            ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-                                                rusultList3[i]
-                                        c += 1
-                        self.textBrowser.append("完成%s QC填写" % fileDate)
-                    self.lineEdit_6.setText("完成QC填写")
+                    self.textBrowser.append("完成%s QC填写" % fileDate)
+                self.lineEdit_6.setText("完成QC填写")
 
         # 质检院结果科学计数法转化为自然数法
 
@@ -2114,23 +2207,28 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         try:
             selectResultFile[0]
         except NameError:
-            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                Ui_MainWindow.getResult(self, 'ICP')
-            else:
-                self.lineEdit_6.setText("请重新选择ECO ZJY Result数据文件")
-                self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据")
-        if selectResultFile[0] == []:
-            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                Ui_MainWindow.getResult(self, 'ICP')
-                self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据处理")
-            else:
-                self.lineEdit_6.setText("请重新选择Result数据文件")
-                self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据")
+            m = 'N'
         else:
+            if selectResultFile[0] == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self, 'ICP')
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                    self.textBrowser.append("请重新选择ICP Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+                self.textBrowser.append("请重新选择ICP Result数据文件")
+                m = 'N'
+        if m == 'Y':
             # 判断ECO存储路径是否存在
             fileUrl = configContent['ECO_Result_Export_URL']
             folder = os.path.exists(fileUrl)
