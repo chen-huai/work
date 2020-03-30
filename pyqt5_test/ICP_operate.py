@@ -14,7 +14,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(511, 442)
-        global icon
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -605,20 +604,35 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.actionExport = QtWidgets.QAction(MainWindow)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/daochu.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionExport.setIcon(icon1)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.actionExport.setFont(font)
         self.actionExport.setObjectName("actionExport")
         self.actionExit = QtWidgets.QAction(MainWindow)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/tuichu.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionExit.setIcon(icon2)
         self.actionExit.setObjectName("actionExit")
         self.actionImport = QtWidgets.QAction(MainWindow)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/daoru.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionImport.setIcon(icon3)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.actionImport.setFont(font)
         self.actionImport.setObjectName("actionImport")
         self.actionHelp = QtWidgets.QAction(MainWindow)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/bangzhu.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionHelp.setIcon(icon4)
         self.actionHelp.setObjectName("actionHelp")
         self.actionAuthor = QtWidgets.QAction(MainWindow)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/zuozhe.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionAuthor.setIcon(icon5)
         self.actionAuthor.setObjectName("actionAuthor")
         self.menu.addAction(self.actionExport)
         self.menu.addAction(self.actionImport)
@@ -630,260 +644,48 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
-
-
-# 需要拷贝部分
-        QFileDialog.setWindowIcon(self, icon)
-        QMessageBox.setWindowIcon(self, icon)
-
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.pushButton_23.clicked.connect(self.aasBatch)
+        self.pushButton_23.clicked.connect(self.tabWidget.close)
         self.pushButton_24.clicked.connect(self.tabWidget.close)
-        self.pushButton_26.clicked.connect(self.randomAction)
         self.pushButton_27.clicked.connect(MainWindow.close)
         self.pushButton_30.clicked.connect(self.tabWidget.close)
         self.pushButton_22.clicked.connect(self.menubar.close)
         self.pushButton_25.clicked.connect(self.tabWidget.close)
-        self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
-        self.pushButton_21.clicked.connect(self.icpBatch)
-        self.pushButton_34.clicked.connect(self.getResult)
+        self.pushButton_29.clicked.connect(self.tabWidget.close)
+        self.pushButton_21.clicked.connect(self.tabWidget.close)
+        self.pushButton_34.clicked.connect(self.tabWidget.close)
         self.pushButton_31.clicked.connect(self.tabWidget.close)
         self.pushButton_32.clicked.connect(self.tabWidget.close)
         self.pushButton_38.clicked.connect(self.tabWidget.close)
         self.pushButton_39.clicked.connect(self.tabWidget.close)
-        self.pushButton_7.clicked.connect(lambda: self.getData(self.pushButton_7))
-        self.pushButton_8.clicked.connect(lambda: self.getData(self.pushButton_8))
-        self.pushButton_9.clicked.connect(lambda: self.getData(self.pushButton_9))
-        self.pushButton_13.clicked.connect(lambda: self.getData(self.pushButton_13))
-        self.pushButton_4.clicked.connect(lambda: self.getData(self.pushButton_4))
-        self.pushButton_5.clicked.connect(lambda: self.getData(self.pushButton_5))
-        self.pushButton_6.clicked.connect(lambda: self.getData(self.pushButton_6))
-        self.pushButton_14.clicked.connect(lambda: self.getData(self.pushButton_14))
-        self.pushButton_10.clicked.connect(lambda: self.getData(self.pushButton_10))
-        self.pushButton_2.clicked.connect(lambda: self.getData(self.pushButton_2))
-        self.pushButton_3.clicked.connect(lambda: self.getData(self.pushButton_3))
-        self.pushButton_15.clicked.connect(self.clearContent)
-        self.pushButton_11.clicked.connect(lambda: self.getData(self.pushButton_11))
-        self.pushButton_12.clicked.connect(lambda: self.getData(self.pushButton_12))
-        self.pushButton_17.clicked.connect(lambda: self.getData(self.pushButton_17))
-        self.pushButton_18.clicked.connect(lambda: self.getBatch('Auto'))
-        self.pushButton.clicked.connect(self.autoWrite)
-        self.pushButton_16.clicked.connect(self.stopMessage)
-        self.actionExport.triggered.connect(self.createConfigContent)
-        self.actionImport.triggered.connect(self.getConfigContent)
+        self.pushButton_7.clicked.connect(self.lineEdit.close)
+        self.pushButton_8.clicked.connect(self.lineEdit.clear)
+        self.pushButton_9.clicked.connect(self.lineEdit.clear)
+        self.pushButton_13.clicked.connect(self.lineEdit.clear)
+        self.pushButton_4.clicked.connect(self.lineEdit.clear)
+        self.pushButton_5.clicked.connect(self.lineEdit.clear)
+        self.pushButton_6.clicked.connect(self.lineEdit.clear)
+        self.pushButton_14.clicked.connect(self.lineEdit.clear)
+        self.pushButton_10.clicked.connect(self.lineEdit.clear)
+        self.pushButton_2.clicked.connect(self.lineEdit.clear)
+        self.pushButton_3.clicked.connect(self.lineEdit.clear)
+        self.pushButton_3.clicked.connect(self.lineEdit.clear)
+        self.pushButton_15.clicked.connect(self.lineEdit.clear)
+        self.pushButton_11.clicked.connect(self.lineEdit.clear)
+        self.pushButton_12.clicked.connect(self.lineEdit.clear)
+        self.pushButton_17.clicked.connect(self.lineEdit.clear)
+        self.pushButton_18.clicked.connect(self.lineEdit.clear)
+        self.pushButton.clicked.connect(self.lineEdit.clear)
+        self.pushButton_16.clicked.connect(self.lineEdit.clear)
+        self.actionExport.triggered.connect(self.lineEdit.clear)
         self.actionExit.triggered.connect(MainWindow.close)
         self.pushButton_37.clicked.connect(self.spinBox_6.clear)
         self.actionImport.triggered.connect(self.lineEdit.clear)
         self.actionHelp.triggered.connect(self.lineEdit.clear)
         self.actionAuthor.triggered.connect(self.lineEdit.clear)
+        self.pushButton_26.clicked.connect(self.spinBox_4.clear)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-        # 初始化，获取或生成配置文件
-
-    def getConfig(self):
-        global configFileUrl
-        global desktopUrl
-        global now
-        global last_time
-        global today
-        now = int(time.strftime('%Y'))
-        last_time = now - 1
-        today = time.strftime('%Y%m%d')
-        desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
-        configFileUrl = '%s/config'%desktopUrl
-        configFile = os.path.exists('%s/config.txt'%configFileUrl)
-        # print(desktopUrl,configFileUrl,configFile)
-        if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
-            reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                if not os.path.exists(configFileUrl):
-                    os.makedirs(configFileUrl)
-                Ui_MainWindow.createConfigContent(self)
-                Ui_MainWindow.getConfigContent(self)
-                self.lineEdit_6.setText("创建并导入配置成功")
-            else:
-                exit()
-        else:
-            Ui_MainWindow.getConfigContent(self)
-
-        # 获取配置文件内容
-
-    def getConfigContent(self):
-        f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
-        global configContent
-        configContent = {}
-        i = 0
-        for line in f1:
-            if line != '\n':
-                lineContent = line.split('|')
-                # print(lineContent)
-                configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
-            i += 1
-        # print(configContent)
-        self.lineEdit_6.setText("配置获取成功")
-
-        # 生成默认配置文件
-
-    def createConfigContent(self):
-        configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Input_URL', 'ICP_Batch_Output_URL',
-                             'ECO_Batch_Output_URL', 'Nickel_Batch_Output_URL', 'Nickel_Batch_Input_URL','Nickel_File_Name',
-                             '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Input_URL', 'ICP_Result_Output_URL','AAS_Result_Input_URL',
-                             'AAS_Result_Output_URL','ECO_Result_Input_URL','ECO_Result_Output_URL','ICP_QC_Chart_Input_URL',
-                             'ICP_QC_Chart_File_Name','Reach_Result_Input_URL','Reach_Result_File_Name','Reach_Message_Input_URL','Reach_Message_File_Name']
-        configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl, 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO', 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
-                         'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm','默认，可更改为自己需要的', 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-                         'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'Z:\\QC Chart\\%s' % now,
-                         'QC Chart_Heavy Metal -66-01-2018-012.xlsx','Z:\\Inorganic_batch\\Microwave\\Result\\Reach','SVHC-DCU.xlsx','Z:\\Inorganic\\Program\\Reach_Result\\Raw_data','TUV_SUD_REACH_SVHC_Candidate_List.xlsx']
-        f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
-        i = 0
-        for i in range(len(configContentName)):
-            f1.write(configContentName[i] + '|' + configContent[i] + '\n')
-            i += 1
-        self.lineEdit_6.setText("配置文件创建成功")
-
-        # 自动填写-获取内容
-        # 获取Sample ID 、实验方法、质量、体积
-
-    def getBatch(self,messages):
-        #address = os.path.abspath('.')
-        self.lineEdit_6.clear()
-        self.textBrowser_3.clear()
-        selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Batch_Input_URL'],'Wrod files(*.doc*)')
-        # print(selectBatchFile)
-        if selectBatchFile[0] != []:
-            self.lineEdit_6.setText("正在抓取样品单号")
-            if messages == 'Auto':
-                self.lineEdit.clear()
-                self.lineEdit.setText('Sample ID')
-            w = Dispatch('Word.Application')
-            w.Visible = 0
-            # win系统识别路径为“\”
-            global labNumber
-            global qualityValue
-            global volumeValue
-            labNumber = []
-            qualityValue = []
-            volumeValue = []
-            n = 0
-            for n in range(len(selectBatchFile[0])):
-                if messages == 'ICP':
-                    fileName = os.path.split(selectBatchFile[0][n])[1]
-                    self.textBrowser_3.append('%s：%s' % (n+1,fileName))
-                    app.processEvents()
-                doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
-                a = doc.Content.Text
-                b = a.split('\r')
-                doc.Close()
-                i = 0
-                for i in range(len(b)):
-                    if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]):
-                        labNumber.append(b[i])
-                        qualityValue.append(b[i + 4])
-                        volumeValue.append(b[i + 2])
-                        app.processEvents()
-                n += 1
-            self.lineEdit_6.setText("样品单号抓取完成")
-            w.Quit()
-            # print(labNumber, qualityValue, volumeValue)
-        else:
-            self.lineEdit_6.setText("请重新选择Batch文件")
-
-    # 获取结果文件
-    def getResult(self):
-        self.lineEdit_6.clear()
-        self.textBrowser.clear()
-        selectResultFile = QFileDialog.getOpenFileNames(self, '选择Batch文件', '%s' % configContent['ICP_Result_Input_URL'],'CSV files(*.csv);;Text Files (*.txt)')
-        # print(selectBatchFile)
-        if selectResultFile[0] != []:
-            self.lineEdit_6.setText("正在抓取Result文件")
-            n = 0
-            for n in range(len(selectResultFile[0])):
-                fileName = os.path.split(selectResultFile[0][n])[1]
-                self.textBrowser.append('%s：%s' % (n + 1, fileName))
-            self.lineEdit_6.setText("完成Result文件抓取")
-        else:
-            self.lineEdit_6.setText("请重新选择Result文件")
-
-    def icpBatch(self):
-        f1 = open('%s/ICP %s.txt' % (desktopUrl,today), "w", encoding="utf-8")
-        i = 0
-        for i in range(len(labNumber)):
-            f1.write(labNumber[i] + '\n')
-            i += 1
-        self.lineEdit_6.setText("ICP Sample ID转化完成")
-
-    def aasBatch(self):
-        f1 = open('%s/AAS %s.txt' % (desktopUrl,today), "w", encoding="utf-8")
-        i = 0
-        for i in range(len(labNumber)):
-            f1.write(labNumber[i].replace('+','-') + '\n')
-            i += 1
-        self.lineEdit_6.setText("AAS Sample ID转化完成")
-
-    def nickelBatch(self):
-        pass
-    def ecoZjy(self):
-        pass
-    def ecoZxd(self):
-        pass
-
-
-
-    # 自动填写-内容
-    def getData(self, pbt):
-        text = self.lineEdit.text() + pbt.text()
-        self.lineEdit.setText(text)
-        self.lineEdit_6.setText("内容已填写，可随时开始")
-
-    def clearContent(self):
-        self.lineEdit.clear()
-        self.lineEdit_6.setText("已清零，请重新填写内容")
-
-
-        # 自动填写-停止
-    def stopMessage(self):
-        stopMessage1 = 'stop'
-        self.lineEdit.setText(stopMessage1)
-        self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
-
-        # 自动填写 - 开始自动填写
-
-    def autoWrite(self):
-        time.sleep(3)
-        n = int(self.spinBox.text())
-        if self.lineEdit.text() == 'Sample ID':
-            self.lineEdit_6.setText("正在填写样品单号")
-            for each in labNumber:
-                if self.lineEdit.text() != 'stop':
-                    pyautogui.typewrite('%s' % each, 0.0001)
-                    pyautogui.typewrite(['Enter'])
-                    app.processEvents()
-                    time.sleep(0.1)
-        elif self.lineEdit.text() == 'Random':
-            for i in range(n):
-                if self.lineEdit.text() != 'stop':
-                    pyautogui.typewrite('%s' % random.randint(int(self.spinBox_4.text()), int(self.spinBox_5.text())),
-                                        0.0001)
-                    pyautogui.typewrite(['Enter'])
-                    app.processEvents()
-                    time.sleep(0.1)
-        else:
-            self.lineEdit_6.setText("正在自动填写内容")
-            for i in range(n):
-                if self.lineEdit.text() != 'stop':
-                    pyautogui.typewrite('%s' % self.lineEdit.text(), 0.0001)
-                    pyautogui.typewrite(['Enter'])
-                    app.processEvents()
-                    time.sleep(0.1)
-            if self.lineEdit.text() != 'stop':
-                self.lineEdit_6.setText("自动填写已经完成")
-
-    # 自动填写-随机数
-    def randomAction(self):
-        self.lineEdit.setText('Random')
-        self.lineEdit_6.setText("随时可以开始填写随机数")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -959,7 +761,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_15.setStatusTip(_translate("MainWindow", "清零后才可开始新的填写"))
         self.pushButton_15.setText(_translate("MainWindow", "清零"))
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
-        self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
+        self.pushButton.setText(_translate("MainWindow", "开始\n"
+"填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
         self.menu.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
@@ -983,6 +786,7 @@ if __name__ == "__main__":
     import pyautogui
     import pandas as pd
     import re
+    import chicon #引用图标
     import win32com.client as win32com
     from win32com.client import Dispatch
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
@@ -991,5 +795,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()  # ui是Ui_MainWindow()类的实例化对象
     ui.setupUi(MainWindow)  # 执行类中的setupUi方法，方法的参数是第二步中创建的QMainWindow
     MainWindow.show()  # 执行QMainWindow的show()方法，显示这个QMainWindow
-    ui.getConfig()
+    # ui.getConfig()
     sys.exit(app.exec_())  # 使用exit()或者点击关闭按钮退出QApplication

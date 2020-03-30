@@ -1668,49 +1668,58 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_4.append("请重新选择Batch数据文件")
         if m == 'Y':
-            self.textBrowser_4.append("样品单号正在生成Formal格式")
-            self.lineEdit_6.setText("样品单号正在生成Formal格式")
-            n = 3
-            jNum = []
-            fNum = []
-            # 获取日本方法和其它方法的单号位置
-            for i in range(len(labNumber)):
-                # print(labNumber[i],analyteList[i])
-                if '1041' in analyteList[i]:
-                    jNum.append(i)
-                else:
-                    fNum.append(i)
-            if jNum !=[]:
-                file = open('%s/JISL %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                for i in jNum:
-                        file.write('A0-%s\n' % labNumber[i])
-                for i in jNum:
-                    if 'A' in analyteList[i]:
-                        file.write('A1-%s\n' % labNumber[i])
+            # 判断存储路径是否存在
+            fileUrl = configContent['UV_Batch_Export_URL']
+            folder = os.path.exists(fileUrl)
+            if not folder:
+                QMessageBox.information(self, "ICP结果路径出错",
+                                        "没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser.append("重新更改配置文件并导入后，重新点击Formal Batch按钮开始数据处理")
+            else:
+                self.textBrowser_4.append("样品单号正在生成Formal格式")
+                self.lineEdit_6.setText("样品单号正在生成Formal格式")
+                n = 3
+                jNum = []
+                fNum = []
+                # 获取日本方法和其它方法的单号位置
+                for i in range(len(labNumber)):
+                    # print(labNumber[i],analyteList[i])
+                    if '1041' in analyteList[i]:
+                        jNum.append(i)
                     else:
-                        file.write('A2-%s\n' % labNumber[i])
-                file.write('As-4.5\n')
-                file.write('QC\n')
-            if fNum !=[]:
-                fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today)
-                for i in fNum:
-                    if not os.path.exists(fileName):
-                        file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today), 'a+')
-                        file.write('BLK\n')
-                        file.write('BLK SPIKE\n')
-                        file.write('SAMPLE SPIKE\n')
-                        file.write('%s\n' % labNumber[i])
-                        n += 1
-                    else:
-                        file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                        file.write('%s\n'%labNumber[i])
-                        n += 1
-                        if n % 20 == 0:
-                            file.write('QC\n')
-                file.write('QC\n')
-            self.textBrowser_4.append("完成样品单号Formal-Batch")
-            self.textBrowser_4.append("生成路径：%s"% configContent['UV_Batch_Export_URL'])
-            self.lineEdit_6.setText("完成样品单号Formal-Batch")
+                        fNum.append(i)
+                if jNum !=[]:
+                    file = open('%s/JISL %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    for i in jNum:
+                            file.write('A0-%s\n' % labNumber[i])
+                    for i in jNum:
+                        if 'A' in analyteList[i]:
+                            file.write('A1-%s\n' % labNumber[i])
+                        else:
+                            file.write('A2-%s\n' % labNumber[i])
+                    file.write('As-4.5\n')
+                    file.write('QC\n')
+                if fNum !=[]:
+                    fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today)
+                    for i in fNum:
+                        if not os.path.exists(fileName):
+                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today), 'a+')
+                            file.write('BLK\n')
+                            file.write('BLK SPIKE\n')
+                            file.write('SAMPLE SPIKE\n')
+                            file.write('%s\n' % labNumber[i])
+                            n += 1
+                        else:
+                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file.write('%s\n'%labNumber[i])
+                            n += 1
+                            if n % 20 == 0:
+                                file.write('QC\n')
+                    file.write('QC\n')
+                self.textBrowser_4.append("完成样品单号Formal-Batch")
+                self.textBrowser_4.append("生成路径：%s"% configContent['UV_Batch_Export_URL'])
+                self.lineEdit_6.setText("完成样品单号Formal-Batch")
 
     def crBatch(self):
         try:
@@ -1736,33 +1745,86 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_4.append("请重新选择Batch数据文件")
         if m == 'Y':
-            self.textBrowser_4.append("样品单号正在生成Cr VI格式")
-            self.lineEdit_6.setText("样品单号正在生成Cr VI格式")
-            n = 1
-            fileName = '%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today)
-            if not os.path.exists(fileName):
-                file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                file.write('BLK\n')
-                file.write('BLK+DPC\n')
-                file.write('BS\n')
-                file.write('BS+DPC\n')
-                file.write('SS\n')
-                file.write('SS+DPC\n')
-                n = 3
-            for each in labNumber:
-                file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                file.write('%s\n'%each)
-                file.write('%s+D\n'%each)
-                n += 1
-                if n % 20 == 0:
-                    file.write('QC\n')
-            file.write('QC\n')
-        self.textBrowser_4.append("完成样品单号Cr VI-Batch")
-        self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
-        self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
+            # 判断存储路径是否存在
+            fileUrl = configContent['UV_Batch_Export_URL']
+            folder = os.path.exists(fileUrl)
+            if not folder:
+                QMessageBox.information(self, "ICP结果路径出错",
+                                        "没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser.append("重新更改配置文件并导入后，重新点击Cr VI Batch按钮开始数据处理")
+            else:
+                self.textBrowser_4.append("样品单号正在生成Cr VI格式")
+                self.lineEdit_6.setText("样品单号正在生成Cr VI格式")
+                n = 1
+                fileName = '%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today)
+                if not os.path.exists(fileName):
+                    file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    file.write('BLK\n')
+                    file.write('BLK+DPC\n')
+                    file.write('BS\n')
+                    file.write('BS+DPC\n')
+                    file.write('SS\n')
+                    file.write('SS+DPC\n')
+                    n = 3
+                for each in labNumber:
+                    file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    file.write('%s\n'%each)
+                    file.write('%s+D\n'%each)
+                    n += 1
+                    if n % 20 == 0:
+                        file.write('QC\n')
+                file.write('QC\n')
+            self.textBrowser_4.append("完成样品单号Cr VI-Batch")
+            self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
+            self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
 
     def phBatch(self):
-        self.lineEdit_6.setText("别急，还在开发中")
+        try:
+            labNumber
+        except NameError:
+            m = 'N'
+        else:
+            if labNumber == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Batch数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getBatch(self, 'UV')
+                if labNumber == []:
+                    self.textBrowser_4.append("请重新选择Batch数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择Batch数据文件")
+                self.textBrowser_4.append("请重新选择Batch数据文件")
+        if m == 'Y':
+            # 判断存储路径是否存在
+            fileUrl = configContent['UV_Batch_Export_URL']
+            folder = os.path.exists(fileUrl)
+            fileUrl2 = configContent['UV_Rusult_Export_URL']
+            folder2 = os.path.exists(fileUrl2)
+            if (not folder) or (not folder2):
+                QMessageBox.information(self, "ICP结果路径出错",
+                                        "没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL,UV_Rusult_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser.append("重新更改配置文件并导入后，重新点击pH Batch按钮开始数据处理")
+            else:
+                self.textBrowser_4.append("样品单号正在生成新旧pH格式")
+                self.lineEdit_6.setText("样品单号正在生成新旧pH格式")
+                # 判断存储文件是否存在
+                fileBatch = configContent['UV_Batch_Export_URL']+'pH Batch %s.csv'%today
+                folder3 = os.path.exists(fileBatch)
+                fileResult = configContent['UV_Rusult_Export_URL']+'pH Result %s.csv'%today
+                folder4 = os.path.exists(fileResult)
+                if not folder3:
+                    pass
+
+
 
     def getResult(self, messages):
         global selectResultFile

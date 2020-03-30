@@ -1088,6 +1088,10 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExport">
+   <property name="icon">
+    <iconset resource="icon/svg/chicon.qrc">
+     <normaloff>:/daochu.svg</normaloff>:/daochu.svg</iconset>
+   </property>
    <property name="text">
     <string>Export</string>
    </property>
@@ -1104,6 +1108,10 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="icon/svg/chicon.qrc">
+     <normaloff>:/tuichu.svg</normaloff>:/tuichu.svg</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
@@ -1112,6 +1120,10 @@
    </property>
   </action>
   <action name="actionImport">
+   <property name="icon">
+    <iconset resource="icon/svg/chicon.qrc">
+     <normaloff>:/daoru.svg</normaloff>:/daoru.svg</iconset>
+   </property>
    <property name="text">
     <string>Import</string>
    </property>
@@ -1125,6 +1137,10 @@
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="icon/svg/chicon.qrc">
+     <normaloff>:/bangzhu.svg</normaloff>:/bangzhu.svg</iconset>
+   </property>
    <property name="text">
     <string>Help</string>
    </property>
@@ -1133,6 +1149,10 @@
    </property>
   </action>
   <action name="actionAuthor">
+   <property name="icon">
+    <iconset resource="icon/svg/chicon.qrc">
+     <normaloff>:/zuozhe.svg</normaloff>:/zuozhe.svg</iconset>
+   </property>
    <property name="text">
     <string>Author</string>
    </property>
@@ -1141,7 +1161,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icon/svg/chicon.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_23</sender>
