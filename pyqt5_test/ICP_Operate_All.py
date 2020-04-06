@@ -816,6 +816,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 需要拷贝部分
         QFileDialog.setWindowIcon(self, icon)
         QMessageBox.setWindowIcon(self, icon)
+        QInputDialog.setWindowIcon(self, icon)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -871,9 +872,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_48.clicked.connect(self.phQc)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # 初始化，获取或生成配置文件
+
 
     def getConfig(self):
+        # 初始化，获取或生成配置文件
         global configFileUrl
         global desktopUrl
         global now
@@ -914,9 +916,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             Ui_MainWindow.getConfigContent(self)
 
-        # 获取配置文件内容
-
     def getConfigContent(self):
+        # 获取配置文件内容
         f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
         global configContent
         configContent = {}
@@ -930,10 +931,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # print(configContent)
         self.lineEdit_6.setText("配置获取成功")
 
-        # 生成默认配置文件
-
     def createConfigContent(self):
-
+        # 生成默认配置文件
         configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Import_URL', 'ICP_Batch_Export_URL',
                              'ECO_Batch_Export_URL', 'Nickel_Batch_Export_URL', 'Nickel_Batch_Import_URL',
                              'Nickel_File_Name',
@@ -981,18 +980,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 "默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
                                 QMessageBox.Yes)
 
-        # 重新导出默认配置文件
-
     def exportConfig(self):
+        # 重新导出默认配置文件
         reply = QMessageBox.question(self, '信息', '确认是否要创建默认配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if reply == QMessageBox.Yes:
             Ui_MainWindow.createConfigContent(self)
         else:
             QMessageBox.information(self, "提示信息", "没有创建默认配置文件，保留原有的配置文件", QMessageBox.Yes)
 
-        # 重新导入配置文件
-
     def importConfig(self):
+        # 重新导入配置文件
         reply = QMessageBox.question(self, '信息', '确认是否要导入配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if reply == QMessageBox.Yes:
             Ui_MainWindow.getConfigContent(self)
@@ -1000,12 +997,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             QMessageBox.information(self, "提示信息", "没有重新导入配置文件，将按照原有的配置文件操作", QMessageBox.Yes)
 
     def showAuthorMessage(self):
+        # 关于作者
         QMessageBox.about(self, "关于",
                           "人生苦短，码上行乐。\n\n\n        ----Frank Chen")
 
-        # 获取Sample ID 、实验方法、质量、体积
-
     def getBatch(self, messages):
+        # 获取Sample ID 、实验方法、质量、体积
         # address = os.path.abspath('.')
         self.lineEdit_6.clear()
         global labNumber
@@ -1085,9 +1082,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Batch文件")
 
-        # ICP仪器使用
-
     def icpBatch(self):
+        # ICP仪器使用
         try:
             labNumber
         except NameError:
@@ -1133,9 +1129,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.textBrowser_3.append("生成路径：%s" % desktopUrl)
             self.lineEdit_6.setText("ICP Sample ID转化完成")
 
-        # AAS仪器使用
-
     def aasBatch(self):
+        # AAS仪器使用
         try:
             labNumber
         except NameError:
@@ -1172,9 +1167,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_3.append("生成路径：%s" % desktopUrl)
                 self.lineEdit_6.setText("AAS Sample ID转化完成")
 
-        # 镍释放
-
     def nickelBatch(self):
+        # 镍释放模板
         # 判断是否有选择Batch文件
         try:
             labNumber
@@ -1270,9 +1264,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_3.append("请确认Batch方法是镍释放")
                     self.lineEdit_6.setText("请确认Batch方法是镍释放")
 
-        # ECO质检院模板生成
-
     def ecoZjy(self):
+        # ECO质检院模板生成
         # 判断是否选择了Batch文件
         try:
             labNumber
@@ -1452,9 +1445,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("ECO质检院Batch转化完成")
                 app.processEvents()
 
-        # ECO中迅德模板生成
-
     def ecoZxd(self):
+        # ECO中迅德模板生成
         # 判断是否选择了Batch文件
         try:
             labNumber
@@ -1645,6 +1637,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 获取结果文件
 
     def formalBatch(self):
+        # 获取甲醛Batch信息
         try:
             labNumber
         except NameError:
@@ -1722,6 +1715,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("完成样品单号Formal-Batch")
 
     def crBatch(self):
+        # 获取六价铬Batch信息
         try:
             labNumber
         except NameError:
@@ -1780,6 +1774,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
 
     def phBatch(self):
+        # 获取pH-Batch信息
         try:
             labNumber
         except NameError:
@@ -1817,16 +1812,103 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_4.append("样品单号正在生成新旧pH格式")
                 self.lineEdit_6.setText("样品单号正在生成新旧pH格式")
                 # 判断存储文件是否存在
-                fileBatch = configContent['UV_Batch_Export_URL']+'pH Batch %s.csv'%today
+                nowTime = time.strftime('%Y-%m-%d %H:%M:%S ')
+                lNum = []
+                fNum = []
+                batchNum = []
+                batchLab = []
+                resultNum = []
+                resultLab= []
+                for i in range(len(labNumber)):
+                    if '4045' in analyteList[i]:
+                        lNum.append(i)
+                    else:
+                        fNum.append(i)
+                fileBatch = configContent['UV_Batch_Export_URL']+'/'+'pH Batch %s.csv'%today
                 folder3 = os.path.exists(fileBatch)
-                fileResult = configContent['UV_Rusult_Export_URL']+'pH Result %s.csv'%today
+                fileResult = configContent['UV_Rusult_Export_URL']+'/'+'pH Result %s.csv'%today
                 folder4 = os.path.exists(fileResult)
-                if not folder3:
-                    pass
+                if lNum != [] or fNum !=[]:
+                    if not folder3:
+                        # Batch模板
+                        batchOne = ['pH cal','pH Measure','pH Measure','pH Measure']
+                        batchThree = ['Standard','CC','BLK','BLK']
+                        batchFour = ['','QC','Before','After']
+                        batchData = pd.DataFrame({'a': batchOne, 'b': 1, 'c': batchThree,'d':batchFour,'e':'','f':'','g':'','h':'','i':'','j':'','k':'','l':1})
+                        batchData.to_csv(fileBatch, mode='a', index=0, header=0)
+                        # Result模板
 
-
+                        resultOne = ['Determination start','','%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,]
+                        resultTwo = ['Method name','','pH Cal','pH Measure','pH Measure','pH Measure']
+                        resultThree = ['ID1.Value','','Standard','CC','BLK','BLK']
+                        resultFour = ['ID2.Value','','','QC','before','after',]
+                        resultFive = ['RS01.Name','','','pH','pH','pH']
+                        resultSix = ['RS01.Value','','','','','']
+                        resultSeven = ['RS02.Name','','','T','T','T']
+                        resultEight = ['RS02.Value','','','','','']
+                        resultNine = ['Lab TEMP','','','','','']
+                        resultTen = ['[DELTA]ph',0,'','','','']
+                        resultData = pd.DataFrame(
+                            {'a': resultOne, 'b': resultTwo, 'c': resultThree, 'd': resultFour, 'e':resultFive , 'f': resultSix, 'g': resultSeven, 'h': resultEight,
+                             'i': resultNine, 'j': resultTen})
+                        resultData.to_csv(fileResult, mode='a', index=0, header=0)
+                if fNum != []:
+                    num, ok = QInputDialog.getInt(self, '输入3071编号', '输入pH3071第一个样品编号', 1, 1, 999999, 1)
+                    if ok and num:
+                        n = num
+                        for i in fNum:
+                            batchNum.append(n)
+                            batchNum.append(n)
+                            batchNum.append(n)
+                            batchLab.append('%s' % labNumber[i])
+                            batchLab.append('%sA' % labNumber[i])
+                            batchLab.append('%sB' % labNumber[i])
+                            if n % 20 == 0:
+                                batchNum.append('CC')
+                                batchLab.append('QC')
+                            n += 1
+                        if n == 1:
+                            batchNum.append('DI')
+                            batchLab.append('Water')
+                        if n % 20 != 1:
+                            batchNum.append('CC')
+                            batchLab.append('QC')
+                if lNum != []:
+                    num, ok = QInputDialog.getInt(self, '输入4045编号', '输入pH4045第一个样品编号', 1, 1, 999999, 1)
+                    if ok and num:
+                        l = num
+                        if l == 1:
+                            batchNum.append('BLK')
+                            batchLab.append(4045)
+                        for i in lNum:
+                            batchNum.append('4045 %s'%l)
+                            batchNum.append('4045 %s'%l)
+                            batchNum.append('4045 %s'%l)
+                            batchNum.append('4045 %s'%l)
+                            batchLab.append('%sA' % labNumber[i])
+                            batchLab.append('%sB' % labNumber[i])
+                            batchLab.append('%sC' % labNumber[i])
+                            batchLab.append('%sD' % labNumber[i])
+                            if l % 20 == 0:
+                                batchNum.append('CC')
+                                batchLab.append('QC')
+                            l += 1
+                        if l % 20 != 1:
+                            batchNum.append('CC')
+                            batchLab.append('QC')
+                if lNum != [] or fNum != []:
+                    batchData = pd.DataFrame(
+                        {'a': 'pH Measure', 'b': 1, 'c': batchNum, 'd': batchLab, 'e': '', 'f': '', 'g': '', 'h': '',
+                         'i': '', 'j': '', 'k': '', 'l': 1})
+                    batchData.to_csv(fileBatch, mode='a', index=0, header=0)
+                    resultData = pd.DataFrame(
+                        {'a': '%s UTC+8' % nowTime, 'b': 'pH Measure', 'c': batchNum, 'd': batchLab, 'e': 'pH','f':'','g':'T', 'h': ''})
+                    resultData.to_csv(fileResult, mode='a', index=0, header=0)
+                self.textBrowser_4.append("完成样品单号生成新旧pH格式")
+                self.lineEdit_6.setText("完成样品单号生成新旧pH格式")
 
     def getResult(self, messages):
+        # 获取结果文件路径
         global selectResultFile
         self.lineEdit_6.clear()
         self.textBrowser.clear()
@@ -1871,9 +1953,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
-        # ICP结果转化为TXT
-
     def icpResultToTxt(self):
+        # ICP结果转化为TXT
         # 判断是否选择了Result文件
         try:
             selectResultFile[0]
@@ -1925,9 +2006,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         self.textBrowser.append("生成路径：%s" % configContent['ICP_Result_Export_URL'])
                         self.lineEdit_6.setText("完成ICP文件转换为TXT")
 
-        # Reach结果转化为TXT
-
     def reachResult(self):
+        # Reach结果转化为TXT
         # 判断是否选择了Batch文件
         try:
             labNumber
@@ -2130,14 +2210,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         self.textBrowser.append("生成路径：%s\\%s" % (configContent['Reach_Result_Export_URL'], today))
                         self.lineEdit_6.setText("完成Reach结果转换为TXT")
 
-        # AAS结果转化还不需要用到
-
     def aasResult(self):
+        # AAS结果转化还不需要用到
         self.textBrowser.append("暂时不需要用到，后续再开发")
 
-        # ICP QC 填写
-
     def icpQc(self):
+        # ICP QC 填写
         # 判断是否选择了Result文件
         # 判断是否选择了Result文件
         try:
@@ -2262,9 +2340,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser.append("完成%s QC填写" % fileDate)
                 self.lineEdit_6.setText("完成QC填写")
 
-        # 质检院结果科学计数法转化为自然数法
-
     def resultZjyToTxt(self):
+        # 质检院结果科学计数法转化为自然数法
         # 判断是否选择了Result文件
         try:
             selectResultFile[0]
@@ -2341,7 +2418,62 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         # 获取Reach信息
 
+    def uvQc(self,file):
+        # 判断是否选择了Result文件
+        # 判断是否选择了Result文件
+        try:
+            selectResultFile[0]
+        except NameError:
+            m = 'N'
+        else:
+            if selectResultFile[0] == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self, 'UV')
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择UV Result数据文件")
+                    self.textBrowser_5.append("请重新选择UV Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择UV Result数据文件")
+                self.textBrowser_5.append("请重新选择UV Result数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断UV QC模板是否存在
+            file = configContent['UV_QC_Chart_Import_URL'] + '\\' + file
+            folder = os.path.exists(file)
+            if not folder:
+                QMessageBox.information(self, "无UV QC模板",
+                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nUV_QC_Chart_Import_URL,Formal_QC_Chart_File_Name,Cr_VI_QC_Chart_File_Name,pH2014_QC_Chart_File_Name,pH2018_QC_Chart_File_Name;\nUV QC Chart的文件路径、对应方法、文件名称和Excel格式",
+                                        QMessageBox.Yes)
+                self.textBrowser_5.append("请更改配置文件并导入后，重新点击QC Chart按钮开始数据处理")
+            else:
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = True
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+                    configContent['UV_QC_Chart_Import_URL'], file)))
+                ws = wb.Worksheets('Data')
+                x = 1
+                oneRow = []
+                while ws.Cells(1, x).Value is not None:
+                    oneRow.append(ws.Cells(1, x).Value)
+                    x += 1
+
+    def phQc(self):
+        self.lineEdit_6.setText("别急，还在开发中")
+
+
+
     def getReachMessage(self):
+        # 获取Reach信息
         global reachLimsNo
         global reachEnglish
         global reachChinese
@@ -2362,9 +2494,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             reachPurpose = list(reachMessage['可能用途'])
             self.lineEdit_6.setText("Reach信息获取成功")
 
-        # 搜索Reach信息提示
-
     def searchReachMessage(self):
+        # 搜索Reach信息提示
         try:
             reachLimsNo
         except NameError:
@@ -2434,15 +2565,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_2.append('--------------------------')
                 self.lineEdit_6.setText("搜索完成")
 
-    def uvQc(self):
-        self.lineEdit_6.setText("别急，还在开发中")
-
-    def phQc(self):
-        self.lineEdit_6.setText("别急，还在开发中")
-
-        # 自动填写-填写内容
-
     def getData(self, pbt):
+        # 自动填写-获取填写内容
         text = self.lineEdit.text() + pbt.text()
         self.lineEdit.setText(text)
         self.lineEdit_6.setText("内容已填写，可随时开始")
@@ -2450,19 +2574,18 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 自动填写-清除内容
 
     def clearContent(self):
+        # 清除填写内容
         self.lineEdit.clear()
         self.lineEdit_6.setText("已清零，请重新填写内容")
 
-        # 自动填写-停止
-
     def stopMessage(self):
+        # 自动填写-停止
         stopMessage1 = 'stop'
         self.lineEdit.setText(stopMessage1)
         self.lineEdit_6.setText("已停止，请清零后重新开始!!!")
 
-        # 自动填写 - 开始自动填写
-
     def autoWrite(self):
+        # 自动填写 - 开始自动填写
         if self.lineEdit.text() == '' or self.lineEdit.text() == 'stop':
             QMessageBox.information(self, "提示信息", "自动填写中无内容或内容为‘stop’，请清零并填写内容",
                                     QMessageBox.Yes)
@@ -2497,9 +2620,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 if self.lineEdit.text() != 'stop':
                     self.lineEdit_6.setText("自动填写已经完成")
 
-        # 自动填写-随机数
-
     def randomAction(self):
+        # 自动填写-随机数
         self.lineEdit.setText('Random')
         self.lineEdit_6.setText("随时可以开始填写随机数")
 
