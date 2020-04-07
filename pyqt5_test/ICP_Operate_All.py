@@ -866,10 +866,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_44.clicked.connect(self.formalBatch)
         self.pushButton_46.clicked.connect(self.crBatch)
         self.pushButton_45.clicked.connect(self.phBatch)
-        self.pushButton_47.clicked.connect(self.uvQc)
-        self.pushButton_49.clicked.connect(self.uvQc)
-        self.pushButton_52.clicked.connect(self.phQc)
-        self.pushButton_48.clicked.connect(self.phQc)
+        self.pushButton_47.clicked.connect(lambda: self.uvQc('Formal'))
+        self.pushButton_49.clicked.connect(lambda: self.uvQc('Cr VI'))
+        self.pushButton_52.clicked.connect(lambda: self.phQc('pH 2018'))
+        self.pushButton_48.clicked.connect(lambda: self.phQc('pH 2014'))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
@@ -1674,12 +1674,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("样品单号正在生成Formal格式")
                 n = 3
                 jNum = []
+                lNum = []
                 fNum = []
                 # 获取日本方法和其它方法的单号位置
                 for i in range(len(labNumber)):
                     # print(labNumber[i],analyteList[i])
                     if '1041' in analyteList[i]:
                         jNum.append(i)
+                    elif '17226' in analyteList[i]:
+                        lNum.append(i)
                     else:
                         fNum.append(i)
                 if jNum !=[]:
@@ -1693,14 +1696,37 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             file.write('A2-%s\n' % labNumber[i])
                     file.write('As-4.5\n')
                     file.write('QC\n')
+                if lNum != []:
+                    fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today)
+                    for i in lNum:
+                        if not os.path.exists(fileName):
+                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file.write('BLK\n')
+                            file.write('BS\n')
+                            file.write('SS\n')
+                            file.write('%s\n' % labNumber[i])
+                            n += 1
+                        else:
+                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file.write('%s\n' % labNumber[i])
+                            n += 1
+                            if n % 20 == 0:
+                                file.write('QC\n')
+                    if n % 20 != 0:
+                        file.write('QC\n')
+                    for i in lNum:
+                        file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                        file.write('%sB\n' % labNumber[i])
+                        n += 1
+                    file.write('QC\n')
                 if fNum !=[]:
                     fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today)
                     for i in fNum:
                         if not os.path.exists(fileName):
                             file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today), 'a+')
                             file.write('BLK\n')
-                            file.write('BLK SPIKE\n')
-                            file.write('SAMPLE SPIKE\n')
+                            file.write('BS\n')
+                            file.write('SS\n')
                             file.write('%s\n' % labNumber[i])
                             n += 1
                         else:
@@ -1709,7 +1735,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             n += 1
                             if n % 20 == 0:
                                 file.write('QC\n')
-                    file.write('QC\n')
+                    if n % 20 != 0:
+                        file.write('QC\n')
                 self.textBrowser_4.append("完成样品单号Formal-Batch")
                 self.textBrowser_4.append("生成路径：%s"% configContent['UV_Batch_Export_URL'])
                 self.lineEdit_6.setText("完成样品单号Formal-Batch")
@@ -1768,7 +1795,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     n += 1
                     if n % 20 == 0:
                         file.write('QC\n')
-                file.write('QC\n')
+                if n % 20 != 0:
+                    file.write('QC\n')
             self.textBrowser_4.append("完成样品单号Cr VI-Batch")
             self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
             self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
@@ -1912,6 +1940,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         global selectResultFile
         self.lineEdit_6.clear()
         self.textBrowser.clear()
+        self.textBrowser_5.clear()
         if messages == 'ICP':
             if (self.comboBox.currentText() == 'URL:ICP Result'):
                 selectResultFile = QFileDialog.getOpenFileNames(self, '选择ICP-Result文件',
@@ -1942,14 +1971,24 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 仅获取选择文件的路径
         if selectResultFile[0] != []:
             self.lineEdit_6.setText("正在抓取Result文件")
-            self.textBrowser.append("正在抓取Result文件")
+            if messages == 'ICP':
+                self.textBrowser.append("正在抓取Result文件")
+            elif   messages == 'UV':
+                self.textBrowser_5.append("正在抓取Result文件")
             app.processEvents()
             n = 0
             for n in range(len(selectResultFile[0])):
                 fileName = os.path.split(selectResultFile[0][n])[1]
-                self.textBrowser.append('%s：%s' % (n + 1, fileName))
-            self.textBrowser.append("完成Result文件抓取")
-            self.lineEdit_6.setText("完成Result文件抓取")
+                if messages == 'ICP':
+                    self.textBrowser.append('%s：%s' % (n + 1, fileName))
+                elif messages == 'UV':
+                    self.textBrowser_5.append('%s：%s' % (n + 1, fileName))
+                app.processEvents()
+            if messages == 'ICP':
+                self.textBrowser.append("完成抓取Result文件")
+            elif messages == 'UV':
+                self.textBrowser_5.append("完成抓取Result文件")
+            app.processEvents()
         else:
             self.lineEdit_6.setText("请重新选择Result文件")
 
@@ -2289,16 +2328,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         e = e + each
                     else:
                         e = e + each + '|'
+                y = 1
                 for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
                     fileDate = os.path.split(fileUrl)[1].split('-')[0]
-                    self.textBrowser.append("正在进行%s QC填写" % fileDate)
+                    self.textBrowser.append("%s:%s" % (y,fileDate))
                     self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
                     app.processEvents()
                     # 获取相关结果数据
                     csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
-                    csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
-                    csvFile = csvFile.loc[csvFile['A'].str.contains(e)]
-                    csvFile = csvFile[csvFile['D'].isin(set(elements))]
+                    csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)# 保留A,D,E列
+                    csvFile = csvFile.loc[csvFile['A'].str.contains(e)]# 保留material列，不重复的物质
+                    csvFile = csvFile[csvFile['D'].isin(set(elements))]# 保留不重复元素
                     rusultList = list(csvFile['A'])
                     rusultList2 = list(csvFile['D'])
                     rusultList3 = list(csvFile['E'])
@@ -2337,7 +2377,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                         ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
                                             rusultList3[i]
                                     c += 1
-                    self.textBrowser.append("完成%s QC填写" % fileDate)
+                    y += 1
+                self.textBrowser.append("完成QC填写")
                 self.lineEdit_6.setText("完成QC填写")
 
     def resultZjyToTxt(self):
@@ -2418,8 +2459,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         # 获取Reach信息
 
-    def uvQc(self,file):
-        # 判断是否选择了Result文件
+    def uvQc(self,messages):
         # 判断是否选择了Result文件
         try:
             selectResultFile[0]
@@ -2447,30 +2487,211 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 m = 'N'
         if m == 'Y':
             # 判断UV QC模板是否存在
-            file = configContent['UV_QC_Chart_Import_URL'] + '\\' + file
+            if messages == 'Formal':
+                fileName = configContent['Formal_QC_Chart_File_Name']
+            elif messages == 'Cr VI':
+                fileName = configContent['Cr_VI_QC_Chart_File_Name']
+            file = configContent['UV_QC_Chart_Import_URL'] + '\\' + fileName
             folder = os.path.exists(file)
             if not folder:
                 QMessageBox.information(self, "无UV QC模板",
-                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nUV_QC_Chart_Import_URL,Formal_QC_Chart_File_Name,Cr_VI_QC_Chart_File_Name,pH2014_QC_Chart_File_Name,pH2018_QC_Chart_File_Name;\nUV QC Chart的文件路径、对应方法、文件名称和Excel格式",
+                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nUV_QC_Chart_Import_URL,Formal_QC_Chart_File_Name,Cr_VI_QC_Chart_File_Name;\nUV QC Chart的文件路径、对应方法、文件名称和Excel格式",
                                         QMessageBox.Yes)
                 self.textBrowser_5.append("请更改配置文件并导入后，重新点击QC Chart按钮开始数据处理")
             else:
+                self.textBrowser_5.append("正在进行QC Chart填写")
                 excel = win32com.gencache.EnsureDispatch('Excel.Application')
                 excel.Visible = True
                 excel.Application.DisplayAlerts = True
-                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-                    configContent['UV_QC_Chart_Import_URL'], file)))
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s' % file))
                 ws = wb.Worksheets('Data')
                 x = 1
                 oneRow = []
                 while ws.Cells(1, x).Value is not None:
                     oneRow.append(ws.Cells(1, x).Value)
                     x += 1
+                materialColumn = int(oneRow.index('Material')) + 1
+                sampleColumn = int(oneRow.index('Chemical Name')) + 1
+                material = []
+                resultRows = {}
+                elements = []
+                n = 2
+                # 获取需要测试元素
+                while ws.Cells(n, materialColumn).Value is not None:
+                    material.append(ws.Cells(n, materialColumn).Value)
+                    elements.append(ws.Cells(n, sampleColumn).Value)
+                    resultRows['%s-%s' % (ws.Cells(n, materialColumn).Value, ws.Cells(n, sampleColumn).Value)] = n
+                    n += 1
+                # print(elements)
+                # 获取所需数据
+                rusultList = []
+                rusultList2 = []
+                rusultList3 = []
+                e = str()
+                m = []
+                for each in set(material):
+                    m.append(each)
+                for each in m:
+                    if each == m[-1]:
+                        e = e + each
+                    else:
+                        e = e + each + '|'
+                y = 1
+                for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+                    # 获取相关结果数据
+                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
+                    csvFile.drop(['C','D'], axis=1, inplace=True)# 保留A,B,D列
+                    dataResult = csvFile.loc[1]
+                    fileDate = dataResult[1].split(' ')[0]
+                    if fileDate == '':# 判断文件格式是否正确
+                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。",QMessageBox.Yes)
+                        break
+                    self.textBrowser_5.append("%s:%s" % (y,fileDate))
+                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+                    app.processEvents()
+                    csvFile = csvFile.loc[csvFile['A'].str.contains(e,na=False)]# 保留material列，不重复的物质
+                    rusultList = list(csvFile['A'])
+                    rusultList2 = list(csvFile['B'])
+                    for num in resultRows:
+                        # print(num,resultRows[num])
+                        if 'Date' in num:  # 跳过填写日期的行
+                            continue
+                        else:
+                            c = 6
+                            while ws.Cells(resultRows[num], c).Value is not None:
+                                c += 1
+                            for i in range(len(rusultList)):  # 遍历结果列表
+                                # print('%s-%s' % (rusultList[i].strip(), messages),num)
+                                if '%s-%s' % (rusultList[i].strip(), messages) in num:# strip()去除空格
+                                    if 'Date-%s' % rusultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).NumberFormat = "yy/mm/dd"
+                                    if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
+                                        continue
+                                    else:
+                                        ws.Cells(resultRows['%s-%s' % (rusultList[i].strip(), messages)], c).Value = rusultList2[i].strip()
+                                    c += 1
+                    y += 1
+                self.textBrowser_5.append("完成QC填写")
+                self.lineEdit_6.setText("完成QC填写")
 
-    def phQc(self):
-        self.lineEdit_6.setText("别急，还在开发中")
-
-
+    def phQc(self,messages):
+        # 判断是否选择了Result文件
+        try:
+            selectResultFile[0]
+        except NameError:
+            m = 'N'
+        else:
+            if selectResultFile[0] == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self, 'UV')
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择UV Result数据文件")
+                    self.textBrowser_5.append("请重新选择UV Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择pH Result数据文件")
+                self.textBrowser_5.append("请重新选择pH Result数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断UV QC模板是否存在
+            if messages == 'pH 2014':
+                fileName = configContent['pH2014_QC_Chart_File_Name']
+            elif messages == 'pH 2018':
+                fileName = configContent['pH2018_QC_Chart_File_Name']
+            file = configContent['UV_QC_Chart_Import_URL'] + '\\' + fileName
+            folder = os.path.exists(file)
+            if not folder:
+                QMessageBox.information(self, "无pH QC模板",
+                                        "没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nUV_QC_Chart_Import_URL,pH2014_QC_Chart_File_Name,pH2018_QC_Chart_File_Name;\npH QC Chart的文件路径、对应方法、文件名称和Excel格式",
+                                        QMessageBox.Yes)
+                self.textBrowser_5.append("请更改配置文件并导入后，重新点击QC Chart按钮开始数据处理")
+            else:
+                self.textBrowser_5.append("正在进行QC Chart填写")
+                excel = win32com.gencache.EnsureDispatch('Excel.Application')
+                excel.Visible = True
+                excel.Application.DisplayAlerts = True
+                wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s' % file))
+                ws = wb.Worksheets('Data')
+                x = 1
+                oneRow = []
+                while ws.Cells(1, x).Value is not None:
+                    oneRow.append(ws.Cells(1, x).Value)
+                    x += 1
+                materialColumn = int(oneRow.index('Material')) + 1
+                sampleColumn = int(oneRow.index('Chemical Name')) + 1
+                material = []
+                resultRows = {}
+                elements = []
+                n = 2
+                # 获取需要测试元素
+                while ws.Cells(n, materialColumn).Value is not None:
+                    material.append(ws.Cells(n, materialColumn).Value)
+                    elements.append(ws.Cells(n, sampleColumn).Value)
+                    if ws.Cells(n, sampleColumn).Value is None:
+                        ws.Cells(n, sampleColumn).Value = 'nan'
+                    resultRows['%s-%s' % (ws.Cells(n, materialColumn).Value, ws.Cells(n, sampleColumn).Value)] = n
+                    n += 1
+                # print(elements)
+                # 获取所需数据
+                rusultList = []
+                rusultList2 = []
+                rusultList3 = []
+                e = str()
+                m = []
+                for each in set(material):
+                    m.append(each)
+                for each in m:
+                    if each == m[-1]:
+                        e = e + each
+                    else:
+                        e = e + each + '|'
+                y = 1
+                for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+                    # 获取相关结果数据
+                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D','E','F','G','H','I','J'])
+                    csvFile.drop(['B','E','G','H','I','J'], axis=1, inplace=True)  # 保留A,B,D列
+                    dataResult = csvFile.loc[1]
+                    fileDate = dataResult[0].split(' ')[0]
+                    if fileDate == '':  # 判断文件格式是否正确
+                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。", QMessageBox.Yes)
+                        break
+                    csvFile.drop(['A'], axis=1, inplace=True)
+                    self.textBrowser_5.append("%s:%s" % (y, fileDate))
+                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+                    app.processEvents()
+                    csvFile = csvFile.loc[csvFile['C'].str.contains(e, na=False)]  # 保留material列，不重复的物质
+                    rusultList = list(csvFile['C'])
+                    rusultList2 = list(csvFile['D'])
+                    rusultList3 = list(csvFile['F'])
+                    for num in resultRows:
+                        # print(num,resultRows[num])
+                        if 'Date' in num:  # 跳过填写日期的行
+                            continue
+                        else:
+                            c = 6
+                            while ws.Cells(resultRows[num], c).Value is not None:
+                                c += 1
+                            for i in range(len(rusultList)):  # 遍历结果列表
+                                # print('%s-%s' % (rusultList[i], rusultList2[i]),num)
+                                if '%s-%s' % (rusultList[i], rusultList2[i]) in num:  # strip()去除空格
+                                    if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).NumberFormat = "yy/mm/dd"
+                                    ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
+                                    rusultList3[i]
+                                    c += 1
+                    y += 1
+                self.textBrowser_5.append("完成QC填写")
+                self.lineEdit_6.setText("完成QC填写")
 
     def getReachMessage(self):
         # 获取Reach信息
