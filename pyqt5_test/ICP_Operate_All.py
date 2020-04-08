@@ -1672,6 +1672,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             else:
                 self.textBrowser_4.append("样品单号正在生成Formal格式")
                 self.lineEdit_6.setText("样品单号正在生成Formal格式")
+                app.processEvents()
                 n = 3
                 jNum = []
                 lNum = []
@@ -1715,7 +1716,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     if n % 20 != 0:
                         file.write('QC\n')
                     for i in lNum:
-                        file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                        file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                         file.write('%sB\n' % labNumber[i])
                         n += 1
                     file.write('QC\n')
@@ -1740,6 +1741,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_4.append("完成样品单号Formal-Batch")
                 self.textBrowser_4.append("生成路径：%s"% configContent['UV_Batch_Export_URL'])
                 self.lineEdit_6.setText("完成样品单号Formal-Batch")
+
 
     def crBatch(self):
         # 获取六价铬Batch信息
@@ -1777,6 +1779,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             else:
                 self.textBrowser_4.append("样品单号正在生成Cr VI格式")
                 self.lineEdit_6.setText("样品单号正在生成Cr VI格式")
+                app.processEvents()
                 n = 1
                 fileName = '%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today)
                 if not os.path.exists(fileName):
@@ -1819,12 +1822,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 Ui_MainWindow.getBatch(self, 'UV')
                 if labNumber == []:
                     self.textBrowser_4.append("请重新选择Batch数据文件")
+                    app.processEvents()
                     m = 'N'
                 else:
                     m = 'Y'
             else:
                 self.lineEdit_6.setText("请重新选择Batch数据文件")
                 self.textBrowser_4.append("请重新选择Batch数据文件")
+                app.processEvents()
         if m == 'Y':
             # 判断存储路径是否存在
             fileUrl = configContent['UV_Batch_Export_URL']
@@ -1839,6 +1844,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             else:
                 self.textBrowser_4.append("样品单号正在生成新旧pH格式")
                 self.lineEdit_6.setText("样品单号正在生成新旧pH格式")
+                app.processEvents()
                 # 判断存储文件是否存在
                 nowTime = time.strftime('%Y-%m-%d %H:%M:%S ')
                 lNum = []
@@ -2562,7 +2568,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 if '%s-%s' % (rusultList[i].strip(), messages) in num:# strip()去除空格
                                     if 'Date-%s' % rusultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
                                         ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).NumberFormat = "yy/mm/dd"
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).NumberFormat = "yyyy/mm/dd"
                                     if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
                                         continue
                                     else:
@@ -2682,7 +2688,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 if '%s-%s' % (rusultList[i], rusultList2[i]) in num:  # strip()去除空格
                                     if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
                                         ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).NumberFormat = "yy/mm/dd"
+                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).NumberFormat = "yyyy/mm/dd"
                                     ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
                                     rusultList3[i]
                                     c += 1
