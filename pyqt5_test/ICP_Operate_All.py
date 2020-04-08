@@ -1865,7 +1865,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         batchOne = ['pH cal','pH Measure','pH Measure','pH Measure']
                         batchThree = ['Standard','CC','BLK','BLK']
                         batchFour = ['','QC','Before','After']
-                        batchData = pd.DataFrame({'a': batchOne, 'b': 1, 'c': batchThree,'d':batchFour,'e':'','f':'','g':'','h':'','i':'','j':'','k':'','l':1})
+                        batchData = pd.DataFrame({'a': batchOne, 'b': 1, 'c': batchThree,'d':batchFour,'e':'','f':'','g':'','h':'','i':'','j':'','k':'1'})
                         batchData.to_csv(fileBatch, mode='a', index=0, header=0)
                         # Result模板
                         resultOne = ['Determination start','','%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,]
@@ -1897,7 +1897,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                 batchNum.append('CC')
                                 batchLab.append('QC')
                             n += 1
-                        if n == 1:
+                        if num == 1:
                             batchNum.append('DI')
                             batchLab.append('Water')
                         if n % 20 != 1:
@@ -1929,7 +1929,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 if lNum != [] or fNum != []:
                     batchData = pd.DataFrame(
                         {'a': 'pH Measure', 'b': 1, 'c': batchNum, 'd': batchLab, 'e': '', 'f': '', 'g': '', 'h': '',
-                         'i': '', 'j': '', 'k': '', 'l': 1})
+                         'i': '', 'j': '', 'k': '1'})
                     batchData.to_csv(fileBatch, mode='a', index=0, header=0)
                     resultData = pd.DataFrame(
                         {'a': '%s UTC+8' % nowTime, 'b': 'pH Measure', 'c': batchNum, 'd': batchLab, 'e': 'pH','f':'','g':'T', 'h': ''})
