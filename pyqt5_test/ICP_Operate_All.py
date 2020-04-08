@@ -1686,7 +1686,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     else:
                         fNum.append(i)
                 if jNum !=[]:
-                    file = open('%s/JISL %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    file = open('%s/Formal JISL %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                     for i in jNum:
                             file.write('A0-%s\n' % labNumber[i])
                     for i in jNum:
@@ -1697,17 +1697,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     file.write('As-4.5\n')
                     file.write('QC\n')
                 if lNum != []:
-                    fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today)
+                    fileName = '%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
                     for i in lNum:
                         if not os.path.exists(fileName):
-                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                             file.write('BLK\n')
                             file.write('BS\n')
                             file.write('SS\n')
                             file.write('%s\n' % labNumber[i])
                             n += 1
                         else:
-                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                             file.write('%s\n' % labNumber[i])
                             n += 1
                             if n % 20 == 0:
@@ -1715,22 +1715,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     if n % 20 != 0:
                         file.write('QC\n')
                     for i in lNum:
-                        file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                        file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                         file.write('%sB\n' % labNumber[i])
                         n += 1
                     file.write('QC\n')
                 if fNum !=[]:
-                    fileName = '%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today)
+                    fileName = '%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'],today)
                     for i in fNum:
                         if not os.path.exists(fileName):
-                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'],today), 'a+')
+                            file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'],today), 'a+')
                             file.write('BLK\n')
                             file.write('BS\n')
                             file.write('SS\n')
                             file.write('%s\n' % labNumber[i])
                             n += 1
                         else:
-                            file = open('%s/Formal %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                            file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                             file.write('%s\n'%labNumber[i])
                             n += 1
                             if n % 20 == 0:
@@ -1865,7 +1865,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         batchData = pd.DataFrame({'a': batchOne, 'b': 1, 'c': batchThree,'d':batchFour,'e':'','f':'','g':'','h':'','i':'','j':'','k':'','l':1})
                         batchData.to_csv(fileBatch, mode='a', index=0, header=0)
                         # Result模板
-
                         resultOne = ['Determination start','','%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,'%s UTC+8'%nowTime,]
                         resultTwo = ['Method name','','pH Cal','pH Measure','pH Measure','pH Measure']
                         resultThree = ['ID1.Value','','Standard','CC','BLK','BLK']
@@ -2456,8 +2455,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         app.processEvents()
                     self.textBrowser.append("生成路径：%s\\%s" % (configContent['ECO_Result_Export_URL'], today))
                     self.lineEdit_6.setText("完成ECO ZJY转换")
-
-        # 获取Reach信息
 
     def uvQc(self,messages):
         # 判断是否选择了Result文件
