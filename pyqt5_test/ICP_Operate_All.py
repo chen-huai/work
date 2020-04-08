@@ -1877,7 +1877,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         resultSeven = ['RS02.Name','','','T','T','T']
                         resultEight = ['RS02.Value','','','','','']
                         resultNine = ['Lab TEMP','','','','','']
-                        resultTen = ['[DELTA]ph',0,'','','','']
+                        resultTen = ['[DELTA]ph','','0','','','']
                         resultData = pd.DataFrame(
                             {'a': resultOne, 'b': resultTwo, 'c': resultThree, 'd': resultFour, 'e':resultFive , 'f': resultSix, 'g': resultSeven, 'h': resultEight,
                              'i': resultNine, 'j': resultTen})
