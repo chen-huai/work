@@ -2539,39 +2539,42 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 y = 1
                 for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
                     # 获取相关结果数据
-                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
-                    csvFile.drop(['C','D'], axis=1, inplace=True)# 保留A,B,D列
-                    dataResult = csvFile.loc[1]
-                    fileDate = dataResult[1].split(' ')[0]
-                    if fileDate == '':# 判断文件格式是否正确
-                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。",QMessageBox.Yes)
+                    try:
+                        csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
+                    except pd.errors.ParserError:
+                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。"% fileUrl, QMessageBox.Yes)
+                        os.startfile(os.path.split(fileUrl)[0])
                         break
-                    self.textBrowser_5.append("%s:%s" % (y,fileDate))
-                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
-                    app.processEvents()
-                    csvFile = csvFile.loc[csvFile['A'].str.contains(e,na=False)]# 保留material列，不重复的物质
-                    rusultList = list(csvFile['A'])
-                    rusultList2 = list(csvFile['B'])
-                    for num in resultRows:
-                        # print(num,resultRows[num])
-                        if 'Date' in num:  # 跳过填写日期的行
-                            continue
-                        else:
-                            c = 6
-                            while ws.Cells(resultRows[num], c).Value is not None:
-                                c += 1
-                            for i in range(len(rusultList)):  # 遍历结果列表
-                                # print('%s-%s' % (rusultList[i].strip(), messages),num)
-                                if '%s-%s' % (rusultList[i].strip(), messages) in num:# strip()去除空格
-                                    if 'Date-%s' % rusultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).NumberFormat = "yyyy/mm/dd"
-                                    if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
-                                        continue
-                                    else:
-                                        ws.Cells(resultRows['%s-%s' % (rusultList[i].strip(), messages)], c).Value = rusultList2[i].strip()
+                    else:
+                        csvFile.drop(['C','D'], axis=1, inplace=True)# 保留A,B,D列
+                        dataResult = csvFile.loc[1]
+                        fileDate = dataResult[1].split(' ')[0]
+                        self.textBrowser_5.append("%s:%s" % (y,fileDate))
+                        self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+                        app.processEvents()
+                        csvFile = csvFile.loc[csvFile['A'].str.contains(e,na=False)]# 保留material列，不重复的物质
+                        rusultList = list(csvFile['A'])
+                        rusultList2 = list(csvFile['B'])
+                        for num in resultRows:
+                            # print(num,resultRows[num])
+                            if 'Date' in num:  # 跳过填写日期的行
+                                continue
+                            else:
+                                c = 6
+                                while ws.Cells(resultRows[num], c).Value is not None:
                                     c += 1
-                    y += 1
+                                for i in range(len(rusultList)):  # 遍历结果列表
+                                    # print('%s-%s' % (rusultList[i].strip(), messages),num)
+                                    if '%s-%s' % (rusultList[i].strip(), messages) in num:# strip()去除空格
+                                        if 'Date-%s' % rusultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).NumberFormat = "yyyy/mm/dd"
+                                        if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
+                                            continue
+                                        else:
+                                            ws.Cells(resultRows['%s-%s' % (rusultList[i].strip(), messages)], c).Value = rusultList2[i].strip()
+                                        c += 1
+                        y += 1
                 self.textBrowser_5.append("完成QC填写")
                 self.lineEdit_6.setText("完成QC填写")
 
@@ -2657,39 +2660,42 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 y = 1
                 for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
                     # 获取相关结果数据
-                    csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D','E','F','G','H','I','J'])
-                    csvFile.drop(['B','E','G','H','I','J'], axis=1, inplace=True)  # 保留A,B,D列
-                    dataResult = csvFile.loc[1]
-                    fileDate = dataResult[0].split(' ')[0]
-                    if fileDate == '':  # 判断文件格式是否正确
-                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。", QMessageBox.Yes)
+                    try:
+                        csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D','E','F','G','H','I','J'])
+                    except pd.errors.ParserError:
+                        QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。"% fileUrl, QMessageBox.Yes)
+                        os.startfile(os.path.split(fileUrl)[0])
                         break
-                    csvFile.drop(['A'], axis=1, inplace=True)
-                    self.textBrowser_5.append("%s:%s" % (y, fileDate))
-                    self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
-                    app.processEvents()
-                    csvFile = csvFile.loc[csvFile['C'].str.contains(e, na=False)]  # 保留material列，不重复的物质
-                    rusultList = list(csvFile['C'])
-                    rusultList2 = list(csvFile['D'])
-                    rusultList3 = list(csvFile['F'])
-                    for num in resultRows:
-                        # print(num,resultRows[num])
-                        if 'Date' in num:  # 跳过填写日期的行
-                            continue
-                        else:
-                            c = 6
-                            while ws.Cells(resultRows[num], c).Value is not None:
-                                c += 1
-                            for i in range(len(rusultList)):  # 遍历结果列表
-                                # print('%s-%s' % (rusultList[i], rusultList2[i]),num)
-                                if '%s-%s' % (rusultList[i], rusultList2[i]) in num:  # strip()去除空格
-                                    if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-                                        ws.Cells(resultRows['Date-%s' % rusultList[i]], c).NumberFormat = "yyyy/mm/dd"
-                                    ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-                                    rusultList3[i]
+                    else:
+                        csvFile.drop(['B','E','G','H','I','J'], axis=1, inplace=True)  # 保留A,B,D列
+                        dataResult = csvFile.loc[1]
+                        fileDate = dataResult[0].split(' ')[0]
+                        csvFile.drop(['A'], axis=1, inplace=True)
+                        self.textBrowser_5.append("%s:%s" % (y, fileDate))
+                        self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+                        app.processEvents()
+                        csvFile = csvFile.loc[csvFile['C'].str.contains(e, na=False)]  # 保留material列，不重复的物质
+                        rusultList = list(csvFile['C'])
+                        rusultList2 = list(csvFile['D'])
+                        rusultList3 = list(csvFile['F'])
+                        for num in resultRows:
+                            # print(num,resultRows[num])
+                            if 'Date' in num:  # 跳过填写日期的行
+                                continue
+                            else:
+                                c = 6
+                                while ws.Cells(resultRows[num], c).Value is not None:
                                     c += 1
-                    y += 1
+                                for i in range(len(rusultList)):  # 遍历结果列表
+                                    # print('%s-%s' % (rusultList[i], rusultList2[i]),num)
+                                    if '%s-%s' % (rusultList[i], rusultList2[i]) in num:  # strip()去除空格
+                                        if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
+                                            ws.Cells(resultRows['Date-%s' % rusultList[i]], c).NumberFormat = "yyyy/mm/dd"
+                                        ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
+                                        rusultList3[i]
+                                        c += 1
+                        y += 1
                 self.textBrowser_5.append("完成QC填写")
                 self.lineEdit_6.setText("完成QC填写")
 
