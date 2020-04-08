@@ -960,7 +960,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                          'Z:\\QC Chart\\%s' % now,
                          'QC_Chart_Heavy_Metal_66_01_2018_012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
                          'SVHC_DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-                         'Z:\Inorganic\Program\1.Inorganic Operate\1.New edition\2.Model',
+                         'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model',
                          'REACH_SVHC_Candidate_List.csv', '"||||||"六根，少了或者多了都无法读取配置文件',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
                          'Z:\\Inorganic_batch\\Formaldehyde\\Result',
@@ -1634,8 +1634,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.lineEdit_6.setText("ECO中迅德Batch转化完成")
                 app.processEvents()
 
-        # 获取结果文件
-
     def formalBatch(self):
         # 获取甲醛Batch信息
         try:
@@ -1741,7 +1739,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_4.append("完成样品单号Formal-Batch")
                 self.textBrowser_4.append("生成路径：%s"% configContent['UV_Batch_Export_URL'])
                 self.lineEdit_6.setText("完成样品单号Formal-Batch")
-
 
     def crBatch(self):
         # 获取六价铬Batch信息
