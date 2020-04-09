@@ -2240,9 +2240,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                            'Reach_Result_Export_URL'] + '\\' + today + '\\' + 'SVHC ' + name + '.txt'
                             with open(fileName, "w", encoding="utf-8") as fileTxt:
                                 for i in range(len(resultDcuOne)):
-                                    lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(
-                                        resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(
-                                        resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
+                                    if i == 0:
+                                        lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(
+                                            resultDcuThree[i]) + '\t' + str(resultDcuFour[i]) + '\t' + str(
+                                            resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
+                                    else:
+                                        lineTxt = str(resultDcuOne[i]) + '\t' + str(resultDcuTwo[i]) + '\t' + str(
+                                            resultDcuThree[i]) + '\t' + str(
+                                            '%f' % (float(resultDcuFour[i]))) + '\t' + str(
+                                            resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
                                     fileTxt.write(lineTxt)
                             wb.SaveAs('%s\\%s\\SVHC %s' % (configContent['Reach_Result_Export_URL'], today, name))
                             n += 1
