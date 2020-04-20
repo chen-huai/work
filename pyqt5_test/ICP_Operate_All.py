@@ -1108,9 +1108,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_3.append("请重新选择Batch数据文件")
                 m = 'N'
         if m == 'Y':
-            f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
-            self.textBrowser_3.append("正在微波Batch-ICP转化")
+            self.textBrowser_3.append("正在微波ICP Batch转化")
             app.processEvents()
+            f1 = open('%s/ICP %s.txt' % (desktopUrl, today), "a+", encoding="utf-8")
+            f1.write('\n')
             i = 0
             for i in range(len(labNumber)):
                 # print(analyteList[i],qualityValue[i])
@@ -1156,11 +1157,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 self.textBrowser_3.append("请重新选择Batch数据文件")
                 m = 'N'
         if m =='Y':
-                f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "w", encoding="utf-8")
                 self.textBrowser_3.append("正在微波Batch-AAS转化")
                 app.processEvents()
+                f1 = open('%s/AAS %s.txt' % (desktopUrl, today), "a+", encoding="utf-8")
+                f1.write('\n')
                 i = 0
                 for i in range(len(labNumber)):
+                    if i < len(labNumber) - 1:
+                        if batchNum[i] != batchNum[i - 1]:
+                            f1.write('\n')
                     f1.write(labNumber[i].replace('+', '-') + '\n')
                     i += 1
                 self.textBrowser_3.append("完成微波Batch-AAS转化")
