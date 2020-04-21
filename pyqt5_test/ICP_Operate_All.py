@@ -1795,13 +1795,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     n = 3
                 for each in labNumber:
                     file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                    file.write('%s\n'%each)
-                    file.write('%s+D\n'%each)
+                    file.write('%s\n' % each)
+                    file.write('%s+D\n' % each)
                     n += 1
                     if n % 20 == 0:
                         file.write('QC\n')
                 if n % 20 != 0:
                     file.write('QC\n')
+                for each in labNumber:
+                    file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    file.write('%s+S\n' % each)
+                file.write('QC\n')
             self.textBrowser_4.append("完成样品单号Cr VI-Batch")
             self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
             self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
