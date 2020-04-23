@@ -1790,9 +1790,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     file.write('BLK+DPC\n')
                     file.write('BS\n')
                     file.write('BS+DPC\n')
-                    file.write('SS\n')
-                    file.write('SS+DPC\n')
-                    n = 3
+                    n = 2
                 for each in labNumber:
                     file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
                     file.write('%s\n' % each)

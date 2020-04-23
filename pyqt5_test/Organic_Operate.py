@@ -254,7 +254,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def createConfigContent(self):
         # 生成默认配置文件
         configContentName = ['选择Organic_Batch的输入路径和结果输出路径', 'Organic_Batch_Import_URL']
-        configContent = ['默认，可更改为自己需要的', 'Z:\\Organic_batch\\Batch']
+        configContent = ['默认，可更改为自己需要的', 'Z:\\Organic Batch']
         f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
         i = 0
         for i in range(len(configContentName)):
