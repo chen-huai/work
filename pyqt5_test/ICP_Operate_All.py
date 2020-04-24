@@ -2374,6 +2374,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                             {'a': dataOne, 'b': dataTwo, 'c': dataThree, 'd': dataFour, 'e': dataFive, 'f': dataSix, 'g': dataSeven})
                         resultData.to_csv('%s.txt'% filePath2, sep='\t', index=0, header=0)
                     self.textBrowser.append("完成ECO ZJY转换")
+                    self.textBrowser.append("生成路径：%s\\%s" % (configContent['ECO_Result_Export_URL'], today))
 
     def icpQc(self):
         # ICP QC 填写
