@@ -832,7 +832,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_21.clicked.connect(self.icpBatch)
         self.pushButton_34.clicked.connect(lambda: self.getResult('ICP'))
         self.pushButton_43.clicked.connect(lambda: self.getResult('UV'))
-        self.pushButton_31.clicked.connect(self.aasResult)
+        self.pushButton_31.clicked.connect(self.zjyResultToIcp)
         self.pushButton_32.clicked.connect(self.resultZjyToTxt)
         self.pushButton_38.clicked.connect(self.reachResult)
         self.pushButton_39.clicked.connect(self.tabWidget.close)
@@ -1958,7 +1958,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
                 selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
                                                                 '%s' % configContent['ECO_Result_Import_URL'],
-                                                                'Text Files (*.txt)')
+                                                                'CSV Files (*.csv;*.txt)')
         elif messages == 'UV':
             if self.comboBox_2.currentText() == 'URL:Formal Result':
                 selectResultFile = QFileDialog.getOpenFileNames(self, '选择Formal-Result文件',
@@ -2264,9 +2264,116 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         self.textBrowser.append("生成路径：%s\\%s" % (configContent['Reach_Result_Export_URL'], today))
                         self.lineEdit_6.setText("完成Reach结果转换为TXT")
 
-    def aasResult(self):
-        # AAS结果转化还不需要用到
-        self.textBrowser.append("暂时不需要用到，后续再开发")
+    def zjyResultToIcp(self):
+        # 质检院结果转化为ICP格式
+        # 判断是否选择了Result文件
+        try:
+            selectResultFile[0]
+        except NameError:
+            m = 'N'
+        else:
+            if selectResultFile[0] == []:
+                m = 'N'
+            else:
+                m = 'Y'
+        if m == 'N':
+            reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                Ui_MainWindow.getResult(self, 'ICP')
+                if selectResultFile[0] == []:
+                    self.lineEdit_6.setText("请重新选择ECO Result数据文件")
+                    self.textBrowser.append("请重新选择ECO Result数据文件")
+                    m = 'N'
+                else:
+                    m = 'Y'
+            else:
+                self.lineEdit_6.setText("请重新选择ECO Result数据文件")
+                self.textBrowser.append("请重新选择ECO Result数据文件")
+                m = 'N'
+        if m == 'Y':
+            # 判断ECO存储路径是否存在
+            fileUrl = configContent['ECO_Result_Export_URL']
+            folder = os.path.exists(fileUrl)
+            if not folder:
+                QMessageBox.information(self, "ECO存储路径出错",
+                                        "没有ECO结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Result_Export_URL",
+                                        QMessageBox.Yes)
+                self.textBrowser.append("请更改配置文件并导入后，重新选择ECO ZJY Result数据文件")
+            else:
+                fileNum = 1
+                for files in selectResultFile[0]:  # 遍历所有文件
+                    # print(os.path.split(files))
+                    fileName = os.path.split(files)[1]  # 文件名
+                    if fileName.split('.')[-1] != 'csv':
+                        reply = QMessageBox.question(self, '信息',
+                                                     'Result文件不是ECO质检院的CSV结果文件，\n是否需要获取ECO质检院Result数据文件，CSV格式',
+                                                     QMessageBox.Yes | QMessageBox.No,
+                                                     QMessageBox.Yes)
+                        if reply == QMessageBox.Yes:
+                            Ui_MainWindow.getResult(self, 'ICP')
+                            self.textBrowser.append("请重新点击ECO ZJY Result按钮开始数据处理")
+                        else:
+                            self.lineEdit_6.setText("请重新选择ECO的质检院结果数据文件，TXT格式")
+                            self.textBrowser.append("请重新选择ECO的质检院结果数据文件，TXT格式")
+                    else:
+                        self.textBrowser.append("正在进行ECO ZJY转换")
+                        self.textBrowser.append("%s:%s" % (fileNum,fileName))
+                        fileNum += 1
+                        app.processEvents()
+                        filePath = files
+                        folder = os.path.exists(configContent['ECO_Result_Export_URL'] + '\\' + today)
+                        # print(folder)
+                        if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+                            os.makedirs(
+                                configContent['ECO_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
+                        filePath2 = configContent['ECO_Result_Export_URL'] + '\\' + today + '\\' + fileName.split('.')[0]
+                        csvFile = pd.read_csv(filePath,encoding='gbk', names = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56'])
+                        dataResult = csvFile.loc[1]
+                        i = 0
+                        dropC = []
+                        leaveC = []
+                        for each in dataResult:
+                            if each == '样品名称':
+                                leaveC.append(str(i))
+                            elif each == '浓度 [ ug/L ]' and '内标' not in list(csvFile.loc[0])[i]:
+                                leaveC.append(str(i))
+                            else:
+                                dropC.append(str(i))
+                            i += 1
+                        csvFile = csvFile.drop(dropC, axis=1)
+                        oneRow = csvFile.loc[0]
+                        element = []
+                        for each in oneRow:
+                            if pd.isnull(each):
+                                element.append('')
+                            else:
+                                element.append(each.split(' ')[2])
+                        labNum = list(csvFile[leaveC[0]])
+                        starNum = labNum.index('样品名称')+1
+                        dataOne = ['Solution Label']
+                        dataTwo = ['Type']
+                        dataThree = ['Element']
+                        dataFour = ['Soln Conc']
+                        dataFive = ['Units']
+                        dataSix = ['强度']
+                        dataSeven = ['重复项']
+                        m = starNum
+                        for i in range(len(labNum)-starNum):
+                            for n in range(len(leaveC)):
+                                dataOne.append(labNum[m])
+                                dataTwo.append('样品')
+                                dataFive.append('ug/L')
+                                dataSix.append('')
+                                dataSeven.append('')
+                            dataThree += element
+                            data = list(csvFile.loc[m])
+                            dataFour += list(csvFile.loc[m])
+                            m += 1
+                        resultData = pd.DataFrame(
+                            {'a': dataOne, 'b': dataTwo, 'c': dataThree, 'd': dataFour, 'e': dataFive, 'f': dataSix, 'g': dataSeven})
+                        resultData.to_csv('%s.txt'% filePath2, sep='\t', index=0, header=0)
+                    self.textBrowser.append("完成ECO ZJY转换")
 
     def icpQc(self):
         # ICP QC 填写
@@ -2893,8 +3000,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.pushButton_38.setText(_translate("MainWindow", "Reach Result"))
         self.pushButton_27.setStatusTip(_translate("MainWindow", "将CSV转化成DCU使用的TXT格式"))
         self.pushButton_27.setText(_translate("MainWindow", "ICP Result"))
-        self.pushButton_31.setStatusTip(_translate("MainWindow", "由于AAS仪器结果导出不符合DCU格式，需要转化一下"))
-        self.pushButton_31.setText(_translate("MainWindow", "AAS Result"))
+        self.pushButton_31.setStatusTip(_translate("MainWindow", "由于质检院仪器结果导出不符合DCU格式，需要转化为ICP结果格式"))
+        self.pushButton_31.setText(_translate("MainWindow", "ECO ZJY To ICP"))
         self.pushButton_30.setStatusTip(_translate("MainWindow", "填写ICP的QC Chart"))
         self.pushButton_30.setText(_translate("MainWindow", "MM QC Chart"))
         self.comboBox.setStatusTip(_translate("MainWindow", "Result数据的选择路径"))
