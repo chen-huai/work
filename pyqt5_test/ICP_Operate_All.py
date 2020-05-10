@@ -1066,10 +1066,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
-                        analyteList.append(b[i + 5])
+                        analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 8])
                         batchNum.append(b[4])
                         app.processEvents()
                 n += 1
+                print(analyteList)
             self.lineEdit_6.setText("样品单号抓取完成")
             if messages == 'ICP':
                 self.textBrowser_3.append("样品单号抓取完成")
@@ -1666,7 +1667,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         if m == 'Y':
             # 判断存储路径是否存在
             fileUrl = configContent['UV_Batch_Export_URL']
-            folder = os.path.exists(fileUrl)
+            folder = os.path.exists(fileUrl)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             if not folder:
                 QMessageBox.information(self, "ICP结果路径出错",
                                         "没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
