@@ -1066,11 +1066,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
-                        analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 8])
+                        analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7])
                         batchNum.append(b[4])
                         app.processEvents()
                 n += 1
-                print(analyteList)
+                # print(analyteList)
             self.lineEdit_6.setText("样品单号抓取完成")
             if messages == 'ICP':
                 self.textBrowser_3.append("样品单号抓取完成")
@@ -1218,7 +1218,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             if (not folder1) or (not folder2):
                 self.textBrowser_3.append("请更改配置文件并导入后，重新点击Nickel Batch按钮开始数据处理")
             else:
-                if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
+                analyteNo = []
+                for i in range(len(analyteList)):
+                    if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
+                        analyteNo.append(i)
+                if analyteNo != []:
                     self.textBrowser_3.append("正在镍释放Batch转化")
                     self.lineEdit_6.setText("正在镍释放Batch转化")
                     app.processEvents()
@@ -1267,7 +1271,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     self.textBrowser_3.append("生成路径：%s" % configContent['Nickel_Batch_Export_URL'])
                     self.lineEdit_6.setText("完成镍释放Batch转化")
                 else:
-                    self.textBrowser_3.append("请确认Batch方法是镍释放")
+                    self.textBrowser_3.append("请确认Batch方法是镍释放，或者请将Batch质量填写为0，并重新保存")
                     self.lineEdit_6.setText("请确认Batch方法是镍释放")
 
     def ecoZjy(self):
