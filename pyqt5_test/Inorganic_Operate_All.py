@@ -1795,8 +1795,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     file.write('BLK+DPC\n')
                     file.write('BS\n')
                     file.write('BS+DPC\n')
-                    file.write('SS\n')
-                    file.write('SS+DPC\n')
+                    # file.write('SS\n')
+                    # file.write('SS+DPC\n')
                     n = 2
                 for each in labNumber:
                     file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
@@ -1808,10 +1808,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 if n % 20 != 0:
                     file.write('QC\n')
                 # 添加样品加标
-                # for each in labNumber:
-                #     file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-                #     file.write('%s+S\n' % each)
-                # file.write('QC\n')
+                for each in labNumber:
+                    file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+                    file.write('%s+S\n' % each)
+                file.write('QC\n')
             self.textBrowser_4.append("完成样品单号Cr VI-Batch")
             self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
             self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
