@@ -1066,7 +1066,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
-                        analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7])
+                        analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7]+ ' ' + b[i + 3])
                         batchNum.append(b[4])
                         app.processEvents()
                 n += 1
