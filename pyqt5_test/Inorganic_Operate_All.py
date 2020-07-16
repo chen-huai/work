@@ -1062,7 +1062,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 i = 0
                 for i in range(len(b)):
                     if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]):
+                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and ('QB/T' not in b[i]):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
