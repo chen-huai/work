@@ -2165,7 +2165,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     i = 0
                     for each in labNumber:
                         # print(labNumber[i], analyteList[i],i)
-                        if 'R\x1eI' in analyteList[i]:
+                        if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]):
                             resultLabnumber.append(each)
                             resultQualityValue.append(qualityValue[i])
                             resultVolumeValue.append(volumeValue[i])
