@@ -1062,7 +1062,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 i = 0
                 for i in range(len(b)):
                     if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and ('QB/T' not in b[i]):
+                            '/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and ('QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
                         labNumber.append(b[i])
                         qualityValue.append(b[i + 4])
                         volumeValue.append(b[i + 2])
@@ -2221,13 +2221,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                                     if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
                                         ws.Cells(resultRows[x], concColumn).Value = '未校正'
                                     elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
-                                        ws.Cells(resultRows[x], concColumn).Value = '超出'
+                                        ws.Cells(resultRows[x], concColumn).Value = '9999'
+                                        ws.Cells(resultRows[x], concColumn + 1).Value = '超出'
                                     else:
                                         ws.Cells(resultRows[x], concColumn).Value = float(
                                             rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
                                             resultVolumeValue[n]) / float(resultQualityValue[n])
                                 else:
-                                    ws.Cells(resultRows[x], concColumn).Value = '未走标准曲线'
+                                    ws.Cells(resultRows[x], concColumn).Value = '0'
+                                    ws.Cells(resultRows[x], concColumn + 1).Value = '未走标准曲线'
                                 x += 1
                             # 将excel数据重新填写txt文件中
                             ws1 = wb.Sheets("DCU-Result")
