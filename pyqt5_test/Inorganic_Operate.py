@@ -1,4 +1,5 @@
 import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -9,14 +10,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
 		super(MyMainWindow, self).__init__(parent)
 		self.setupUi(self)
-		# # 需要拷贝部分
-		#
-		# QFileDialog.setWindowIcon(self, icon)
-		# QMessageBox.setWindowIcon(self, icon)
-		# QInputDialog.setWindowIcon(self, icon)
 
-		# self.retranslateUi(MyMainWindow)
-		self.tabWidget.setCurrentIndex(0)
 		self.pushButton_23.clicked.connect(self.aasBatch)
 		self.pushButton_24.clicked.connect(self.ecoZxd)
 		self.pushButton_26.clicked.connect(self.randomAction)
@@ -67,7 +61,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_49.clicked.connect(lambda: self.uvQc('Cr VI'))
 		self.pushButton_52.clicked.connect(lambda: self.phQc('pH 2018'))
 		self.pushButton_48.clicked.connect(lambda: self.phQc('pH 2014'))
-		# QtCore.QMetaObject.connectSlotsByName(MyMainWindow)
 
 	def getConfig(self):
 		# 初始化，获取或生成配置文件
@@ -532,7 +525,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					ws.Cells(1, 7).Value = 'Batch No'
 					ws.Cells(2, 1).Value = 1
 					ws.Cells(2, 2).Value = 'BLK'
-					ws.Cells(2, 6).Value = 5
+					ws.Cells(2, 6).Value = 1
 					m = 0
 					for m in range(2):
 						x = 0
@@ -549,7 +542,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						ws.Cells(n, 3).Value = '%s' % analyteList[i]
 						ws.Cells(n, 4).Value = '%s' % qualityValue[i]
 						ws.Cells(n, 5).Value = '%s' % volumeValue[i]
-						ws.Cells(n, 6).Value = 5
+						ws.Cells(n, 6).Value = 1
 						ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
 						x = 0
 						for x in range(7):
@@ -1377,6 +1370,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				sampleColumn = int(oneRow.index('Sample ID')) + 1
 				elementColumn = int(oneRow.index('Element')) + 1
 				concColumn = int(oneRow.index('Sample Conc.')) + 1
+				reColumn = int(oneRow.index('Remark')) + 1
 				elements = []
 				resultRows = []
 				n = 2
@@ -1427,6 +1421,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						rusultList2 += list(csvFile['D'])
 						rusultList3 += list(csvFile['E'])
 					for num, each in enumerate(rusultList):
+						if self.radioButton_2.isChecked():
+							if rusultList2[num] == 'Pb' and rusultList2[num] == rusultList2[num-1]:
+								continue
 						rusultList4['%s-%s' % (rusultList[num], rusultList2[num])] = rusultList3[num]
 					# 填写excel模板文件
 					if endNum == 0 or endNum > len(resultLabnumber):
@@ -1448,16 +1445,28 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
 								if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
 									ws.Cells(resultRows[x], concColumn).Value = '未校正'
+									self.textBrowser.append('%s-%s:结果未校正' % (resultLabnumber[n], elements[x]))
+									app.processEvents()
 								elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
 									ws.Cells(resultRows[x], concColumn).Value = '9999'
-									ws.Cells(resultRows[x], concColumn + 1).Value = '超出'
+									ws.Cells(resultRows[x], reColumn).Value = '超出'
+									self.textBrowser.append('%s-%s:结果超出' % (resultLabnumber[n], elements[x]))
+									app.processEvents()
 								else:
 									ws.Cells(resultRows[x], concColumn).Value = float(
 										rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
 										resultVolumeValue[n]) / float(resultQualityValue[n])
+									if self.radioButton_2.isChecked():
+										if elements[x] == 'Pb':
+											ws.Cells(resultRows[x], reColumn).Value = 'Pb受Fe影响,Fact校正'
+											self.textBrowser.append('%s-%s:Pb受Fe影响，Fact校正' % (resultLabnumber[n], elements[x]))
+											app.processEvents()
 							else:
 								ws.Cells(resultRows[x], concColumn).Value = '0'
-								ws.Cells(resultRows[x], concColumn + 1).Value = '未走标准曲线'
+								ws.Cells(resultRows[x], reColumn).Value = '未走标准曲线'
+								self.textBrowser.append('%s-%s:未走标准曲线' % (resultLabnumber[n], elements[x]))
+								app.processEvents()
+
 							x += 1
 						# 将excel数据重新填写txt文件中
 						ws1 = wb.Sheets("DCU-Result")
