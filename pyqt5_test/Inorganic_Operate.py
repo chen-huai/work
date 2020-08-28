@@ -1057,6 +1057,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				nowTime = time.strftime('%Y-%m-%d %H:%M:%S ')
 				lNum = []
 				fNum = []
+				aNum = []
 				batchNum = []
 				batchLab = []
 				resultNum = []
@@ -1064,13 +1065,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				for i in range(len(labNumber)):
 					if '4045' in analyteList[i]:
 						lNum.append(i)
+					elif 'AATCC' in analyteList[i]:
+						aNum.append(i)
 					else:
 						fNum.append(i)
 				fileBatch = configContent['UV_Batch_Export_URL'] + '/' + 'pH Batch %s.csv' % today
 				folder3 = os.path.exists(fileBatch)
 				fileResult = configContent['UV_Rusult_Export_URL'] + '/' + 'pH Result %s.csv' % today
 				folder4 = os.path.exists(fileResult)
-				if lNum != [] or fNum != []:
+				if lNum != [] or fNum != [] or aNum != []:
 					if not folder3:
 						# Batch模板
 						batchOne = ['pH cal', 'pH Measure', 'pH Measure', 'pH Measure']
@@ -1097,6 +1100,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							 'f': resultSix, 'g': resultSeven, 'h': resultEight,
 							 'i': resultNine, 'j': resultTen})
 						resultData.to_csv(fileResult, mode='a', index=0, header=0)
+				if aNum != []:
+					num, ok = QInputDialog.getInt(self, '输入AATCC编号', '输入AATCC第一个样品编号', 1, 1, 999999, 1)
+					if ok and num:
+						n = num
+						batchNum.append('AATCC')
+						batchLab.append('BLK')
+						for i in aNum:
+							batchNum.append('AATCC %s'% n)
+							batchNum.append('AATCC %s'% n)
+							batchNum.append('AATCC %s'% n)
+							batchLab.append('%s' % labNumber[i])
+							batchLab.append('%sA' % labNumber[i])
+							batchLab.append('%sB' % labNumber[i])
+							if n % 20 == 0:
+								batchNum.append('CC')
+								batchLab.append('QC')
+							n += 1
+						if num == 1 and fNum == []:
+							batchNum.append('DI')
+							batchLab.append('Water')
+						if n % 20 != 1:
+							batchNum.append('CC')
+							batchLab.append('QC')
 				if fNum != []:
 					num, ok = QInputDialog.getInt(self, '输入3071编号', '输入pH3071第一个样品编号', 1, 1, 999999, 1)
 					if ok and num:
@@ -1141,7 +1167,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if l % 20 != 1:
 							batchNum.append('CC')
 							batchLab.append('QC')
-				if lNum != [] or fNum != []:
+				if lNum != [] or fNum != [] or aNum != []:
 					batchData = pd.DataFrame(
 						{'a': 'pH Measure', 'b': 1, 'c': batchNum, 'd': batchLab, 'e': '', 'f': '', 'g': '', 'h': '',
 						 'i': '', 'j': '', 'k': '1'})
@@ -1151,6 +1177,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						 'g': 'T', 'h': ''})
 					resultData.to_csv(fileResult, mode='a', index=0, header=0)
 				self.textBrowser_4.append("完成样品单号生成新旧pH格式")
+				self.textBrowser_4.append("生成路径：%s\\%s" % (configContent['UV_Batch_Export_URL'], today))
 				self.lineEdit_6.setText("完成样品单号生成新旧pH格式")
 
 	def getResult(self, messages):
