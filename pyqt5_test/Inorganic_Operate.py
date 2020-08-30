@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-
+import chicon  # 引用图标
 from Inorganic_Operate_Ui import *
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -2240,7 +2240,6 @@ if __name__ == "__main__":
 	import pyautogui
 	import pandas as pd
 	import re
-	# import chicon  # 引用图标
 	import win32com.client as win32com
 	from win32com.client import Dispatch
 	app = QApplication(sys.argv)
