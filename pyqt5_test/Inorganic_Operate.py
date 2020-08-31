@@ -208,16 +208,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_3.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'Wrod files(*.doc*)')
+														   'files(*.doc*;*.xls*)')
 		elif messages == 'UV':
 			self.textBrowser_4.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['UV_Batch_Import_URL'],
-														   'Wrod files(*.doc*)')
+														   'files(*.doc*;*.xls*)')
 		else:
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'Wrod files(*.doc*)')
+														   'files(*.doc*;*.xls*)')
 		# print(selectBatchFile)
 		if selectBatchFile[0] != []:
 			self.lineEdit_6.setText("正在抓取样品单号")
@@ -231,41 +231,84 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.lineEdit.clear()
 				self.lineEdit.setText('Sample ID')
 			app.processEvents()
-			w = Dispatch('Word.Application')
-			w.Visible = 0
+
+			# fileDate = os.path.split(selectBatchFile[0])[1].split('-')[0]
+			# print(selectBatchFile[0][0].split('/')[-1].split('.')[-1])
 			n = 0
 			for n in range(len(selectBatchFile[0])):
 				fileName = os.path.split(selectBatchFile[0][n])[1]
+				fileType = os.path.split(selectBatchFile[0][n])[1].split('.')[-1]
 				if messages == 'ICP':
 					self.textBrowser_3.append('%s：%s' % (n + 1, fileName))
-				if messages == 'UV':
+				elif messages == 'UV':
 					self.textBrowser_4.append('%s：%s' % (n + 1, fileName))
 				app.processEvents()
-				# win系统识别路径为“\”
-				doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
-				a = doc.Content.Text
-				b = a.split('\r')
-				# print(b)
-				doc.Close()
-				i = 0
-				for i in range(len(b)):
-					if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-							'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
-							'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
-						labNumber.append(b[i])
-						qualityValue.append(b[i + 4])
-						volumeValue.append(b[i + 2])
-						analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 3])
-						batchNum.append(b[4])
-						app.processEvents()
-				n += 1
+				if 'doc' in fileType:
+					w = Dispatch('Word.Application')
+					w.Visible = 0
+					# win系统识别路径为“\”
+					doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+					a = doc.Content.Text
+					b = a.split('\r')
+					# print(b)
+					doc.Close()
+					i = 0
+					for i in range(len(b)):
+						if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
+								'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
+								'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
+							labNumber.append(b[i])
+							qualityValue.append(b[i + 4])
+							volumeValue.append(b[i + 2])
+							analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 3])
+							batchNum.append(b[4])
+							app.processEvents()
+					n += 1
+					w.Quit()
+				elif 'xls' in fileType:
+					excel = win32com.gencache.EnsureDispatch('Excel.Application')
+					excel.Visible = 0
+					excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+					wb = excel.Workbooks.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+					ws = wb.Worksheets('Sheet1')
+					column = 1
+					row = 1
+					oneRow =[]
+					while ws.Cells(row, column).Value is not None:
+						oneRow.append(ws.Cells(row, column).Value)
+						column += 1
+					num = 0
+					for num in range(len(oneRow)):
+						row = 2
+						if oneRow['num'] in 'Sample ID':
+							while ws.Cells(row, num + 1).Value is not None:
+								labNumber.append(ws.Cells(row, num + 1).Value)
+								row += 1
+						elif oneRow['num'] in 'Test Desc':
+							while ws.Cells(row, num + 1).Value is not None:
+								analyteList.append(ws.Cells(row, num + 1).Value)
+								row += 1
+						elif oneRow['num'] in 'Weight':
+							while ws.Cells(row, num + 1).Value is not None:
+								qualityValue.append(ws.Cells(row, num + 1).Value)
+								row += 1
+						elif oneRow['num'] in 'Volume':
+							while ws.Cells(row, num + 1).Value is not None:
+								volumeValue.append(ws.Cells(row, num + 1).Value)
+								row += 1
+						elif oneRow['num'] in 'Batch #':
+							while ws.Cells(row, num + 1).Value is not None:
+								batchNum.append(ws.Cells(row, num + 1).Value)
+								row += 1
+						num += 1
+					excel.Quit()
+
 			# print(analyteList)
 			self.lineEdit_6.setText("样品单号抓取完成")
 			if messages == 'ICP':
 				self.textBrowser_3.append("样品单号抓取完成")
 			elif messages == 'UV':
 				self.textBrowser_4.append("样品单号抓取完成")
-			w.Quit()
 			app.processEvents()
 		# print(labNumber, qualityValue, volumeValue)
 		# print(batchNum)
@@ -1187,7 +1230,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
 																'%s' % configContent['ECO_Result_Import_URL'],
-																'CSV Files (*.csv;*.txt)')
+																'Files (*.csv;*.txt)')
 		elif messages == 'UV':
 			if self.comboBox_2.currentText() == 'URL:Formal Result':
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择Formal-Result文件',
