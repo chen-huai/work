@@ -280,23 +280,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					num = 0
 					for num in range(len(oneRow)):
 						row = 2
-						if oneRow['num'] in 'Sample ID':
+						if oneRow[num] in 'Sample ID':
 							while ws.Cells(row, num + 1).Value is not None:
 								labNumber.append(ws.Cells(row, num + 1).Value)
 								row += 1
-						elif oneRow['num'] in 'Test Desc':
+						elif oneRow[num] in 'Test Desc':
 							while ws.Cells(row, num + 1).Value is not None:
 								analyteList.append(ws.Cells(row, num + 1).Value)
 								row += 1
-						elif oneRow['num'] in 'Weight':
+						elif oneRow[num] in 'Weight':
 							while ws.Cells(row, num + 1).Value is not None:
 								qualityValue.append(ws.Cells(row, num + 1).Value)
 								row += 1
-						elif oneRow['num'] in 'Volume':
+						elif oneRow[num] in 'Volume':
 							while ws.Cells(row, num + 1).Value is not None:
 								volumeValue.append(ws.Cells(row, num + 1).Value)
 								row += 1
-						elif oneRow['num'] in 'Batch #':
+						elif oneRow[num] in 'Batch #':
 							while ws.Cells(row, num + 1).Value is not None:
 								batchNum.append(ws.Cells(row, num + 1).Value)
 								row += 1
