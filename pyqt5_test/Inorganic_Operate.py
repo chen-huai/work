@@ -301,6 +301,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								batchNum.append(ws.Cells(row, num + 1).Value)
 								row += 1
 						num += 1
+					if batchNum == []:
+						for i in range(len(labNumber)):
+							batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 					excel.Quit()
 
 			# print(analyteList)
