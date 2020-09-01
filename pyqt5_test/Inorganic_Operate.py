@@ -61,6 +61,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_49.clicked.connect(lambda: self.uvQc('Cr VI'))
 		self.pushButton_52.clicked.connect(lambda: self.phQc('pH 2018'))
 		self.pushButton_48.clicked.connect(lambda: self.phQc('pH 2014'))
+		self.pushButton_54.clicked.connect(self.crRecovery)
 
 	def getConfig(self):
 		# 初始化，获取或生成配置文件
@@ -2123,7 +2124,129 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						y += 1
 				self.textBrowser_5.append("完成QC填写")
 				self.lineEdit_6.setText("完成QC填写")
-
+	def crRecovery(self):
+		# 判断是否选择了Result文件
+		try:
+			selectResultFile[0]
+		except NameError:
+			m = 'N'
+		else:
+			if selectResultFile[0] == []:
+				m = 'N'
+			else:
+				m = 'Y'
+		if m == 'N':
+			reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+										 QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.getResult(self, 'UV')
+				if selectResultFile[0] == []:
+					self.lineEdit_6.setText("请重新选择Cr VI Result数据文件")
+					self.textBrowser_5.append("请重新选择Cr VI Result数据文件")
+					m = 'N'
+				else:
+					m = 'Y'
+			else:
+				self.lineEdit_6.setText("请重新选择Cr VI Result数据文件")
+				self.textBrowser_5.append("请重新选择Cr VI Result数据文件")
+				m = 'N'
+		if m == 'Y':
+			self.textBrowser_5.append("正在进行六价铬回收率计算")
+			app.processEvents()
+			y = 1
+			xLabNum = []
+			xConResult = []
+			xAbsResult = []
+			bLabNum = []
+			bConResult = []
+			bAbsResult = []
+			sLabNum = []
+			sConResult = []
+			sAbsResult = []
+			labNum = ['Sample ID']
+			absResult = ['吸光值差']
+			conResult = ['溶度差']
+			reResult = ['回收率']
+			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+				# 获取相关结果数据
+				try:
+					csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
+				except pd.errors.ParserError:
+					QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
+					os.startfile(os.path.split(fileUrl)[0])
+					break
+				else:
+					csvFile.drop(['C'], axis=1, inplace=True)  # 保留A,B,D列
+					dataResult = csvFile.loc[1]
+					fileDate = dataResult[1].split(' ')[0]
+					self.textBrowser_5.append("%s:%s" % (y, fileDate))
+					self.lineEdit_6.setText("正在进行%s 六价铬回收率" % fileDate)
+					app.processEvents()
+					lRusult = list(csvFile['A'])
+					print(lRusult)
+					cRusult = list(csvFile['B'])
+					aRusult = list(csvFile['D'])
+					try:
+						starKey = lRusult.index('BS+DPC               ')
+					except ValueError:
+						try:
+							starKey = lRusult.index('BS+D                 ')
+						except ValueError:
+							try:
+								starKey = lRusult.index('BLK SPIKE+DPC        ')
+							except ValueError:
+								QMessageBox.warning(self, "文件格式错误",
+													"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
+													QMessageBox.Yes)
+								os.startfile(os.path.split(fileUrl)[0])
+								break
+							else:
+								m = starKey + 1
+						else:
+							m = starKey + 1
+					else:
+						m = starKey + 1
+					for i in range(len(lRusult)-starKey):
+						if isinstance(lRusult[m],float):
+							continue
+						elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   ') and ('/' in lRusult[m]):
+							bLabNum.append(lRusult[m].strip())
+							bAbsResult.append(aRusult[m])
+							bConResult.append(cRusult[m])
+						elif 'D' in lRusult[m]:
+							xLabNum.append(lRusult[m].strip())
+							xAbsResult.append(aRusult[m])
+							xConResult.append(cRusult[m])
+						elif 'S' in lRusult[m]:
+							sLabNum.append(lRusult[m].strip())
+							sAbsResult.append(aRusult[m])
+							sConResult.append(cRusult[m])
+						m += 1
+					i = 0
+					for each in bLabNum:
+						if each == 'Sample ID':
+							continue
+						else:
+							xNum = xLabNum.index('%s+D' % each)
+							try:
+								sNum = sLabNum.index('%s+S' % each)
+							except ValueError:
+								continue
+							else:
+								labNum.append(each)
+								absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+								conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+								rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
+								reResult.append("%s%s" % (rec,'\%'))
+						i += 1
+					batchData = pd.DataFrame(
+						{'a': labNum, 'b': absResult, 'c': conResult, 'd': reResult})
+					batchData.to_csv('%s/%s recovery.csv' % (os.path.split(fileUrl)[0], fileDate),encoding="utf_8_sig",
+									 mode='a', index=0, header=0)
+				y += 1
+			self.textBrowser_5.append("完成六价铬回收率计算")
+			self.textBrowser_5.append("地址：%s"%(os.path.split(selectResultFile[0][0])[0]))
+			self.lineEdit_6.setText("完成六价铬回收率计算")
 	def getReachMessage(self):
 		# 获取Reach信息
 		global reachLimsNo
