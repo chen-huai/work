@@ -2210,7 +2210,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					for i in range(len(lRusult)-starKey):
 						if isinstance(lRusult[m],float):
 							continue
-						elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   ') and ('/' in lRusult[m]):
+						elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   '):
 							bLabNum.append(lRusult[m].strip())
 							bAbsResult.append(aRusult[m])
 							bConResult.append(cRusult[m])
