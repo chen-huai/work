@@ -2154,20 +2154,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_5.append("正在进行六价铬回收率计算")
 			app.processEvents()
 			y = 1
-			xLabNum = []
-			xConResult = []
-			xAbsResult = []
-			bLabNum = []
-			bConResult = []
-			bAbsResult = []
-			sLabNum = []
-			sConResult = []
-			sAbsResult = []
-			labNum = ['Sample ID']
-			absResult = ['吸光值差']
-			conResult = ['溶度差']
-			reResult = ['回收率']
 			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+				xLabNum = []
+				xConResult = []
+				xAbsResult = []
+				bLabNum = []
+				bConResult = []
+				bAbsResult = []
+				sLabNum = []
+				sConResult = []
+				sAbsResult = []
+				labNum = ['Sample ID']
+				absResult = ['吸光值差']
+				conResult = ['溶度差']
+				reResult = ['回收率']
 				# 获取相关结果数据
 				try:
 					csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
@@ -2183,7 +2183,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.lineEdit_6.setText("正在进行%s 六价铬回收率" % fileDate)
 					app.processEvents()
 					lRusult = list(csvFile['A'])
-					print(lRusult)
+					# print(lRusult)
 					cRusult = list(csvFile['B'])
 					aRusult = list(csvFile['D'])
 					try:
@@ -2199,6 +2199,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 													"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
 													QMessageBox.Yes)
 								os.startfile(os.path.split(fileUrl)[0])
+								self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
 								break
 							else:
 								m = starKey + 1
@@ -2227,17 +2228,43 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if each == 'Sample ID':
 							continue
 						else:
-							xNum = xLabNum.index('%s+D' % each)
-							try:
-								sNum = sLabNum.index('%s+S' % each)
-							except ValueError:
+							sNum = ''
+							xNum = ''
+							d = 0
+							for d in range(len(xLabNum)):
+								if (each in xLabNum[d]) and ('D' in xLabNum[d]):
+									xNum = d
+							s = 0
+							for s in range(len(sLabNum)):
+								if (each in sLabNum[s]) and ('S' in sLabNum[s]):
+									sNum = s
+							if xNum == '':
 								continue
 							else:
-								labNum.append(each)
-								absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
-								conResult.append(float(xConResult[xNum])-float(bConResult[i]))
-								rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
-								reResult.append("%s%s" % (rec,'\%'))
+								if sNum == '':
+									continue
+								else:
+									labNum.append(each)
+									absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+									conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+									rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
+									reResult.append("%s%s" % (rec,'%'))
+
+
+							# try:
+							# 	xNum = xLabNum.index('%s+D' % each)
+							# except ValueError:
+							# 	continue
+							# try:
+							# 	sNum = sLabNum.index('%s+S' % each)
+							# except ValueError:
+							# 	continue
+							# else:
+							# 	labNum.append(each)
+							# 	absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+							# 	conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+							# 	rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
+							# 	reResult.append("%s%s" % (rec,'%'))
 						i += 1
 					batchData = pd.DataFrame(
 						{'a': labNum, 'b': absResult, 'c': conResult, 'd': reResult})
