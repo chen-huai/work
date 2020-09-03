@@ -239,16 +239,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			for n in range(len(selectBatchFile[0])):
 				fileName = os.path.split(selectBatchFile[0][n])[1]
 				fileType = os.path.split(selectBatchFile[0][n])[1].split('.')[-1]
+				if 'doc' in fileType:
+					# word = win32com.DispatchEx('Word.Application')
+					wordDoc = Dispatch('Word.Application')
+					wordDoc.Visible = 0
+					wordDoc.Application.DisplayAlerts = False
+				elif 'xls' in fileType:
+					excel = win32com.gencache.EnsureDispatch('Excel.Application')
+					excel.Visible = 0
+					excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+
 				if messages == 'ICP':
 					self.textBrowser_3.append('%s：%s' % (n + 1, fileName))
 				elif messages == 'UV':
 					self.textBrowser_4.append('%s：%s' % (n + 1, fileName))
 				app.processEvents()
 				if 'doc' in fileType:
-					w = Dispatch('Word.Application')
-					w.Visible = 0
+					# word = Dispatch('Word.Application')
+					# word = Dispatch('Word.Application')
+					# word = win32com.DispatchEx('Word.Application')
+					# word.Visible = 0
+					# word.Application.DisplayAlerts = False
 					# win系统识别路径为“\”
-					doc = w.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+					doc = wordDoc.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
 					a = doc.Content.Text
 					b = a.split('\r')
 					# print(b)
@@ -265,11 +278,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							batchNum.append(b[4])
 							app.processEvents()
 					n += 1
-					w.Quit()
+					# word.Quit()
 				elif 'xls' in fileType:
-					excel = win32com.gencache.EnsureDispatch('Excel.Application')
-					excel.Visible = 0
-					excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
+					# excel = win32com.gencache.EnsureDispatch('Excel.Application')
+					# excel.Visible = 0
+					# excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
 					wb = excel.Workbooks.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
 					ws = wb.Worksheets('Sheet1')
 					column = 1
@@ -301,11 +314,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							while ws.Cells(row, num + 1).Value is not None:
 								batchNum.append(ws.Cells(row, num + 1).Value)
 								row += 1
+						if len(batchNum) != len(labNumber):
+							for i in range(len(labNumber)):
+								batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 						num += 1
-					if batchNum == []:
-						for i in range(len(labNumber)):
-							batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
-					excel.Quit()
+					n += 1
+					# excel.Quit()
 
 			# print(analyteList)
 			self.lineEdit_6.setText("样品单号抓取完成")
@@ -313,9 +327,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.textBrowser_3.append("样品单号抓取完成")
 			elif messages == 'UV':
 				self.textBrowser_4.append("样品单号抓取完成")
+			if 'doc' in fileType:
+				wordDoc.Quit()
+			elif 'xls' in fileType:
+				excel.Quit()
 			app.processEvents()
-		# print(labNumber, qualityValue, volumeValue)
-		# print(batchNum)
+
 		else:
 			self.lineEdit_6.setText("请重新选择Batch文件")
 
@@ -355,7 +372,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				if i < len(labNumber) - 1:
 					if batchNum[i] != batchNum[i - 1]:
 						f1.write('\n')
-				if ('1811' in analyteList[i]) or ('1811' in qualityValue[i]):
+				if ('1811' in analyteList[i]) or ('1811' in str(qualityValue[i])):
 					f1.write('%sA' % labNumber[i] + '\n')
 					f1.write('%sB' % labNumber[i] + '\n')
 					f1.write('%sC' % labNumber[i] + '\n')
@@ -456,7 +473,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				analyteNo = []
 				for i in range(len(analyteList)):
-					if ('1811' in analyteList[0]) or ('1811' in qualityValue[0]):
+					if ('1811' in analyteList[0]) or ('1811' in str(qualityValue[0])):
 						analyteNo.append(i)
 				if analyteNo != []:
 					self.textBrowser_3.append("正在镍释放Batch转化")
@@ -1434,7 +1451,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				i = 0
 				for each in labNumber:
 					# print(labNumber[i], analyteList[i],i)
-					if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]):
+					if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]) or ('R-I' in analyteList[i]):
 						resultLabnumber.append(each)
 						resultQualityValue.append(qualityValue[i])
 						resultVolumeValue.append(volumeValue[i])
@@ -1492,12 +1509,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
 								if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
 									ws.Cells(resultRows[x], concColumn).Value = '未校正'
-									self.textBrowser.append('%s-%s:结果未校正' % (resultLabnumber[n], elements[x]))
+									self.textBrowser.append('	%s-%s:结果未校正' % (resultLabnumber[n], elements[x]))
 									app.processEvents()
 								elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
 									ws.Cells(resultRows[x], concColumn).Value = '9999'
 									ws.Cells(resultRows[x], reColumn).Value = '超出'
-									self.textBrowser.append('%s-%s:结果超出' % (resultLabnumber[n], elements[x]))
+									self.textBrowser.append('	%s-%s:结果超出' % (resultLabnumber[n], elements[x]))
 									app.processEvents()
 								else:
 									ws.Cells(resultRows[x], concColumn).Value = float(
@@ -1506,12 +1523,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									if self.radioButton_2.isChecked():
 										if elements[x] == 'Pb':
 											ws.Cells(resultRows[x], reColumn).Value = 'Pb受Fe影响,Fact校正'
-											self.textBrowser.append('%s-%s:Pb受Fe影响，Fact校正' % (resultLabnumber[n], elements[x]))
+											self.textBrowser.append('	%s-%s:Pb受Fe影响，Fact校正' % (resultLabnumber[n], elements[x]))
 											app.processEvents()
 							else:
 								ws.Cells(resultRows[x], concColumn).Value = '0'
 								ws.Cells(resultRows[x], reColumn).Value = '未走标准曲线'
-								self.textBrowser.append('%s-%s:未走标准曲线' % (resultLabnumber[n], elements[x]))
+								self.textBrowser.append('	%s-%s:未走标准曲线' % (resultLabnumber[n], elements[x]))
 								app.processEvents()
 
 							x += 1
@@ -2153,127 +2170,132 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		if m == 'Y':
 			self.textBrowser_5.append("正在进行六价铬回收率计算")
 			app.processEvents()
-			y = 1
-			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
-				xLabNum = []
-				xConResult = []
-				xAbsResult = []
-				bLabNum = []
-				bConResult = []
-				bAbsResult = []
-				sLabNum = []
-				sConResult = []
-				sAbsResult = []
-				labNum = ['Sample ID']
-				absResult = ['吸光值差']
-				conResult = ['溶度差']
-				reResult = ['回收率']
-				# 获取相关结果数据
-				try:
-					csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
-				except pd.errors.ParserError:
-					QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
-					os.startfile(os.path.split(fileUrl)[0])
-					break
-				else:
-					csvFile.drop(['C'], axis=1, inplace=True)  # 保留A,B,D列
-					dataResult = csvFile.loc[1]
-					fileDate = dataResult[1].split(' ')[0]
-					self.textBrowser_5.append("%s:%s" % (y, fileDate))
-					self.lineEdit_6.setText("正在进行%s 六价铬回收率" % fileDate)
-					app.processEvents()
-					lRusult = list(csvFile['A'])
-					# print(lRusult)
-					cRusult = list(csvFile['B'])
-					aRusult = list(csvFile['D'])
+			num, ok = QInputDialog.getDouble(self, '输入六价铬理论加标值', '输入六价铬理论加标值', 0.032, 0, 999999.000, 3)
+			if ok and num:
+				nNum = num
+				y = 1
+				for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+					xLabNum = []
+					xConResult = []
+					xAbsResult = []
+					bLabNum = []
+					bConResult = []
+					bAbsResult = []
+					sLabNum = []
+					sConResult = []
+					sAbsResult = []
+					labNum = ['Sample ID']
+					absResult = ['吸光值差']
+					conResult = ['溶度差']
+					reResult = ['回收率']
+					# 获取相关结果数据
 					try:
-						starKey = lRusult.index('BS+DPC               ')
-					except ValueError:
+						csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D'])
+					except pd.errors.ParserError:
+						QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
+						os.startfile(os.path.split(fileUrl)[0])
+						break
+					else:
+						csvFile.drop(['C'], axis=1, inplace=True)  # 保留A,B,D列
+						dataResult = csvFile.loc[1]
+						fileDate = dataResult[1].split(' ')[0]
+						self.textBrowser_5.append("%s:%s" % (y, fileDate))
+						self.lineEdit_6.setText("正在进行%s 六价铬回收率" % fileDate)
+						app.processEvents()
+						lRusult = list(csvFile['A'])
+						# print(lRusult)
+						cRusult = list(csvFile['B'])
+						aRusult = list(csvFile['D'])
 						try:
-							starKey = lRusult.index('BS+D                 ')
+							starKey = lRusult.index('BS+DPC               ')
 						except ValueError:
 							try:
-								starKey = lRusult.index('BLK SPIKE+DPC        ')
+								starKey = lRusult.index('BS+D                 ')
 							except ValueError:
-								QMessageBox.warning(self, "文件格式错误",
-													"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
-													QMessageBox.Yes)
-								os.startfile(os.path.split(fileUrl)[0])
-								self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
-								break
+								try:
+									starKey = lRusult.index('BLK SPIKE+DPC        ')
+								except ValueError:
+									QMessageBox.warning(self, "文件格式错误",
+														"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
+														QMessageBox.Yes)
+									os.startfile(os.path.split(fileUrl)[0])
+									self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
+									break
+								else:
+									m = starKey + 1
 							else:
 								m = starKey + 1
 						else:
 							m = starKey + 1
-					else:
-						m = starKey + 1
-					for i in range(len(lRusult)-starKey):
-						if isinstance(lRusult[m],float):
-							continue
-						elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   '):
-							bLabNum.append(lRusult[m].strip())
-							bAbsResult.append(aRusult[m])
-							bConResult.append(cRusult[m])
-						elif 'D' in lRusult[m]:
-							xLabNum.append(lRusult[m].strip())
-							xAbsResult.append(aRusult[m])
-							xConResult.append(cRusult[m])
-						elif 'S' in lRusult[m]:
-							sLabNum.append(lRusult[m].strip())
-							sAbsResult.append(aRusult[m])
-							sConResult.append(cRusult[m])
-						m += 1
-					i = 0
-					for each in bLabNum:
-						if each == 'Sample ID':
-							continue
-						else:
-							sNum = ''
-							xNum = ''
-							d = 0
-							for d in range(len(xLabNum)):
-								if (each in xLabNum[d]) and ('D' in xLabNum[d]):
-									xNum = d
-							s = 0
-							for s in range(len(sLabNum)):
-								if (each in sLabNum[s]) and ('S' in sLabNum[s]):
-									sNum = s
-							if xNum == '':
+						for i in range(len(lRusult)-starKey):
+							if isinstance(lRusult[m],float):
+								continue
+							elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   '):
+								bLabNum.append(lRusult[m].strip())
+								bAbsResult.append(aRusult[m])
+								bConResult.append(cRusult[m])
+							elif 'D' in lRusult[m]:
+								xLabNum.append(lRusult[m].strip())
+								xAbsResult.append(aRusult[m])
+								xConResult.append(cRusult[m])
+							elif 'S' in lRusult[m]:
+								sLabNum.append(lRusult[m].strip())
+								sAbsResult.append(aRusult[m])
+								sConResult.append(cRusult[m])
+							m += 1
+						i = 0
+						for each in bLabNum:
+							if each == 'Sample ID':
 								continue
 							else:
-								if sNum == '':
+								# sNum = ''
+								# xNum = ''
+								# d = 0
+								# for d in range(len(xLabNum)):
+								# 	if (each in xLabNum[d]) and ('D' in xLabNum[d]):
+								# 		xNum = d
+								# s = 0
+								# for s in range(len(sLabNum)):
+								# 	if (each in sLabNum[s]) and ('S' in sLabNum[s]):
+								# 		sNum = s
+								# if xNum == '':
+								# 	continue
+								# else:
+								# 	if sNum == '':
+								# 		continue
+								# 	else:
+								# 		labNum.append(each)
+								# 		absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+								# 		conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+								# 		rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
+								# 		reResult.append("%s%s" % (rec,'%'))
+
+
+								try:
+									xNum = xLabNum.index('%s+D' % each)
+								except ValueError:
+									continue
+								try:
+									sNum = sLabNum.index('%s+S' % each)
+								except ValueError:
 									continue
 								else:
 									labNum.append(each)
 									absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
 									conResult.append(float(xConResult[xNum])-float(bConResult[i]))
-									rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
+									rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
 									reResult.append("%s%s" % (rec,'%'))
-
-
-							# try:
-							# 	xNum = xLabNum.index('%s+D' % each)
-							# except ValueError:
-							# 	continue
-							# try:
-							# 	sNum = sLabNum.index('%s+S' % each)
-							# except ValueError:
-							# 	continue
-							# else:
-							# 	labNum.append(each)
-							# 	absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
-							# 	conResult.append(float(xConResult[xNum])-float(bConResult[i]))
-							# 	rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/0.032*100
-							# 	reResult.append("%s%s" % (rec,'%'))
-						i += 1
-					batchData = pd.DataFrame(
-						{'a': labNum, 'b': absResult, 'c': conResult, 'd': reResult})
-					batchData.to_csv('%s/%s recovery.csv' % (os.path.split(fileUrl)[0], fileDate),encoding="utf_8_sig",
-									 mode='a', index=0, header=0)
-				y += 1
-			self.textBrowser_5.append("完成六价铬回收率计算")
-			self.textBrowser_5.append("地址：%s"%(os.path.split(selectResultFile[0][0])[0]))
-			self.lineEdit_6.setText("完成六价铬回收率计算")
+							i += 1
+						batchData = pd.DataFrame(
+							{'a': labNum, 'b': absResult, 'c': conResult, 'd': reResult})
+						batchData.to_csv('%s/%s recovery.csv' % (os.path.split(fileUrl)[0], fileDate),encoding="utf_8_sig",
+										 mode='a', index=0, header=0)
+					y += 1
+				self.textBrowser_5.append("完成六价铬回收率计算")
+				self.textBrowser_5.append("地址：%s"%(os.path.split(selectResultFile[0][0])[0]))
+				self.lineEdit_6.setText("完成六价铬回收率计算")
+			else:
+				self.textBrowser_5.append("请输入六价铬理论加标值")
 	def getReachMessage(self):
 		# 获取Reach信息
 		global reachLimsNo
