@@ -240,8 +240,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				fileName = os.path.split(selectBatchFile[0][n])[1]
 				fileType = os.path.split(selectBatchFile[0][n])[1].split('.')[-1]
 				if 'doc' in fileType:
-					# word = win32com.DispatchEx('Word.Application')
-					wordDoc = Dispatch('Word.Application')
+					wordDoc = win32com.DispatchEx('Word.Application')
+					# wordDoc = Dispatch('Word.Application')
 					wordDoc.Visible = 0
 					wordDoc.Application.DisplayAlerts = False
 				elif 'xls' in fileType:
@@ -254,32 +254,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				elif messages == 'UV':
 					self.textBrowser_4.append('%s：%s' % (n + 1, fileName))
 				app.processEvents()
-				if 'doc' in fileType:
-					# word = Dispatch('Word.Application')
-					# word = Dispatch('Word.Application')
-					# word = win32com.DispatchEx('Word.Application')
-					# word.Visible = 0
-					# word.Application.DisplayAlerts = False
-					# win系统识别路径为“\”
-					doc = wordDoc.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
-					a = doc.Content.Text
-					b = a.split('\r')
-					# print(b)
-					doc.Close()
-					i = 0
-					for i in range(len(b)):
-						if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-								'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
-								'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
-							labNumber.append(b[i])
-							qualityValue.append(b[i + 4])
-							volumeValue.append(b[i + 2])
-							analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 3])
-							batchNum.append(b[4])
-							app.processEvents()
-					n += 1
-					# word.Quit()
-				elif 'xls' in fileType:
+
+				if 'xls' in fileType:
 					# excel = win32com.gencache.EnsureDispatch('Excel.Application')
 					# excel.Visible = 0
 					# excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
@@ -320,6 +296,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						num += 1
 					n += 1
 					# excel.Quit()
+				elif 'doc' in fileType:
+					# word = Dispatch('Word.Application')
+					# wordDoc = win32com.DispatchEx('Word.Application')
+					# wordDoc.Visible = 0
+					# wordDoc.Application.DisplayAlerts = False
+					# win系统识别路径为“\”
+					doc = wordDoc.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+					a = doc.Content.Text
+					b = a.split('\r')
+					# print(b)
+					doc.Close()
+					for i in range(len(b)):
+						if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
+								'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
+								'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
+							labNumber.append(b[i])
+							qualityValue.append(b[i + 4])
+							volumeValue.append(b[i + 2])
+							analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 3])
+							batchNum.append(b[4])
+							app.processEvents()
+					n += 1
+					# wordDoc.Quit()
 
 			# print(analyteList)
 			self.lineEdit_6.setText("样品单号抓取完成")
@@ -2248,43 +2247,42 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							if each == 'Sample ID':
 								continue
 							else:
-								# sNum = ''
-								# xNum = ''
-								# d = 0
-								# for d in range(len(xLabNum)):
-								# 	if (each in xLabNum[d]) and ('D' in xLabNum[d]):
-								# 		xNum = d
-								# s = 0
-								# for s in range(len(sLabNum)):
-								# 	if (each in sLabNum[s]) and ('S' in sLabNum[s]):
-								# 		sNum = s
-								# if xNum == '':
-								# 	continue
-								# else:
-								# 	if sNum == '':
-								# 		continue
-								# 	else:
-								# 		labNum.append(each)
-								# 		absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
-								# 		conResult.append(float(xConResult[xNum])-float(bConResult[i]))
-								# 		rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
-								# 		reResult.append("%s%s" % (rec,'%'))
-
-
-								try:
-									xNum = xLabNum.index('%s+D' % each)
-								except ValueError:
-									continue
-								try:
-									sNum = sLabNum.index('%s+S' % each)
-								except ValueError:
+								sNum = ''
+								xNum = ''
+								d = 0
+								for d in range(len(xLabNum)):
+									if (each in xLabNum[d]) and ('D' in xLabNum[d]):
+										xNum = d
+								s = 0
+								for s in range(len(sLabNum)):
+									if (each in sLabNum[s]) and ('S' in sLabNum[s]):
+										sNum = s
+								if xNum == '':
 									continue
 								else:
-									labNum.append(each)
-									absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
-									conResult.append(float(xConResult[xNum])-float(bConResult[i]))
-									rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
-									reResult.append("%s%s" % (rec,'%'))
+									if sNum == '':
+										continue
+									else:
+										labNum.append(each)
+										absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+										conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+										rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
+										reResult.append("%s%s" % (rec,'%'))
+
+								# try:
+								# 	xNum = xLabNum.index('%s+D' % each)
+								# except ValueError:
+								# 	continue
+								# try:
+								# 	sNum = sLabNum.index('%s+S' % each)
+								# except ValueError:
+								# 	continue
+								# else:
+								# 	labNum.append(each)
+								# 	absResult.append(float(xAbsResult[xNum])-float(bAbsResult[i]))
+								# 	conResult.append(float(xConResult[xNum])-float(bConResult[i]))
+								# 	rec = (float(sConResult[sNum])-float(bConResult[i])-float(conResult[i+1]))/float(nNum)*100
+								# 	reResult.append("%s%s" % (rec,'%'))
 							i += 1
 						batchData = pd.DataFrame(
 							{'a': labNum, 'b': absResult, 'c': conResult, 'd': reResult})
