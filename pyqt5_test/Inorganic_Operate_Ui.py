@@ -2,17 +2,16 @@
 
 # Form implementation generated from reading ui file 'Inorganic_Operate_Ui.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(548, 481)
+        MainWindow.resize(474, 402)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -890,7 +889,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addLayout(self.verticalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 548, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 474, 18))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -1067,7 +1066,8 @@ class Ui_MainWindow(object):
         self.pushButton_15.setStatusTip(_translate("MainWindow", "清零后才可开始新的填写"))
         self.pushButton_15.setText(_translate("MainWindow", "清零"))
         self.pushButton.setStatusTip(_translate("MainWindow", "开始后，你将有几秒钟时间选择起始位置"))
-        self.pushButton.setText(_translate("MainWindow", "开始\n""填写"))
+        self.pushButton.setText(_translate("MainWindow", "开始\n"
+"填写"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Auto"))
         self.pushButton_45.setStatusTip(_translate("MainWindow", "获取Sample ID以pH格式生成CSV格式"))
         self.pushButton_45.setText(_translate("MainWindow", "pH Batch"))
@@ -1111,4 +1111,5 @@ class Ui_MainWindow(object):
         self.actionHelp.setStatusTip(_translate("MainWindow", "帮助提示"))
         self.actionAuthor.setText(_translate("MainWindow", "Author"))
         self.actionAuthor.setStatusTip(_translate("MainWindow", "关于作者"))
+
 

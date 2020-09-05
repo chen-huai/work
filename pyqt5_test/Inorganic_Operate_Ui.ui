@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>481</height>
+    <width>474</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>操作界面</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>icon/ch.ico</normaloff>icon/ch.ico</iconset>
+   <iconset resource="icon/chicon.qrc">
+    <normaloff>:/ch.ico</normaloff>:/ch.ico</iconset>
   </property>
   <property name="statusTip">
    <string>作者：Frank Chen</string>
@@ -1611,8 +1611,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>548</width>
-     <height>23</height>
+     <width>474</width>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
