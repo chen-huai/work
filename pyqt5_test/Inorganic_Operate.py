@@ -267,33 +267,66 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					while ws.Cells(row, column).Value is not None:
 						oneRow.append(ws.Cells(row, column).Value)
 						column += 1
-					num = 0
-					for num in range(len(oneRow)):
-						row = 2
-						if oneRow[num] in 'Sample ID':
-							while ws.Cells(row, num + 1).Value is not None:
-								labNumber.append(ws.Cells(row, num + 1).Value)
-								row += 1
-						elif oneRow[num] in 'Test Desc':
-							while ws.Cells(row, num + 1).Value is not None:
-								analyteList.append(ws.Cells(row, num + 1).Value)
-								row += 1
-						elif oneRow[num] in 'Weight':
-							while ws.Cells(row, num + 1).Value is not None:
-								qualityValue.append(ws.Cells(row, num + 1).Value)
-								row += 1
-						elif oneRow[num] in 'Volume':
-							while ws.Cells(row, num + 1).Value is not None:
-								volumeValue.append(ws.Cells(row, num + 1).Value)
-								row += 1
-						elif oneRow[num] in 'Batch #':
-							while ws.Cells(row, num + 1).Value is not None:
-								batchNum.append(ws.Cells(row, num + 1).Value)
-								row += 1
-						if len(batchNum) != len(labNumber):
-							for i in range(len(labNumber)):
+					row = 2
+
+					# 无机实验去除BLK,BS,SS
+					i = 0
+					for i in range(len(oneRow)):
+						if oneRow[i] in 'Sample ID':
+							lCol = i + 1
+						elif oneRow[i] in 'Test Desc':
+							aCol = i + 1
+						elif oneRow[i] in 'Weight':
+							wCol = i + 1
+						elif oneRow[i] in 'Volume':
+							vCol = i + 1
+						elif oneRow[i] in 'Batch #':
+							bCol = i + 1
+						i += 1
+					while ws.Cells(row, 1).Value is not None:
+						if (ws.Cells(row, lCol).Value == 'BLANK') or (ws.Cells(row, lCol).Value == 'BLANK SPIKE') or (ws.Cells(row, lCol).Value == 'SAMPLE SPIKE'):
+							row += 1
+							continue
+						else:
+							labNumber.append(ws.Cells(row, lCol).Value)
+							analyteList.append(ws.Cells(row, aCol).Value)
+							qualityValue.append(ws.Cells(row, wCol).Value)
+							volumeValue.append(ws.Cells(row, vCol).Value)
+							batchNum.append(ws.Cells(row, bCol).Value)
+							row += 1
+					if len(batchNum) != len(labNumber):
+						for i in range(len(labNumber)):
 								batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
-						num += 1
+
+					# 不去除sample id中BLK,BS,SS
+					# num = 0
+					# for num in range(len(oneRow)):
+					# 	row = 2
+					# 	if oneRow[num] in 'Sample ID':
+					# 		while ws.Cells(row, num + 1).Value is not None:
+					# 			labNumber.append(ws.Cells(row, num + 1).Value)
+					# 			row += 1
+					# 	elif oneRow[num] in 'Test Desc':
+					# 		while ws.Cells(row, num + 1).Value is not None:
+					# 			analyteList.append(ws.Cells(row, num + 1).Value)
+					# 			row += 1
+					# 	elif oneRow[num] in 'Weight':
+					# 		while ws.Cells(row, num + 1).Value is not None:
+					# 			qualityValue.append(ws.Cells(row, num + 1).Value)
+					# 			row += 1
+					# 	elif oneRow[num] in 'Volume':
+					# 		while ws.Cells(row, num + 1).Value is not None:
+					# 			volumeValue.append(ws.Cells(row, num + 1).Value)
+					# 			row += 1
+					# 	elif oneRow[num] in 'Batch #':
+					# 		while ws.Cells(row, num + 1).Value is not None:
+					# 			batchNum.append(ws.Cells(row, num + 1).Value)
+					# 			row += 1
+					# 	if len(batchNum) != len(labNumber):
+					# 		for i in range(len(labNumber)):
+					# 			batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
+					# 	num += 1
+
 					n += 1
 					# excel.Quit()
 				elif 'doc' in fileType:
