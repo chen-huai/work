@@ -292,13 +292,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							analyteList.append(ws.Cells(row, aCol).Value)
 							qualityValue.append(ws.Cells(row, wCol).Value)
 							volumeValue.append(ws.Cells(row, vCol).Value)
-							batchNum.append(ws.Cells(row, bCol).Value)
-							row += 1
-					if len(batchNum) != len(labNumber):
-						for i in range(len(labNumber)):
+							try:
+								bCol
+							except UnboundLocalError:
 								batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
+							else:
+								batchNum.append(ws.Cells(row, bCol).Value)
+							row += 1
+					# if len(batchNum) != len(labNumber):
+					# 	for i in range(len(labNumber)):
+					# 			batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 
-					# 不去除sample id中BLK,BS,SS
+					# 不去除sample id中BLK,BS,SS,有bug，当blk或者bs或者ss时，质量和体积抓不到
 					# num = 0
 					# for num in range(len(oneRow)):
 					# 	row = 2
