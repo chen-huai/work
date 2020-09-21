@@ -1826,7 +1826,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if 'Date' in num:  # 跳过填写日期的行
 							continue
 						else:
-							c = 6
+							c = 4
 							while ws.Cells(resultRows[num], c).Value is not None:
 								c += 1
 							for i in range(len(rusultList)):  # 遍历结果列表
@@ -1840,12 +1840,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									if ',' in rusultList[i]:  # 将需要计算的挑选出来
 										if len(list1) == 3:
 											# float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
+												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
 											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
 													 c).Value = float(
 												rusultList3[i]) * int(float(list1[1]) * 250) * float(
 												list1[2]) / float(
 												list1[1])
 										elif len(list1) == 2:
+											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
+												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
 											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
 													 c).Value = float(
 												rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
