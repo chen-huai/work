@@ -546,6 +546,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								i += 1
 							else:
 								ws.Cells(n, sampleColumn).Value = each
+								while os.path.exists('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m)):
+									m += 1
 								wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
 								n = 2
 								i += 1
