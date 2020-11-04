@@ -1003,7 +1003,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if not os.path.exists(fileName):
 							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
-							file.write('BLK+S\n')
+							file.write('BLK-S\n')
 							file.write('SS\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
@@ -1026,7 +1026,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if not os.path.exists(fileName):
 							file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
-							file.write('BLK+S\n')
+							file.write('BLK-S\n')
 							file.write('SS\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
@@ -1085,8 +1085,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 					file.write('BLK\n')
 					file.write('BLK+D\n')
-					file.write('BLK+S\n')
-					file.write('BLK+S+D\n')
+					file.write('BLK-S\n')
+					file.write('BLK-S-D\n')
 					# file.write('SS\n')
 					# file.write('SS+DPC\n')
 					n = 2
@@ -2014,6 +2014,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				for each in set(material):
 					m.append(each)
 				for each in m:
+					# if "+" in each:
+					# 	each = each.replace('+','-')
+
 					if each == m[-1]:
 						e = e + each
 					else:
@@ -2028,13 +2031,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						os.startfile(os.path.split(fileUrl)[0])
 						break
 					else:
-						csvFile.drop(['C', 'D'], axis=1, inplace=True)  # 保留A,B,D列
+						csvFile.drop(['C', 'D'], axis=1, inplace=True)  # 保留A,B列
 						dataResult = csvFile.loc[1]
 						fileDate = dataResult[1].split(' ')[0]
 						self.textBrowser_5.append("%s:%s" % (y, fileDate))
 						self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
 						app.processEvents()
-						csvFile = csvFile.loc[csvFile['A'].str.contains(e, na=False)]  # 保留material列，不重复的物质
+						# csvFile = csvFile.loc[csvFile['A'].str.contains(e, na=False)]  # 保留material列，不重复的物质
+						csvFile = csvFile.loc[csvFile['A'].str.contains('BS-DPC', na=False)]  # 保留material列，不重复的物质
+						# csvFile = csvFile[csvFile['A'].isin(['QC','BS-DPC'])]  # 保留material列，不重复的物质
 						rusultList = list(csvFile['A'])
 						rusultList2 = list(csvFile['B'])
 						for num in resultRows:
@@ -2250,16 +2255,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						cRusult = list(csvFile['B'])
 						aRusult = list(csvFile['D'])
 						try:
-							starKey = lRusult.index('BS+DPC               ')
+							starKey = lRusult.index('BLK+D                ')
 						except ValueError:
 							try:
-								starKey = lRusult.index('BLK+S+D              ')
+								starKey = lRusult.index('BLK+DPC              ')
 							except ValueError:
 								try:
-									starKey = lRusult.index('BLK+S+DPC            ')
+									starKey = lRusult.index('BLANK+D              ')
 								except ValueError:
 									try:
-										starKey = lRusult.index('BLK SPIKE+DPC        ')
+										starKey = lRusult.index('BLANK+DPC            ')
 									except ValueError:
 										QMessageBox.warning(self, "文件格式错误",
 															"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>402</height>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1326,7 +1326,7 @@
             </item>
             <item>
              <property name="text">
-              <string>URL:pH 2014 Result</string>
+              <string>URL:Cr VI Result</string>
              </property>
             </item>
             <item>
@@ -1336,7 +1336,7 @@
             </item>
             <item>
              <property name="text">
-              <string>URL:Cr VI Result</string>
+              <string>URL:pH 2014 Result</string>
              </property>
             </item>
            </widget>
@@ -1612,7 +1612,7 @@
      <x>0</x>
      <y>0</y>
      <width>474</width>
-     <height>18</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
