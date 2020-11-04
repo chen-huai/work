@@ -1004,7 +1004,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
 							file.write('BLK-S\n')
-							file.write('SS\n')
+							file.write('S-S\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
 						else:
@@ -1027,7 +1027,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
 							file.write('BLK-S\n')
-							file.write('SS\n')
+							file.write('S-S\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
 						else:
@@ -1084,7 +1084,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				if not os.path.exists(fileName):
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 					file.write('BLK\n')
-					file.write('BLK+D\n')
+					file.write('BLK-D\n')
 					file.write('BLK-S\n')
 					file.write('BLK-S-D\n')
 					# file.write('SS\n')
@@ -1093,7 +1093,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				for each in labNumber:
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 					file.write('%s\n' % each)
-					file.write('%s+D\n' % each)
+					file.write('%s-D\n' % each)
 					n += 1
 					if n % 20 == 0:
 						file.write('CQC\n')
@@ -1102,7 +1102,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# 添加样品加标
 				for each in labNumber:
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
-					file.write('%s+S\n' % each)
+					file.write('%s-S\n' % each)
 				file.write('CQC\n')
 			self.textBrowser_4.append("完成样品单号Cr VI-Batch")
 			self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
@@ -2255,16 +2255,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						cRusult = list(csvFile['B'])
 						aRusult = list(csvFile['D'])
 						try:
-							starKey = lRusult.index('BLK+D                ')
+							starKey = lRusult.index('BLK-D                ')
 						except ValueError:
 							try:
-								starKey = lRusult.index('BLK+DPC              ')
+								starKey = lRusult.index('BLK-DPC              ')
 							except ValueError:
 								try:
-									starKey = lRusult.index('BLANK+D              ')
+									starKey = lRusult.index('BLANK-D              ')
 								except ValueError:
 									try:
-										starKey = lRusult.index('BLANK+DPC            ')
+										starKey = lRusult.index('BLANK-DPC            ')
 									except ValueError:
 										QMessageBox.warning(self, "文件格式错误",
 															"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
