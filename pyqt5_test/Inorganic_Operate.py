@@ -996,14 +996,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						else:
 							file.write('A2-%s\n' % labNumber[i])
 					file.write('As-4.5\n')
-					file.write('QC\n')
+					file.write('CQC\n')
 				if lNum != []:
 					fileName = '%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
 					for i in lNum:
 						if not os.path.exists(fileName):
 							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
-							file.write('BS\n')
+							file.write('BLK+S\n')
 							file.write('SS\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
@@ -1012,21 +1012,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							file.write('%s\n' % labNumber[i])
 							n += 1
 							if n % 20 == 0:
-								file.write('QC\n')
+								file.write('CQC\n')
 					if n % 20 != 0:
-						file.write('QC\n')
+						file.write('CQC\n')
 					for i in lNum:
 						file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 						file.write('%sB\n' % labNumber[i])
 						n += 1
-					file.write('QC\n')
+					file.write('CQC\n')
 				if fNum != []:
 					fileName = '%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
 					for i in fNum:
 						if not os.path.exists(fileName):
 							file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 							file.write('BLK\n')
-							file.write('BS\n')
+							file.write('BLK+S\n')
 							file.write('SS\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
@@ -1035,9 +1035,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							file.write('%s\n' % labNumber[i])
 							n += 1
 							if n % 20 == 0:
-								file.write('QC\n')
+								file.write('CQC\n')
 					if n % 20 != 0:
-						file.write('QC\n')
+						file.write('CQC\n')
 				self.textBrowser_4.append("完成样品单号Formal-Batch")
 				self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
 				self.lineEdit_6.setText("完成样品单号Formal-Batch")
@@ -1084,9 +1084,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				if not os.path.exists(fileName):
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 					file.write('BLK\n')
-					file.write('BLK+DPC\n')
-					file.write('BS\n')
-					file.write('BS+DPC\n')
+					file.write('BLK+D\n')
+					file.write('BLK+S\n')
+					file.write('BLK+S+D\n')
 					# file.write('SS\n')
 					# file.write('SS+DPC\n')
 					n = 2
@@ -1096,14 +1096,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					file.write('%s+D\n' % each)
 					n += 1
 					if n % 20 == 0:
-						file.write('QC\n')
+						file.write('CQC\n')
 				if n % 20 != 0:
-					file.write('QC\n')
+					file.write('CQC\n')
 				# 添加样品加标
 				for each in labNumber:
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
 					file.write('%s+S\n' % each)
-				file.write('QC\n')
+				file.write('CQC\n')
 			self.textBrowser_4.append("完成样品单号Cr VI-Batch")
 			self.textBrowser_4.append("生成路径：%s" % configContent['UV_Batch_Export_URL'])
 			self.lineEdit_6.setText("完成样品单号Cr VI-Batch")
@@ -2253,17 +2253,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							starKey = lRusult.index('BS+DPC               ')
 						except ValueError:
 							try:
-								starKey = lRusult.index('BS+D                 ')
+								starKey = lRusult.index('BLK+S+D              ')
 							except ValueError:
 								try:
-									starKey = lRusult.index('BLK SPIKE+DPC        ')
+									starKey = lRusult.index('BLK+S+DPC            ')
 								except ValueError:
-									QMessageBox.warning(self, "文件格式错误",
-														"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
-														QMessageBox.Yes)
-									os.startfile(os.path.split(fileUrl)[0])
-									self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
-									break
+									try:
+										starKey = lRusult.index('BLK SPIKE+DPC        ')
+									except ValueError:
+										QMessageBox.warning(self, "文件格式错误",
+															"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
+															QMessageBox.Yes)
+										os.startfile(os.path.split(fileUrl)[0])
+										self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
+										break
+									else:
+										m = starKey + 1
 								else:
 									m = starKey + 1
 							else:
@@ -2273,7 +2278,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						for i in range(len(lRusult)-starKey):
 							if isinstance(lRusult[m],float):
 								continue
-							elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'QC                   '):
+							elif ('D' not in lRusult[m]) and ('S' not in lRusult[m]) and (lRusult[m] != 'CQC                  '):
 								bLabNum.append(lRusult[m].strip())
 								bAbsResult.append(aRusult[m])
 								bConResult.append(cRusult[m])
