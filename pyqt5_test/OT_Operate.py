@@ -14,6 +14,9 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		self.pushButton.clicked.connect(self.getData)
 		self.pushButton_2.clicked.connect(self.otApplication)
 
+		# self.nameItem(MyMainWindow)
+		# QtCore.QMetaObject.connectSlotsByName(MyMainWindow)
+
 	def getData(self):
 		self.textBrowser.clear()
 		global date
@@ -41,7 +44,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			n = 0
 			for n in range(len(selectFile[0])):
 				fileName = os.path.split(selectFile[0][n])[1]
-				self.textBrowser.append('正在开始读取考勤数据')
+				self.textBrowser.append('正在开始读取考勤数据,\n请完成后开始后续操作')
 				self.textBrowser.append('%s:%s' % (n + 1, fileName))
 				app.processEvents()
 				excel = win32com.gencache.EnsureDispatch('Excel.Application')
@@ -68,25 +71,38 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 					publicHoliday.append(ws.Cells(row, int(oneRow.index('Public Holiday'))+1).Value)
 					row += 1
 				n += 1
-			self.textBrowser.append('已完成读取考勤数据')
 			app.processEvents()
 			excel.Quit()
+			MyMainWindow.nameItem(self)
+			self.textBrowser.append('已完成读取考勤数据')
+			app.processEvents()
 		else:
 			self.textBrowser.append('请重新选择考勤数据')
+	def nameItem(self):
+		nameList =set(employeeName)
+		i = 1
+		for each in nameList:
+			self.comboBox_2.addItem(each)
+			i += 1
+			app.processEvents()
+
 	def otApplication(self):
-		name = self.lineEdit.text()
+		# name = self.lineEdit.text()
+		name = self.comboBox_2.currentText()
 		if name == '':
 			self.textBrowser.append('请输入名字')
 			app.processEvents()
 		else:
-			content = self.comboBox.currentText()
+			content = self.comboBox.currentText()+','+self.lineEdit.text()
+			t = int(self.spinBox.text())
+			t2 = int(self.spinBox_2.text())
 			self.textBrowser.append('开始计算加班时间')
 			self.textBrowser.append('%s' % (name))
 			app.processEvents()
 			excel = win32com.gencache.EnsureDispatch('Excel.Application')
 			excel.Visible = 0
 			excel.Application.DisplayAlerts = 0
-			wb = excel.Workbooks.Open(r"%s\\Overtimes Application Form.xlsx" %address)
+			wb = excel.Workbooks.Open(r"%s\\Overtimes Application Form.xlsx" % address)
 			ws = wb.Worksheets('加班申请表-正式&派遣&外包')
 			try:
 				num = employeeName.index(name)
@@ -106,14 +122,12 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 						i += 1
 						continue
 					elif timeIn[i] is None:
-						self.textBrowser.append('%s' % date[i])
-						self.textBrowser.append('上班未打卡')
+						self.textBrowser.append('  %s-上班未打卡' % date[i])
 						app.processEvents()
 						i += 1
 						continue
 					elif timeOut[i] is None:
-						self.textBrowser.append('%s' % date[i])
-						self.textBrowser.append('下班未打卡')
+						self.textBrowser.append('  %s-上下班未打卡' % date[i])
 						app.processEvents()
 						i += 1
 						continue
@@ -143,114 +157,45 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 
 
 						if status == 1:
-							if workHours[i] <= 9:
+							if workHours[i] <= t:
 								i += 1
 								continue
 							else:
 								ws.Cells(row, 1).Value = 'Weekday'
 								ws.Cells(row, 2).Value = date[i]
+								ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 								ws.Cells(row, 3).Value = timeIn[i]
 								ws.Cells(row, 4).Value = timeOut[i]
-								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-9'%(row,row)
+								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t)
 								ws.Cells(row, 5).NumberFormat = "0.0"
+								ws.Cells(row, 7).Value = content
 								row += 1
 								i += 1
 						elif status == 2:
 							ws.Cells(row, 1).Value = 'Weekend'
 							ws.Cells(row, 2).Value = date[i]
+							ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 							ws.Cells(row, 3).Value = timeIn[i]
 							ws.Cells(row, 4).Value = timeOut[i]
-							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-1' % (row, row)
+							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s' % (row, row,t2)
 							ws.Cells(row, 5).NumberFormat = "0.0"
+							ws.Cells(row, 7).Value = content
 							row += 1
 							i += 1
 						else:
 							ws.Cells(row, 1).Value = 'Statutory Holiday'
 							ws.Cells(row, 2).Value = date[i]
+							ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 							ws.Cells(row, 3).Value = timeIn[i]
 							ws.Cells(row, 4).Value = timeOut[i]
-							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-1' % (row, row)
+							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s' % (row, row.t2)
 							ws.Cells(row, 5).NumberFormat = "0.0"
+							ws.Cells(row, 7).Value = content
 							row += 1
 							i += 1
-				# i = 0
-				# n = 1
-				# row = 10
-				# for i in range(len(employeeName)):
-				# 	if employeeName[i] != name:
-				# 		continue
-				# 	else:
-				# 		if (timeIn[i] is None) and (timeOut[i] is None):
-				# 			continue
-				# 		elif timeIn[i] is None:
-				# 			self.textBrowser.append('%s' % date[i])
-				# 			self.textBrowser.append('上班未打卡')
-				# 			app.processEvents()
-				# 			continue
-				# 		elif timeOut[i] is None:
-				# 			self.textBrowser.append('%s' % date[i])
-				# 			self.textBrowser.append('下班未打卡')
-				# 			app.processEvents()
-				# 			continue
-				# 		else:
-				# 			# print(timeIn[i])
-				# 			# a = datetime.datetime.strptime(str(timeIn[i]), "%H:%M")
-				# 			# b = datetime.datetime.strptime(str(timeOut[i]), "%H:%M")
-				# 			# c = int((b - a).seconds) / 3600
-				# 			# if c % 0.5 > 0.41:
-				# 			# 	d = c // 0.5 * 0.5 + 0.5
-				# 			# else:
-				# 			# 	d = c // 0.5 * 0.5
-				#
-				# 			# 工作日1，周末2，法定假日3
-				# 			status = 1
-				# 			# 周末
-				# 			if (weekday[i] != 'Saturday') or (weekday[i] != 'Sunday'):
-				# 				if publicHoliday[i] is None:
-				# 					status = 1
-				# 				elif 'Adjustment Holiday' in publicHoliday[i]:
-				# 					status = 2
-				# 				elif 'Statutory Holiday' in publicHoliday[i]:
-				# 					status = 3
-				#
-				# 			# 工作日
-				# 			else:
-				# 				if publicHoliday[i] is None:
-				# 					status = 2
-				# 				if 'Weekend Workday' in publicHoliday[i]:
-				# 					status = 1
-				# 				elif 'Statutory Holiday' in publicHoliday[i]:
-				# 					status = 3
-				#
-				# 			if status == 1:
-				# 				if workHours[i] <= 9:
-				# 					continue
-				# 				else:
-				# 					ws.Cells(row, 1).Value = 'Weekday'
-				# 					ws.Cells(row, 2).Value = date[i]
-				# 					ws.Cells(row, 3).Value = timeIn[i]
-				# 					ws.Cells(row, 4).Value = timeOut[i]
-				# 					ws.Cells(row, 5).Value = '=(D%s-C%s)*24-9'%(row,row)
-				# 					ws.Cells(row, 5).NumberFormat = "0.0"
-				# 					row += 1
-				# 			elif status == 2:
-				# 				ws.Cells(row, 1).Value = 'Weekend'
-				# 				ws.Cells(row, 2).Value = date[i]
-				# 				ws.Cells(row, 3).Value = timeIn[i]
-				# 				ws.Cells(row, 4).Value = timeOut[i]
-				# 				ws.Cells(row, 5).Value = '=(D%s-C%s)*24-1' % (row, row)
-				# 				ws.Cells(row, 5).NumberFormat = "0.0"
-				# 				row += 1
-				# 			else:
-				# 				ws.Cells(row, 1).Value = 'Statutory Holiday'
-				# 				ws.Cells(row, 2).Value = date[i]
-				# 				ws.Cells(row, 3).Value = timeIn[i]
-				# 				ws.Cells(row, 4).Value = timeOut[i]
-				# 				ws.Cells(row, 5).Value = '=(D%s-C%s)*24-1' % (row, row)
-				# 				ws.Cells(row, 5).NumberFormat = "0.0"
-				# 				row += 1
 				wb.SaveAs('%s\\%s Overtimes Application Form.xlsx' % (address, name))
 				self.textBrowser.append('已完成加班计算')
+				self.textBrowser.append('文件生产路径：%s' % address)
 				app.processEvents()
 				excel.Quit()
 				reply = QMessageBox.information(self, '信息', '已完成加班计算，请点击下一位', QMessageBox.Yes ,
@@ -265,6 +210,7 @@ if __name__ == "__main__":
 	import calendar
 	import win32com.client as win32com
 	from win32com.client import Dispatch
+	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()
 	myWin.show()

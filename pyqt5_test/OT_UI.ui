@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
-    <height>481</height>
+    <width>470</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,56 @@
    <iconset resource="icon/chicon.qrc">
     <normaloff>:/ch.ico</normaloff>:/ch.ico</iconset>
   </property>
+  <property name="statusTip">
+   <string>作者：Frank Chen</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="pushButton_7">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>正常上班时间：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>减去正常上班时间为加班时间，每个人有所不同(对于工作日加班)</string>
+      </property>
+      <property name="maximum">
+       <number>24</number>
+      </property>
+      <property name="value">
+       <number>9</number>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="pushButton_5">
       <property name="enabled">
@@ -36,24 +84,12 @@
        </font>
       </property>
       <property name="text">
-       <string>姓名：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0" colspan="2">
-     <widget class="QTextBrowser" name="textBrowser">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="statusTip">
-       <string>信息显示框</string>
+       <string>申请人：</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QComboBox" name="comboBox_2">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -66,15 +102,12 @@
        </font>
       </property>
       <property name="statusTip">
-       <string>请输入中文名字或英文名字</string>
-      </property>
-      <property name="text">
-       <string/>
+       <string>请先选择考勤文件，再选择名字</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QPushButton" name="pushButton_3">
+    <item row="2" column="2">
+     <widget class="QPushButton" name="pushButton_8">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -90,11 +123,35 @@
        </font>
       </property>
       <property name="text">
-       <string>加班申请</string>
+       <string>就餐时间：</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item row="2" column="3">
+     <widget class="QSpinBox" name="spinBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>就餐时间</string>
+      </property>
+      <property name="maximum">
+       <number>24</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
      <widget class="QPushButton" name="pushButton_6">
       <property name="enabled">
        <bool>false</bool>
@@ -115,8 +172,8 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QPushButton" name="pushButton">
+    <item row="3" column="1">
+     <widget class="QComboBox" name="comboBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -129,25 +186,7 @@
        </font>
       </property>
       <property name="statusTip">
-       <string>选择考勤数据并获得数据</string>
-      </property>
-      <property name="text">
-       <string>选择考勤文件</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <widget class="QComboBox" name="comboBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
+       <string>加班内容可选</string>
       </property>
       <item>
        <property name="text">
@@ -196,11 +235,8 @@
       </item>
      </widget>
     </item>
-    <item row="6" column="0">
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
+    <item row="3" column="2" colspan="2">
+     <widget class="QLineEdit" name="lineEdit">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -212,12 +248,24 @@
         <pointsize>10</pointsize>
        </font>
       </property>
-      <property name="text">
-       <string>信息显示</string>
+      <property name="statusTip">
+       <string>加班内容自定义</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="1" rowspan="2">
+    <item row="5" column="0" colspan="4">
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>信息显示框</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" colspan="2">
      <widget class="QPushButton" name="pushButton_2">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -238,6 +286,69 @@
       </property>
      </widget>
     </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>信息显示：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>加班申请</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QPushButton" name="pushButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>选择考勤数据并获得数据</string>
+      </property>
+      <property name="text">
+       <string>选择考勤文件</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -245,8 +356,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>297</width>
-     <height>23</height>
+     <width>470</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

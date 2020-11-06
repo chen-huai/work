@@ -2512,6 +2512,7 @@ if __name__ == "__main__":
 	import re
 	import win32com.client as win32com
 	from win32com.client import Dispatch
+	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()
 	myWin.show()
