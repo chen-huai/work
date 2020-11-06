@@ -1682,29 +1682,47 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								configContent['ECO_Result_Export_URL'] + '\\' + today)  # makedirs 创建文件时如果路径不存在会创建这个路径
 						filePath2 = configContent['ECO_Result_Export_URL'] + '\\' + today + '\\' + fileName.split('.')[
 							0]
-						csvFile = pd.read_csv(filePath, encoding='gbk',
-											  names=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-													 '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23',
-													 '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
-													 '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45',
-													 '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56'])
-						dataResult = csvFile.loc[1]
+						# csvFile = pd.read_csv(filePath, encoding='gbk',
+						# 					  names=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+						# 							 '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23',
+						# 							 '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
+						# 							 '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45',
+						# 							 '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56','57','58','59','60'])
+						csvFile = pd.read_csv(filePath, encoding='gbk')
+						# dataResult = csvFile.loc[1]
+						# i = 0
+						# dropC = []
+						# leaveC = []
+						# for each in dataResult:
+						# 	if each == '样品名称':
+						# 		leaveC.append(str(i))
+						# 	elif each == '浓度 [ ug/L ]' and '内标' not in list(csvFile.loc[0])[i]:
+						# 		leaveC.append(str(i))
+						# 	else:
+						# 		dropC.append(str(i))
+						# 	i += 1
+						# csvFile = csvFile.drop(dropC, axis=1)
+						# oneRow = csvFile.loc[0]
+						dataResult = csvFile.loc[0]
+						csvHead = list(csvFile.head())
 						i = 0
 						dropC = []
 						leaveC = []
 						for each in dataResult:
 							if each == '样品名称':
-								leaveC.append(str(i))
+								leaveC.append(csvHead[i])
 							elif each == '浓度 [ ug/L ]' and '内标' not in list(csvFile.loc[0])[i]:
-								leaveC.append(str(i))
+								leaveC.append(csvHead[i])
 							else:
-								dropC.append(str(i))
+								dropC.append(csvHead[i])
 							i += 1
 						csvFile = csvFile.drop(dropC, axis=1)
-						oneRow = csvFile.loc[0]
+						oneRow = csvFile.head()
 						element = []
 						for each in oneRow:
 							if pd.isnull(each):
+								element.append('')
+							elif 'Unnamed' in each:
 								element.append('')
 							else:
 								element.append(each.split(' ')[2])
