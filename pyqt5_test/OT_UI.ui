@@ -43,30 +43,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
-     <widget class="QSpinBox" name="spinBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="statusTip">
-       <string>减去正常上班时间为加班时间，每个人有所不同(对于工作日加班)</string>
-      </property>
-      <property name="maximum">
-       <number>24</number>
-      </property>
-      <property name="value">
-       <number>9</number>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="pushButton_5">
       <property name="enabled">
@@ -124,30 +100,6 @@
       </property>
       <property name="text">
        <string>就餐时间：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="3">
-     <widget class="QSpinBox" name="spinBox_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="statusTip">
-       <string>就餐时间</string>
-      </property>
-      <property name="maximum">
-       <number>24</number>
-      </property>
-      <property name="value">
-       <number>1</number>
       </property>
      </widget>
     </item>
@@ -349,6 +301,78 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="3">
+     <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="statusTip">
+       <string>正常上班时间(每个人考勤数据不一样)</string>
+      </property>
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>24.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.500000000000000</double>
+      </property>
+      <property name="value">
+       <double>9.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="statusTip">
+       <string>就餐时间(主要是周末加班)</string>
+      </property>
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>24.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.500000000000000</double>
+      </property>
+      <property name="value">
+       <double>1.000000000000000</double>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -363,6 +387,20 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>textBrowser</tabstop>
+  <tabstop>pushButton_6</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_8</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>pushButton_7</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
  <resources>
   <include location="icon/chicon.qrc"/>
  </resources>

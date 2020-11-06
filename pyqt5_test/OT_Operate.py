@@ -94,8 +94,8 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			app.processEvents()
 		else:
 			content = self.comboBox.currentText()+','+self.lineEdit.text()
-			t = int(self.spinBox.text())
-			t2 = int(self.spinBox_2.text())
+			t = float(self.doubleSpinBox.text())
+			t2 = float(self.doubleSpinBox_2.text())
 			self.textBrowser.append('开始计算加班时间')
 			self.textBrowser.append('%s' % (name))
 			app.processEvents()
