@@ -562,6 +562,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser_3.append("完成镍释放Batch转化")
 					self.textBrowser_3.append("生成路径：%s" % configContent['Nickel_Batch_Export_URL'])
 					self.lineEdit_6.setText("完成镍释放Batch转化")
+					os.startfile(configContent['Nickel_Batch_Export_URL'])
 				else:
 					self.textBrowser_3.append("请确认Batch方法是镍释放，或者请将Batch质量填写为0，并重新保存")
 					self.lineEdit_6.setText("请确认Batch方法是镍释放")
@@ -746,6 +747,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
 				self.lineEdit_6.setText("ECO质检院Batch转化完成")
 				app.processEvents()
+				os.startfile(configContent['ECO_Batch_Export_URL'])
 
 	def ecoZxd(self):
 		# ECO中迅德模板生成
@@ -935,6 +937,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
 				self.lineEdit_6.setText("ECO中迅德Batch转化完成")
 				app.processEvents()
+				os.startfile(configContent['ECO_Batch_Export_URL'])
 
 	def formalBatch(self):
 		# 获取甲醛Batch信息
@@ -2037,8 +2040,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.textBrowser_5.append("%s:%s" % (y, fileDate))
 						self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
 						app.processEvents()
-						# csvFile = csvFile.loc[csvFile['A'].str.contains(e, na=False)]  # 保留material列，不重复的物质
-						csvFile = csvFile.loc[csvFile['A'].str.contains('BS-DPC', na=False)]  # 保留material列，不重复的物质
+						csvFile = csvFile.loc[csvFile['A'].str.contains(e, na=False)]  # 保留material列，不重复的物质
+						# csvFile = csvFile.loc[csvFile['A'].str.contains('BS-DPC', na=False)]  # 保留material列，不重复的物质
 						# csvFile = csvFile[csvFile['A'].isin(['QC','BS-DPC'])]  # 保留material列，不重复的物质
 						rusultList = list(csvFile['A'])
 						rusultList2 = list(csvFile['B'])
@@ -2057,7 +2060,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
 											ws.Cells(resultRows['Date-%s' % rusultList[i].strip()],
 													 c).NumberFormat = "yyyy/mm/dd"
-										if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
+										# if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
+										if 'QCQ' in rusultList[i].strip():
 											continue
 										else:
 											ws.Cells(resultRows['%s-%s' % (rusultList[i].strip(), messages)], c).Value = \
@@ -2246,7 +2250,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					else:
 						csvFile.drop(['C'], axis=1, inplace=True)  # 保留A,B,D列
 						dataResult = csvFile.loc[1]
-						fileDate = dataResult[1].split(' ')[0]
+						fileDate = dataResult[1].split(' ')[0].replace('/','-')
 						self.textBrowser_5.append("%s:%s" % (y, fileDate))
 						self.lineEdit_6.setText("正在进行%s 六价铬回收率" % fileDate)
 						app.processEvents()
@@ -2255,23 +2259,28 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						cRusult = list(csvFile['B'])
 						aRusult = list(csvFile['D'])
 						try:
-							starKey = lRusult.index('BLK-D                ')
+							starKey = lRusult.index('BLK+DPC              ')
 						except ValueError:
 							try:
-								starKey = lRusult.index('BLK-DPC              ')
+								starKey = lRusult.index('BLK-D                ')
 							except ValueError:
 								try:
-									starKey = lRusult.index('BLANK-D              ')
+									starKey = lRusult.index('BLK-DPC              ')
 								except ValueError:
 									try:
-										starKey = lRusult.index('BLANK-DPC            ')
+										starKey = lRusult.index('BLANK-D              ')
 									except ValueError:
-										QMessageBox.warning(self, "文件格式错误",
-															"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl,
-															QMessageBox.Yes)
-										os.startfile(os.path.split(fileUrl)[0])
-										self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BS+D或BS+DPC或BLK SPIKE+DPC" % fileUrl)
-										break
+										try:
+											starKey = lRusult.index('BLANK-DPC            ')
+										except ValueError:
+											QMessageBox.warning(self, "文件格式错误",
+																"%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BLK-S-D或BLK-S-DPC或BLANK SPIKE-DPC" % fileUrl,
+																QMessageBox.Yes)
+											os.startfile(os.path.split(fileUrl)[0])
+											self.textBrowser_5.append("%s文件格式不正确，\n请调整成正确的文件格式后继续操作。\n样品测试前添加：BLK-S-D或BLK-S-DPC或BLANK SPIKE-DPC" % fileUrl)
+											break
+										else:
+											m = starKey + 1
 									else:
 										m = starKey + 1
 								else:
@@ -2346,6 +2355,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.textBrowser_5.append("完成六价铬回收率计算")
 				self.textBrowser_5.append("地址：%s"%(os.path.split(selectResultFile[0][0])[0]))
 				self.lineEdit_6.setText("完成六价铬回收率计算")
+				os.startfile(os.path.split(fileUrl)[0])
 			else:
 				self.textBrowser_5.append("请输入六价铬理论加标值")
 	def getReachMessage(self):
