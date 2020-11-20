@@ -54,6 +54,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				ws = wb.Worksheets('TA Report')
 				column = 1
 				row = 10
+				# 老方法获取excel表格数据
 				oneRow = []
 				while ws.Cells(row, column).Value is not None:
 					oneRow.append(ws.Cells(row, column).Value)
@@ -70,6 +71,16 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 					workHours.append(ws.Cells(row, int(oneRow.index('Work Hours'))+1).Value)
 					publicHoliday.append(ws.Cells(row, int(oneRow.index('Public Holiday'))+1).Value)
 					row += 1
+
+				# 新方法获取表格数据
+				# 获取Excel Data的范围
+				# row = ws.UsedRange.Rows.Count
+				# col = ws.UsedRange.Columns.Count
+				# wk=ws.Range(ws.Cells(11, int(oneRow.index('Weekday'))+1), ws.Cells(row, int(oneRow.index('Weekday'))+1)).Value
+				# print(wk,wk[1])
+				# print(wk[1],111)
+
+
 				n += 1
 			app.processEvents()
 			excel.Quit()
@@ -79,7 +90,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		else:
 			self.textBrowser.append('请重新选择考勤数据')
 	def nameItem(self):
-		nameList =set(employeeName)
+		nameList =sorted(list(set(employeeName)))
 		i = 1
 		for each in nameList:
 			self.comboBox_2.addItem(each)
@@ -103,6 +114,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			excel.Visible = 0
 			excel.Application.DisplayAlerts = 0
 			wb = excel.Workbooks.Open(r"%s\\Overtimes Application Form.xlsx" % address)
+			w=wb.sheetnames
 			ws = wb.Worksheets('加班申请表-正式&派遣&外包')
 			try:
 				num = employeeName.index(name)
@@ -157,7 +169,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 
 
 						if status == 1:
-							if workHours[i] <= t:
+							if workHours[i] <= t+t2:
 								i += 1
 								continue
 							else:
@@ -166,7 +178,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 								ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 								ws.Cells(row, 3).Value = timeIn[i]
 								ws.Cells(row, 4).Value = timeOut[i]
-								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t)
+								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t+t2)
 								ws.Cells(row, 5).NumberFormat = "0.0"
 								ws.Cells(row, 7).Value = content
 								row += 1
