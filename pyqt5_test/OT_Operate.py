@@ -29,15 +29,15 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		global workHours
 		global publicHoliday
 		global address
-		date = ()
-		weekday = ()
-		employeeName = ()
-		sapNo = ()
-		department = ()
-		timeIn = ()
-		timeOut = ()
-		workHours = ()
-		publicHoliday = ()
+		date = []
+		weekday = []
+		employeeName = []
+		sapNo = []
+		department = []
+		timeIn = []
+		timeOut = []
+		workHours = []
+		publicHoliday = []
 		address = os.path.abspath('.')
 		selectFile = QFileDialog.getOpenFileNames(self, '选择考勤数据文件','%s'%address,'files(*.xls*)')
 		if selectFile[0] !=[]:
@@ -75,24 +75,20 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				# 	row += 1
 
 				# 新方法获取表格数据
-				# 获取Excel Data的范围,解决(('Chen Frank',),('Chen Nemo',))
-				row = ws.UsedRange.Rows.Count
+				# 获取Excel Data的范围,解决list(chain.from_iterable((('Chen Frank',),('Chen Nemo',))))解决二维元组变一位，并转化为列表
+				row = ws.UsedRange.Rows.Count-1
 				col = ws.UsedRange.Columns.Count
 				oneRow = ws.Range(ws.Cells(10, 1), ws.Cells(10, col)).Value[0]
-				print(oneRow[0])
-				date += ws.Range(ws.Cells(11, int(oneRow.index('Date'))+1), ws.Cells(row, int(oneRow.index('Date'))+1)).Value
-				weekday += ws.Range(ws.Cells(11, int(oneRow.index('Weekday'))+1), ws.Cells(row, int(oneRow.index('Weekday'))+1)).Value
-				employeeName += ws.Range(ws.Cells(11, int(oneRow.index('Employee Name'))+1), ws.Cells(row, int(oneRow.index('Employee Name'))+1)).Value
-				sapNo += ws.Range(ws.Cells(11, int(oneRow.index('SAP No'))+1), ws.Cells(row, int(oneRow.index('SAP No'))+1)).Value
-				department += ws.Range(ws.Cells(11, int(oneRow.index('Department'))+1), ws.Cells(row, int(oneRow.index('Department'))+1)).Value
-				timeIn += ws.Range(ws.Cells(11, int(oneRow.index('Time IN'))+1), ws.Cells(row, int(oneRow.index('Time IN'))+1)).Value
-				timeOut += ws.Range(ws.Cells(11, int(oneRow.index('Time OUT'))+1), ws.Cells(row, int(oneRow.index('Time OUT'))+1)).Value
-				workHours += ws.Range(ws.Cells(11, int(oneRow.index('Work Hours'))+1), ws.Cells(row, int(oneRow.index('Work Hours'))+1)).Value
-				publicHoliday += ws.Range(ws.Cells(11, int(oneRow.index('Public Holiday'))+1), ws.Cells(row, int(oneRow.index('Public Holiday'))+1)).Value
-				aaa=list(chain.from_iterable(employeeName))
-				bbb=('1',)
-				aaa+=bbb
-				print(aaa)
+				date += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Date'))+1), ws.Cells(row, int(oneRow.index('Date'))+1)).Value))
+				weekday += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Weekday'))+1), ws.Cells(row, int(oneRow.index('Weekday'))+1)).Value))
+				employeeName += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Employee Name'))+1), ws.Cells(row, int(oneRow.index('Employee Name'))+1)).Value))
+				sapNo += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('SAP No'))+1), ws.Cells(row, int(oneRow.index('SAP No'))+1)).Value))
+				department += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Department'))+1), ws.Cells(row, int(oneRow.index('Department'))+1)).Value))
+				timeIn += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Time IN'))+1), ws.Cells(row, int(oneRow.index('Time IN'))+1)).Value))
+				timeOut += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Time OUT'))+1), ws.Cells(row, int(oneRow.index('Time OUT'))+1)).Value))
+				workHours += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Work Hours'))+1), ws.Cells(row, int(oneRow.index('Work Hours'))+1)).Value))
+				publicHoliday += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Public Holiday'))+1), ws.Cells(row, int(oneRow.index('Public Holiday'))+1)).Value))
+
 				n += 1
 			app.processEvents()
 			excel.Quit()
@@ -102,12 +98,10 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		else:
 			self.textBrowser.append('请重新选择考勤数据')
 	def nameItem(self):
-		# nameList =sorted(list(set(employeeName)))
-		nameList =list(set(employeeName))
+		nameList =sorted(list(set(employeeName)))
 		i = 1
 		for each in nameList:
-			# self.comboBox_2.addItem(each)
-			self.comboBox_2.addItem(each[0])
+			self.comboBox_2.addItem(each)
 			i += 1
 			app.processEvents()
 
@@ -183,7 +177,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 
 
 						if status == 1:
-							if workHours[i] <= t+t2:
+							if workHours[i] <= t:
 								i += 1
 								continue
 							else:
@@ -192,7 +186,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 								ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 								ws.Cells(row, 3).Value = timeIn[i]
 								ws.Cells(row, 4).Value = timeOut[i]
-								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t+t2)
+								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t)
 								ws.Cells(row, 5).NumberFormat = "0.0"
 								ws.Cells(row, 7).Value = content
 								row += 1

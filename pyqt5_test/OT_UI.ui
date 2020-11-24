@@ -318,7 +318,7 @@
        <number>-1</number>
       </property>
       <property name="statusTip">
-       <string>正常上班时间(每个人考勤数据不一样)</string>
+       <string>工作日上班+就餐时间(就餐时间因人而异)</string>
       </property>
       <property name="decimals">
        <number>1</number>
@@ -354,7 +354,7 @@
        <number>-1</number>
       </property>
       <property name="statusTip">
-       <string>就餐时间(主要是周末加班)</string>
+       <string>就餐时间(周末)</string>
       </property>
       <property name="decimals">
        <number>1</number>

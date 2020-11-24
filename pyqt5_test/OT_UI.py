@@ -245,6 +245,6 @@ class Ui_mainWindow(object):
         self.pushButton_3.setText(_translate("mainWindow", "加班申请"))
         self.pushButton.setStatusTip(_translate("mainWindow", "选择考勤数据并获得数据"))
         self.pushButton.setText(_translate("mainWindow", "选择考勤文件"))
-        self.doubleSpinBox.setStatusTip(_translate("mainWindow", "正常上班时间(每个人考勤数据不一样)"))
-        self.doubleSpinBox_2.setStatusTip(_translate("mainWindow", "就餐时间(主要是周末加班)"))
+        self.doubleSpinBox.setStatusTip(_translate("mainWindow", "工作日上班+就餐时间(就餐时间因人而异)"))
+        self.doubleSpinBox_2.setStatusTip(_translate("mainWindow", "就餐时间(周末)"))
 
