@@ -29,15 +29,15 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		global workHours
 		global publicHoliday
 		global address
-		date = []
-		weekday = []
-		employeeName = []
-		sapNo = []
-		department = []
-		timeIn = []
-		timeOut = []
-		workHours = []
-		publicHoliday = []
+		date = ()
+		weekday = ()
+		employeeName = ()
+		sapNo = ()
+		department = ()
+		timeIn = ()
+		timeOut = ()
+		workHours = ()
+		publicHoliday = ()
 		address = os.path.abspath('.')
 		selectFile = QFileDialog.getOpenFileNames(self, '选择考勤数据文件','%s'%address,'files(*.xls*)')
 		if selectFile[0] !=[]:
@@ -52,35 +52,47 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				excel.Application.DisplayAlerts = 0
 				wb = excel.Workbooks.Open(r"%s" % selectFile[0][n].replace('/', '\\'))
 				ws = wb.Worksheets('TA Report')
-				column = 1
-				row = 10
+
+
 				# 老方法获取excel表格数据
-				oneRow = []
-				while ws.Cells(row, column).Value is not None:
-					oneRow.append(ws.Cells(row, column).Value)
-					column += 1
-				row = 11
-				while ws.Cells(row, 1).Value is not None:
-					date.append(ws.Cells(row, int(oneRow.index('Date'))+1).Value)
-					weekday.append(ws.Cells(row, int(oneRow.index('Weekday'))+1).Value)
-					employeeName.append(ws.Cells(row, int(oneRow.index('Employee Name'))+1).Value)
-					sapNo.append(ws.Cells(row, int(oneRow.index('SAP No'))+1).Value)
-					department.append(ws.Cells(row, int(oneRow.index('Department'))+1).Value)
-					timeIn.append(ws.Cells(row, int(oneRow.index('Time IN'))+1).Value)
-					timeOut.append(ws.Cells(row, int(oneRow.index('Time OUT'))+1).Value)
-					workHours.append(ws.Cells(row, int(oneRow.index('Work Hours'))+1).Value)
-					publicHoliday.append(ws.Cells(row, int(oneRow.index('Public Holiday'))+1).Value)
-					row += 1
+				# column = 1
+				# row = 10
+				# oneRow = []
+				# while ws.Cells(row, column).Value is not None:
+				# 	oneRow.append(ws.Cells(row, column).Value)
+				# 	column += 1
+				# row = 11
+				# while ws.Cells(row, 1).Value is not None:
+				# 	date.append(ws.Cells(row, int(oneRow.index('Date'))+1).Value)
+				# 	weekday.append(ws.Cells(row, int(oneRow.index('Weekday'))+1).Value)
+				# 	employeeName.append(ws.Cells(row, int(oneRow.index('Employee Name'))+1).Value)
+				# 	sapNo.append(ws.Cells(row, int(oneRow.index('SAP No'))+1).Value)
+				# 	department.append(ws.Cells(row, int(oneRow.index('Department'))+1).Value)
+				# 	timeIn.append(ws.Cells(row, int(oneRow.index('Time IN'))+1).Value)
+				# 	timeOut.append(ws.Cells(row, int(oneRow.index('Time OUT'))+1).Value)
+				# 	workHours.append(ws.Cells(row, int(oneRow.index('Work Hours'))+1).Value)
+				# 	publicHoliday.append(ws.Cells(row, int(oneRow.index('Public Holiday'))+1).Value)
+				# 	row += 1
 
 				# 新方法获取表格数据
-				# 获取Excel Data的范围
-				# row = ws.UsedRange.Rows.Count
-				# col = ws.UsedRange.Columns.Count
-				# wk=ws.Range(ws.Cells(11, int(oneRow.index('Weekday'))+1), ws.Cells(row, int(oneRow.index('Weekday'))+1)).Value
-				# print(wk,wk[1])
-				# print(wk[1],111)
-
-
+				# 获取Excel Data的范围,解决(('Chen Frank',),('Chen Nemo',))
+				row = ws.UsedRange.Rows.Count
+				col = ws.UsedRange.Columns.Count
+				oneRow = ws.Range(ws.Cells(10, 1), ws.Cells(10, col)).Value[0]
+				print(oneRow[0])
+				date += ws.Range(ws.Cells(11, int(oneRow.index('Date'))+1), ws.Cells(row, int(oneRow.index('Date'))+1)).Value
+				weekday += ws.Range(ws.Cells(11, int(oneRow.index('Weekday'))+1), ws.Cells(row, int(oneRow.index('Weekday'))+1)).Value
+				employeeName += ws.Range(ws.Cells(11, int(oneRow.index('Employee Name'))+1), ws.Cells(row, int(oneRow.index('Employee Name'))+1)).Value
+				sapNo += ws.Range(ws.Cells(11, int(oneRow.index('SAP No'))+1), ws.Cells(row, int(oneRow.index('SAP No'))+1)).Value
+				department += ws.Range(ws.Cells(11, int(oneRow.index('Department'))+1), ws.Cells(row, int(oneRow.index('Department'))+1)).Value
+				timeIn += ws.Range(ws.Cells(11, int(oneRow.index('Time IN'))+1), ws.Cells(row, int(oneRow.index('Time IN'))+1)).Value
+				timeOut += ws.Range(ws.Cells(11, int(oneRow.index('Time OUT'))+1), ws.Cells(row, int(oneRow.index('Time OUT'))+1)).Value
+				workHours += ws.Range(ws.Cells(11, int(oneRow.index('Work Hours'))+1), ws.Cells(row, int(oneRow.index('Work Hours'))+1)).Value
+				publicHoliday += ws.Range(ws.Cells(11, int(oneRow.index('Public Holiday'))+1), ws.Cells(row, int(oneRow.index('Public Holiday'))+1)).Value
+				aaa=list(chain.from_iterable(employeeName))
+				bbb=('1',)
+				aaa+=bbb
+				print(aaa)
 				n += 1
 			app.processEvents()
 			excel.Quit()
@@ -90,10 +102,12 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		else:
 			self.textBrowser.append('请重新选择考勤数据')
 	def nameItem(self):
-		nameList =sorted(list(set(employeeName)))
+		# nameList =sorted(list(set(employeeName)))
+		nameList =list(set(employeeName))
 		i = 1
 		for each in nameList:
-			self.comboBox_2.addItem(each)
+			# self.comboBox_2.addItem(each)
+			self.comboBox_2.addItem(each[0])
 			i += 1
 			app.processEvents()
 
@@ -104,7 +118,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			self.textBrowser.append('请输入名字')
 			app.processEvents()
 		else:
-			content = self.comboBox.currentText()+','+self.lineEdit.text()
+			content = self.comboBox.currentText()+' '+self.lineEdit.text()
 			t = float(self.doubleSpinBox.text())
 			t2 = float(self.doubleSpinBox_2.text())
 			self.textBrowser.append('开始计算加班时间')
@@ -114,7 +128,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			excel.Visible = 0
 			excel.Application.DisplayAlerts = 0
 			wb = excel.Workbooks.Open(r"%s\\Overtimes Application Form.xlsx" % address)
-			w=wb.sheetnames
+			# w=wb.sheetnames
 			ws = wb.Worksheets('加班申请表-正式&派遣&外包')
 			try:
 				num = employeeName.index(name)
@@ -200,7 +214,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 							ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 							ws.Cells(row, 3).Value = timeIn[i]
 							ws.Cells(row, 4).Value = timeOut[i]
-							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s' % (row, row.t2)
+							ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s' % (row, row,t2)
 							ws.Cells(row, 5).NumberFormat = "0.0"
 							ws.Cells(row, 7).Value = content
 							row += 1
@@ -222,6 +236,7 @@ if __name__ == "__main__":
 	import calendar
 	import win32com.client as win32com
 	from win32com.client import Dispatch
+	from itertools import chain
 	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()
