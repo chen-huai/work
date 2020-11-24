@@ -284,7 +284,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							bCol = i + 1
 						i += 1
 					while ws.Cells(row, 1).Value is not None:
-						if (ws.Cells(row, lCol).Value == 'BLANK') or (ws.Cells(row, lCol).Value == 'BLANK SPIKE') or (ws.Cells(row, lCol).Value == 'SAMPLE SPIKE'):
+						if (ws.Cells(row, lCol).Value == 'BLANK') or (ws.Cells(row, lCol).Value == 'BLANK SPIKE') or (ws.Cells(row, lCol).Value == 'SAMPLE SPIKE') or ('D' in ws.Cells(row, lCol).Value) or (ws.Cells(row, lCol).Value.upper() == 'METAL') or (ws.Cells(row, lCol).Value.upper() == 'PAINT') or (ws.Cells(row, lCol).Value.upper() == 'PLASTIC'):
 							row += 1
 							continue
 						else:
