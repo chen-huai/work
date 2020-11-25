@@ -229,6 +229,7 @@ if __name__ == "__main__":
 	import time
 	import datetime
 	import calendar
+	import win32timezone
 	import win32com.client as win32com
 	from win32com.client import Dispatch
 	from itertools import chain
