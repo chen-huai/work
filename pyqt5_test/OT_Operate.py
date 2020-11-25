@@ -42,14 +42,15 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 		selectFile = QFileDialog.getOpenFileNames(self, '选择考勤数据文件','%s'%address,'files(*.xls*)')
 		if selectFile[0] !=[]:
 			n = 0
+			self.textBrowser.append('正在开始读取考勤数据,\n请完成后开始后续操作')
 			for n in range(len(selectFile[0])):
 				fileName = os.path.split(selectFile[0][n])[1]
-				self.textBrowser.append('正在开始读取考勤数据,\n请完成后开始后续操作')
 				self.textBrowser.append('%s:%s' % (n + 1, fileName))
 				app.processEvents()
 				excel = win32com.gencache.EnsureDispatch('Excel.Application')
 				excel.Visible = 0
 				excel.Application.DisplayAlerts = 0
+				print(selectFile[0][n])
 				wb = excel.Workbooks.Open(r"%s" % selectFile[0][n].replace('/', '\\'))
 				ws = wb.Worksheets('TA Report')
 
@@ -88,16 +89,16 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				timeOut += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Time OUT'))+1), ws.Cells(row, int(oneRow.index('Time OUT'))+1)).Value))
 				workHours += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Work Hours'))+1), ws.Cells(row, int(oneRow.index('Work Hours'))+1)).Value))
 				publicHoliday += list(chain.from_iterable(ws.Range(ws.Cells(11, int(oneRow.index('Public Holiday'))+1), ws.Cells(row, int(oneRow.index('Public Holiday'))+1)).Value))
-
+				excel.Quit()
 				n += 1
 			app.processEvents()
-			excel.Quit()
 			MyMainWindow.nameItem(self)
 			self.textBrowser.append('已完成读取考勤数据')
 			app.processEvents()
 		else:
 			self.textBrowser.append('请重新选择考勤数据')
 	def nameItem(self):
+		self.comboBox_2.clear()
 		nameList =sorted(list(set(employeeName)))
 		i = 1
 		for each in nameList:
@@ -137,7 +138,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				i = num
 				n = 1
 				row = 10
-				while employeeName[i] == name :
+				while employeeName[i] == name:
 					if (timeIn[i] is None) and (timeOut[i] is None):
 						i += 1
 						continue
