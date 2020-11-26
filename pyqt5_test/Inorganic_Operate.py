@@ -973,6 +973,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					for i in lNum:
 						if not os.path.exists(fileName):
 							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+							# file.write('CQC\n')
 							file.write('BLK\n')
 							file.write('BLK-S\n')
 							file.write('S-S\n')
@@ -1054,6 +1055,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				fileName = '%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today)
 				if not os.path.exists(fileName):
 					file = open('%s/Cr VI %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+					file.write('CQC\n')
 					file.write('BLK\n')
 					file.write('BLK-D\n')
 					file.write('BLK-S\n')
@@ -1578,7 +1580,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										'%f' % (float(resultDcuFour[i]))) + '\t' + str(
 										resultDcuFive[i]) + '\t' + str(resultDcuSix[i]) + '\n'
 								fileTxt.write(lineTxt)
-						wb.SaveAs('%s\\%s\\SVHC %s' % (configContent['Reach_Result_Export_URL'], today, name))
+						wb.SaveAs('%s\\%s\\SVHC %s' % (configContent['Reach_Result_Export_URL'], today, name.replace('.','_')))
 						n += 1
 					excel.Quit()
 					self.textBrowser.append("完成Reach结果转换为TXT")
