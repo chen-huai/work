@@ -116,7 +116,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			content = self.comboBox.currentText()+' '+self.lineEdit.text()
 			t = float(self.doubleSpinBox.text())
 			t2 = float(self.doubleSpinBox_2.text())
-			self.textBrowser.append('开始计算加班时间')
+			self.textBrowser.append('\n开始计算加班时间')
 			self.textBrowser.append('%s' % (name))
 			app.processEvents()
 			excel = win32com.gencache.EnsureDispatch('Excel.Application')
@@ -176,9 +176,17 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 							else:
 								status = 1
 
-
 						if status == 1:
 							if workHours[i] <= t:
+								try:
+									float(timeIn[i]) > 0.4375
+									float(timeOut[i]) > 0.770833333
+								except TypeError:
+									pass
+								else:
+									if float(timeIn[i]) > 0.4375 and float(timeOut[i]) > 0.770833333:
+										self.textBrowser.append("<font color='red'>" + '&nbsp; %s<br>&nbsp;&nbsp;&nbsp;&nbsp; 上班晚于10:30，且下班晚于18:30；<br>&nbsp;&nbsp;&nbsp;&nbsp; 如有加班请自行添加加班信息。' % date[i].strftime('%Y-%m-%d') + "<font>")
+									app.processEvents()
 								i += 1
 								continue
 							else:
@@ -187,7 +195,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 								ws.Cells(row, 2).NumberFormat = "yyyy/mm/dd"
 								ws.Cells(row, 3).Value = timeIn[i]
 								ws.Cells(row, 4).Value = timeOut[i]
-								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s'%(row,row,t)
+								ws.Cells(row, 5).Value = '=(D%s-C%s)*24-%s' % (row,row,t)
 								ws.Cells(row, 5).NumberFormat = "0.0"
 								ws.Cells(row, 7).Value = content
 								row += 1
@@ -216,7 +224,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 							i += 1
 				wb.SaveAs('%s\\%s Overtimes Application Form.xlsx' % (address, name))
 				self.textBrowser.append('已完成加班计算')
-				self.textBrowser.append('文件生产路径：%s' % address)
+				self.textBrowser.append('文件生成路径：%s' % address)
 				app.processEvents()
 				excel.Quit()
 				reply = QMessageBox.information(self, '信息', '已完成加班计算，请点击下一位', QMessageBox.Yes ,
