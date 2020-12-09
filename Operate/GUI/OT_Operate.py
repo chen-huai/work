@@ -138,7 +138,8 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 				i = num
 				n = 1
 				row = 10
-				while employeeName[i] == name:
+
+				while (i < len(employeeName)) and (employeeName[i] == name):
 					if (timeIn[i] is None) and (timeOut[i] is None):
 						i += 1
 						continue
@@ -222,6 +223,7 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 							ws.Cells(row, 7).Value = content
 							row += 1
 							i += 1
+
 				wb.SaveAs('%s\\%s Overtimes Application Form.xlsx' % (address, name))
 				self.textBrowser.append('已完成加班计算')
 				self.textBrowser.append('文件生成路径：%s' % address)
