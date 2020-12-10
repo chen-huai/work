@@ -470,7 +470,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileUrl = configContent['Nickel_Batch_Export_URL']
 			folder2 = os.path.exists(fileUrl)
 			if not folder2:
-				QMessageBox.information(self, "镍释放路径错误",
+				QMessageBox.information(self, "Ni-Batch路径出错",
 										"没有镍释放存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Export_URL",
 										QMessageBox.Yes)
 			if (not folder1) or (not folder2):
@@ -936,8 +936,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileUrl = configContent['UV_Batch_Export_URL']
 			folder = os.path.exists(fileUrl)
 			if not folder:
-				QMessageBox.information(self, "ICP结果路径出错",
-										"没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
+				QMessageBox.information(self, "Formal-Batch路径出错",
+										"没有Formal结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
 										QMessageBox.Yes)
 				self.textBrowser.append("重新更改配置文件并导入后，重新点击Formal Batch按钮开始数据处理")
 			else:
@@ -1043,8 +1043,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileUrl = configContent['UV_Batch_Export_URL']
 			folder = os.path.exists(fileUrl)
 			if not folder:
-				QMessageBox.information(self, "ICP结果路径出错",
-										"没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
+				QMessageBox.information(self, "Cr VI-Batch路径出错",
+										"没有Cr VI结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL",
 										QMessageBox.Yes)
 				self.textBrowser.append("重新更改配置文件并导入后，重新点击Cr VI Batch按钮开始数据处理")
 			else:
@@ -1114,8 +1114,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileUrl2 = configContent['UV_Rusult_Export_URL']
 			folder2 = os.path.exists(fileUrl2)
 			if (not folder) or (not folder2):
-				QMessageBox.information(self, "ICP结果路径出错",
-										"没有ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL,UV_Rusult_Export_URL",
+				QMessageBox.information(self, "pH-Batch路径出错",
+										"没有pH-Batch转化的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nUV_Batch_Export_URL,UV_Rusult_Export_URL",
 										QMessageBox.Yes)
 				self.textBrowser.append("重新更改配置文件并导入后，重新点击pH Batch按钮开始数据处理")
 			else:
