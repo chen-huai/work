@@ -1445,8 +1445,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					x += 1
 				sampleColumn = int(oneRow.index('Sample ID')) + 1
 				elementColumn = int(oneRow.index('Element')) + 1
-				concColumn = int(oneRow.index('Sample Conc.')) + 1
+				samConcColumn = int(oneRow.index('Sample Conc.')) + 1
 				reColumn = int(oneRow.index('Remark')) + 1
+				try:
+					volumeColumn = int(oneRow.index('Volume')) + 1
+					qualityColumn = int(oneRow.index('Quality')) + 1
+					conColumn = int(oneRow.index('Concentration')) + 1
+				except ValueError:
+					sta = 1
+				else:
+					sta = 2
 				elements = []
 				resultRows = []
 				n = 2
@@ -1515,30 +1523,36 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.textBrowser.append("%s:%s" % (n + 1, resultLabnumber[n]))
 						app.processEvents()
 						ws.Cells(2, sampleColumn).Value = resultLabnumber[n]
+						if sta == 2:
+							ws.Cells(2, qualityColumn).Value = float(resultQualityValue[n])
+							ws.Cells(2, volumeColumn).Value = int(resultVolumeValue[n])
 						x = 0
 						for e in range(len(elements)):
 							# print(resultLabnumber[n],elements[x])
 							if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
 								if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
-									ws.Cells(resultRows[x], concColumn).Value = '未校正'
+									ws.Cells(resultRows[x], samConcColumn).Value = '未校正'
 									self.textBrowser.append('	%s-%s:结果未校正' % (resultLabnumber[n], elements[x]))
 									app.processEvents()
 								elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
-									ws.Cells(resultRows[x], concColumn).Value = '9999'
+									ws.Cells(resultRows[x], samConcColumn).Value = '9999'
 									ws.Cells(resultRows[x], reColumn).Value = '超出'
 									self.textBrowser.append('	%s-%s:结果超出' % (resultLabnumber[n], elements[x]))
 									app.processEvents()
 								else:
-									ws.Cells(resultRows[x], concColumn).Value = float(
-										rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
-										resultVolumeValue[n]) / float(resultQualityValue[n])
+									if sta == 1:
+										ws.Cells(resultRows[x], samConcColumn).Value = float(
+											rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
+											resultVolumeValue[n]) / float(resultQualityValue[n])
+									else:
+										ws.Cells(resultRows[x], conColumn).Value = float(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])])
 									if self.radioButton_2.isChecked():
 										if elements[x] == 'Pb':
 											ws.Cells(resultRows[x], reColumn).Value = 'Pb受Fe影响,Fact校正'
 											self.textBrowser.append('	%s-%s:Pb受Fe影响，Fact校正' % (resultLabnumber[n], elements[x]))
 											app.processEvents()
 							else:
-								ws.Cells(resultRows[x], concColumn).Value = '0'
+								ws.Cells(resultRows[x], samConcColumn).Value = '0'
 								ws.Cells(resultRows[x], reColumn).Value = '未走标准曲线'
 								self.textBrowser.append('	%s-%s:未走标准曲线' % (resultLabnumber[n], elements[x]))
 								app.processEvents()
