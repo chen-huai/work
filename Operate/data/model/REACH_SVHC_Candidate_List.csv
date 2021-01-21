@@ -51,13 +51,13 @@
 37,,"4,4'-bis(dimethylamino)benzophenone (Michler’s ketone)","4,4'-二（N,N-二甲氨基）二苯甲酮（米氏酮）",202-027-5,90-94-8         ,用作制造三苯基甲烷染料和其他物质的中间体; 其它用途包括作染料和颜料的添加剂（光敏剂）和用于干膜产品
 38,,"4,4'-Diaminodiphenylmethane (MDA)","4,4'-二氨基二苯基甲烷",202-974-4,101-77-9,用作固化剂于环氧树脂和粘合剂; 用作制造高性能聚合物; 被REACH附录17 条目43所管控，限制纺织品和皮革使用能释放出该芳香胺的偶氮染料
 39,,"4,4'-isopropylidenediphenol (Bisphenol A)","4,4'-对异丙基联苯酚
- (双酚A)",201-245-8,1980/5/7,"用于聚碳酸酯(PC)的生产;
+ (双酚A)",201-245-8,05-07-1980,"用于聚碳酸酯(PC)的生产;
 用于其它聚合物的合成，如 聚酯碳酸酯， 聚丙烯酸酯， 聚砜，聚醚酰亚胺，多元醇， 聚酰胺 和苯并嗪树脂；
 用于环氧树脂及其它树脂（如：乙烯基树脂，酚醛树脂和不饱和聚酯树脂）的生产；
 作为添加剂用于应用在热敏纸的涂层中。"
 40,,"4,4'-methylenedi-o-toluidine","4,4'-二氨基-3,3'-二甲基二苯甲烷",212-658-8,838-88-0,染料; 被REACH附录17 条目43所管控，限制纺织品和皮革使用能释放出该芳香胺的偶氮染料
 41,,"4,4'-oxydianiline and its salts","4,4'-二氨基二苯醚",202-977-0,101-80-4,用作生产聚酰亚胺和聚酯酰亚胺树脂的染料中间体，用作着色剂; 被REACH附录17 条目43所管控，限制纺织品和皮革使用能释放出该芳香胺的偶氮染料
-42,,4-Aminoazobenzene,4-氨基偶氮苯,200-453-6,1960/9/3,制造染料，包括碱性桔橙染料、对氮蒽蓝、纯黄色和酸黄色; 用作涂料、漆、蜡制品、油渍和苯乙烯树脂的染料; 被REACH附录17 条目43所管控，限制纺织品和皮革使用能释放出该芳香胺的偶氮染料
+42,,4-Aminoazobenzene,4-氨基偶氮苯,200-453-6,09-03-1960,制造染料，包括碱性桔橙染料、对氮蒽蓝、纯黄色和酸黄色; 用作涂料、漆、蜡制品、油渍和苯乙烯树脂的染料; 被REACH附录17 条目43所管控，限制纺织品和皮革使用能释放出该芳香胺的偶氮染料
 43,,"4-Heptylphenol,
 branched and linear [substances with a linear and/or branched alkyl chain with a carbon number of 7 covalently bound predominantly in position 4 to phenol, covering also UVCB-and well-defined substances which include any of the individual isomers or a combination
 thereof]","支链 和直链的4-庚基苯酚
@@ -79,7 +79,7 @@ isomers of [1] and [2] or any combination thereof]","[1]為卡拉花醛，[2]為
 52,46,"Acids generated from chromium trioxide and their oligomers. Names of the acids and their oligomers: Chromic acid, Dichromic acid, Oligomers of chromic acid and dichromic acid.","铬酸,重铬酸,铬酸和重铬酸的低聚物.","231-801-5, 
 236-881-5","7738-94-5, 
 13530-68-2",三氧化铬溶解于水时，产生这些酸和它们的低聚物。因此，这些物质的用途与三氧化铬相同
-53,,Acrylamide,丙烯酰胺,201-173-7,1979/6/1,主要用在制造聚丙烯酰胺; 用作特殊应用的灌浆剂; 其他可能的应用包括: 作为添加剂用在化妆品、用于土壤和沙子的稳定和纺织品的处理;粘合剂
+53,,Acrylamide,丙烯酰胺,201-173-7,06-01-1979,主要用在制造聚丙烯酰胺; 用作特殊应用的灌浆剂; 其他可能的应用包括: 作为添加剂用在化妆品、用于土壤和沙子的稳定和纺织品的处理;粘合剂
 54,,"Alkanes, C10-13, chloro (Short Chain Chlorinated Paraffins, SCCPs)",短链氯化石蜡,287-476-5,85535-84-8,"作为阻燃剂用在软垫家具的布料,地毯用塑料衬底纺织品、橡胶、涂料、密封胶和粘合剂; 皮革加脂剂，PVC增塑剂"
 55,29,"Aluminosilicate Refractory Ceramic Fibres
  
@@ -90,7 +90,7 @@ a) oxides of aluminium and silicon are the main components present (in the fibre
 b) fibres have a length weighted geometric mean diameter less two standard geometric errors of 6 or less micrometres (µm)
  
 c) alkaline oxide and alkali earth oxide (Na2O+K2O+CaO+MgO+BaO) content less or equal to 18%  by weight", 硅酸铝耐火陶瓷纤维,-,-,用于高温绝缘的耐火材料，大部分用于工业应用（如工业炉和设备，汽车制造，航天航空设备的绝缘），用于建筑和工业设备的防火
-56,37,Ammonium dichromate,重铬酸铵,232-143-1,7789/9/5,氧化剂、实验室（分析剂）、纺织媒染剂，用于制造光敏屏幕
+56,37,Ammonium dichromate,重铬酸铵,232-143-1,09-05-7789,氧化剂、实验室（分析剂）、纺织媒染剂，用于制造光敏屏幕
 57,,Ammonium pentadecafluorooctanoate (APFO),全氟辛酸铵,223-320-4,3825-26-1,它主要用作含氟聚合物和氟橡胶的加工助剂（如聚四氟乙烯）; 用作地毯、家具和衣物的防水防油剂; 用于灭火的泡沫、食品包装、摄影行业和半导体行业; 用于造纸和纸包装。用于油漆
 58,,Anthracene,蒽,204-371-1,120-12-7,用于制造烟火产品、木浆生产的催化剂、蒽醌染料的基材
 59,,Anthracene oil,蒽油,292-602-7,90640-80-5,主要用作生产蒽(用作人造染料)的中间体; 其他应用包括: 技术焦油油和涂料、医药产品、浸渍剂、屋顶防水膜、工业粘度调节剂; 用于木材防腐
@@ -194,7 +194,7 @@ by this entry].
 119,107,"Fatty acids, C16-18, lead salts",C16-18-脂肪酸铅盐,292-966-7,91031-62-8,用于PVC加工; 用于铅稳定剂的塑料材料(作为建筑的内部结构组件)
 120,,Fluoranthene,荧蒽,205-912-4,206-44-0 ,此物质通常不是有意生产，可作为杂质存在于塑胶，橡胶和涂层中
 121,,"Formaldehyde, oligomeric reaction products with aniline (technical MDA)",甲醛与苯胺的共聚物,500-036-1,25214-70-4,主要用于制造其他物质; 次要用途是作为核电站中的离子交换树脂; 作为环氧树脂的硬化剂，例如用于生产辊、管、模具
-122,,Formamide,甲酰胺,200-842-0,1975/12/7,主要用作制造农用化学品、医药和工业化学品的中间体;  次要用途为溶剂、作实验室试剂用于质量控制(在法医实验室、医院、制药公司、食品和饮料制造商和研究实验室);  该物质似乎也可以用作增塑剂
+122,,Formamide,甲酰胺,200-842-0,12-07-1975,主要用作制造农用化学品、医药和工业化学品的中间体;  次要用途为溶剂、作实验室试剂用于质量控制(在法医实验室、医院、制药公司、食品和饮料制造商和研究实验室);  该物质似乎也可以用作增塑剂
 123,,Furan,呋喃,203-727-3,110-00-9,主要用作合成四氢呋喃和生产其他有机化合物的中间体; 用于农业化学品、杀虫剂、稳定剂、医药品 
 124,,Henicosafluoroundecanoic acid,全氟十一烷酸 ,218-165-4,2058-94-8,用于含氟聚合物的生产; 用作服装、皮革、食品保鲜膜和地毯，家具中的防水处理剂; 用于涂料、油漆、造纸和灭火泡沫
 125,,Heptacosafluorotetradecanoic acid,全氟代十四酸,206-803-4,376-06-7,用于生产含氟聚合物; 用作服装、皮革、食品保鲜膜和地毯，家具的防水处理剂; 还用于涂料、油漆、造纸和灭火泡沫
@@ -238,7 +238,7 @@ by this entry].
 148,,Methyloxirane (Propylene oxide),环氧丙烷,200-879-2,75-56-9,用于生产聚合物，表面活性剂，染色助剂，化妆品，个人护理产品；用于粘合剂，密封剂，涂料，油漆，稀释剂，脱漆剂，防冻剂和除冰产品，填料，腻子，石膏，粘土，指画颜料，润滑剂，抛光剂和混合蜡；燃料；原油破乳剂
 149,,"N,N,N',N'-tetramethyl-4,4'-methylenedianiline (Michler’s base)","4,4'-（对二甲氨基）二苯基甲烷（米氏碱）",202-959-2,101-61-1,用作生产染料和其他物质的的中间体
 150,,"N,N-dimethylacetamide","N,N-二甲基乙酰胺",204-826-4,127-19-5,用作溶剂，主要是在生产服装和其它应用的纤维; 也用作试剂，并存在产品，如工业涂料、聚酰亚胺薄膜、脱漆剂和油墨清洗剂 
-151,,"N,N-dimethylformamide","N,N-二甲基甲酰胺",200-679-5,1968/12/2,用作涂料、胶粘剂、胶水、溶剂、墨水、染料、涂料、清漆、粘合剂;  用在生产聚氨酯合成革、聚丙烯腈、聚氨酯和聚氯乙烯(PVC)、弹性体、服装纤维; 也可用于布料清洗剂;  有机化学用作试剂和催化剂; 此外还可用于生产印刷电路板(PCB)，电分配设备
+151,,"N,N-dimethylformamide","N,N-二甲基甲酰胺",200-679-5,12-02-1968,用作涂料、胶粘剂、胶水、溶剂、墨水、染料、涂料、清漆、粘合剂;  用在生产聚氨酯合成革、聚丙烯腈、聚氨酯和聚氯乙烯(PVC)、弹性体、服装纤维; 也可用于布料清洗剂;  有机化学用作试剂和催化剂; 此外还可用于生产印刷电路板(PCB)，电分配设备
 152,,Nitrobenzene,硝基苯,202-716-0,98-95-3,"主要用于生产其他的化学物质;
 存在于印刷产业的复印试剂;
 用于制剂的制备，用作加工助剂及溶剂。"
@@ -262,7 +262,7 @@ by this entry].
 161,,Pentacosafluorotridecanoic acid,全氟十三酸,276-745-2,72629-94-8,用于含氟聚合物的生产; 用作服装、皮革、食品保鲜膜和地毯，家具中的防水处理剂; 用于涂料、油漆、造纸和灭火泡沫
 162,,Pentadecafluorooctanoic acid (PFOA),全氟辛酸,206-397-9,335-67-1,用作地毯、家具和衣物的防水防油剂; 用于聚四氟乙烯和食品包装；用于灭火的泡沫、摄影行业和半导体行业; 用于造纸和纸包装。用于油漆
 163,115,Pentalead tetraoxide sulphate,氧化铅与硫酸铅的复合物,235-067-7,12065-90-6,用于车用铅基电池和PVC稳定剂
-164,70,Pentazinc chromate octahydroxide,鋅黃 (CI 颜料黄 36),256-418-0,49663-84-5,主要用作汽车涂装和航空/航天领域的涂料
+164,68,Pentazinc chromate octahydroxide,鋅黃 (CI 颜料黄 36),256-418-0,49663-84-5,主要用作汽车涂装和航空/航天领域的涂料
 165,,Perfluorohexane-1-sulphonic acid and its salts (PFHxS),全氟己基磺酸及其盐类 (PFHxS), -, -,"可存在于地毯，皮革，服装，纺织品和家具装饰用品；
 可存在于日常用品中（如，厨房用品，地板蜡，以及服装和鞋的防水喷雾）；
 可存在于金属电镀，防火棉和电子设备中。
@@ -277,13 +277,13 @@ by this entry].
 用作生产含氟聚合物（尤其是聚偏二氯乙烯）的加工助剂；
 用作润滑油的添加剂和灭火设备的表面活性剂，清洁剂，抛光的表面活性剂，防水试剂；
 存在于纳米喷雾，浸渍喷雾及滑雪蜡。"
-167,,Phenanthrene,菲,201-581-5,1985/1/8,此物质通常不是有意生产，可作为杂质存在于塑胶，橡胶和涂层中
-168,,Phenolphthalein,酚酞,201-004-7,1977/9/8,主要用作实验室试剂（pH指示剂溶液）; 次要用途是用于药物制剂和某些特殊应用（如pH值试纸，隐形墨水）
+167,,Phenanthrene,菲,201-581-5,01-08-1985,此物质通常不是有意生产，可作为杂质存在于塑胶，橡胶和涂层中
+168,,Phenolphthalein,酚酞,201-004-7,09-08-1977,主要用作实验室试剂（pH指示剂溶液）; 次要用途是用于药物制剂和某些特殊应用（如pH值试纸，隐形墨水）
 169,,"Pitch, coal tar, high temp. ",煤沥青，高温 ,266-028-2,65996-93-2,"工业用电极、耐火材料和煤球的结合剂; 作防腐蚀保护剂用于工业用油漆和涂料; 用于生产活性碳和碳纤维; 用于防水涂料/屋面粘合剂
 产品可能包含此物質：粘土飞靶、医药制剂、防水涂料/屋面和重型防腐蚀产品的粘合剂"
 170,36,Potassium chromate,铬酸钾,232-140-5,7789-00-6,用于金属处理和涂层的腐蚀抑制剂; 用于生产试剂和化学品; 用于生产纺织品; 用作陶瓷着色剂; 用于制造颜料/油墨; 用于实验室（分析试剂）
 171,38,Potassium dichromate,重铬酸钾,231-906-6,7778-50-9,用于制造镀铬金属; 作为腐蚀抑制剂用于处理金属和金属涂层; 用于生产试剂和化学品; 用于实验室（分析试剂）; 用于清洗实验室玻璃器皿; 纺织媒染剂; 用作光刻技术的氧化剂;用于木材防腐剂
-172,,Potassium hydroxyoctaoxodizincatedichromate,氢氧化铬酸锌钾,234-329-8,11103-86-9,主要用于航空/航天应用、钢铁、铝卷材涂料和车辆的涂料
+172,70,Potassium hydroxyoctaoxodizincatedichromate,氢氧化铬酸锌钾,234-329-8,11103-86-9,主要用于航空/航天应用、钢铁、铝卷材涂料和车辆的涂料
 173,,Pyrene,芘,204-927-3,129-00-0,此物质通常不是有意生产，可作为杂质存在于塑胶，橡胶和涂层中
 174,116,"Pyrochlore, antimony lead yellow",颜料黄41,232-382-1,8012-00-8,用于烧绿石的生产;作为着色剂于陶瓷/玻璃制品装饰
 175,161,"Reaction mass of 2-ethylhexyl 10-ethyl-4,4-dioctyl-7-oxo-8-oxa-3,5-dithia-4-stannatetradecanoate and 2-ethylhexyl 10-ethyl-4-[[2-[(2-ethylhexyl)oxy]-2-oxoethyl]thio]-4-octyl-7-oxo-8-oxa-3,5-dithia-4-stannatetradecanoate (reaction mass of DOTE and MOTE)",二正辛基-双（巯乙酸2-乙基己酯）锡（DOTE）和三（2-乙基己基巯基乙酸）辛锡（MOTE）的反应产物,-,-,PVC热稳定剂
@@ -292,18 +292,18 @@ by this entry].
 [with lead (Pb) content above the applicable generic concentration limit for 'toxicity for reproduction' Repr. 1A (CLP) or category 1 (DSD); the substance is a member of the group entry of lead compounds, with index number 082-001-00-6 in Regulation (EC) No 1272/2008]
 ",掺有铅的硅酸钡铅含量超出CLP指令表述的致生殖毒性1A、DSD指令致生殖毒性1类的通用限制浓度限值；(EC) No 1272/2008 下指引号为082-001-00-6的一组含铅化合物）,272-271-5,68784-75-8,用于镀膜玻璃灯泡
 178,118,"Silicic acid, lead salt",硅酸铅,234-363-3,11120-22-2,用于生产铅晶
-179,35,Sodium chromate,铬酸钠,231-889-5,7775/11/3,用于实验室（分析剂）; 用于制造其他铬化合物; 用于皮革、纺织品、金属和塑料
+179,35,Sodium chromate,铬酸钠,231-889-5,11-03-7775,用于实验室（分析剂）; 用于制造其他铬化合物; 用于皮革、纺织品、金属和塑料
 180,10,Sodium dichromate,重铬酸钠,234-190-3,"7789-12-0, 10588-01-9",用作染料、媒染剂; 用于制造铬颜料
 181,154,"Sodium perborate; perboric acid, sodium salt","过硼酸钠;过硼酸,钠盐",239-172-9; 234-390-0, - ,用作洗衣清洁剂和机器洗碗产品中的漂白剂
-182,155,Sodium peroxometaborate,过硼酸钠,231-556-4,7632/4/4,用作洗衣清洁剂和机器洗碗产品中的漂白剂
-183,48,Strontium chromate,铬酸锶,232-142-6,7789/6/2,主要作为涂料的缓蚀剂，用在航空/航天、钢和铝的卷材涂料行业和汽车涂料
+182,155,Sodium peroxometaborate,过硼酸钠,231-556-4,04-04-7632,用作洗衣清洁剂和机器洗碗产品中的漂白剂
+183,48,Strontium chromate,铬酸锶,232-142-6,06-02-7789,主要作为涂料的缓蚀剂，用在航空/航天、钢和铝的卷材涂料行业和汽车涂料
 184,119,"Sulfurous acid, lead salt, dibasic",亚硫酸铅（II）,263-467-1,62229-08-7,用于PVC加工; 用于铅稳定剂的塑料材料(作为建筑的内部结构组件)
 185,,Terphenyl hydrogenated,氢化三联苯,262-967-7,61788-32-7 ,"用作塑胶应用中的添加剂
 用于涂层/油墨，胶黏剂和密封剂的配制。"
 186,34,"Tetraboron disodium heptaoxide, hydrate",水合硼酸钠,235-541-3,12267-73-1,用于多种应用: 例如，洗涤剂、清洁剂、个人护理产品、工业流体、冶金、粘合剂、阻燃剂、杀生剂、化肥等;用作生产玻璃的中间体; 用于皮革鞣制
 187,120,Tetraethyllead,四乙基铅,201-075-4,78-00-2,用作汽油的抗爆添加剂; 用于制造其他金属烷基，如乙基汞化合物和化学中间体(用于混合烷基作汽油添加剂)
 188,121,Tetralead trioxide sulphate,三盐基硫酸铅,235-380-9,12202-17-4,用于车用铅基电池; 用于PVC加工; 用于铅稳定剂的塑料材料(作为建筑的内部结构组件)
-189,,Trichloroethylene,三氯乙烯 ,201-167-4,1979/1/6,用于清洗和脱脂金属部件; 用于粘合剂的溶剂; 用作制造氯化有机​​化合物的中间体; 用来作为在皮革制备和织物整理的溶剂
+189,,Trichloroethylene,三氯乙烯 ,201-167-4,01-06-1979,用于清洗和脱脂金属部件; 用于粘合剂的溶剂; 用作制造氯化有机​​化合物的中间体; 用来作为在皮革制备和织物整理的溶剂
 190,,Tricosafluorododecanoic acid,全氟十二烷酸,206-203-2,307-55-1,用于生产含氟聚合物; 用作服装、皮革、食品保鲜膜、地毯，家具的防水处理剂; 还用于涂料、油漆、造纸和灭火泡沫
 191,5,Triethyl arsenate,三乙基砷酸酯,427-700-2,15606-95-8,用于在生产半导体的中间体。
 192,103,Trilead bis(carbonate)dihydroxide,碱式碳酸铅,215-290-6,1319-46-6,用于过氧化物的固化剂 （改进聚乙烯电缆的绝缘性）；用作PVC热稳定剂，用作尼龙增强渔网PVC纤维的成分；于各种漆颜料如外墙涂料颜料、陶瓷釉料、珠光颜料、感温油墨的变色元件、在虹彩塑料片材中的红色反射颜料、润滑脂组分、紫外光反射涂料的成分（以增加太阳能反射率）。它也被用在纸。它也可以用于冷火药的稳定剂和制造其他非金属矿物制品，如石膏，水泥
@@ -321,3 +321,4 @@ a) oxides of aluminium, silicon and zirconium are the main components  present (
 b) fibres have a length weighted geometric mean diameter less two standard geometric errors of 6 or less micrometres (µm).
  
 c) alkaline oxide and alkali earth oxide (Na2O+K2O+CaO+MgO+BaO) content less or equal to 18%  by weight",氧化锆硅酸铝耐火陶瓷纤维,-,-,用于高温绝缘的耐火材料，大部分用于工业应用（如工业炉和设备，汽车制造，航天航空设备的绝缘），用于建筑和工业设备的防火
+198,172,"dibutylbis(2,4-pentanedionato-O,O')-, (OC-6-11)-Tin","二丁基双(2,4-戊二酸根合-O,O')-(OC-6-11)-锡;双(乙酰丙酮酸)二丁基锡",,22673-19-4,本品主要用作室温硅橡胶固化催化剂，尤其是适用于脱醋酸型有机硅制品。还可用作聚氨酯涂料催化剂。
