@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>TableWindow</class>
+ <widget class="QMainWindow" name="TableWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Data</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="chicon.qrc">
+    <normaloff>:/ch.ico</normaloff>:/ch.ico</iconset>
+  </property>
+  <property name="statusTip">
+   <string>作者：Frank Chen</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -22,7 +29,11 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget"/>
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="statusTip">
+          <string>Reach物质信息</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -41,6 +52,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="chicon.qrc"/>
+ </resources>
  <connections/>
 </ui>

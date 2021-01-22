@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import chicon  # 引用图标
 from Reach_Operate_Ui import *
+from Table_Ui import *
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
@@ -74,8 +75,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 	def createConfigContent(self):
 		# 生成默认配置文件
-		configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'Reach_Message_File_Name']
-		configContent = ['默认，可更改为自己需要的', 'REACH_SVHC_Candidate_List.csv']
+		configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'Reach_Message_Import_URL','Reach_Message_File_Name']
+		configContent = ['默认，可更改为自己需要的','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'REACH_SVHC_Candidate_List_Opinion.csv']
 		f1 = open('%s/config_reach.txt' % configFileUrl, "w", encoding="utf-8")
 		i = 0
 		for i in range(len(configContentName)):
@@ -115,11 +116,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global reachChinese
 		global reachCas
 		global reachPurpose
+		global reachMessage
 		file = configContent['Reach_Message_Import_URL'] + '\\' + configContent['Reach_Message_File_Name']
 		folder = os.path.exists(file)
 		if not folder:
 			QMessageBox.information(self, "无Reach信息模板",
-									"没有Reach信息文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式",
+									"没有Reach信息文件！！！\n请查看config_reach配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式",
 									QMessageBox.Yes)
 		else:
 			reachMessage = pd.read_csv(file)
@@ -143,71 +145,91 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser.setText("请点击获取按钮以取得Reach信息")
 		else:
-			reachContent = self.lineEdit_4.text()
-			reachNum = self.spinBox_6.text()
-			# print(type(reachContent),1,type(reachNum))
-			if (reachContent == '') and (reachNum == '0'):
-				self.textBrowser.setText("请输入需要查找Reach英文内容或者编号")
-			else:
-				m = 'F'
-				if reachContent == '':
-					for n in range(len(reachLimsNo)):
-						if float(reachNum) == float(reachLimsNo[n]):
-							m = 'T'
-				elif reachNum == '0':
-					for n in range(len(reachEnglish)):
-						if (reachContent in reachEnglish[n]):
-							m = 'T'
-				else:  # 两者都不为空时匹配
-					for n in range(len(reachEnglish)):
-						if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
-							m = 'T'
-				# print(m)
-				if m == 'T':
-					for i in range(len(reachEnglish)):
-						# print(reachNum,reachLimsNo[i])
-						if reachContent == '':
-							if float(reachNum) == float(reachLimsNo[i]):
-								self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
-								self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
-								self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
-								self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
-								self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
-								self.textBrowser_2.append('--------------------------')
-								self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
-								app.processEvents()
-						elif reachNum == '0':
-							if reachContent in reachEnglish[i]:
-								self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
-								self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
-								self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
-								self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
-								self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
-								self.textBrowser_2.append('--------------------------')
-								self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
-								app.processEvents()
-						else:
-							if (reachContent in reachEnglish[i]) and (float(reachNum) == float(reachLimsNo[i])):
-								self.textBrowser_2.append("Reach Lims No:%s" % reachLimsNo[i])
-								self.textBrowser_2.append("Reach 中文名:%s" % reachChinese[i])
-								self.textBrowser_2.append("Reach 英文名:%s" % reachEnglish[i])
-								self.textBrowser_2.append("Reach CAS No:%s\n" % reachCas[i])
-								self.textBrowser_2.append("Reach 物质作用:\n%s" % reachPurpose[i])
-								self.textBrowser_2.append('--------------------------')
-								self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
-								app.processEvents()
+			
+			reachContent = self.lineEdit_1.text()
+			reachNum = self.spinBox_1.text()
+			casNum = self.lineEdit.text()
+			# 只要物质信息的搜索
+			if (reachContent == '') and (reachNum == 0) and (casNum == ''):
+
+				# print(type(reachContent),1,type(reachNum))
+				if (reachContent == '') and (reachNum == '0'):
+					self.textBrowser.setText("请输入需要查找Reach英文内容或者编号")
 				else:
-					self.textBrowser_2.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
-					self.textBrowser_2.append('--------------------------')
-				self.textBrowser.setText("搜索完成")
+					m = 'F'
+					if reachContent == '':
+						for n in range(len(reachLimsNo)):
+							if float(reachNum) == float(reachLimsNo[n]):
+								m = 'T'
+					elif reachNum == '0':
+						for n in range(len(reachEnglish)):
+							if (reachContent in reachEnglish[n]):
+								m = 'T'
+					else:  # 两者都不为空时匹配
+						for n in range(len(reachEnglish)):
+							if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
+								m = 'T'
+					# print(m)
+					if m == 'T':
+						for i in range(len(reachEnglish)):
+							# print(reachNum,reachLimsNo[i])
+							if reachContent == '':
+								if float(reachNum) == float(reachLimsNo[i]):
+									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
+									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
+									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
+									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
+									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
+									self.textBrowser.append('--------------------------')
+									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+									app.processEvents()
+							elif reachNum == '0':
+								if reachContent in reachEnglish[i]:
+									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
+									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
+									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
+									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
+									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
+									self.textBrowser.append('--------------------------')
+									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+									app.processEvents()
+							else:
+								if (reachContent in reachEnglish[i]) and (float(reachNum) == float(reachLimsNo[i])):
+									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
+									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
+									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
+									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
+									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
+									self.textBrowser.append('--------------------------')
+									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
+									app.processEvents()
+					else:
+						self.textBrowser.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
+						self.textBrowser.append('--------------------------')
+					self.textBrowser.setText("搜索完成")
+			else:
+				myTable.show()
 
 
 
 
+class MyTableWindow(QMainWindow, Ui_TableWindow):
+	def __init__(self, parent=None):
+		super(MyTableWindow, self).__init__(parent)
+		self.setupUi(self)
 
-
-
-
+	def searchReachMessage(self):
+		material = self.comboBox_2.currentText()
+		project = self.comboBox.currentText()
+		estimate = self.comboBox_3.currentText()
+		dropC = ['No.','列入日期','EC 号码','Possible Applications','*Remarks','Chemical Classification']
+		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic/polymers/foam','Wood','Paper','Ceramic ','Glass','Dye/Pigment/Ink/Paint','Adhesives/Sealants','Battery','Electronic components']
+		leaveC = ['Lims No.','物质名称(英文)','物质名称(中文)','CAS 号码','可能用途','Organic/Inorganic']
+		csvHead = list(reachMessage.head())
+		if (material == '') and (project == '') and (estimate == ''):
+			pass
+		else:
+			pass
 
 
 
@@ -215,15 +237,11 @@ if __name__ == "__main__":
 	import sys
 	import os
 	import time
-	import random
-	import pyautogui
 	import pandas as pd
-	import re
-	import win32com.client as win32com
-	from win32com.client import Dispatch
 	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()
+	myTable = MyTableWindow()
 	myWin.show()
 	myWin.getConfig()
 	sys.exit(app.exec_())
