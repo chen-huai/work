@@ -247,7 +247,10 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 			searchReachMessage = searchReachMessage.loc[searchReachMessage['Organic|Inorganic'] == project]
 		if material != '':
 			if estimate != '':
-				searchReachMessage = searchReachMessage.loc[searchReachMessage[material] == estimate]
+				if estimate == 'Y':
+					searchReachMessage = searchReachMessage.loc[(searchReachMessage[material] == 'Y')|(searchReachMessage[material] == 'Y*')]
+				else:
+					searchReachMessage = searchReachMessage.loc[(searchReachMessage[material] == 'N')|(searchReachMessage[material] == 'N*')]
 		csvHead = list(searchReachMessage.head())
 		# csvL = list(range(len(searchReachMessage.index)))
 		# print(csvL)
