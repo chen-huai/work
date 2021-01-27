@@ -216,6 +216,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				project = self.comboBox.currentText()
 				# 风险选择
 				estimate = self.comboBox_3.currentText()
+				print(material,project,estimate)
 				myTable.searchReachMessage()
 
 
@@ -228,61 +229,37 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 	def searchReachMessage(self):
 		dropC = ['No.','列入日期','EC 号码','Possible Applications','*Remarks','Chemical Classification']
 		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic|polymers|foam','Wood','Paper','Ceramic ','Glass','Dye|Pigment|Ink|Paint','Adhesives|Sealants','Battery','Electronic components','Organic|Inorganic']
-		leaveC = ['Lims No.','物质名称(英文)','物质名称(中文)','CAS 号码','可能用途']
+		leaveC = ['Lims No.','CAS 号码','物质名称(英文)','物质名称(中文)','可能用途']
 		csvHead = list(reachMessage.head())
-		if (material == '') and (project == '') and (estimate == ''):
-			# 全显示
-			pass
+		# 选择性显示
+		if material != '':
+			maybeC.remove(material)
+			# reachMessage.loc[reachMessage[material] == estimate]
 		else:
-			# 选择性显示
-			if material != '':
-				maybeC.remove(material)
-			if project != '':
-				maybeC.remove('Organic|Inorganic')
-			dropC += maybeC
-			searchReachMessage = reachMessage.drop(dropC, axis=1)
-			csvHead = list(searchReachMessage.head())
-			csvl = searchReachMessage.index
-			res = pd.DataFrame(searchReachMessage,index=csvl,columns=csvHead)
-			model = TableModel(res)
-
-			# # 测试
-			# data = {'性别': ['男', '女', '女', '男', '男'],
-			# 		'姓名': ['小明', '小红', '小芳', '小强', '小美'],
-			# 		'年龄': [20, 21, 25, 24, 29]}
-			# df = pd.DataFrame(data, index=['No.1', 'No.2', 'No.3', 'No.4', 'No.5'],
-			# 				  columns=['姓名', '性别', '年龄', '职业'])
-			#
-			# model = TableModel(df)
-
-			self.tableView.setModel(model)
-			self.tableView.setAlternatingRowColors(True)
-			myTable.show()
+			maybeC = ['Organic|Inorganic']
+		if project != '':
+			maybeC.remove('Organic|Inorganic')
+			# reachMessage.loc[reachMessage['Organic|Inorganic'] == project]
+		dropC += maybeC
+		searchReachMessage = reachMessage.drop(dropC, axis=1)
+		if project != '':
+			# searchReachMessage要重新赋值才能保存成功
+			searchReachMessage = searchReachMessage.loc[searchReachMessage['Organic|Inorganic'] == project]
+		if material != '':
+			if estimate != '':
+				searchReachMessage = searchReachMessage.loc[searchReachMessage[material] == estimate]
+		csvHead = list(searchReachMessage.head())
+		# csvL = list(range(len(searchReachMessage.index)))
+		# print(csvL)
+		# res = pd.DataFrame(searchReachMessage,index=csvL,columns=csvHead)
+		res = pd.DataFrame(searchReachMessage,columns=csvHead)
+		model = TableModel(res)
+		self.tableView.setModel(model)
+		self.tableView.setAlternatingRowColors(True)
+		myTable.show()
 
 # 将数据转换为table显示数据
 class TableModel(QAbstractTableModel):
-	# def __init__(self, data):
-	# 	super(TableModel, self).__init__()
-	# 	self._data = data
-	#
-	# def data(self, index, role):
-	# 	if role == Qt.DisplayRole:
-	# 		# See below for the nested-list data structure.
-	# 		# .row() indexes into the outer list,
-	# 		# .column() indexes into the sub-list
-	# 		return self._data[index.row()][index.column()]
-	#
-	# def rowCount(self, index):
-	# 	# The length of the outer list.
-	# 	return len(self._data)
-	#
-	# def columnCount(self, index):
-	# 	# The following takes the first sub-list, and returns
-	# 	# the length (only works if all rows are an equal length)
-	# 	return len(self._data)
-	
-
-	# 测试1
 	def __init__(self, data):
 		QAbstractTableModel.__init__(self)
 		self._data = data
@@ -299,67 +276,15 @@ class TableModel(QAbstractTableModel):
 			if role == Qt.DisplayRole:
 				return str(self._data.iloc[index.row(), index.column()])
 		return None
-	
-	
-	# # 测试2
-	# def __init__(self, data):
-	# 	QAbstractTableModel.__init__(self)
-	# 	self._data = data
-	#
-	# def toDataFrame(self):
-	# 	return self._data.copy()
-	#
-	# def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):
-	# 	if role != QtCore.Qt.DisplayRole:
-	# 		return QtCore.QVariant()
-	#
-	# 	if orientation == QtCore.Qt.Horizontal:
-	# 		try:
-	# 			return self._data.columns.tolist()[section]
-	# 		except (IndexError,):
-	# 			return QtCore.QVariant()
-	# 	elif orientation == QtCore.Qt.Vertical:
-	# 		try:
-	# 			# return self.df.index.tolist()
-	# 			return self._data.index.tolist()[section]
-	# 		except (IndexError,):
-	# 			return QtCore.QVariant()
-	#
-	# def data(self, index, role=QtCore.Qt.DisplayRole):
-	# 	if role != QtCore.Qt.DisplayRole:
-	# 		return QtCore.QVariant()
-	#
-	# 	if not index.isValid():
-	# 		return QtCore.QVariant()
-	#
-	# 	return QtCore.QVariant(str(self._data.ix[index.row(), index.column()]))
-	#
-	# def setData(self, index, value, role):
-	# 	row = self._data.index[index.row()]
-	# 	col = self._data.columns[index.column()]
-	# 	if hasattr(value, 'toPyObject'):
-	# 		# PyQt4 gets a QVariant
-	# 		value = value.toPyObject()
-	# 	else:
-	# 		# PySide gets an unicode
-	# 		dtype = self._data[col].dtype
-	# 		if dtype != object:
-	# 			value = None if value == '' else dtype.type(value)
-	# 	self._data.set_value(row, col, value)
-	# 	return True
-	#
-	# def rowCount(self, parent=QtCore.QModelIndex()):
-	# 	return len(self._data.index)
-	#
-	# def columnCount(self, parent=QtCore.QModelIndex()):
-	# 	return len(self._data.columns)
-	#
-	# def sort(self, column, order):
-	# 	colname = self._data.columns.tolist()[column]
-	# 	self.layoutAboutToBeChanged.emit()
-	# 	self._data.sort_values(colname, ascending=order == QtCore.Qt.AscendingOrder, inplace=True)
-	# 	self._data.reset_index(inplace=True, drop=True)
-	# 	self.layoutChanged.emit()
+
+	# 显示行和列头
+	def headerData(self, col, orientation, role):
+		if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+			return self._data.columns[col]
+		elif orientation == Qt.Vertical and role == Qt.DisplayRole:
+			return self._data.axes[0][col]
+		return None
+
 
 if __name__ == "__main__":
 	import sys

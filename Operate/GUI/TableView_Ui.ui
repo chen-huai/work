@@ -29,7 +29,26 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QTableView" name="tableView"/>
+        <widget class="QTableView" name="tableView">
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderCascadingSectionResizes">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
       </layout>
      </widget>
