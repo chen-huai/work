@@ -146,13 +146,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser.setText("请点击获取按钮以取得Reach信息")
 		else:
-			
+			global project
 			reachContent = self.lineEdit_1.text()
 			reachNum = self.spinBox_1.text()
 			casNum = self.lineEdit.text()
+			# 项目选择
+			project = self.comboBox.currentText()
 			# 只要物质信息的搜索
-			if (reachContent == '') and (reachNum == 0) and (casNum == ''):
-
+			if (reachContent == '') and (reachNum == '0') and (casNum == ''):
+				global material, estimate
+				# 物质选择
+				material = self.comboBox_2.currentText()
+				# 风险选择
+				estimate = self.comboBox_3.currentText()
+				# print(material, project, estimate)
+				myTable.searchReachMessage()
+			else:
 				# print(type(reachContent),1,type(reachNum))
 				if (reachContent == '') and (reachNum == '0'):
 					self.textBrowser.setText("请输入需要查找Reach英文内容或者编号")
@@ -182,7 +191,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
 									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
 									self.textBrowser.append('--------------------------')
-									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
 									app.processEvents()
 							elif reachNum == '0':
 								if reachContent in reachEnglish[i]:
@@ -192,7 +200,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
 									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
 									self.textBrowser.append('--------------------------')
-									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
 									app.processEvents()
 							else:
 								if (reachContent in reachEnglish[i]) and (float(reachNum) == float(reachLimsNo[i])):
@@ -202,22 +209,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
 									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
 									self.textBrowser.append('--------------------------')
-									self.lineEdit_5.setText("Reach 中文名:%s" % reachChinese[i])
 									app.processEvents()
 					else:
-						self.textBrowser.append("请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
+						self.textBrowser.append(
+							"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
 						self.textBrowser.append('--------------------------')
 					self.textBrowser.setText("搜索完成")
-			else:
-				global material,project,estimate
-				# 物质选择
-				material = self.comboBox_2.currentText()
-				# 项目选择
-				project = self.comboBox.currentText()
-				# 风险选择
-				estimate = self.comboBox_3.currentText()
-				print(material,project,estimate)
-				myTable.searchReachMessage()
+
 
 
 
@@ -255,10 +253,14 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 		# csvL = list(range(len(searchReachMessage.index)))
 		# print(csvL)
 		# res = pd.DataFrame(searchReachMessage,index=csvL,columns=csvHead)
+		# searchReachMessage.reindex()
 		res = pd.DataFrame(searchReachMessage,columns=csvHead)
 		model = TableModel(res)
 		self.tableView.setModel(model)
 		self.tableView.setAlternatingRowColors(True)
+		self.tableView.horizontalHeader()
+		self.tableView.resizeRowsToContents()
+		# self.tableView.setForegroundRole()setForeground(QBrush(QColor(255, 0, 0)));
 		myTable.show()
 
 # 将数据转换为table显示数据

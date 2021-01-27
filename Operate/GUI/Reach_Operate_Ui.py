@@ -2,16 +2,18 @@
 
 # Form implementation generated from reading ui file 'Reach_Operate_Ui.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(693, 556)
+        MainWindow.resize(671, 606)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -83,7 +85,7 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.gridLayout.addWidget(self.pushButton, 2, 0, 1, 1)
         self.lineEdit = QtWidgets.QLineEdit(self.groupBox_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
@@ -261,7 +263,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addLayout(self.verticalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 693, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 671, 23))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -370,13 +372,13 @@ class Ui_MainWindow(object):
         self.comboBox_2.setItemText(2, _translate("MainWindow", "Synthetic textiles"))
         self.comboBox_2.setItemText(3, _translate("MainWindow", "Leather"))
         self.comboBox_2.setItemText(4, _translate("MainWindow", "Metal"))
-        self.comboBox_2.setItemText(5, _translate("MainWindow", "Plastic/polymers/foam"))
+        self.comboBox_2.setItemText(5, _translate("MainWindow", "Plastic|polymers|foam"))
         self.comboBox_2.setItemText(6, _translate("MainWindow", "Wood"))
         self.comboBox_2.setItemText(7, _translate("MainWindow", "Paper"))
         self.comboBox_2.setItemText(8, _translate("MainWindow", "Ceramic "))
         self.comboBox_2.setItemText(9, _translate("MainWindow", "Glass"))
-        self.comboBox_2.setItemText(10, _translate("MainWindow", "Dye/Pigment/Ink/Paint"))
-        self.comboBox_2.setItemText(11, _translate("MainWindow", "Adhesives/Sealants"))
+        self.comboBox_2.setItemText(10, _translate("MainWindow", "Dye|Pigment|Ink|Paint"))
+        self.comboBox_2.setItemText(11, _translate("MainWindow", "Adhesives|Sealants"))
         self.comboBox_2.setItemText(12, _translate("MainWindow", "Battery"))
         self.comboBox_2.setItemText(13, _translate("MainWindow", "Electronic components"))
         self.pushButton_7.setText(_translate("MainWindow", "项目分类"))
@@ -410,5 +412,4 @@ class Ui_MainWindow(object):
         self.actionHelp.setStatusTip(_translate("MainWindow", "帮助提示"))
         self.actionAuthor.setText(_translate("MainWindow", "Author"))
         self.actionAuthor.setStatusTip(_translate("MainWindow", "关于作者"))
-
 
