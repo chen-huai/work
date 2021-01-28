@@ -16,12 +16,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.actionImport.triggered.connect(self.importConfig)
 		self.actionExit.triggered.connect(MyMainWindow.close)
 		self.pushButton_3.clicked.connect(self.searchReachMessage)
-		self.actionImport.triggered.connect(self.lineEdit.clear)
-		self.actionHelp.triggered.connect(self.lineEdit.clear)
+		# self.actionImport.triggered.connect(self.lineEdit.clear)
+		# self.actionHelp.triggered.connect(self.lineEdit.clear)
 		self.actionAuthor.triggered.connect(self.showAuthorMessage)
 		self.pushButton_2.clicked.connect(self.getReachMessage)
 		self.pushButton_1.clicked.connect(self.textBrowser.clear)
-		self.pushButton_1.clicked.connect(self.lineEdit.clear)
+		# self.pushButton_1.clicked.connect(self.comboBox_4.clear)
 		self.pushButton_1.clicked.connect(self.lineEdit_1.clear)
 
 
@@ -125,12 +125,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									"没有Reach信息文件！！！\n请查看config_reach配置文件内容是否符合需求。\nReach_Message_Import_URL,Reach_Message_File_Name\nReach Message的文件路径、文件名称和CSV格式",
 									QMessageBox.Yes)
 		else:
+			self.comboBox_4.clear()
 			reachMessage = pd.read_csv(file)
 			reachLimsNo = list(reachMessage['Lims No.'])
 			reachEnglish = list(reachMessage['物质名称(英文)'])
 			reachChinese = list(reachMessage['物质名称(中文)'])
 			reachCas = list(reachMessage['CAS 号码'])
 			reachPurpose = list(reachMessage['可能用途'])
+			self.comboBox_4.addItem('')
+			for i in sorted(set(reachCas)):
+				self.comboBox_4.addItem(i)
+				app.processEvents()
 			self.textBrowser.setText("Reach信息获取成功")
 
 	def searchReachMessage(self):
@@ -149,7 +154,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			global project
 			reachContent = self.lineEdit_1.text()
 			reachNum = self.spinBox_1.text()
-			casNum = self.lineEdit.text()
+			casNum = self.comboBox_4.currentText()
 			# 项目选择
 			project = self.comboBox.currentText()
 			# 只要物质信息的搜索
@@ -162,61 +167,52 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# print(material, project, estimate)
 				myTable.searchReachMessage()
 			else:
-				# print(type(reachContent),1,type(reachNum))
-				if (reachContent == '') and (reachNum == '0'):
-					self.textBrowser.setText("请输入需要查找Reach英文内容或者编号")
-				else:
+
+				# if (reachContent != '') and (reachNum != '0') and (casNum != ''):
+				#
+				# 	if (reachContent  reachEnglish==reachLimsNo.index(reachNum) and (
+				# 			casNum == reachCas[n]):
+				# 		m = 'T'
+				# else:
+				# 	self.textBrowser.append(
+				# 		"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’、物质内容和Cas No.不为空时，\n物质内容、编号和Cas No.要同时匹配才能查找Reach信息")
+				# 	self.textBrowser.append('--------------------------')
+				for n in range(len(reachLimsNo)):
 					m = 'F'
-					if reachContent == '':
-						for n in range(len(reachLimsNo)):
-							if float(reachNum) == float(reachLimsNo[n]):
-								m = 'T'
-					elif reachNum == '0':
-						for n in range(len(reachEnglish)):
+					if (reachContent != '') and (reachNum != '0') and (casNum != ''):
+						if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]) and (
+								casNum == reachCas[n]):
+							m = 'T'
+							num = n
+						# else:
+						# 	self.textBrowser.append(
+						# 		"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’、物质内容和Cas No.不为空时，\n物质内容、编号和Cas No.要同时匹配才能查找Reach信息")
+						# 	self.textBrowser.append('--------------------------')
+					elif reachContent != '':
 							if (reachContent in reachEnglish[n]):
 								m = 'T'
-					else:  # 两者都不为空时匹配
-						for n in range(len(reachEnglish)):
-							if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
+								num = n
+
+					elif reachNum != '0':
+						if float(reachNum) == float(reachLimsNo[n]):
+							m = 'T'
+							num = n
+					elif casNum != '':
+							if (casNum == reachCas[n]):
 								m = 'T'
+								num = n
 					# print(m)
 					if m == 'T':
-						for i in range(len(reachEnglish)):
-							# print(reachNum,reachLimsNo[i])
-							if reachContent == '':
-								if float(reachNum) == float(reachLimsNo[i]):
-									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
-									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
-									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
-									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
-									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
-									self.textBrowser.append('--------------------------')
-									app.processEvents()
-							elif reachNum == '0':
-								if reachContent in reachEnglish[i]:
-									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
-									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
-									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
-									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
-									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
-									self.textBrowser.append('--------------------------')
-									app.processEvents()
-							else:
-								if (reachContent in reachEnglish[i]) and (float(reachNum) == float(reachLimsNo[i])):
-									self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[i])
-									self.textBrowser.append("Reach 中文名:%s" % reachChinese[i])
-									self.textBrowser.append("Reach 英文名:%s" % reachEnglish[i])
-									self.textBrowser.append("Reach CAS No:%s\n" % reachCas[i])
-									self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[i])
-									self.textBrowser.append('--------------------------')
-									app.processEvents()
-					else:
-						self.textBrowser.append(
-							"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’和物质内容不为空时，\n物质内容和编号要同时匹配才能查找Reach信息")
+						# self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[num])
+						# self.textBrowser.append("Reach 中文名:%s" % reachChinese[num])
+						# self.textBrowser.append("Reach 英文名:%s" % reachEnglish[num])
+						# self.textBrowser.append("Reach CAS No:%s\n" % reachCas[num])
+						# self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[num])
+						# self.textBrowser.append('--------------------------')
+						# app.processEvents()
+						self.textBrowser.append("<table border='1'> <tr><th>目标</th> <th>内容</th></tr> <tr><td>Reach Lims No:</td><td>%s</td></tr> <tr><td>Reach 中文名:</td><td>%s</td></tr> <tr><td>Reach 英文名:</td><td>%s</td></tr> <tr><td>Reach CAS No:</td><td><font color='red'>%s</font></td></tr> <tr><td>Reach 物质作用:</td><td>%s</td></tr> </table>" % (reachLimsNo[num],reachChinese[num],reachEnglish[num],reachCas[num],reachPurpose[num]))
 						self.textBrowser.append('--------------------------')
-					self.textBrowser.setText("搜索完成")
-
-
+						app.processEvents()
 
 
 class MyTableWindow(QMainWindow, Ui_TableWindow):
@@ -226,18 +222,17 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 
 	def searchReachMessage(self):
 		dropC = ['No.','列入日期','EC 号码','Possible Applications','*Remarks','Chemical Classification']
-		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic|polymers|foam','Wood','Paper','Ceramic ','Glass','Dye|Pigment|Ink|Paint','Adhesives|Sealants','Battery','Electronic components','Organic|Inorganic']
-		leaveC = ['Lims No.','CAS 号码','物质名称(英文)','物质名称(中文)','可能用途']
+		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic|polymers|foam','Wood','Paper','Ceramic ','Glass','Dye|Pigment|Ink|Paint','Adhesives|Sealants','Battery','Electronic components']
+		leaveC = ['Lims No.','CAS 号码','物质名称(英文)','物质名称(中文)','可能用途','Organic|Inorganic']
 		csvHead = list(reachMessage.head())
 		# 选择性显示
 		if material != '':
 			maybeC.remove(material)
-			# reachMessage.loc[reachMessage[material] == estimate]
 		else:
-			maybeC = ['Organic|Inorganic']
-		if project != '':
-			maybeC.remove('Organic|Inorganic')
-			# reachMessage.loc[reachMessage['Organic|Inorganic'] == project]
+			maybeC = []
+		# if project != '':
+		# 	maybeC.remove('Organic|Inorganic')
+		# 	# reachMessage.loc[reachMessage['Organic|Inorganic'] == project]
 		dropC += maybeC
 		searchReachMessage = reachMessage.drop(dropC, axis=1)
 		if project != '':
@@ -258,7 +253,6 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 		model = TableModel(res)
 		self.tableView.setModel(model)
 		self.tableView.setAlternatingRowColors(True)
-		self.tableView.horizontalHeader()
 		self.tableView.resizeRowsToContents()
 		# self.tableView.setForegroundRole()setForeground(QBrush(QColor(255, 0, 0)));
 		myTable.show()
