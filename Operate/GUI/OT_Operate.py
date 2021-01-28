@@ -186,7 +186,8 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 									pass
 								else:
 									if float(timeIn[i]) > 0.4375 and float(timeOut[i]) > 0.770833333:
-										self.textBrowser.append("<font color='red'>" + '&nbsp; %s<br>&nbsp;&nbsp;&nbsp;&nbsp; 上班晚于10:30，且下班晚于18:30；<br>&nbsp;&nbsp;&nbsp;&nbsp; 如有加班请自行添加加班信息。' % date[i].strftime('%Y-%m-%d') + "<font>")
+										# self.textBrowser.append("<font color='red'>" + '&nbsp; %s<br>&nbsp;&nbsp;&nbsp;&nbsp; 上班晚于10:30，且下班晚于18:30；<br>&nbsp;&nbsp;&nbsp;&nbsp; 如有加班请自行添加加班信息。' % date[i].strftime('%Y-%m-%d') + "</font>")
+										self.textBrowser.append("<font color='red'>&nbsp; %s<br>&nbsp;&nbsp;&nbsp;&nbsp; 上班晚于10:30，且下班晚于18:30；<br>&nbsp;&nbsp;&nbsp;&nbsp; 如有加班请自行添加加班信息。</font>"% date[i].strftime('%Y-%m-%d'))
 									app.processEvents()
 								i += 1
 								continue
