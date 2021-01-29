@@ -239,7 +239,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[num])
 							self.textBrowser.append('--------------------------')
 							app.processEvents()
-				if same and different:
+				if ((same == 'same') and (different == 'different') )or ((same == '') and (different == '')):
 					pass
 				else:
 					self.textBrowser.append(
@@ -252,9 +252,23 @@ class MyTableWindow(QMainWindow, Ui_TableWindow):
 		super(MyTableWindow, self).__init__(parent)
 		self.setupUi(self)
 
+		self.pushButton_4.clicked.connect(self.search)
+
+
+	def search(self):
+		global material, estimate,project
+		# 物质选择
+		material = self.comboBox.currentText()
+		# 风险选择
+		estimate = self.comboBox_3.currentText()
+		# 项目选择
+		project = self.comboBox_2.currentText()
+		# print(material, project, estimate)
+		myTable.searchReachMessage()
+
 	def searchReachMessage(self):
 		dropC = ['No.','列入日期','EC 号码','Possible Applications','*Remarks','Chemical Classification']
-		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic|polymers|foam','Wood','Paper','Ceramic ','Glass','Dye|Pigment|Ink|Paint','Adhesives|Sealants','Battery','Electronic components']
+		maybeC = ['Natural textiles','Synthetic textiles','Leather','Metal','Plastic|polymers|foam','Wood','Paper','Ceramic','Glass','Dye|Pigment|Ink|Paint','Adhesives|Sealants','Battery','Electronic components']
 		leaveC = ['Lims No.','CAS 号码','物质名称(英文)','物质名称(中文)','可能用途','Organic|Inorganic']
 		csvHead = list(reachMessage.head())
 		# 选择性显示
