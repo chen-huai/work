@@ -318,11 +318,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
 								'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
 								'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
-							labNumber.append(b[i])
-							qualityValue.append(b[i + 4])
-							volumeValue.append(b[i + 2])
-							analyteList.append(b[i + 5] + ' ' + b[i + 6] + ' ' + b[i + 7] + ' ' + b[i + 3])
-							batchNum.append(b[4])
+							labNumber.append(b[i].replace('',''))
+							qualityValue.append(b[i + 4].replace('',''))
+							volumeValue.append(b[i + 2].replace('',''))
+							analyteList.append(b[i + 5].replace('','') + ' ' + b[i + 6].replace('','') + ' ' + b[i + 7].replace('','') + ' ' + b[i + 3].replace('',''))
+							batchNum.append(b[4].replace('',''))
 							app.processEvents()
 					n += 1
 					# wordDoc.Quit()
