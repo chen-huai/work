@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>808</width>
-    <height>610</height>
+    <width>931</width>
+    <height>686</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,14 +21,172 @@
    <string>作者：Frank Chen</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>查询</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="5">
+        <widget class="QComboBox" name="comboBox_3">
+         <item>
+          <property name="text">
+           <string>Y</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>N</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>物质分类</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QComboBox" name="comboBox_2">
+         <item>
+          <property name="text">
+           <string>Inorganic</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Organic</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Natural textiles</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Synthetic textiles</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Leather</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Metal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Plastic|polymers|foam</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Wood</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Paper</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ceramic</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Glass</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dye|Pigment|Ink|Paint</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Adhesives|Sealants</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Battery</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Electronic components</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>项目分类</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>风险评估</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>查询信息</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
-       <string>Reach结果判定界面</string>
+       <string>Reach查询信息内容</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QTableView" name="tableView">
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>true</bool>
@@ -60,7 +218,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>808</width>
+     <width>931</width>
      <height>23</height>
     </rect>
    </property>

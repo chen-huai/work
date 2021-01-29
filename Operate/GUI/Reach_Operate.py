@@ -177,6 +177,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# 	self.textBrowser.append(
 				# 		"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’、物质内容和Cas No.不为空时，\n物质内容、编号和Cas No.要同时匹配才能查找Reach信息")
 				# 	self.textBrowser.append('--------------------------')
+				same = ''
+				different = ''
 				for n in range(len(reachLimsNo)):
 					m = 'F'
 					if (reachContent != '') and (reachNum != '0') and (casNum != ''):
@@ -184,10 +186,32 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								casNum == reachCas[n]):
 							m = 'T'
 							num = n
-						# else:
-						# 	self.textBrowser.append(
-						# 		"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’、物质内容和Cas No.不为空时，\n物质内容、编号和Cas No.要同时匹配才能查找Reach信息")
-						# 	self.textBrowser.append('--------------------------')
+							same = 'same'
+						else:
+							different = 'different'
+					elif (reachContent != '') and (reachNum != '0'):
+						if (reachContent in reachEnglish[n]) and float(reachNum) == float(reachLimsNo[n]):
+							m = 'T'
+							num = n
+							same = 'same'
+						else:
+							different = 'different'
+
+					elif (reachNum != '0') and (casNum != ''):
+						if float(reachNum) == float(reachLimsNo[n]) and (casNum == reachCas[n]):
+							m = 'T'
+							num = n
+							same = 'same'
+						else:
+							different = 'different'
+					elif (reachContent in reachEnglish[n]) and (casNum != ''):
+						if (reachContent in reachEnglish[n]) and (casNum == reachCas[n]):
+							m = 'T'
+							num = n
+							same = 'same'
+						else:
+							different = 'different'
+
 					elif reachContent != '':
 							if (reachContent in reachEnglish[n]):
 								m = 'T'
@@ -203,16 +227,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								num = n
 					# print(m)
 					if m == 'T':
-						# self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[num])
-						# self.textBrowser.append("Reach 中文名:%s" % reachChinese[num])
-						# self.textBrowser.append("Reach 英文名:%s" % reachEnglish[num])
-						# self.textBrowser.append("Reach CAS No:%s\n" % reachCas[num])
-						# self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[num])
-						# self.textBrowser.append('--------------------------')
-						# app.processEvents()
-						self.textBrowser.append("<table border='1'> <tr><th>目标</th> <th>内容</th></tr> <tr><td>Reach Lims No:</td><td>%s</td></tr> <tr><td>Reach 中文名:</td><td>%s</td></tr> <tr><td>Reach 英文名:</td><td>%s</td></tr> <tr><td>Reach CAS No:</td><td><font color='red'>%s</font></td></tr> <tr><td>Reach 物质作用:</td><td>%s</td></tr> </table>" % (reachLimsNo[num],reachChinese[num],reachEnglish[num],reachCas[num],reachPurpose[num]))
-						self.textBrowser.append('--------------------------')
-						app.processEvents()
+						if self.checkBox.checkState():
+							self.textBrowser.append("<table border='1'> <tr><th>目标</th> <th>内容</th></tr> <tr><td>Reach Lims No:</td><td>%s</td></tr> <tr><td>Reach 中文名:</td><td>%s</td></tr> <tr><td>Reach 英文名:</td><td>%s</td></tr> <tr><td>Reach CAS No:</td><td><font color='red'>%s</font></td></tr> <tr><td>Reach 物质作用:</td><td>%s</td></tr> </table>" % (reachLimsNo[num],reachChinese[num],reachEnglish[num],reachCas[num],reachPurpose[num]))
+							self.textBrowser.append('--------------------------')
+							app.processEvents()
+						if self.checkBox_2.checkState():
+							self.textBrowser.append("Reach Lims No:%s" % reachLimsNo[num])
+							self.textBrowser.append("Reach 中文名:%s" % reachChinese[num])
+							self.textBrowser.append("Reach 英文名:%s" % reachEnglish[num])
+							self.textBrowser.append("Reach CAS No:%s\n" % reachCas[num])
+							self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[num])
+							self.textBrowser.append('--------------------------')
+							app.processEvents()
+				if same and different:
+					pass
+				else:
+					self.textBrowser.append(
+						"请确认查找Reach英文内容或者编号是否写对，\n当物质编号不为‘0’、物质内容和Cas No.不为空时，\n物质内容、编号和Cas No.要同时匹配才能查找Reach信息")
+					self.textBrowser.append('--------------------------')
 
 
 class MyTableWindow(QMainWindow, Ui_TableWindow):

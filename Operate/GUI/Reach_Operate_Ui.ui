@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>728</width>
+    <width>730</width>
     <height>616</height>
    </rect>
   </property>
@@ -345,6 +345,44 @@
              </widget>
             </item>
             <item>
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="title">
+               <string>表现形式</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="checkBox">
+                 <property name="statusTip">
+                  <string>以表格形式显示查询信息</string>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>表格</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="checkBox_2">
+                 <property name="statusTip">
+                  <string>以文本形式显示查询信息</string>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>文本</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <widget class="QGroupBox" name="groupBox_3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -356,40 +394,7 @@
                <string>操作</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
-               <item row="2" column="0">
-                <widget class="QPushButton" name="pushButton_1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="statusTip">
-                  <string>将所有之前查找的信息清除</string>
-                 </property>
-                 <property name="text">
-                  <string>清零</string>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>icon/clean.png</normaloff>
-                   <normalon>icon/clean.png</normalon>
-                   <disabledoff>icon/clean.png</disabledoff>
-                   <disabledon>icon/clean.png</disabledon>
-                   <activeoff>icon/clean.png</activeoff>
-                   <activeon>icon/clean.png</activeon>
-                   <selectedoff>icon/clean.png</selectedoff>
-                   <selectedon>icon/clean.png</selectedon>icon/clean.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
+               <item row="0" column="1">
                 <widget class="QPushButton" name="pushButton_2">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -422,7 +427,40 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+               <item row="2" column="1">
+                <widget class="QPushButton" name="pushButton_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="statusTip">
+                  <string>将所有之前查找的信息清除</string>
+                 </property>
+                 <property name="text">
+                  <string>清零</string>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>icon/clean.png</normaloff>
+                   <normalon>icon/clean.png</normalon>
+                   <disabledoff>icon/clean.png</disabledoff>
+                   <disabledon>icon/clean.png</disabledon>
+                   <activeoff>icon/clean.png</activeoff>
+                   <activeon>icon/clean.png</activeon>
+                   <selectedoff>icon/clean.png</selectedoff>
+                   <selectedon>icon/clean.png</selectedon>icon/clean.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
                 <widget class="QPushButton" name="pushButton_3">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -440,7 +478,7 @@
                   <string>根据内容或编号查找Reach物质的信息</string>
                  </property>
                  <property name="text">
-                  <string>显示信息</string>
+                  <string>查询信息</string>
                  </property>
                  <property name="icon">
                   <iconset>
@@ -501,7 +539,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>728</width>
+     <width>730</width>
      <height>23</height>
     </rect>
    </property>
