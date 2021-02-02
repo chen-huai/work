@@ -20,7 +20,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# self.actionHelp.triggered.connect(self.lineEdit.clear)
 		self.actionAuthor.triggered.connect(self.showAuthorMessage)
 		self.pushButton_2.clicked.connect(self.getReachMessage)
-		self.pushButton_1.clicked.connect(self.textBrowser.clear)
+		self.pushButton_1.clicked.connect(self.clearCon)
 		# self.pushButton_1.clicked.connect(self.comboBox_4.clear)
 		self.pushButton_1.clicked.connect(self.lineEdit_1.clear)
 
@@ -108,6 +108,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		QMessageBox.about(self, "关于",
 						  "人生苦短，码上行乐。\n\n\n        ----Frank Chen")
 
+	def clearCon(self):
+		self.spinBox_1.setValue(0)
+		self.textBrowser.clear
+		self.lineEdit_1.clear
+		self.comboBox_4.setCurrentIndex(0)
+
 
 	def getReachMessage(self):
 		# 获取Reach信息
@@ -133,9 +139,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			reachCas = list(reachMessage['CAS 号码'])
 			reachPurpose = list(reachMessage['可能用途'])
 			self.comboBox_4.addItem('')
-			for i in sorted(set(reachCas)):
-				self.comboBox_4.addItem(i)
-				app.processEvents()
+			self.comboBox_4.addItems(sorted(set(reachCas)))
 			self.textBrowser.setText("Reach信息获取成功")
 
 	def searchReachMessage(self):
@@ -239,7 +243,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							self.textBrowser.append("Reach 物质作用:\n%s" % reachPurpose[num])
 							self.textBrowser.append('--------------------------')
 							app.processEvents()
-				if ((same == 'same') and (different == 'different') )or ((same == '') and (different == '')):
+				if ((same == 'same') and (different == 'different')) or ((same == '') and (different == '')):
 					pass
 				else:
 					self.textBrowser.append(
