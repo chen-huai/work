@@ -210,16 +210,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_3.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*)')
+														   'files(*.doc*;*.xls*;*.csv)')
 		elif messages == 'UV':
 			self.textBrowser_4.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['UV_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*)')
+														   'files(*.doc*;*.xls*;*.csv)')
 		else:
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*)')
+														   'files(*.doc*;*.xls*;*.csv)')
 		# print(selectBatchFile)
 		if selectBatchFile[0] != []:
 			self.lineEdit_6.setText("正在抓取样品单号")
@@ -326,7 +326,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							app.processEvents()
 					n += 1
 					# wordDoc.Quit()
-
+				elif 'csv' in fileType:
+					file = selectBatchFile[0][n].replace('/', '\\')
+					csvFile = pd.read_csv(file)
+					sampleNum = list(csvFile[' Sample No.'])
+					leaveNum = []
+					for each in sampleNum:
+						if '/' in each:
+							leaveNum.append(each)
+					csvFile = csvFile.loc[(csvFile[' Sample No.'].isin(leaveNum))]
+					labNumber = list(csvFile[' Sample No.'])
+					qualityValue = list(csvFile[' Weight'])
+					volumeValue = list(csvFile[' Volume'])
+					analyteList = list(csvFile[' Analyte'])
+					batchNum = list(csvFile[' Batch No.'])
+					app.processEvents()
 			# print(analyteList)
 			self.lineEdit_6.setText("样品单号抓取完成")
 			if messages == 'ICP':

@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['C:\\Users\\chenhuai\\python\\work\\Operate\\GUI\\Inorganic_Operate.py'],
-             pathex=['C:\\Users\\chenhuai\\python\\work'],
+a = Analysis(['D:\\python\\work\\Operate\\GUI\\Inorganic_Operate.py'],
+             pathex=['D:\\python\\work'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , icon='C:\\Users\\chenhuai\\python\\work\\Operate\\GUI\\chemistry.ico')
+          console=False , icon='D:\\python\\work\\Operate\\GUI\\chemistry.ico')
