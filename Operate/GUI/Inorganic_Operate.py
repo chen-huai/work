@@ -210,16 +210,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_3.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*;*.csv)')
+														   'files(*.docx;*.xls*;*.csv)')
 		elif messages == 'UV':
 			self.textBrowser_4.clear()
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['UV_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*;*.csv)')
+														   'files(*.docx;*.xls*;*.csv)')
 		else:
 			selectBatchFile = QFileDialog.getOpenFileNames(self, '选择Batch文件',
 														   '%s' % configContent['ICP_Batch_Import_URL'],
-														   'files(*.doc*;*.xls*;*.csv)')
+														   'files(*.docx;*.xls*;*.csv)')
 		# print(selectBatchFile)
 		if selectBatchFile[0] != []:
 			self.lineEdit_6.setText("正在抓取样品单号")
@@ -268,8 +268,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					while ws.Cells(row, column).Value is not None:
 						oneRow.append(ws.Cells(row, column).Value)
 						column += 1
-
-
 					# 无机实验去除BLK,BS,SS
 					# i = 0
 					for i in range(len(oneRow)):
@@ -304,28 +302,31 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					n += 1
 					# excel.Quit()
 				elif 'doc' in fileType:
-					# word = Dispatch('Word.Application')
-					# wordDoc = win32com.DispatchEx('Word.Application')
-					# wordDoc.Visible = 0
-					# wordDoc.Application.DisplayAlerts = False
-					# win系统识别路径为“\”
-					doc = wordDoc.Documents.Open(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
-					a = doc.Content.Text
-					b = a.split('\r')
-					# print(b)
-					doc.Close()
-					for i in range(len(b)):
-						if ('/' in b[i]) and (len(b[i]) > 5) and ('/' + str(last_time) not in b[i]) and (
-								'/' + str(now) not in b[i]) and ('GB/T' not in b[i]) and ('D' not in b[i]) and (
-								'QB/T' not in b[i]) and ('EPA3050B/3051' not in b[i]):
-							labNumber.append(b[i].replace('',''))
-							qualityValue.append(b[i + 4].replace('',''))
-							volumeValue.append(b[i + 2].replace('',''))
-							analyteList.append(b[i + 5].replace('','') + ' ' + b[i + 6].replace('','') + ' ' + b[i + 7].replace('','') + ' ' + b[i + 3].replace('',''))
-							batchNum.append(b[4].replace('',''))
-							app.processEvents()
-					n += 1
-					# wordDoc.Quit()
+					doc = Document(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+					for table in doc.tables:
+						for row in table.rows:
+							i = 1
+							for cell in row.cells:
+								if i == 2:
+									if '/' in cell.text:
+										labNumber.append(cell.text)
+										batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
+										i += 1
+									else:
+										# print(cell.text,i)
+										continue
+								elif i == 3:
+									analyteList.append(cell.text)
+									i += 1
+								elif i == 4:
+									qualityValue.append(cell.text)
+									i += 1
+								elif i == 5:
+									volumeValue.append(cell.text)
+									i += 1
+								else:
+									i += 1
+
 				elif 'csv' in fileType:
 					file = selectBatchFile[0][n].replace('/', '\\')
 					csvFile = pd.read_csv(file)
@@ -2537,6 +2538,7 @@ if __name__ == "__main__":
 	import pyautogui
 	import pandas as pd
 	import re
+	from docx import Document
 	import win32com.client as win32com
 	from win32com.client import Dispatch
 	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
