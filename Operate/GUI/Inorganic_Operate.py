@@ -599,7 +599,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					ws = wb.Worksheets('Sheet1')
 					ws.Columns(1).ColumnWidth = 3  # 列宽。
 					ws.Columns(2).ColumnWidth = 12.5  # 列宽。
-					ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+					ws.Columns(3).ColumnWidth = 20  # 列宽。
 					ws.Columns(4).ColumnWidth = 6.5  # 列宽。
 					ws.Columns(5).ColumnWidth = 6.6  # 列宽。
 					ws.Columns(6).ColumnWidth = 6  # 列宽。
@@ -780,7 +780,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					# 创建Batch单号
 					ws.Columns(1).ColumnWidth = 3  # 列宽。
 					ws.Columns(2).ColumnWidth = 12.5  # 列宽。
-					ws.Columns(3).ColumnWidth = 14.5  # 列宽。
+					ws.Columns(3).ColumnWidth = 20  # 列宽。
 					ws.Columns(4).ColumnWidth = 6.5  # 列宽。
 					ws.Columns(5).ColumnWidth = 6.6  # 列宽。
 					ws.Columns(6).ColumnWidth = 6  # 列宽。
