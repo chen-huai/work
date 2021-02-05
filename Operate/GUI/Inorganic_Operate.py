@@ -241,10 +241,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				fileName = os.path.split(selectBatchFile[0][n])[1]
 				fileType = os.path.split(selectBatchFile[0][n])[1].split('.')[-1]
 				if 'doc' in fileType:
-					wordDoc = win32com.DispatchEx('Word.Application')
-					# wordDoc = Dispatch('Word.Application')
-					wordDoc.Visible = 0
-					wordDoc.Application.DisplayAlerts = False
+					pass
 				elif 'xls' in fileType:
 					excel = win32com.gencache.EnsureDispatch('Excel.Application')
 					excel.Visible = 0
@@ -336,11 +333,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if '/' in each:
 							leaveNum.append(each)
 					csvFile = csvFile.loc[(csvFile[' Sample No.'].isin(leaveNum))]
-					labNumber = list(csvFile[' Sample No.'])
-					qualityValue = list(csvFile[' Weight'])
-					volumeValue = list(csvFile[' Volume'])
-					analyteList = list(csvFile[' Analyte'])
-					batchNum = list(csvFile[' Batch No.'])
+					labNumber += list(csvFile[' Sample No.'])
+					qualityValue += list(csvFile[' Weight'])
+					volumeValue += list(csvFile[' Volume'])
+					analyteList += list(csvFile[' Analyte'])
+					batchNum += list(csvFile[' Batch No.'])
 					app.processEvents()
 			# print(analyteList)
 			self.lineEdit_6.setText("样品单号抓取完成")
@@ -349,7 +346,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			elif messages == 'UV':
 				self.textBrowser_4.append("样品单号抓取完成")
 			if 'doc' in fileType:
-				wordDoc.Quit()
+				pass
 			elif 'xls' in fileType:
 				excel.Quit()
 			app.processEvents()
