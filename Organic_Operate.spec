@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['D:\\python\\work\\Operate\\GUI\\Organic_Operate.py'],
-             pathex=['D:\\python\\work'],
+a = Analysis(['C:\\data\\python\\work\\Operate\\GUI\\Organic_Operate.py'],
+             pathex=['C:\\data\\python\\work'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , icon='D:\\python\\work\\Operate\\GUI\\organic_logo.ico')
+          console=False , icon='C:\\data\\python\\work\\Operate\\GUI\\organic_logo.ico')
