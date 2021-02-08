@@ -142,14 +142,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                         x += 1
 
                 elif 'doc' in fileType:
-                    doc = Document(r"%s" % selectBatchFile[0][n].replace('/', '\\'))
+                    doc = Document(r"%s" % file.replace('/', '\\'))
+                    head = ['No.','Sample no.','Analyte','Weight','Volume','Instrument','ECD','Remarks','Chk Remarks']
                     for table in doc.tables:
                         for row in table.rows:
                             i = 1
                             for cell in row.cells:
                                 if i == 2:
-                                    labNumber.append(cell.text)
-                                    i += 1
+                                    if cell.text in head:
+                                       continue
+                                    else:
+                                        labNumber.append(cell.text)
+                                        i += 1
                                     # 去除质控
                                     # if '/' in cell.text:
                                     #     labNumber.append(cell.text)
