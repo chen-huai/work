@@ -305,13 +305,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							i = 1
 							for cell in row.cells:
 								if i == 2:
-									if '/' in cell.text and 'D' not in cell.text:
+									if '/' in cell.text and 'B' not in cell.text and 'C' not in cell.text and 'D' not in cell.text:
 										labNumber.append(cell.text)
 										batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 										i += 1
 									else:
-										# print(cell.text,i)
-										continue
+										i += 1
 								elif i == 3:
 									analyteList.append(cell.text)
 									i += 1
@@ -329,8 +328,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					csvFile = pd.read_csv(file)
 					sampleNum = list(csvFile[' Sample No.'])
 					leaveNum = []
-					for each in sampleNum and 'D' not in sampleNum:
-						if '/' in each:
+					for each in sampleNum:
+						if '/' in each and 'B' not in sampleNum and 'C' not in sampleNum and 'D' not in sampleNum:
 							leaveNum.append(each)
 					csvFile = csvFile.loc[(csvFile[' Sample No.'].isin(leaveNum))]
 					labNumber += list(csvFile[' Sample No.'])
