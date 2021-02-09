@@ -143,24 +143,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
                 elif 'doc' in fileType:
                     doc = Document(r"%s" % file.replace('/', '\\'))
-                    head = ['No.','Sample no.','Analyte','Weight','Volume','Instrument','ECD','Remarks','Chk Remarks']
                     for table in doc.tables:
                         for row in table.rows:
                             i = 1
                             for cell in row.cells:
+                                print(i,cell.text)
                                 if i == 2:
-                                    if cell.text in head:
-                                       continue
-                                    else:
+                                    if '/' in cell.text:
                                         labNumber.append(cell.text)
                                         i += 1
-                                    # 去除质控
-                                    # if '/' in cell.text:
-                                    #     labNumber.append(cell.text)
-                                    #     i += 1
-                                    # else:
-                                    #     # print(cell.text,i)
-                                    #     continue
+                                    else:
+                                        i += 1
                                 else:
                                     i += 1
                 elif 'csv' in fileType:
