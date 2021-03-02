@@ -133,8 +133,8 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 			else:
 				ws.Cells(5, 3).Value = sapNo[num]
 				ws.Cells(6, 3).Value = department[num]
-				ws.Cells(5, 7).Value = name
-				ws.Cells(6, 7).Value = calendar.month_abbr[int(time.strftime('%m'))]
+				ws.Cells(5, 8).Value = name
+				ws.Cells(6, 8).Value = calendar.month_abbr[int(time.strftime('%m'))]
 				i = num
 				n = 1
 				row = 10
@@ -157,26 +157,12 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 						# 工作日1，周末2，法定假日3
 						# status = 1
 						# 周末
-						if (weekday[i] == 'Saturday') or (weekday[i] == 'Sunday'):
-							if publicHoliday[i] is None:
-								status = 2
-							elif 'Weekend Workday' in publicHoliday[i]:
-								status = 1
-							elif 'Statutory Holiday' in publicHoliday[i]:
-								status = 3
-							else:
-								status = 2
-						# 工作日
+						if is_workday(date[i]):
+							status = 1
+						elif is_holiday(date[i]):
+							status = 3
 						else:
-							if publicHoliday[i] is None:
-								status = 1
-							elif 'Adjustment Holiday' in publicHoliday[i]:
-								status = 2
-							elif 'Statutory Holiday' in publicHoliday[i]:
-								status = 3
-							else:
-								status = 1
-
+							status = 2
 						if status == 1:
 							if workHours[i] <= t:
 								try:
@@ -243,6 +229,7 @@ if __name__ == "__main__":
 	import win32timezone
 	import win32com.client as win32com
 	from win32com.client import Dispatch
+	from chinese_calendar import is_workday, is_holiday
 	from itertools import chain
 	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
