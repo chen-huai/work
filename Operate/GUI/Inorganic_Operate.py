@@ -306,13 +306,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							for cell in row.cells:
 								if i == 2:
 									if '/' in cell.text and 'B' not in cell.text and 'C' not in cell.text and 'D' not in cell.text:
-										labNumber.append(cell.text)
+										labNumber.append(cell.text.replace('\n',''))
 										batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 										i += 1
 									else:
-										i += 1
+										i += 7
 								elif i == 3:
-									analyteList.append(cell.text)
+									analyteList.append(cell.text.replace('\n',''))
 									i += 1
 								elif i == 4:
 									qualityValue.append(cell.text)
@@ -1544,12 +1544,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
 								if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
 									ws.Cells(resultRows[x], samConcColumn).Value = '未校正'
-									self.textBrowser.append('	%s-%s:结果未校正' % (resultLabnumber[n], elements[x]))
+									self.textBrowser.append('	%s:结果未校正' % (elements[x]))
 									app.processEvents()
 								elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
 									ws.Cells(resultRows[x], samConcColumn).Value = '9999'
 									ws.Cells(resultRows[x], reColumn).Value = '超出'
-									self.textBrowser.append('	%s-%s:结果超出' % (resultLabnumber[n], elements[x]))
+									self.textBrowser.append('	%s:结果超出' % (elements[x]))
 									app.processEvents()
 								else:
 									if sta == 1:
@@ -1561,12 +1561,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									if self.radioButton_2.isChecked():
 										if elements[x] == 'Pb':
 											ws.Cells(resultRows[x], reColumn).Value = 'Pb受Fe影响,Fact校正'
-											self.textBrowser.append('	%s-%s:Pb受Fe影响，Fact校正' % (resultLabnumber[n], elements[x]))
+											self.textBrowser.append('	%s:Pb受Fe影响，Fact校正' % (elements[x]))
 											app.processEvents()
 							else:
 								ws.Cells(resultRows[x], samConcColumn).Value = '0'
 								ws.Cells(resultRows[x], reColumn).Value = '未走标准曲线'
-								self.textBrowser.append('	%s-%s:未走标准曲线' % (resultLabnumber[n], elements[x]))
+								self.textBrowser.append('	%s:未走标准曲线' % (elements[x]))
 								app.processEvents()
 
 							x += 1
