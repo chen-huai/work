@@ -1293,6 +1293,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择Cr VI-Result文件',
 																'%s' % configContent['Cr_VI_Result_Import_URL'],
 																'CSV files(*.csv)')
+		elif messages == 'pH':
+			selectResultFile = QFileDialog.getOpenFileNames(self, '选择pH2018-Result文件',
+															'%s' % configContent['UV_Rusult_Export_URL'],
+															'CSV files(*.csv)')
 		# print(1,selectBatchFile[0])
 		# 仅获取选择文件的路径
 		if selectResultFile[0] != []:
@@ -1313,6 +1317,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			if messages == 'ICP':
 				self.textBrowser.append("完成抓取Result文件")
 			elif messages == 'UV':
+				self.textBrowser_5.append("完成抓取Result文件")
+			elif messages == 'pH':
 				self.textBrowser_5.append("完成抓取Result文件")
 			app.processEvents()
 		else:
@@ -2207,6 +2213,56 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						y += 1
 				self.textBrowser_5.append("完成QC填写")
 				self.lineEdit_6.setText("完成QC填写")
+
+	def phResult(self):
+		# 判断是否选择了Result文件
+		try:
+			selectResultFile[0]
+		except NameError:
+			m = 'N'
+		else:
+			if selectResultFile[0] == []:
+				m = 'N'
+			else:
+				m = 'Y'
+		if m == 'N':
+			reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+										 QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.getResult(self, 'pH')
+				if selectResultFile[0] == []:
+					self.lineEdit_6.setText("请重新选择pH Result数据文件")
+					self.textBrowser_5.append("请重新选择pH Result数据文件")
+					m = 'N'
+				else:
+					m = 'Y'
+			else:
+				self.lineEdit_6.setText("请重新选择pH Result数据文件")
+				self.textBrowser_5.append("请重新选择pH Result数据文件")
+				m = 'N'
+		if m == 'Y':
+			self.textBrowser_5.append("pH结果正在转化，请稍等")
+			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+				# 获取相关结果数据
+				try:
+					csvFile = pd.read_csv(fileUrl, header=0)
+				except pd.errors.ParserError:
+					QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
+					os.startfile(os.path.split(fileUrl)[0])
+					break
+				else:
+					tem, ok = QInputDialog.getDouble(self, '输入信息', '输入温度', 20, -50, 50, 0.1)
+					if ok and tem:
+						tep = tem
+					slo, ok = QInputDialog.getDouble(self, '输入信息', '输入斜率', 99, 0, 120, 0.1)
+					if ok and slo:
+						slope = slo
+					if tep and slope:
+
+						# csvFile.drop(['B', 'E', 'G'])
+						pass
+					else:
+						self.textBrowser_5.append("请重新输入温度和斜率数据")
 	def crRecovery(self):
 		# 判断是否选择了Result文件
 		try:
