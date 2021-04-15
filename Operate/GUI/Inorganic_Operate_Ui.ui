@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>438</height>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1360,6 +1360,11 @@
               <string>URL:pH 2014 Result</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>URL:pH Result</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="11" column="3">
@@ -1633,7 +1638,7 @@
      <x>0</x>
      <y>0</y>
      <width>474</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

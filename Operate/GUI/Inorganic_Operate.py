@@ -58,6 +58,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_44.clicked.connect(self.formalBatch)
 		self.pushButton_46.clicked.connect(self.crBatch)
 		self.pushButton_45.clicked.connect(self.phBatch)
+		self.pushButton_53.clicked.connect(self.phResult)
 		self.pushButton_47.clicked.connect(lambda: self.uvQc('Formal'))
 		self.pushButton_49.clicked.connect(lambda: self.uvQc('Cr VI'))
 		self.pushButton_52.clicked.connect(lambda: self.phQc('pH 2018'))
@@ -133,11 +134,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							 'ICP_QC_Chart_File_Name', 'Reach_Result_Import_URL', 'Reach_Result_File_Name',
 							 'Reach_Result_Export_URL',
 							 'Reach_Message_Import_URL', 'Reach_Message_File_Name', '选择UV_Batch的输入路径和结果输出路径',
-							 'UV_Batch_Import_URL', 'UV_Batch_Export_URL', 'UV_Rusult_Export_URL',
+							 'UV_Batch_Import_URL','UV_Batch_Export_URL', 'UV_Rusult_Export_URL',
 							 '选择UV_Result的输入路径和结果输出路径', 'UV_QC_Chart_Import_URL', 'Formal_QC_Chart_File_Name',
 							 'Cr_VI_QC_Chart_File_Name', 'pH2014_QC_Chart_File_Name', 'pH2018_QC_Chart_File_Name',
 							 'Formal_Result_Import_URL', 'Cr_VI_Result_Import_URL', 'pH2014_Result_Import_URL',
-							 'pH2018_Result_Import_URL']
+							 'pH2018_Result_Import_URL','pH_Result_Import_URL']
 		configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
 						 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
 						 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
@@ -158,8 +159,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						 'QC_Chart_Cr_66_01_2013_011_CARY100.xlsx', 'QC_Chart _pH_66_01_2014_015.xlsx',
 						 'QC_Chart _pH_66_01_2018_006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
 						 'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now,
-						 'Z:\\Data\\%s\\66-01-2014-015 pH' % now,
-						 'Z:\\Data\\%s\\66-01-2018-006 pH' % now]
+						 'Z:\\Data\\%s\\66-01-2014-015 pH' % now,'Z:\\Data\\%s\\66-01-2018-006 pH' % now,'C:\Data\pH CSV']
 		f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
 		i = 0
 		for i in range(len(configContentName)):
@@ -1296,9 +1296,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择Cr VI-Result文件',
 																'%s' % configContent['Cr_VI_Result_Import_URL'],
 																'CSV files(*.csv)')
-		elif messages == 'pH':
-			selectResultFile = QFileDialog.getOpenFileNames(self, '选择pH2018-Result文件',
-															'%s' % configContent['UV_Rusult_Export_URL'],
+			elif self.comboBox_2.currentText() == 'URL:pH Result':
+				selectResultFile = QFileDialog.getOpenFileNames(self, '选择pH2018-Result文件',
+															'%s' % configContent['pH_Result_Import_URL'],
 															'CSV files(*.csv)')
 		# print(1,selectBatchFile[0])
 		# 仅获取选择文件的路径
@@ -2232,7 +2232,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
-				MyMainWindow.getResult(self, 'pH')
+				MyMainWindow.getResult(self, 'UV')
 				if selectResultFile[0] == []:
 					self.lineEdit_6.setText("请重新选择pH Result数据文件")
 					self.textBrowser_5.append("请重新选择pH Result数据文件")
@@ -2248,22 +2248,45 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
 				# 获取相关结果数据
 				try:
-					csvFile = pd.read_csv(fileUrl, header=0)
+					print(fileUrl)
+					csvFile = pd.read_csv(fileUrl,names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
 				except pd.errors.ParserError:
 					QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
 					os.startfile(os.path.split(fileUrl)[0])
 					break
 				else:
-					tem, ok = QInputDialog.getDouble(self, '输入信息', '输入温度', 20, -50, 50, 0.1)
+					tep = ''
+					slope = ''
+					tem, ok = QInputDialog.getDouble(self, '输入信息', '输入温度', 20.00, -50, 50, 1)
 					if ok and tem:
 						tep = tem
-					slo, ok = QInputDialog.getDouble(self, '输入信息', '输入斜率', 99, 0, 120, 0.1)
+					slo, ok = QInputDialog.getDouble(self, '输入信息', '输入斜率', 99.00, 0, 120, 1)
 					if ok and slo:
 						slope = slo
 					if tep and slope:
-
-						# csvFile.drop(['B', 'E', 'G'])
-						pass
+						nowTime = time.strftime('%Y%m%d')
+						slopeData = ['%s'%nowTime,'pH Measure','Standard','Slope','value','%s'%slope,'%','','','']
+						csvFile.iloc[0, 8] = 'Lab TEMP'
+						csvFile.iloc[0, 9] = "[DELTA]ph"
+						csvFile.iloc[2, 8] = '%s'%tep
+						csvFile.iloc[2, 9] = 0
+						csvFile.loc[len(csvFile)] = slopeData
+						name, ok = QInputDialog.getText(self, '输入信息', '输入文件名', QLineEdit.Normal , '%s pH 3071' % nowTime)
+						if ok and tem:
+							fileName = configContent['pH2018_Result_Import_URL'] + '/' + name + '.csv'
+							csvFile.to_csv(fileName, mode='a', index=0, header=0)
+							file = configContent['pH_Result_Import_URL'] + '\\' + name + '.csv'
+							if not os.path.exists(file):
+								os.rename(fileUrl,file)
+							else:
+								i = 0
+								while os.path.exists(file):
+									i += 1
+									file = configContent['pH_Result_Import_URL'] + '\\' + name + '-%s' % i + '.csv'
+								os.rename(fileUrl,file)
+							self.textBrowser_5.append("pH数据迁移完成")
+						else:
+							self.textBrowser_5.append("没有文件名")
 					else:
 						self.textBrowser_5.append("请重新输入温度和斜率数据")
 	def crRecovery(self):
