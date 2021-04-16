@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>471</height>
+    <width>559</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1220,6 +1220,125 @@
           <string>UV Operate</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_39">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>信息：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QPushButton" name="pushButton_46">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID以六价铬格式生成TXT格式</string>
+            </property>
+            <property name="text">
+             <string>Cr VI Batch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="3">
+           <widget class="QPushButton" name="pushButton_48">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>填写pH QC Chart</string>
+            </property>
+            <property name="text">
+             <string>pH QC 2014</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2" colspan="2">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="3">
+           <widget class="QPushButton" name="pushButton_54">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>六价铬回收率计算</string>
+            </property>
+            <property name="text">
+             <string>Cr VI Recovery</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="pushButton_45">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID以pH格式生成CSV格式</string>
+            </property>
+            <property name="text">
+             <string>pH Batch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2" rowspan="8">
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
           <item row="6" column="0">
            <widget class="QPushButton" name="pushButton_42">
             <property name="enabled">
@@ -1241,6 +1360,58 @@
             </property>
            </widget>
           </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="pushButton_43">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>选择Result文件</string>
+            </property>
+            <property name="text">
+             <string>选择Result</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="5" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>选择Barch的文件信息</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" rowspan="4">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
           <item row="9" column="3">
            <widget class="QPushButton" name="pushButton_52">
             <property name="sizePolicy">
@@ -1258,6 +1429,19 @@
             </property>
             <property name="text">
              <string>pH QC 2018</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" rowspan="6" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>选择Result的文件信息</string>
             </property>
            </widget>
           </item>
@@ -1282,8 +1466,8 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="3">
-           <widget class="QPushButton" name="pushButton_49">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_41">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1296,31 +1480,21 @@
              </font>
             </property>
             <property name="statusTip">
-             <string>填写六价铬QC Chart</string>
+             <string>选择需要获取的Batch</string>
             </property>
             <property name="text">
-             <string>Cr VI QC</string>
+             <string>选择Batch</string>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="pushButton_45">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID以pH格式生成CSV格式</string>
-            </property>
-            <property name="text">
-             <string>pH Batch</string>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
             </property>
            </widget>
           </item>
@@ -1367,8 +1541,8 @@
             </item>
            </widget>
           </item>
-          <item row="11" column="3">
-           <widget class="QPushButton" name="pushButton_54">
+          <item row="7" column="3">
+           <widget class="QPushButton" name="pushButton_49">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1381,109 +1555,10 @@
              </font>
             </property>
             <property name="statusTip">
-             <string>六价铬回收率计算</string>
+             <string>填写六价铬QC Chart</string>
             </property>
             <property name="text">
-             <string>Cr VI Recovery</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" rowspan="4">
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QPushButton" name="pushButton_43">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>选择Result文件</string>
-            </property>
-            <property name="text">
-             <string>选择Result</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>icon/open.png</normaloff>
-              <normalon>:/open.png</normalon>
-              <disabledoff>:/open.png</disabledoff>
-              <disabledon>:/open.png</disabledon>
-              <activeoff>:/open.png</activeoff>
-              <activeon>:/open.png</activeon>
-              <selectedoff>:/open.png</selectedoff>
-              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2" colspan="2">
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="3">
-           <widget class="QPushButton" name="pushButton_48">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>填写pH QC Chart</string>
-            </property>
-            <property name="text">
-             <string>pH QC 2014</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_41">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>选择需要获取的Batch</string>
-            </property>
-            <property name="text">
-             <string>选择Batch</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>icon/open.png</normaloff>
-              <normalon>:/open.png</normalon>
-              <disabledoff>:/open.png</disabledoff>
-              <disabledon>:/open.png</disabledon>
-              <activeoff>:/open.png</activeoff>
-              <activeon>:/open.png</activeon>
-              <selectedoff>:/open.png</selectedoff>
-              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+             <string>Cr VI QC</string>
             </property>
            </widget>
           </item>
@@ -1508,61 +1583,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" rowspan="5" colspan="2">
-           <widget class="QTextBrowser" name="textBrowser_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="statusTip">
-             <string>选择Barch的文件信息</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="pushButton_46">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID以六价铬格式生成TXT格式</string>
-            </property>
-            <property name="text">
-             <string>Cr VI Batch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_39">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>信息：</string>
-            </property>
-           </widget>
-          </item>
           <item row="12" column="3">
            <widget class="QPushButton" name="pushButton_53">
             <property name="sizePolicy">
@@ -1581,26 +1601,6 @@
             </property>
             <property name="text">
              <string>pH Result</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" rowspan="6" colspan="2">
-           <widget class="QTextBrowser" name="textBrowser_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="statusTip">
-             <string>选择Result的文件信息</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2" rowspan="8">
-           <widget class="Line" name="line_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
@@ -1637,7 +1637,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>474</width>
+     <width>559</width>
      <height>23</height>
     </rect>
    </property>

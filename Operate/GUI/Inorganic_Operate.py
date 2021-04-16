@@ -120,6 +120,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
 			i += 1
 		# print(configContent)
+		configLen = 36
+		if configLen != len(configContent):
+			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
+										 QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.createConfigContent(self)
+				MyMainWindow.getConfigContent(self)
 		self.lineEdit_6.setText("配置获取成功")
 
 	def createConfigContent(self):
@@ -2248,8 +2255,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
 				# 获取相关结果数据
 				try:
-					print(fileUrl)
-					csvFile = pd.read_csv(fileUrl,names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
+					# print(fileUrl)
+					csvFile = pd.read_csv(fileUrl,skip_blank_lines=False,names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
 				except pd.errors.ParserError:
 					QMessageBox.warning(self, "文件格式错误", "%s文件格式不正确，\n请调整成正确的文件格式后继续操作。" % fileUrl, QMessageBox.Yes)
 					os.startfile(os.path.split(fileUrl)[0])
@@ -2274,6 +2281,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						name, ok = QInputDialog.getText(self, '输入信息', '输入文件名', QLineEdit.Normal , '%s pH 3071' % nowTime)
 						if ok and tem:
 							fileName = configContent['pH2018_Result_Import_URL'] + '/' + name + '.csv'
+							i = 0
+							while os.path.exists(fileName):
+								i += 1
+								fileName = configContent['pH2018_Result_Import_URL'] + '/' + name + '-%s' % i + '.csv'
 							csvFile.to_csv(fileName, mode='a', index=0, header=0)
 							file = configContent['pH_Result_Import_URL'] + '\\' + name + '.csv'
 							if not os.path.exists(file):
@@ -2285,6 +2296,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									file = configContent['pH_Result_Import_URL'] + '\\' + name + '-%s' % i + '.csv'
 								os.rename(fileUrl,file)
 							self.textBrowser_5.append("pH数据迁移完成")
+							self.textBrowser_5.append("URL:%s" % configContent['pH2018_Result_Import_URL'])
 						else:
 							self.textBrowser_5.append("没有文件名")
 					else:
