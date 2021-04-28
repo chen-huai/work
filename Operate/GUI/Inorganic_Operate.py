@@ -970,6 +970,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				jNum = []
 				lNum = []
 				fNum = []
+				eNum = []
 				# 获取日本方法和其它方法的单号位置
 				for i in range(len(labNumber)):
 					# print(labNumber[i],analyteList[i])
@@ -977,6 +978,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						jNum.append(i)
 					elif '17226' in analyteList[i]:
 						lNum.append(i)
+					elif '717' in analyteList[i]:
+						eNum.append(i)
 					else:
 						fNum.append(i)
 				if jNum != []:
@@ -994,7 +997,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					fileName = '%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
 					for i in lNum:
 						if not os.path.exists(fileName):
-							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+							file = open(fileName, 'a+')
 							# file.write('CQC\n')
 							file.write('BLK\n')
 							file.write('BLK-S\n')
@@ -1002,7 +1005,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							file.write('%s\n' % labNumber[i])
 							n += 1
 						else:
-							file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+							file = open(fileName, 'a+')
 							file.write('%s\n' % labNumber[i])
 							n += 1
 							if n % 20 == 0:
@@ -1010,7 +1013,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					if n % 20 != 0:
 						file.write('CQC\n')
 					for i in lNum:
-						file = open('%s/Formal 17226 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+						file = open(fileName, 'a+')
 						file.write('%sB\n' % labNumber[i])
 						n += 1
 					file.write('CQC\n')
@@ -1018,15 +1021,34 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					fileName = '%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
 					for i in fNum:
 						if not os.path.exists(fileName):
-							file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+							file = open(fileName, 'a+')
 							file.write('BLK\n')
 							file.write('BLK-S\n')
 							file.write('S-S\n')
 							file.write('%s\n' % labNumber[i])
 							n += 1
 						else:
-							file = open('%s/Formal 14184 %s.txt' % (configContent['UV_Batch_Export_URL'], today), 'a+')
+							file = open(fileName, 'a+')
 							file.write('%s\n' % labNumber[i])
+							n += 1
+							if n % 20 == 0:
+								file.write('CQC\n')
+					if n % 20 != 0:
+						file.write('CQC\n')
+				if eNum != []:
+					fileName = '%s\\Formal EN717-3 %s.txt' % (configContent['UV_Batch_Export_URL'], today)
+					for i in eNum:
+						if not os.path.exists(fileName):
+							file = open(fileName, 'a+')
+							file.write('BLK\n')
+							file.write('BLK-S\n')
+							file.write('%s\n' % labNumber[i])
+							file.write('%sD\n' % labNumber[i])
+							n += 1
+						else:
+							file = open(fileName, 'a+')
+							file.write('%s\n' % labNumber[i])
+							file.write('%sD\n' % labNumber[i])
 							n += 1
 							if n % 20 == 0:
 								file.write('CQC\n')
