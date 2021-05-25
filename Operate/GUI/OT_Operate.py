@@ -160,7 +160,10 @@ class MyMainWindow(QMainWindow, Ui_mainWindow):
 						if is_workday(date[i]):
 							status = 1
 						elif is_holiday(date[i]):
-							status = 3
+							if publicHoliday[i]:
+								status = 3
+							else:
+								status = 2
 						else:
 							status = 2
 						if status == 1:
