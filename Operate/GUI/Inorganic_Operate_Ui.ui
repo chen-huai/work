@@ -1645,10 +1645,12 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionEdit"/>
     <addaction name="actionExport"/>
     <addaction name="actionImport"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1774,6 +1776,11 @@
    </property>
    <property name="statusTip">
     <string>关于作者</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Edit</string>
    </property>
   </action>
  </widget>
