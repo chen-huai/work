@@ -177,7 +177,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	# 							"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
 	# 							QMessageBox.Yes)
 	def getConfigContent(self):
-		csvFile = pd.read_csv('%s/config_inorganic.csv' % configFileUrl, header=0, names=['A', 'B', 'C'])
+		csvFile = pd.read_csv('%s/config_inorganic.csv' % configFileUrl, names=['A', 'B', 'C'])
 		global configContent
 		configContent = {}
 		content = list(csvFile['A'])
@@ -185,7 +185,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		use = list(csvFile['C'])
 		for i in range(len(content)):
 			configContent['%s' % content[i]] = rul[i]
-		if int(rul[0]) != len(configContent):
+		if int(configContent['config_num']) != len(configContent):
 			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
@@ -235,7 +235,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		]
 		config = np.array(configContent)
 		df = pd.DataFrame(config)
-		df.to_csv('%s/config_inorganic.csv' % configFileUrl)
+		df.to_csv('%s/config_inorganic.csv' % configFileUrl, index=0, header=0, encoding='utf_8_sig')
 		self.lineEdit_6.setText("配置文件创建成功")
 		QMessageBox.information(self, "提示信息",
 								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config_inorganic.csv，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。",
@@ -2725,7 +2725,7 @@ if __name__ == "__main__":
 	myWin.getConfig()
 	sys.exit(app.exec_())
 
-	
+
 
 
 
