@@ -92,7 +92,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		today = time.strftime('%Y%m%d')
 		desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
 		configFileUrl = '%s/config' % desktopUrl
-		configFile = os.path.exists('%s/config.txt' % configFileUrl)
+		configFile = os.path.exists('%s/config_inorganic.csv' % configFileUrl)
 		# print(desktopUrl,configFileUrl,configFile)
 		if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
 			reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
@@ -107,21 +107,85 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		else:
 			MyMainWindow.getConfigContent(self)
 
+	# def getConfigContent(self):
+	# 	# 获取配置文件内容
+	# 	f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
+	# 	global configContent
+	# 	configContent = {}
+	# 	i = 0
+	# 	for line in f1:
+	# 		if line != '\n':
+	# 			lineContent = line.split('||||||')
+	# 			# print(lineContent)
+	# 			configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
+	# 		i += 1
+	# 	# print(configContent)
+	# 	configLen = 36
+	# 	if configLen != len(configContent):
+	# 		reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
+	# 									 QMessageBox.Yes)
+	# 		if reply == QMessageBox.Yes:
+	# 			MyMainWindow.createConfigContent(self)
+	# 			MyMainWindow.getConfigContent(self)
+	# 	self.lineEdit_6.setText("配置获取成功")
+
+	# def createConfigContent(self):
+	# 	# 生成默认配置文件
+	# 	configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Import_URL', 'ICP_Batch_Export_URL',
+	# 						 'ECO_Batch_Export_URL', 'Nickel_Batch_Export_URL', 'Nickel_Model_Import_URL',
+	# 						 'Nickel_File_Name',
+	# 						 '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Import_URL', 'ICP_Result_Export_URL',
+	# 						 'AAS_Result_Import_URL',
+	# 						 'AAS_Result_Export_URL', 'ECO_Result_Import_URL', 'ECO_Result_Export_URL',
+	# 						 'ICP_QC_Chart_Import_URL',
+	# 						 'ICP_QC_Chart_File_Name', 'Reach_Model_Import_URL', 'Reach_Result_File_Name',
+	# 						 'Reach_Result_Export_URL',
+	# 						 'Reach_Message_Import_URL', 'Reach_Message_File_Name', '选择UV_Batch的输入路径和结果输出路径',
+	# 						 'UV_Batch_Import_URL','UV_Batch_Export_URL', 'UV_Rusult_Export_URL',
+	# 						 '选择UV_Result的输入路径和结果输出路径', 'UV_QC_Chart_Import_URL', 'Formal_QC_Chart_File_Name',
+	# 						 'Cr_VI_QC_Chart_File_Name', 'pH2014_QC_Chart_File_Name', 'pH2018_QC_Chart_File_Name',
+	# 						 'Formal_Result_Import_URL', 'Cr_VI_Result_Import_URL', 'pH2014_Result_Import_URL',
+	# 						 'pH2018_Result_Import_URL','pH_Result_Import_URL']
+	# 	configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
+	# 					 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
+	# 					 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
+	# 					 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm', '有条件最好改为跟默认配置一致',
+	# 					 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+	# 					 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+	# 					 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+	# 					 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
+	# 					 'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
+	# 					 'Z:\\QC Chart\\%s' % now,
+	# 					 'QC_Chart_Heavy_Metal_66_01_2018_012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+	# 					 'SVHC_DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
+	# 					 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model',
+	# 					 'REACH_SVHC_Candidate_List.csv', '"||||||"六根，少了或者多了都无法读取配置文件',
+	# 					 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
+	# 					 'Z:\\Inorganic_batch\\Formaldehyde\\Result',
+	# 					 '默认，可更改为自己需要的', 'Z:\\QC Chart\\%s' % now, 'QC_Chart_HCHO_66_01_2016_051_CARY60.xlsx',
+	# 					 'QC_Chart_Cr_66_01_2013_011_CARY100.xlsx', 'QC_Chart_pH_66_01_2014_015.xlsx',
+	# 					 'QC_Chart_pH_66_01_2018_006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
+	# 					 'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now,
+	# 					 'Z:\\Data\\%s\\66-01-2014-015 pH' % now,'Z:\\Data\\%s\\66-01-2018-006 pH' % now,'C:\Data\pH CSV']
+	# 	f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
+	# 	i = 0
+	# 	for i in range(len(configContentName)):
+	# 		f1.write(configContentName[i] + '||||||' + configContent[i] + '\n')
+	# 		i += 1
+	# 	self.lineEdit_6.setText("配置文件创建成功")
+	# 	QMessageBox.information(self, "提示信息",
+	# 							"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
+	# 							QMessageBox.Yes)
 	def getConfigContent(self):
-		# 获取配置文件内容
-		f1 = open('%s/config.txt' % configFileUrl, "r", encoding="utf-8")
+		csvFile = pd.read_csv('%s/config_inorganic.csv' % configFileUrl, header=0, names=['A', 'B', 'C'])
 		global configContent
 		configContent = {}
-		i = 0
-		for line in f1:
-			if line != '\n':
-				lineContent = line.split('||||||')
-				# print(lineContent)
-				configContent['%s' % lineContent[0]] = lineContent[1].split('\n')[0]
-			i += 1
-		# print(configContent)
-		configLen = 36
-		if configLen != len(configContent):
+		content = list(csvFile['A'])
+		rul = list(csvFile['B'])
+		use = list(csvFile['C'])
+		for i in range(len(content)):
+			configContent['%s' % content[i]] = rul[i]
+		if int(rul[0]) != len(configContent):
 			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
@@ -130,51 +194,51 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.lineEdit_6.setText("配置获取成功")
 
 	def createConfigContent(self):
-		# 生成默认配置文件
-		configContentName = ['选择ICP_Batch的输入路径和结果输出路径', 'ICP_Batch_Import_URL', 'ICP_Batch_Export_URL',
-							 'ECO_Batch_Export_URL', 'Nickel_Batch_Export_URL', 'Nickel_Batch_Import_URL',
-							 'Nickel_File_Name',
-							 '选择ICP_Result的输入路径和结果输出路径', 'ICP_Result_Import_URL', 'ICP_Result_Export_URL',
-							 'AAS_Result_Import_URL',
-							 'AAS_Result_Export_URL', 'ECO_Result_Import_URL', 'ECO_Result_Export_URL',
-							 'ICP_QC_Chart_Import_URL',
-							 'ICP_QC_Chart_File_Name', 'Reach_Result_Import_URL', 'Reach_Result_File_Name',
-							 'Reach_Result_Export_URL',
-							 'Reach_Message_Import_URL', 'Reach_Message_File_Name', '选择UV_Batch的输入路径和结果输出路径',
-							 'UV_Batch_Import_URL','UV_Batch_Export_URL', 'UV_Rusult_Export_URL',
-							 '选择UV_Result的输入路径和结果输出路径', 'UV_QC_Chart_Import_URL', 'Formal_QC_Chart_File_Name',
-							 'Cr_VI_QC_Chart_File_Name', 'pH2014_QC_Chart_File_Name', 'pH2018_QC_Chart_File_Name',
-							 'Formal_Result_Import_URL', 'Cr_VI_Result_Import_URL', 'pH2014_Result_Import_URL',
-							 'pH2018_Result_Import_URL','pH_Result_Import_URL']
-		configContent = ['默认，可更改为自己需要的', 'Z:\\Inorganic_batch\\Microwave\\Batch', '%s' % desktopUrl,
-						 'Z:\\Inorganic_batch\\Microwave\\Result\\ECO',
-						 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel',
-						 'Z:\\Inorganic_batch\\Microwave\\Result\\Nickel', 'TC_XMN_CHM_F_T.02E.xlsm', '有条件最好改为跟默认配置一致',
-						 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-						 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-						 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-						 'Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,
-						 'Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now, 'Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,
-						 'Z:\\QC Chart\\%s' % now,
-						 'QC_Chart_Heavy_Metal_66_01_2018_012.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-						 'SVHC_DCU.xlsx', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach',
-						 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model',
-						 'REACH_SVHC_Candidate_List.csv', '"||||||"六根，少了或者多了都无法读取配置文件',
-						 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch',
-						 'Z:\\Inorganic_batch\\Formaldehyde\\Result',
-						 '默认，可更改为自己需要的', 'Z:\\QC Chart\\%s' % now, 'QC_Chart_HCHO_66_01_2016_051_CARY60.xlsx',
-						 'QC_Chart_Cr_66_01_2013_011_CARY100.xlsx', 'QC_Chart _pH_66_01_2014_015.xlsx',
-						 'QC_Chart _pH_66_01_2018_006.xlsx', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now,
-						 'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now,
-						 'Z:\\Data\\%s\\66-01-2014-015 pH' % now,'Z:\\Data\\%s\\66-01-2018-006 pH' % now,'C:\Data\pH CSV']
-		f1 = open('%s/config.txt' % configFileUrl, "w", encoding="utf-8")
-		i = 0
-		for i in range(len(configContentName)):
-			f1.write(configContentName[i] + '||||||' + configContent[i] + '\n')
-			i += 1
+		configContent = [
+			['config_num','37','config文件条目数量'],
+			['选择ICP_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下ICP组Batch相关'],
+			['ICP_Batch_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Batch', 'ICP的Batch引入路径，所有ICP组batch均为次路径'],
+			['ICP_Batch_Export_URL', '%s' % desktopUrl, 'ICP仪器使用，一般为本机电脑桌面'],
+			['ECO_Batch_Export_URL','Z:\\Inorganic_batch\\Microwave\\Result\\ECO','ECO项目的导出路径，质检院格式'],
+			['Nickel_Batch_Export_URL','Z:\\Inorganic_batch\\Microwave\\Result\\Nickel','镍释放项目的导出路径'],
+			['Nickel_Model_Import_URL','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model','镍释放项目的模板文件路径'],
+			['Nickel_File_Name','TC_XMN_CHM_F_T.02E.xlsm','镍释放项目的模板文件名称'],
+			['选择ICP_Result的输入路径和输出路径','默认，可更改为自己需要的','以下ICP组Result相关'],
+			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'ICP组结果的引入路径，选择CSV结果文件'],
+			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'ICP组结果的导出路径，转化为TXT保存路径'],
+			['AAS_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的引入路径，选择CSV结果文件'],
+			['AAS_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的导出路径，转化为TXT保存路径'],
+			['ECO_Result_Import_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'ECO项目结果的引入路径'],
+			['ECO_Result_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'ECO项目结果转化后的输出路径'],
+			['ICP_QC_Chart_Import_URL','Z:\\QC Chart\\%s' % now,'ICP仪器的QC-Chart路径'],
+			['ICP_QC_Chart_File_Name','QC_Chart_Heavy_Metal_66_01_2018_012.xlsx','ICP仪器的QC-Chart文件名'],
+			['Reach_Model_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Reach项目的模板路径'],
+			['Reach_Result_File_Name', 'SVHC_DCU.xlsx', 'Reach项目的模板文件名'],
+			['Reach_Result_Export_URL', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Reach项目结果转化后的导出路径'],
+			['Reach_Message_Import_URL', 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'Reach-Message项目的模板路径'],
+			['Reach_Message_File_Name', 'REACH_SVHC_Candidate_List.csv', 'Reach-Message项目的模板文件名'],
+			['选择UV_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下UV组Batch相关'],
+			['UV_Batch_Import_URL', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'UV组的Batch引入路径'],
+			['UV_Batch_Export_URL', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'UV组的Batch转化后的导出路径'],
+			['UV_Rusult_Export_URL', 'Z:\\Inorganic_batch\\Formaldehyde\\Result', 'UV组的Batch转化为DCU结果格式后的导出路径，主要针对pH'],
+			['选择UV_Result的输入路径和输出路径', '默认，可更改为自己需要的', '以下UV组Result相关'],
+			['UV_QC_Chart_Import_URL', 'Z:\\QC Chart\\%s' % now, 'UV组仪器的QC-Chart路径'],
+			['Formal_QC_Chart_File_Name', 'QC_Chart_HCHO_66_01_2016_051_CARY60.xlsx', '甲醛QC-Chart文件名'],
+			['Cr_VI_QC_Chart_File_Name', 'QC_Chart_Cr_66_01_2013_011_CARY100.xlsx', '六价铬QC-Chart文件名'],
+			['pH2014_QC_Chart_File_Name', 'QC_Chart_pH_66_01_2014_015.xlsx', 'pH2014-QC-Chart文件名'],
+			['pH2018_QC_Chart_File_Name', 'QC_Chart_pH_66_01_2018_006.xlsx', 'pH2018-QC-Chart文件名'],
+			['Formal_Result_Import_URL', 'Z:\\Data\\%s\\66-01-2016-051 UV-Vis (60)\\Formal' % now, '甲醛结果的导入路径'],
+			['Cr_VI_Result_Import_URL', 'Z:\\Data\\%s\\66-01-2013-011 UV-Vis (100)\\Cr-VI\\Data' % now, '六价铬结果的导入路径'],
+			['pH2014_Result_Import_URL', 'Z:\\Data\\%s\\66-01-2014-015 pH' % now, 'pH2014结果的导入路径'],
+			['pH2018_Result_Import_URL', 'Z:\\Data\\%s\\66-01-2018-006 pH' % now, 'pH2018结果的导入路径'],
+			['pH_Result_Import_URL', 'C:\Data\pH CSV', '原始pH结果路径']
+		]
+		config = np.array(configContent)
+		df = pd.DataFrame(config)
+		df.to_csv('%s/config_inorganic.csv' % configFileUrl)
 		self.lineEdit_6.setText("配置文件创建成功")
 		QMessageBox.information(self, "提示信息",
-								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config.txt，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。\n切记：中间‘||||||’六根，不能多也不能少！！！",
+								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config_inorganic.csv，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。",
 								QMessageBox.Yes)
 
 	def exportConfig(self):
@@ -482,11 +546,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				m = 'N'
 		if m == 'Y':
 			# 判断是否有镍释放的模板文件
-			file = configContent['Nickel_Batch_Import_URL'] + '\\' + configContent['Nickel_File_Name']
+			file = configContent['Nickel_Model_Import_URL'] + '\\' + configContent['Nickel_File_Name']
 			folder1 = os.path.exists(file)
 			if not folder1:
 				QMessageBox.information(self, "无镍释放模板",
-										"没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Batch_Import_URL,Nickel_File_Name\n镍释放结果模板的文件路径、文件名称和Excel格式",
+										"没有Nickel结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nNickel_Model_Import_URL,Nickel_File_Name\n镍释放结果模板的文件路径、文件名称和Excel格式",
 										QMessageBox.Yes)
 			# 判断镍释放存储路径是否存在
 			fileUrl = configContent['Nickel_Batch_Export_URL']
@@ -511,7 +575,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
 					wb = excel.Workbooks.Open(
 						os.path.join(os.getcwd(), r'%s/%s' % (
-							configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+							configContent['Nickel_Model_Import_URL'], configContent['Nickel_File_Name'])))
 					ws = wb.Worksheets('Data')
 					x = 1
 					oneRow = []
@@ -544,7 +608,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								m += 1
 								wb = excel.Workbooks.Open(
 									os.path.join(os.getcwd(), r'%s/%s' % (
-										configContent['Nickel_Batch_Import_URL'], configContent['Nickel_File_Name'])))
+										configContent['Nickel_Model_Import_URL'], configContent['Nickel_File_Name'])))
 								ws = wb.Worksheets('Data')
 					if (i + 1) % num[-1] != 1:
 						wb.SaveAs('%s/Ni %s-%s.xlsm' % (configContent['Nickel_Batch_Export_URL'], today, m))
@@ -1463,11 +1527,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 判断是否有Batch和Result文件
 		if m3 == 'Y' and m4 == 'Y':
 			# 判断是否有Reach模板
-			file = configContent['Reach_Result_Import_URL'] + '\\' + configContent['Reach_Result_File_Name']
+			file = configContent['Reach_Model_Import_URL'] + '\\' + configContent['Reach_Result_File_Name']
 			folder1 = os.path.exists(file)
 			if not folder1:
 				QMessageBox.information(self, "无Reach模板",
-										"没有Reach结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Result_Import_URL,Reach_Result_File_Name\nReach结果模板的文件路径、文件名称和Excel格式",
+										"没有Reach结果模板文件！！！\n请查看config配置文件内容是否符合需求。\nReach_Model_Import_URL,Reach_Result_File_Name\nReach结果模板的文件路径、文件名称和Excel格式",
 										QMessageBox.Yes)
 			# 判断Reach存储路径是否存在
 			fileUrl = configContent['Reach_Result_Export_URL']
@@ -1486,7 +1550,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				excel.Visible = 0
 				excel.Application.DisplayAlerts = True
 				wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
-					configContent['Reach_Result_Import_URL'], configContent['Reach_Result_File_Name'])))
+					configContent['Reach_Model_Import_URL'], configContent['Reach_Result_File_Name'])))
 				ws = wb.Worksheets('Data')
 				oneRow = []
 				x = 1
@@ -2649,6 +2713,7 @@ if __name__ == "__main__":
 	import random
 	import pyautogui
 	import pandas as pd
+	import numpy as np
 	import re
 	from docx import Document
 	import win32com.client as win32com
@@ -2659,3 +2724,8 @@ if __name__ == "__main__":
 	myWin.show()
 	myWin.getConfig()
 	sys.exit(app.exec_())
+
+	
+
+
+
