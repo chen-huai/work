@@ -79,6 +79,7 @@ class Ui_TableWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.groupBox)
         self.gridLayout.setObjectName("gridLayout")
         self.tableView = QtWidgets.QTableView(self.groupBox)
+        self.tableView.setEditTriggers(QtWidgets.QAbstractItemView.AllEditTriggers)
         self.tableView.setObjectName("tableView")
         self.tableView.horizontalHeader().setCascadingSectionResizes(True)
         self.tableView.horizontalHeader().setSortIndicatorShown(False)

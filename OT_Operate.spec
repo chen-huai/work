@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['D:\\python\\work\\Operate\\GUI\\OT_Operate.py'],
-             pathex=['D:\\python\\work'],
+a = Analysis(['C:\\Data\\python\\work\\Operate\\GUI\\OT_Operate.py'],
+             pathex=['C:\\Data\\python\\work'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='D:\\python\\work\\Operate\\GUI\\overtime_logo.ico')
+          console=False , icon='C:\\Data\\python\\work\\Operate\\GUI\\overtime_logo.ico')

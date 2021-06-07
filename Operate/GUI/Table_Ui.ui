@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>784</height>
+    <width>623</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,17 +50,29 @@
          <property name="lineWidth">
           <number>1</number>
          </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>200</number>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
          </attribute>
          <attribute name="horizontalHeaderMinimumSectionSize">
           <number>100</number>
          </attribute>
-         <attribute name="verticalHeaderDefaultSectionSize">
-          <number>40</number>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+         <attribute name="verticalHeaderCascadingSectionResizes">
+          <bool>true</bool>
          </attribute>
          <attribute name="verticalHeaderMinimumSectionSize">
           <number>25</number>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>40</number>
          </attribute>
          <row>
           <property name="text">
@@ -464,7 +476,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>681</width>
+     <width>623</width>
      <height>23</height>
     </rect>
    </property>
