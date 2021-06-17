@@ -52,7 +52,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.actionEdit.triggered.connect(self.showTable)
 		self.pushButton_37.clicked.connect(self.searchReachMessage)
 		self.actionImport.triggered.connect(self.lineEdit.clear)
-		self.actionHelp.triggered.connect(self.lineEdit.clear)
+		self.actionHelp.triggered.connect(self.showVersion)
 		self.actionAuthor.triggered.connect(self.showAuthorMessage)
 		self.pushButton_50.clicked.connect(self.getReachMessage)
 		self.pushButton_51.clicked.connect(self.lineEdit_5.clear)
@@ -202,27 +202,32 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 	def createConfigContent(self):
+		months = "JanFebMarAprMayJunJulAugSepOctNovDec"
+		n = time.strftime('%m')
+		pos = (int(n) - 1) * 3
+		monthAbbrev = months[pos:pos + 3]
+
 		configContent = [
 			['config_num','37','config文件条目数量'],
 			['选择ICP_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下ICP组Batch相关'],
 			['ICP_Batch_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Batch', 'ICP的Batch引入路径，所有ICP组batch均为次路径'],
 			['ICP_Batch_Export_URL', '%s' % desktopUrl, 'ICP仪器使用，一般为本机电脑桌面'],
-			['ECO_Batch_Export_URL','Z:\\Inorganic_batch\\Microwave\\Result\\ECO','ECO项目的导出路径，质检院格式'],
+			['ECO_Batch_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\%s' % (now,monthAbbrev),'ECO项目的导出路径，质检院格式'],
 			['Nickel_Batch_Export_URL','Z:\\Inorganic_batch\\Microwave\\Result\\Nickel','镍释放项目的导出路径'],
 			['Nickel_Model_Import_URL','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model','镍释放项目的模板文件路径'],
 			['Nickel_File_Name','TC_XMN_CHM_F_T.02E.xlsm','镍释放项目的模板文件名称'],
 			['选择ICP_Result的输入路径和输出路径','默认，可更改为自己需要的','以下ICP组Result相关'],
-			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'ICP组结果的引入路径，选择CSV结果文件'],
-			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'ICP组结果的导出路径，转化为TXT保存路径'],
+			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES\\%s' % (now,monthAbbrev),'ICP组结果的引入路径，选择CSV结果文件'],
+			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES\\%s' % (now,monthAbbrev),'ICP组结果的导出路径，转化为TXT保存路径'],
 			['AAS_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的引入路径，选择CSV结果文件'],
 			['AAS_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的导出路径，转化为TXT保存路径'],
 			['ECO_Result_Import_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'ECO项目结果的引入路径'],
 			['ECO_Result_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'ECO项目结果转化后的输出路径'],
 			['ICP_QC_Chart_Import_URL','Z:\\QC Chart\\%s' % now,'ICP仪器的QC-Chart路径'],
 			['ICP_QC_Chart_File_Name','QC_Chart_Heavy_Metal_66_01_2018_012.xlsx','ICP仪器的QC-Chart文件名'],
-			['Reach_Model_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Reach项目的模板路径'],
+			['Reach_Model_Import_URL', 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'Reach项目的模板路径'],
 			['Reach_Result_File_Name', 'SVHC_DCU.xlsx', 'Reach项目的模板文件名'],
-			['Reach_Result_Export_URL', 'Z:\\Inorganic_batch\\Microwave\\Result\\Reach', 'Reach项目结果转化后的导出路径'],
+			['Reach_Result_Export_URL', 'Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\SVHC'% now, 'Reach项目结果转化后的导出路径'],
 			['Reach_Message_Import_URL', 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'Reach-Message项目的模板路径'],
 			['Reach_Message_File_Name', 'REACH_SVHC_Candidate_List.csv', 'Reach-Message项目的模板文件名'],
 			['选择UV_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下UV组Batch相关'],
@@ -269,6 +274,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 关于作者
 		QMessageBox.about(self, "关于",
 						  "人生苦短，码上行乐。\n\n\n        ----Frank Chen")
+	def showVersion(self):
+		# 关于作者
+		QMessageBox.about(self, "版本",
+						  "V 2.21.16\n\n\n     2021-06-17")
 
 	def getBatch(self, messages):
 		# 获取Sample ID 、实验方法、质量、体积
