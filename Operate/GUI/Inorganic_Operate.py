@@ -277,7 +277,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 2.21.16\n\n\n     2021-06-17")
+						  "V 2.21.17\n\n\n     2021-07-26")
 
 	def getBatch(self, messages):
 		# 获取Sample ID 、实验方法、质量、体积
@@ -1602,7 +1602,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				i = 0
 				for each in labNumber:
 					# print(labNumber[i], analyteList[i],i)
-					if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]) or ('R-I' in analyteList[i]):
+					if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]) or ('R-I' in analyteList[i]) or ('SVHC' in analyteList[i]):
 						resultLabnumber.append(each)
 						resultQualityValue.append(qualityValue[i])
 						resultVolumeValue.append(volumeValue[i])
