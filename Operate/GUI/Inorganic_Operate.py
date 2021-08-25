@@ -277,7 +277,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 2.21.17\n\n\n     2021-07-26")
+						  "V 2.21.18\n\n\n     2021-08-25")
 
 	def getBatch(self, messages):
 		# 获取Sample ID 、实验方法、质量、体积
@@ -394,7 +394,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							for cell in row.cells:
 								if i == 2:
 									if '/' in cell.text and '(B' not in cell.text and '(C' not in cell.text and '(D' not in cell.text:
-										labNumber.append(cell.text.replace('\n',''))
+										if 'SVHC ' in cell.text:
+											labNumber.append(cell.text.replace('\n',''))
+										else:
+											labNumber.append(cell.text.replace('\n','').replace('SVHC','SVHC '))
 										batchNum.append(os.path.split(selectBatchFile[0][n])[1].split('.')[0])
 										i += 1
 									else:
@@ -1603,7 +1606,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				for each in labNumber:
 					# print(labNumber[i], analyteList[i],i)
 					if ('R\x1eI' in analyteList[i]) or ('Reach' in analyteList[i]) or ('R-I' in analyteList[i]) or ('SVHC' in analyteList[i]):
+						# if 'SVHC ' in each:
 						resultLabnumber.append(each)
+						# else:
+						# 	resultLabnumber.append(each.replace('SVHC','SVHC '))
 						resultQualityValue.append(qualityValue[i])
 						resultVolumeValue.append(volumeValue[i])
 					# print(resultLabnumber, analyteList[i])
