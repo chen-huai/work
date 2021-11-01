@@ -16,6 +16,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_24.clicked.connect(self.ecoZxd)
 		self.pushButton_26.clicked.connect(self.randomAction)
 		self.pushButton_27.clicked.connect(self.icpResultToTxt)
+		self.pushButton_55.clicked.connect(self.nbResultToTxt)
 		self.pushButton_30.clicked.connect(self.icpQc)
 		self.pushButton_22.clicked.connect(self.nickelBatch)
 		self.pushButton_25.clicked.connect(self.ecoZjy)
@@ -187,7 +188,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		use = list(csvFile['C'])
 		for i in range(len(content)):
 			configContent['%s' % content[i]] = rul[i]
-		if int(configContent['config_num']) != len(configContent):
+		a = len(configContent)
+		if (int(configContent['config_num']) != len(configContent)) or (len(configContent) != 39):
 			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
@@ -200,7 +202,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		else:
 			pass
 
-
 	def createConfigContent(self):
 		months = "JanFebMarAprMayJunJulAugSepOctNovDec"
 		n = time.strftime('%m')
@@ -208,7 +209,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			['config_num','37','config文件条目数量'],
+			['config_num','39','config文件条目数量,不能更改数值'],# getConfigContent()中需要更改配置文件数量
 			['选择ICP_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下ICP组Batch相关'],
 			['ICP_Batch_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Batch', 'ICP的Batch引入路径，所有ICP组batch均为次路径'],
 			['ICP_Batch_Export_URL', '%s' % desktopUrl, 'ICP仪器使用，一般为本机电脑桌面'],
@@ -217,10 +218,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['Nickel_Model_Import_URL','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model','镍释放项目的模板文件路径'],
 			['Nickel_File_Name','TC_XMN_CHM_F_T.02E.xlsm','镍释放项目的模板文件名称'],
 			['选择ICP_Result的输入路径和输出路径','默认，可更改为自己需要的','以下ICP组Result相关'],
-			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES\\%s' % (now,monthAbbrev),'ICP组结果的引入路径，选择CSV结果文件'],
-			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES\\%s' % (now,monthAbbrev),'ICP组结果的导出路径，转化为TXT保存路径'],
-			['AAS_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的引入路径，选择CSV结果文件'],
-			['AAS_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012 5110 ICP-OES' % now,'AAS组结果的导出路径，转化为TXT保存路径'],
+			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP组结果的引入路径，选择CSV结果文件'],
+			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP组结果的导出路径，转化为TXT保存路径'],
+			['NB_Result_Import_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\Raw Dada\\%s' % (now,monthAbbrev),'NB-ICP组结果的引入路径，选择CSV结果文件'],
+			['NB_Result_Export_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\NB Result\\%s' % (now,monthAbbrev),'NB-ICP组结果的导出路径，转化为TXT保存路径'],
+			['AAS_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110' % now,'AAS组结果的引入路径，选择CSV结果文件'],
+			['AAS_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110' % now,'AAS组结果的导出路径，转化为TXT保存路径'],
 			['ECO_Result_Import_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'ECO项目结果的引入路径'],
 			['ECO_Result_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'ECO项目结果转化后的输出路径'],
 			['ICP_QC_Chart_Import_URL','Z:\\QC Chart\\%s' % now,'ICP仪器的QC-Chart路径'],
@@ -274,10 +277,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 关于作者
 		QMessageBox.about(self, "关于",
 						  "人生苦短，码上行乐。\n\n\n        ----Frank Chen")
+
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 2.21.18\n\n\n     2021-08-25")
+						  "V 2.21.19\n\n\n     2021-10-25")
 
 	def getBatch(self, messages):
 		# 获取Sample ID 、实验方法、质量、体积
@@ -1392,6 +1396,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
 																'%s' % configContent['ECO_Result_Import_URL'],
 																'Files (*.csv;*.txt)')
+			elif self.comboBox.currentText() == 'URL:NB ICP Result':
+				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
+																'%s' % configContent['NB_Result_Import_URL'],
+																'Files (*.csv)')
 		elif messages == 'UV':
 			if self.comboBox_2.currentText() == 'URL:Formal Result':
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择Formal-Result文件',
@@ -1492,6 +1500,65 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("完成ICP文件转换为TXT")
 					self.textBrowser.append("生成路径：%s" % configContent['ICP_Result_Export_URL'])
 					self.lineEdit_6.setText("完成ICP文件转换为TXT")
+
+	def nbResultToTxt(self):
+		# ICP结果转化为TXT
+		# 判断是否选择了Result文件
+		try:
+			selectResultFile[0]
+		except NameError:
+			m = 'N'
+		else:
+			if selectResultFile[0] == []:
+				m = 'N'
+			else:
+				m = 'Y'
+		if m == 'N':
+			reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+										 QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.getResult(self, 'ICP')
+				if selectResultFile[0] == []:
+					self.lineEdit_6.setText("请重新选择NB ICP Result数据文件")
+					self.textBrowser.append("请重新选择NB ICP Result数据文件")
+					m = 'N'
+				else:
+					m = 'Y'
+			else:
+				self.lineEdit_6.setText("请重新选择NB ICP Result数据文件")
+				self.textBrowser.append("请重新选择NB ICP Result数据文件")
+				m = 'N'
+		if m == 'Y':
+			# 判断ICP存储路径是否存在
+			fileUrl = configContent['NB_Result_Export_URL']
+			folder = os.path.exists(fileUrl)
+			if not folder:
+				QMessageBox.information(self, "NB ICP结果路径出错",
+										"没有NB ICP结果转化为TXT的存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nNB_Result_Export_URL",
+										QMessageBox.Yes)
+				self.textBrowser.append("重新更改配置文件并导入后，重新点击NB ICP Result按钮开始数据处理")
+			else:
+				for fileUrl in selectResultFile[0]:
+					self.textBrowser.append("正在进行NB ICP文件转换为TXT")
+					self.lineEdit_6.setText("正在进行NB ICP文件转换为TXT")
+					fileName = os.path.split(fileUrl)[1]
+					app.processEvents()
+					csvFile = pd.read_csv(fileUrl,header=None)
+					csvLine = csvFile.iloc[0]  # 获取行索引为1数据
+					firstLine = list(csvLine)
+					leave = ['Sample Name', 'Operator', 'Analyte', 'Concentration', 'Units','Dilution Multiplier','Element Full Name']
+					leaveIndex = []
+					for each in leave:
+						leaveIndex.append(firstLine.index(each))
+					# csvLine = csvFile.iloc[0]
+					csvLine.replace(['Sample Name', 'Operator', 'Analyte', 'Concentration', 'Units'],
+									['Solution Label', 'Type', 'Element', 'Soln Conc', 'Units'], inplace=True)
+					csvFile = csvFile[leaveIndex]
+					csvFile.to_csv('%s/%s.txt' % (configContent['NB_Result_Export_URL'], fileName), sep='\t',
+								   index=None, header=None)
+					self.textBrowser.append("完成NB ICP文件转换为TXT")
+					self.textBrowser.append("生成路径：%s" % configContent['NB_Result_Export_URL'])
+					self.lineEdit_6.setText("完成NB ICP文件转换为TXT")
 
 	def reachResult(self):
 		# Reach结果转化为TXT
@@ -2410,6 +2477,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							self.textBrowser_5.append("没有文件名")
 					else:
 						self.textBrowser_5.append("请重新输入温度和斜率数据")
+
 	def crRecovery(self):
 		# 判断是否选择了Result文件
 		try:
@@ -2575,6 +2643,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				os.startfile(os.path.split(fileUrl)[0])
 			else:
 				self.textBrowser_5.append("请输入六价铬理论加标值")
+
 	def getReachMessage(self):
 		# 获取Reach信息
 		global reachLimsNo
@@ -2675,7 +2744,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.lineEdit_6.setText("内容已填写，可随时开始")
 
 	# 自动填写-清除内容
-
 	def clearContent(self):
 		# 清除填写内容
 		self.lineEdit.clear()

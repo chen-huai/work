@@ -39,300 +39,6 @@
           <string>ICP Operate</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="7" column="2">
-           <widget class="QPushButton" name="pushButton_38">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID和结果数据，并填入Reach结果Excel模板中 </string>
-            </property>
-            <property name="text">
-             <string>Reach Result</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QSpinBox" name="spinBox_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>Reach结果第几个开始生成</string>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>999999999</number>
-            </property>
-            <property name="value">
-             <number>1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QSpinBox" name="spinBox_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>Reach结果第几个结束，同时0表示该Batch最后一个</string>
-            </property>
-            <property name="maximum">
-             <number>999999999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="3">
-           <widget class="QPushButton" name="pushButton_27">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>将CSV转化成DCU使用的TXT格式</string>
-            </property>
-            <property name="text">
-             <string>ICP Result</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QPushButton" name="pushButton_31">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>由于质检院仪器结果导出不符合DCU格式，需要转化为ICP结果格式CSV-TXT</string>
-            </property>
-            <property name="text">
-             <string>ECO ZJY To ICP</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QPushButton" name="pushButton_30">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>填写ICP的QC Chart</string>
-            </property>
-            <property name="text">
-             <string>MM QC Chart</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3">
-           <widget class="QPushButton" name="pushButton_32">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>由于质检院结果是科学计数法导致有些结果无法DCU，所以需要将结果转化TXT-TXT</string>
-            </property>
-            <property name="text">
-             <string>ECO ZJY Result</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2">
-           <widget class="QComboBox" name="comboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>Result数据的选择路径</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>URL:ICP Result</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>URL:ECO ZJY Result</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="3" rowspan="2">
-           <widget class="QPushButton" name="pushButton_21">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID，并导出TXT</string>
-            </property>
-            <property name="text">
-             <string>ICP Batch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_28">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>信息：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="pushButton_22">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID，并填入Excel模板中</string>
-            </property>
-            <property name="text">
-             <string>Nickel Batch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_29">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="statusTip">
-             <string>选择需要获取的Batch</string>
-            </property>
-            <property name="text">
-             <string>选择Batch</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>icon/open.png</normaloff>
-              <normalon>:/open.png</normalon>
-              <disabledoff>:/open.png</disabledoff>
-              <disabledon>:/open.png</disabledon>
-              <activeoff>:/open.png</activeoff>
-              <activeon>:/open.png</activeon>
-              <selectedoff>:/open.png</selectedoff>
-              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="3">
            <widget class="QPushButton" name="pushButton_23">
             <property name="sizePolicy">
@@ -357,44 +63,10 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="pushButton_35">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="5" column="3">
+           <widget class="QSpinBox" name="spinBox_2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>起始编号</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" rowspan="4" colspan="2">
-           <widget class="QTextBrowser" name="textBrowser_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="statusTip">
-             <string>选择Barch的文件信息</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_24">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -408,48 +80,10 @@
              <string/>
             </property>
             <property name="statusTip">
-             <string>获取Sample ID，按中迅德要求生成Batch单</string>
+             <string>Reach结果第几个结束，同时0表示该Batch最后一个</string>
             </property>
-            <property name="text">
-             <string>ECO ZXD</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="pushButton_25">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string>获取Sample ID，生成符合质检院的单号同时生产出打印编号</string>
-            </property>
-            <property name="text">
-             <string>ECO ZJY</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2" colspan="2">
-           <widget class="Line" name="line">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+            <property name="maximum">
+             <number>999999999</number>
             </property>
            </widget>
           </item>
@@ -506,11 +140,21 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QPushButton" name="pushButton_33">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="1" column="0" rowspan="4" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
+            <property name="statusTip">
+             <string>选择Barch的文件信息</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_29">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -522,8 +166,103 @@
               <pointsize>10</pointsize>
              </font>
             </property>
+            <property name="statusTip">
+             <string>选择需要获取的Batch</string>
+            </property>
             <property name="text">
-             <string>信息：</string>
+             <string>选择Batch</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/open.png</normaloff>
+              <normalon>:/open.png</normalon>
+              <disabledoff>:/open.png</disabledoff>
+              <disabledon>:/open.png</disabledon>
+              <activeoff>:/open.png</activeoff>
+              <activeon>:/open.png</activeon>
+              <selectedoff>:/open.png</selectedoff>
+              <selectedon>:/open.png</selectedon>icon/open.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QPushButton" name="pushButton_38">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID和结果数据，并填入Reach结果Excel模板中 </string>
+            </property>
+            <property name="text">
+             <string>Reach Result</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>Reach方法中Pb元素受Fe元素干扰获取的Fact数据</string>
+            </property>
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Pb元素--Fact</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3" rowspan="2">
+           <widget class="QPushButton" name="pushButton_21">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID，并导出TXT</string>
+            </property>
+            <property name="text">
+             <string>ICP Batch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2" colspan="2">
+           <widget class="Line" name="line">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -549,26 +288,172 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="3">
-           <widget class="QRadioButton" name="radioButton_2">
+          <item row="4" column="2">
+           <widget class="QPushButton" name="pushButton_35">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="statusTip">
-             <string>Reach方法中Pb元素受Fe元素干扰获取的Fact数据</string>
-            </property>
-            <property name="autoFillBackground">
-             <bool>true</bool>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="text">
-             <string>Pb元素--Fact</string>
+             <string>起始编号</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0" rowspan="4" colspan="2">
+          <item row="0" column="2">
+           <widget class="QPushButton" name="pushButton_22">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID，并填入Excel模板中</string>
+            </property>
+            <property name="text">
+             <string>Nickel Batch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_28">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>信息：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QSpinBox" name="spinBox_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>Reach结果第几个开始生成</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>999999999</number>
+            </property>
+            <property name="value">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pushButton_24">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID，按中迅德要求生成Batch单</string>
+            </property>
+            <property name="text">
+             <string>ECO ZXD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="pushButton_25">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>获取Sample ID，生成符合质检院的单号同时生产出打印编号</string>
+            </property>
+            <property name="text">
+             <string>ECO ZJY</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="pushButton_33">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>信息：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" rowspan="5" colspan="2">
            <widget class="QTextBrowser" name="textBrowser">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
@@ -583,6 +468,142 @@
             </property>
             <property name="statusTip">
              <string>选择Result的文件信息</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="3">
+           <widget class="QPushButton" name="pushButton_55">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="statusTip">
+             <string>由于NB数据为CSV格式，同时不适用于厦门DCU，需将结果转化CSV-TXT</string>
+            </property>
+            <property name="text">
+             <string>NB ICP Result</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="2">
+           <widget class="QComboBox" name="comboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>Result数据的选择路径</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>URL:ICP Result</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>URL:NB ICP Result</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>URL:ECO ZJY Result</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="2">
+           <widget class="QPushButton" name="pushButton_32">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>由于质检院结果是科学计数法导致有些结果无法DCU，所以需要将结果转化TXT-TXT</string>
+            </property>
+            <property name="text">
+             <string>ECO ZJY Result</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="3">
+           <widget class="QPushButton" name="pushButton_31">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>由于质检院仪器结果导出不符合DCU格式，需要转化为ICP结果格式CSV-TXT</string>
+            </property>
+            <property name="text">
+             <string>ECO ZJY To ICP</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QPushButton" name="pushButton_30">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="statusTip">
+             <string>填写ICP的QC Chart</string>
+            </property>
+            <property name="text">
+             <string>MM QC Chart</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3" rowspan="2">
+           <widget class="QPushButton" name="pushButton_27">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string>将CSV转化成DCU使用的TXT格式</string>
+            </property>
+            <property name="text">
+             <string>ICP Result</string>
             </property>
            </widget>
           </item>
