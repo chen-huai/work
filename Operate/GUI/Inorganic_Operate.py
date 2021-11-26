@@ -12,14 +12,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		super(MyMainWindow, self).__init__(parent)
 		self.setupUi(self)
 
-		self.pushButton_23.clicked.connect(self.aasBatch)
+		# self.pushButton_23.clicked.connect(self.aasBatch)
+		self.pushButton_23.clicked.connect(lambda: self.ecoZjy('NB'))
 		self.pushButton_24.clicked.connect(self.ecoZxd)
 		self.pushButton_26.clicked.connect(self.randomAction)
 		self.pushButton_27.clicked.connect(self.icpResultToTxt)
 		self.pushButton_55.clicked.connect(self.nbResultToTxt)
 		self.pushButton_30.clicked.connect(self.icpQc)
 		self.pushButton_22.clicked.connect(self.nickelBatch)
-		self.pushButton_25.clicked.connect(self.ecoZjy)
+		self.pushButton_25.clicked.connect(lambda: self.ecoZjy('ZJY'))
 		self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
 		self.pushButton_41.clicked.connect(lambda: self.getBatch('UV'))
 		self.pushButton_21.clicked.connect(self.icpBatch)
@@ -189,7 +190,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		for i in range(len(content)):
 			configContent['%s' % content[i]] = rul[i]
 		a = len(configContent)
-		if (int(configContent['config_num']) != len(configContent)) or (len(configContent) != 39):
+		if (int(configContent['config_num']) != len(configContent)) or (len(configContent) != 40):
 			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
@@ -209,11 +210,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			['config_num','39','config文件条目数量,不能更改数值'],# getConfigContent()中需要更改配置文件数量
+			['config_num','40','config文件条目数量,不能更改数值'],# getConfigContent()中需要更改配置文件数量
 			['选择ICP_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下ICP组Batch相关'],
 			['ICP_Batch_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Batch', 'ICP的Batch引入路径，所有ICP组batch均为次路径'],
 			['ICP_Batch_Export_URL', '%s' % desktopUrl, 'ICP仪器使用，一般为本机电脑桌面'],
-			['ECO_Batch_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\%s' % (now,monthAbbrev),'ECO项目的导出路径，质检院格式'],
+			['ECO_Batch_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\%s' % (now,monthAbbrev),'ECO项目的导出路径(质检院或者中讯德)'],
+			['ECO_Batch_Export_NB_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\%s' % (now,monthAbbrev),'ECO项目的导出路径，质检院格式(宁波)'],
 			['Nickel_Batch_Export_URL','Z:\\Inorganic_batch\\Microwave\\Result\\Nickel','镍释放项目的导出路径'],
 			['Nickel_Model_Import_URL','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model','镍释放项目的模板文件路径'],
 			['Nickel_File_Name','TC_XMN_CHM_F_T.02E.xlsm','镍释放项目的模板文件名称'],
@@ -281,7 +283,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 2.21.19\n\n\n     2021-10-25")
+						  "V 2.21.20\n\n\n     2021-11-26")
 
 	def getBatch(self, messages):
 		# 获取Sample ID 、实验方法、质量、体积
@@ -645,7 +647,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser_3.append("请确认Batch方法是镍释放，或者请将Batch质量填写为0，并重新保存")
 					self.lineEdit_6.setText("请确认Batch方法是镍释放")
 
-	def ecoZjy(self):
+	def ecoZjy(self, messages):
 		# ECO质检院模板生成
 		# 判断是否选择了Batch文件
 		try:
@@ -674,18 +676,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				m = 'N'
 		if m == 'Y':
 			# 判断ECO存储路径是否存在
-			fileUrl = configContent['ECO_Batch_Export_URL']
+			if messages == 'ZJY':
+				fileUrl = configContent['ECO_Batch_Export_URL']
+				configMsg = 'ECO_Batch_Export_URL'
+			else:
+				fileUrl = configContent['ECO_Batch_Export_NB_URL']
+				configMsg = 'ECO_Batch_Export_NB_URL'
 			folder = os.path.exists(fileUrl)
 			if not folder:
 				QMessageBox.information(self, "ECO存储路劲出错",
-										"没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\nECO_Batch_Export_URL",
+										"没有ECO存储文件路径！！！\n请查看config配置文件内容是否符合需求。\n%s"% configMsg,
 										QMessageBox.Yes)
-				self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO ZJY按钮开始数据处理")
+				self.textBrowser_3.append("请更改配置文件并导入后，重新点击ECO %s按钮开始数据处理" % messages)
 			else:
-				self.textBrowser_3.append("正在ECO质检院Batch转化")
-				self.lineEdit_6.setText("正在ECO质检院Batch转化")
+				self.textBrowser_3.append("正在ECO的Batch转化")
+				self.lineEdit_6.setText("正在ECO的Batch转化")
 				app.processEvents()
-				ecoFile = os.path.exists('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+				ecoFile = os.path.exists('%s/ECO %s %s.xlsx' % (fileUrl, messages, today))
 				excel = win32com.gencache.EnsureDispatch('Excel.Application')
 				excel.Visible = 0
 				if not ecoFile:
@@ -732,6 +739,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							ws.Cells(n, x + 1).HorizontalAlignment = -4108
 							x += 1
 						n += 1
+						if 'GB/T17593-1' in analyteList[i]:
+							ws.Cells(n, 1).Value = '%s' % (n - 1)
+							ws.Cells(n, 2).Value = '%sD1' % labNumber[i]
+							ws.Cells(n, 3).Value = '%s' % analyteList[i]
+							ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+							ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+							ws.Cells(n, 6).Value = 1
+							ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+							x = 0
+							for x in range(7):
+								ws.Cells(n, x + 1).BorderAround(1, 2)
+								ws.Cells(n, x + 1).HorizontalAlignment = -4108
+								x += 1
+							n += 1
 						i += 1
 					wb.Worksheets.Add()
 					ws2 = excel.Worksheets('Sheet2')
@@ -759,12 +780,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						ws2.Cells(n, 2).Font.Size = 12
 						ws2.Cells(n, 2).Font.Bold = True
 						n += 1
+						if 'GB/T17593-1' in analyteList[i]:
+							ws2.Rows(n).RowHeight = 33.8  # 行高
+							ws2.Cells(n, 1).Value = '%s.' % n
+							ws2.Cells(n, 1).HorizontalAlignment = -4108
+							ws2.Cells(n, 1).Font.Size = 12
+							ws2.Cells(n, 1).Font.Bold = True
+							ws2.Cells(n, 2).Value = '%sD1' % labNumber[i]
+							ws2.Cells(n, 2).HorizontalAlignment = -4108
+							ws2.Cells(n, 2).Font.Size = 12
+							ws2.Cells(n, 2).Font.Bold = True
+							n += 1
 						i += 1
 				else:
 					excel.Application.DisplayAlerts = False  # False为另存为自动保存，True为弹出提示保存
 					wb = excel.Workbooks.Open(
 						os.path.join(os.getcwd(),
-									 r'%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today)))
+									 r'%s/ECO %s %s.xlsx' % (fileUrl, messages, today)))
 					ws = wb.Worksheets('Sheet1')
 					i = 0
 					n = 1
@@ -785,6 +817,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							ws.Cells(n, x + 1).HorizontalAlignment = -4108
 							x += 1
 						n += 1
+						if 'GB/T17593-1' in analyteList[i]:
+							ws.Cells(n, 1).Value = '%s' % (n - 1)
+							ws.Cells(n, 2).Value = '%s' % labNumber[i]
+							ws.Cells(n, 3).Value = '%s' % analyteList[i]
+							ws.Cells(n, 4).Value = '%s' % qualityValue[i]
+							ws.Cells(n, 5).Value = '%s' % volumeValue[i]
+							ws.Cells(n, 5).NumberFormat = "0"
+							ws.Cells(n, 6).Value = 5
+							ws.Cells(n, 7).Value = '%s' % batchNum[i].replace('\x1e', '-')
+							x = 0
+							for x in range(7):
+								ws.Cells(n, x + 1).BorderAround(1, 2)
+								ws.Cells(n, x + 1).HorizontalAlignment = -4108
+								x += 1
+							n += 1
 						i += 1
 					ws2 = excel.Worksheets('Sheet2')
 					i = 0
@@ -802,6 +849,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						ws2.Cells(n, 2).Font.Size = 12
 						ws2.Cells(n, 2).Font.Bold = True
 						n += 1
+						if 'GB/T17593-1' in analyteList[i]:
+							ws2.Rows(n).RowHeight = 33.8  # 行高
+							ws2.Cells(n, 1).Value = '%s.' % n
+							ws2.Cells(n, 1).HorizontalAlignment = -4108
+							ws2.Cells(n, 1).Font.Size = 12
+							ws2.Cells(n, 1).Font.Bold = True
+							ws2.Cells(n, 2).Value = '%s' % labNumber[i]
+							ws2.Cells(n, 2).HorizontalAlignment = -4108
+							ws2.Cells(n, 2).Font.Size = 12
+							ws2.Cells(n, 2).Font.Bold = True
+							n += 1
 						i += 1
 				list1 = ['Analyte', 'Sb', 'As', 'Cd', 'Cr', 'Co', 'Cu', 'Pb', 'Hg', 'Ni', 'Ba', 'Se']
 				list2 = ['MDL(ug/L)', 2, 0.8, 0.4, 2, 2, 2, 0.8, 0.08, 2, 2, 2]
@@ -819,13 +877,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						x += 1
 					i += 1
 					n += 1
-				wb.SaveAs('%s/ECO ZJY %s.xlsx' % (configContent['ECO_Batch_Export_URL'], today))
+				wb.SaveAs('%s/ECO %s %s.xlsx' % (fileUrl, messages, today))
 				excel.Quit()
-				self.textBrowser_3.append("ECO质检院Batch转化完成")
-				self.textBrowser_3.append("生成路径：%s" % configContent['ECO_Batch_Export_URL'])
-				self.lineEdit_6.setText("ECO质检院Batch转化完成")
+				self.textBrowser_3.append("ECO的Batch转化完成")
+				self.textBrowser_3.append("生成路径：%s" % fileUrl)
+				self.lineEdit_6.setText("ECO的Batch转化完成")
 				app.processEvents()
-				os.startfile(configContent['ECO_Batch_Export_URL'])
+				os.startfile(fileUrl)
 
 	def ecoZxd(self):
 		# ECO中迅德模板生成
