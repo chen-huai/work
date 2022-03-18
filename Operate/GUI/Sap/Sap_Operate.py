@@ -1,4 +1,5 @@
 import sys
+import chicon  # 引用图标
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import *
@@ -29,10 +30,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global now
 		global last_time
 		global today
-
+		global oneWeekday
+		date = datetime.datetime.now() + datetime.timedelta(days=1)
 		now = int(time.strftime('%Y'))
 		last_time = now - 1
 		today = time.strftime('%Y.%m.%d')
+		oneWeekday = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime('%Y.%m.%d')
 		desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
 		configFileUrl = '%s/config' % desktopUrl
 		configFile = os.path.exists('%s/config_user.csv' % configFileUrl)
@@ -309,7 +312,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZUNLIMITLIAB").text = "N"
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtZAUFTD-VORAUS_AUFENDE").text = today
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtZAUFTD-VORAUS_AUFENDE").text = oneWeekday
 						if 'A2' in materialCode:
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
@@ -523,7 +526,7 @@ if __name__ == "__main__":
 	import win32com.client
 	import pandas as pd
 	import numpy as np
-	import re
+	import datetime
 	QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()

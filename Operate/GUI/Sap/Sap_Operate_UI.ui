@@ -19,8 +19,8 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../../../../Users/chen-fr/.designer/ch.ico</normaloff>../../../../../../Users/chen-fr/.designer/ch.ico</iconset>
+   <iconset resource="chicon.qrc">
+    <normaloff>:/ch.ico</normaloff>:/ch.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -719,6 +719,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="chicon.qrc"/>
+ </resources>
  <connections/>
 </ui>

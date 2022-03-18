@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         MainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../../../Users/chen-fr/.designer/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/ch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -460,3 +460,4 @@ class Ui_MainWindow(object):
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionHelp.setText(_translate("MainWindow", "Help"))
         self.actionImport.setText(_translate("MainWindow", "Import"))
+import chicon_rc
