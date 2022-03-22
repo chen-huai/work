@@ -145,7 +145,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.01\n\n\n 2022-03-17")
+						  "V 22.01.02\n\n\n 2022-03-21")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
