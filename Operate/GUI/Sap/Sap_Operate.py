@@ -145,7 +145,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.02\n\n\n 2022-03-21")
+						  "V 22.01.04\n\n\n 2022-03-24")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -199,6 +199,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			amount = float(self.doubleSpinBox_2.text())
 			cost = float(self.doubleSpinBox_3.text())
 			amountVat = float(self.doubleSpinBox_4.text())
+			longText = self.lineEdit_4.text()
+			shortText = self.lineEdit_5.text()
 			if sapNo == '' or projectNo == '' or materialCode == '' or currencyType == '' or exchangeRate == '' or globalPartnerCode == '' or csName == '' or amount == 0.00:
 				self.textBrowser.append("有关键信息未填")
 				app.processEvents()
@@ -262,11 +264,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/btnBT_HEAD").press()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").text = currencyType
+
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").setFocus()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").caretPosition = 3
 						session.findById("wnd[0]").sendVKey(0)
+						session.findById("wnd[1]").sendVKey(0)
 						if currencyType != "CNY":
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = exchangeRate
@@ -307,7 +311,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							session.findById("wnd[0]").sendVKey(0)
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10").select()
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = "Testing Fee"
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = shortText
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 							11, 11)
@@ -356,9 +360,25 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").caretPosition = 8
 
 						if self.checkBox_2.isChecked():
-							session.findById("wnd[0]/tbar[0]/btn[3]").press()
-							session.findById("wnd[0]/tbar[0]/btn[3]").press()
-							session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+							try:
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+							except:
+								try:
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+								except:
+									self.textBrowser.append("跳过保存")
+								else:
+									pass
+							else:
+								pass
+							# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 
 
@@ -403,6 +423,26 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtVBAP-ZIEME[3,1]").text = "pu"
 								session.findById("wnd[0]").sendVKey(0)
+
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,1]").setFocus()
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,1]").caretPosition = 16
+								session.findById("wnd[0]").sendVKey(2)
+								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06").select()
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = phyRe
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").setFocus()
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").caretPosition = 16
+								session.findById("wnd[0]").sendVKey(0)
+								sapAmountVatStr = session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
+								sapAmountVat = float(sapAmountVatStr.replace(',', ''))
+
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
 								session.findById(
@@ -416,26 +456,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").caretPosition = 16
 								session.findById("wnd[0]").sendVKey(0)
-								sapAmountVatStr = session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
-								sapAmountVat = float(sapAmountVatStr.replace(',',''))
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,1]").setFocus()
-								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,1]").caretPosition = 16
-								session.findById("wnd[0]").sendVKey(2)
-								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = phyRe
-								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").setFocus()
-								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").caretPosition = 16
-								session.findById("wnd[0]").sendVKey(0)
 								sapAmountVatStr = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
+
 								sapAmountVat += float(sapAmountVatStr.replace(',', ''))
 								sapAmountVat = format(sapAmountVat,'.2f')
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
+
 							elif 'T20' in materialCode:
 								if '405' in materialCode:
 									session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-405-00"
@@ -461,7 +488,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById("wnd[0]").sendVKey(0)
 								sapAmountVat = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 							else:
 								if '405' in materialCode:
 									session.findById(
@@ -489,7 +515,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById("wnd[0]").sendVKey(0)
 								sapAmountVat = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+
+							if longText != '':
+								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09").select()
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = longText
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
+									4, 4)
+							session.findById("wnd[0]/tbar[0]/btn[3]").press()
 							amountVatStr = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", format(amountVat,'.2f'))
 							self.textBrowser.append("Sap Amount Vat:%s" % sapAmountVat)
 							self.textBrowser.append("Amount Vat:%s" % amountVatStr)
@@ -503,9 +537,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								if reply == QMessageBox.Yes:
 									flag = 1
 							if self.checkBox_3.isChecked() and flag == 1:
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+								try:
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+								except:
+									try:
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									except:
+										self.textBrowser.append("跳过保存")
+									else:
+										pass
+								else:
+									pass
 
 					if self.checkBox_3.isChecked() and flag == 1:
 						try:
