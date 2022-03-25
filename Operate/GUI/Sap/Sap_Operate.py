@@ -145,7 +145,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.04\n\n\n 2022-03-24")
+						  "V 22.01.05\n\n\n 2022-03-25")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -270,8 +270,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").caretPosition = 3
 						session.findById("wnd[0]").sendVKey(0)
-						session.findById("wnd[1]").sendVKey(0)
 						if currencyType != "CNY":
+							session.findById("wnd[1]").sendVKey(0)
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = exchangeRate
 							session.findById(
