@@ -43,7 +43,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		oneWeekday = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime('%Y.%m.%d')
 		desktopUrl = os.path.join(os.path.expanduser("~"), 'Desktop')
 		configFileUrl = '%s/config' % desktopUrl
-		configFile = os.path.exists('%s/config_user.csv' % configFileUrl)
+		configFile = os.path.exists('%s/config_sap.csv' % configFileUrl)
 		# print(desktopUrl,configFileUrl,configFile)
 		if not configFile:  # 判断是否存在文件夹如果不存在则创建为文件夹
 			reply = QMessageBox.question(self, '信息', '确认是否要创建配置文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
@@ -59,7 +59,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			MyMainWindow.getConfigContent(self)
 
 	def getConfigContent(self):
-		csvFile = pd.read_csv('%s/config_user.csv' % configFileUrl, names=['A', 'B', 'C'])
+		csvFile = pd.read_csv('%s/config_sap.csv' % configFileUrl, names=['A', 'B', 'C'])
 		global configContent
 		global username
 		global role
@@ -93,16 +93,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			['名称','编号','角色'],# getConfigContent()中需要更改配置文件数量
+			# ['SAP名称', '内容', '备注'],
+			# ['销售组织', '0486', ''],
+			# ['销售办事处', '>601', '备注'],
+			['名称','编号','角色'],
 			['chen, frank', '6375108', 'CS'],
 			['chen, frank', '6375108', 'Sales'],
 		]
 		config = np.array(configContent)
 		df = pd.DataFrame(config)
-		df.to_csv('%s/config_user.csv' % configFileUrl, index=0, header=0, encoding='utf_8_sig')
+		df.to_csv('%s/config_sap.csv' % configFileUrl, index=0, header=0, encoding='utf_8_sig')
 		self.textBrowser.append("配置文件创建成功")
 		QMessageBox.information(self, "提示信息",
-								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config_user.csv，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。",
+								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config_sap.csv，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。",
 								QMessageBox.Yes)
 
 	def exportConfig(self):
@@ -228,10 +231,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					phyCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
 					chmRe = amount
 					phyRe = amount
-				if salesName == '':
-					reply = QMessageBox.question(self, '信息', 'Sales未填，是否继续', QMessageBox.Yes | QMessageBox.No,
-												 QMessageBox.Yes)
-				if salesName != '' or reply == QMessageBox.Yes:
+				messageFlag = 1
+				if self.checkBox_5.isChecked():
+					if salesName == '':
+						reply = QMessageBox.question(self, '信息', 'Sales未填，是否继续', QMessageBox.Yes | QMessageBox.No,
+													 QMessageBox.Yes)
+						if reply == QMessageBox.Yes:
+							messageFlag = 1
+						else:
+							messageFlag = 2
+				if salesName != '' or messageFlag == 1:
 					self.textBrowser.append("Sap No.:%s" % sapNo)
 					self.textBrowser.append("Project No.:%s" % projectNo)
 					self.textBrowser.append("materialCode:%s" % materialCode)
@@ -613,14 +622,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append('SAP操作已完成')
 					self.textBrowser.append('----------------------------------')
 					app.processEvents()
-					QMessageBox.information(self, "提示信息", "SAP操作已完成", QMessageBox.Yes)
+					if self.checkBox_5.isChecked():
+						QMessageBox.information(self, "提示信息", "SAP操作已完成", QMessageBox.Yes)
 
 
 		except:
 			projectNo = self.lineEdit_2.text()
 			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('----------------------------------')
-			print(sys.exc_info()[0])
+			# print(sys.exc_info()[0])
 
 		finally:
 			session = None
@@ -635,111 +645,81 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.lineEdit_6.setText(fileUrl)
 			app.processEvents()
 		else:
-			self.textBrowser.append("请重新选择ODN文件")
-			QMessageBox.information(self, "提示信息", "请重新选择ODN文件", QMessageBox.Yes)
+			self.textBrowser.append("请重新选择ODM文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
 
 	def odmDataToSap(self):
-		fileUrl = self.lineEdit_6.text()
-		if fileUrl:
-			newData = Get_Data(fileUrl)
-			newData.getFileData()
-			deleteList = {'Amount': 0}
-			headList = newData.getHeaderData()
-			newData.deleteTheRows(deleteList)
-			if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
-				fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
-				newData.fillNanColumn(fillNanColumnKey)
-			getFileDataListKey = ['Project No.', 'CS', 'Sales', 'Currency', 'GPC Glo. Par. Code', 'Material Code',
-								  'SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate', 'Total Cost']
-			if 'Text' in headList:
-				getFileDataListKey.append('Text')
-			elif 'Long Text' in headList:
-				getFileDataListKey.append('Long Text')
-			fileDataList = newData.getFileDataList(getFileDataListKey)
-			headerData = newData.getHeaderData()
-			n = 0
-			for n in range(len(fileDataList['Amount'])):
-				if fileDataList['Material Code'][n] == '':
-					QMessageBox.information(self, "提示信息", "无Material Code，请检查", QMessageBox.Yes)
-					break
-				else:
-					materialCode = fileDataList['Material Code'][n]
-				self.lineEdit_2.setText(fileDataList['Project No.'][n])
-				self.lineEdit_3.setText(str(fileDataList['GPC Glo. Par. Code'][n]))
-				self.lineEdit.setText(str(fileDataList['SAP No.'][n]))
-				self.comboBox_4.setItemText(int(0), materialCode)
-				if fileDataList['CS'][n] in configContent:
-					self.comboBox_2.setItemText(int(0), fileDataList['CS'][n])
-				else:
-					self.comboBox_2.setItemText(int(0), '')
-				if fileDataList['Sales'][n] in configContent:
-					self.comboBox_3.setItemText(int(0), fileDataList['Sales'][n])
-				else:
-					self.comboBox_3.setItemText(int(0), '')
-				self.comboBox.setItemText(int(0), fileDataList['Currency'][n])
-				self.doubleSpinBox_2.setValue(fileDataList['Amount'][n])
-				self.doubleSpinBox_4.setValue(fileDataList['Amount with VAT'][n])
-				self.doubleSpinBox_3.setValue(fileDataList['Total Cost'][n])
-				self.doubleSpinBox.setValue(fileDataList['Exchange Rate'][n])
+		try:
+			fileUrl = self.lineEdit_6.text()
+			if fileUrl:
+				newData = Get_Data(fileUrl)
+				newData.getFileData()
+				deleteList = {'Amount': 0}
+				headList = newData.getHeaderData()
+				newData.deleteTheRows(deleteList)
+				if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
+					fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
+					newData.fillNanColumn(fillNanColumnKey)
+				getFileDataListKey = ['Project No.', 'CS', 'Sales', 'Currency', 'GPC Glo. Par. Code', 'Material Code',
+									  'SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate', 'Total Cost']
 				if 'Text' in headList:
-					self.lineEdit_5.setText(fileDataList['Text'][n])
+					getFileDataListKey.append('Text')
 				elif 'Long Text' in headList:
-					self.lineEdit_4.setText(fileDataList['Long Text'][n])
-				self.textBrowser.append("No.:%s" % (n+1))
-				app.processEvents()
-				MyMainWindow.sapOperate(self)
-				if n < len(fileDataList['Amount'])-1:
-					reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
-												 QMessageBox.Yes)
-					if reply == QMessageBox.Yes:
-						continue
-					else:
+					getFileDataListKey.append('Long Text')
+				fileDataList = newData.getFileDataList(getFileDataListKey)
+				headerData = newData.getHeaderData()
+				n = 0
+				for n in range(len(fileDataList['Amount'])):
+					if fileDataList['Material Code'][n] == '':
+						QMessageBox.information(self, "提示信息", "无Material Code，请检查", QMessageBox.Yes)
 						break
-		else:
-			self.textBrowser.append("请重新选择ODN文件")
-			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
-	# def odmDataToSap1(self):
-	# 	fileUrl = self.lineEdit_6.text()
-	# 	if fileUrl:
-	# 		newData = Get_Data(fileUrl)
-	# 		newData.getFileData()
-	# 		projectNoList, csList, salesList, currencyList, partnerCodeList, materialCodeList, sapNoList, amountList, amountWithVATList, exchangeRateList ,costList= newData.getFileDataList1()
-	# 		n = 0
-	# 		for n in range(len(amountList)):
-	# 			# if materialCodeList[n] == '':
-	# 			# 	if chmMaterialCodeList[n] != '':
-	# 			# 		materialCode = chmMaterialCodeList[n]
-	# 			# 	else:
-	# 			# 		materialCode = phyMaterialCodeList[n]
-	# 			# else:
-	# 			# 	materialCode = materialCodeList[n]
-	# 			materialCode = materialCodeList[n]
-	# 			self.lineEdit_2.setText(projectNoList[n])
-	# 			self.lineEdit_3.setText(str(partnerCodeList[n]))
-	# 			self.lineEdit.setText(str(sapNoList[n]))
-	# 			self.comboBox_4.setItemText(int(0), materialCode)
-	# 			self.comboBox_2.setItemText(int(0), csList[n])
-	# 			if salesList[n] in configContent:
-	# 				self.comboBox_3.setItemText(int(0), salesList[n])
-	# 			else:
-	# 				self.comboBox_3.setItemText(int(0), '')
-	# 			self.comboBox.setItemText(int(0), currencyList[n])
-	# 			self.doubleSpinBox_2.setValue(amountList[n])
-	# 			self.doubleSpinBox_4.setValue(amountWithVATList[n])
-	# 			self.doubleSpinBox_3.setValue(costList[n])
-	# 			self.doubleSpinBox.setValue(exchangeRateList[n])
-	# 			app.processEvents()
-	# 			MyMainWindow.sapOperate(self)
-	# 			if n < len(amountList)-1:
-	# 				reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
-	# 											 QMessageBox.Yes)
-	# 				if reply == QMessageBox.Yes:
-	# 					continue
-	# 				else:
-	# 					break
-	# 	else:
-	# 		self.textBrowser.append("请重新选择ODN文件")
-	# 		QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+					else:
+						materialCode = fileDataList['Material Code'][n]
+					self.lineEdit_2.setText(fileDataList['Project No.'][n])
+					self.lineEdit_3.setText(str(fileDataList['GPC Glo. Par. Code'][n]))
+					self.lineEdit.setText(str(fileDataList['SAP No.'][n]))
+					self.comboBox_4.setItemText(int(0), materialCode)
+					if fileDataList['CS'][n] in configContent:
+						self.comboBox_2.setItemText(int(0), fileDataList['CS'][n])
+					else:
+						self.comboBox_2.setItemText(int(0), '')
+					if fileDataList['Sales'][n] in configContent:
+						self.comboBox_3.setItemText(int(0), fileDataList['Sales'][n])
+					else:
+						self.comboBox_3.setItemText(int(0), '')
+					self.comboBox.setItemText(int(0), fileDataList['Currency'][n])
+					self.doubleSpinBox_2.setValue(fileDataList['Amount'][n])
+					self.doubleSpinBox_4.setValue(fileDataList['Amount with VAT'][n])
+					self.doubleSpinBox_3.setValue(fileDataList['Total Cost'][n])
+					self.doubleSpinBox.setValue(fileDataList['Exchange Rate'][n])
+					if 'Text' in headList:
+						self.lineEdit_5.setText(fileDataList['Text'][n])
+					else:
+						self.lineEdit_5.setText('Testing Fee')
+					if 'Long Text' in headList:
+						self.lineEdit_4.setText(fileDataList['Long Text'][n])
+					self.textBrowser.append("No.:%s" % (n+1))
+					app.processEvents()
+					MyMainWindow.sapOperate(self)
+					if n < len(fileDataList['Amount'])-1:
+						if self.checkBox_5.isChecked():
+							reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
+														 QMessageBox.Yes)
+							if reply == QMessageBox.Yes:
+								continue
+							else:
+								break
+					else:
+						self.textBrowser.append("ODM数据已全部填写完成")
+						self.textBrowser.append('----------------------------------')
+						QMessageBox.information(self, "提示信息", "ODM数据已全部填写完成", QMessageBox.Yes)
+			else:
+				self.textBrowser.append("请重新选择ODM文件")
+				QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+		except:
+			fileData = self.lineEdit_6.text()
+			self.textBrowser.append('这份%s的ODM获取数据有问题' % fileData)
+			self.textBrowser.append('----------------------------------')
 
 
 if __name__ == "__main__":
