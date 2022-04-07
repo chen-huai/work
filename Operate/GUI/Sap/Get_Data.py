@@ -10,7 +10,11 @@ class Get_Data():
         # self.getFileDataList()
 
     def getFileData(self):
-        self.fileData = pd.read_excel(self.fileDataUrl)
+        fileType = self.fileDataUrl.split(".")[-1]
+        if fileType == 'xlsx':
+            self.fileData = pd.read_excel(self.fileDataUrl)
+        elif fileType == 'csv':
+            self.fileData = pd.read_csv(self.fileDataUrl)
         height, width = self.fileData.shape
         return self.fileData
     def getHeaderData(self):
@@ -68,7 +72,8 @@ class Get_Data():
         return self.projectNoList, self.csList, self.salesList, self.currencyList, self.partnerCodeList, self.materialCodeList,self.sapNoList, self.amountList, self.amountWithVATList, self.exchangeRateList,self.costList
 
 # deleteList = {'Amount': 0}
-# a = Get_Data("C:\\Users\\chen-fr\\Desktop\\ODM4.xlsx")
+# a = Get_Data("C:\\Users\\chen-fr\\OneDrive - Binghamton University\\chenhuai\\CS Work\\4.SAP Data\\ODM Data\\Final Data\\data.csv")
+# # a = Get_Data("C:\\Users\\chen-fr\\Desktop\\ODM4.xlsx")
 # a.getFileData()
 # a.deleteTheRows(deleteList)
 # fillNanColumnKey = {'Material Code':["PHY Material Code", "CHM Material Code"]}
