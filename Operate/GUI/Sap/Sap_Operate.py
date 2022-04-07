@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Sap_Operate_UI import *
+from Get_Data import *
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
@@ -18,6 +19,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.actionAuthor.triggered.connect(self.showAuthorMessage)
 		self.pushButton_11.clicked.connect(self.sapOperate)
 		self.pushButton_12.clicked.connect(self.textBrowser.clear)
+		self.pushButton_16.clicked.connect(self.getFileUrl)
+		self.pushButton_17.clicked.connect(self.odmDataToSap)
+		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
@@ -31,6 +35,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global last_time
 		global today
 		global oneWeekday
+		global fileUrl
 		date = datetime.datetime.now() + datetime.timedelta(days=1)
 		now = int(time.strftime('%Y'))
 		last_time = now - 1
@@ -81,6 +86,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			pass
 
 	def createConfigContent(self):
+		global monthAbbrev
 		months = "JanFebMarAprMayJunJulAugSepOctNovDec"
 		n = time.strftime('%m')
 		pos = (int(n) - 1) * 3
@@ -190,7 +196,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			exchangeRate = float(self.doubleSpinBox.text())
 			globalPartnerCode = self.lineEdit_3.text()
 			csName = self.comboBox_2.currentText()
-			csCode = configContent[csName]
+			if csName != '':
+				csCode = configContent[csName]
 			salesName = self.comboBox_3.currentText()
 			if salesName != '':
 				salesCode = configContent[salesName]
@@ -271,7 +278,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").caretPosition = 3
 						session.findById("wnd[0]").sendVKey(0)
 						if currencyType != "CNY":
-							session.findById("wnd[1]").sendVKey(0)
+							try:
+								session.findById("wnd[1]").sendVKey(0)
+							except:
+								pass
+							else:
+								pass
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = exchangeRate
 							session.findById(
@@ -279,6 +291,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").caretPosition = 8
 							session.findById("wnd[0]").sendVKey(0)
+						# 会计
+						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\06").select()
+						session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\06/ssubSUBSCREEN_BODY:SAPMV45A:4311/txtVBAK-XBLNR").text = "*"
+						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\06/ssubSUBSCREEN_BODY:SAPMV45A:4311/txtVBAK-XBLNR").setFocus()
+						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\06/ssubSUBSCREEN_BODY:SAPMV45A:4311/txtVBAK-XBLNR").caretPosition = 1
+						session.findById("wnd[0]").sendVKey(0)
+						# 合作伙伴
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09").select()
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").text = globalPartnerCode
 						session.findById(
@@ -309,15 +329,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,7]").caretPosition = 4
 							session.findById("wnd[0]").sendVKey(0)
+						# 文本
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10").select()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = shortText
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 							11, 11)
+						# DATA A
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13").select()
-						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "00"
+						if 'D2' in materialCode:
+							session.findById(
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "E1"
+						else:
+							session.findById(
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "00"
+						# DATA B
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14").select()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZAUART").text = "WO"
@@ -379,8 +406,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							# session.findById("wnd[0]/tbar[0]/btn[3]").press()
 							# session.findById("wnd[0]/tbar[0]/btn[3]").press()
 							# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-
-
 
 					if self.checkBox_2.isChecked():
 							try:
@@ -592,15 +617,131 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 		except:
-			self.textBrowser.append('SAP有问题')
-			self.textBrowser.append(sys.exc_info()[0])
-			# print(sys.exc_info()[0])
+			projectNo = self.lineEdit_2.text()
+			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
+			self.textBrowser.append('----------------------------------')
+			print(sys.exc_info()[0])
 
 		finally:
 			session = None
 			connection = None
 			application = None
 			SapGuiAuto = None
+
+	def getFileUrl(self):
+		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '', 'files(*.docx;*.xls*;*.csv)')
+		fileUrl = selectBatchFile[0]
+		if fileUrl:
+			self.lineEdit_6.setText(fileUrl)
+			app.processEvents()
+		else:
+			self.textBrowser.append("请重新选择ODN文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODN文件", QMessageBox.Yes)
+
+	def odmDataToSap(self):
+		fileUrl = self.lineEdit_6.text()
+		if fileUrl:
+			newData = Get_Data(fileUrl)
+			newData.getFileData()
+			deleteList = {'Amount': 0}
+			headList = newData.getHeaderData()
+			newData.deleteTheRows(deleteList)
+			if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
+				fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
+				newData.fillNanColumn(fillNanColumnKey)
+			getFileDataListKey = ['Project No.', 'CS', 'Sales', 'Currency', 'GPC Glo. Par. Code', 'Material Code',
+								  'SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate', 'Total Cost']
+			if 'Text' in headList:
+				getFileDataListKey.append('Text')
+			elif 'Long Text' in headList:
+				getFileDataListKey.append('Long Text')
+			fileDataList = newData.getFileDataList(getFileDataListKey)
+			headerData = newData.getHeaderData()
+			n = 0
+			for n in range(len(fileDataList['Amount'])):
+				if fileDataList['Material Code'][n] == '':
+					QMessageBox.information(self, "提示信息", "无Material Code，请检查", QMessageBox.Yes)
+					break
+				else:
+					materialCode = fileDataList['Material Code'][n]
+				self.lineEdit_2.setText(fileDataList['Project No.'][n])
+				self.lineEdit_3.setText(str(fileDataList['GPC Glo. Par. Code'][n]))
+				self.lineEdit.setText(str(fileDataList['SAP No.'][n]))
+				self.comboBox_4.setItemText(int(0), materialCode)
+				if fileDataList['CS'][n] in configContent:
+					self.comboBox_2.setItemText(int(0), fileDataList['CS'][n])
+				else:
+					self.comboBox_2.setItemText(int(0), '')
+				if fileDataList['Sales'][n] in configContent:
+					self.comboBox_3.setItemText(int(0), fileDataList['Sales'][n])
+				else:
+					self.comboBox_3.setItemText(int(0), '')
+				self.comboBox.setItemText(int(0), fileDataList['Currency'][n])
+				self.doubleSpinBox_2.setValue(fileDataList['Amount'][n])
+				self.doubleSpinBox_4.setValue(fileDataList['Amount with VAT'][n])
+				self.doubleSpinBox_3.setValue(fileDataList['Total Cost'][n])
+				self.doubleSpinBox.setValue(fileDataList['Exchange Rate'][n])
+				if 'Text' in headList:
+					self.lineEdit_5.setText(fileDataList['Text'][n])
+				elif 'Long Text' in headList:
+					self.lineEdit_4.setText(fileDataList['Long Text'][n])
+				self.textBrowser.append("No.:%s" % (n+1))
+				app.processEvents()
+				MyMainWindow.sapOperate(self)
+				if n < len(fileDataList['Amount'])-1:
+					reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
+												 QMessageBox.Yes)
+					if reply == QMessageBox.Yes:
+						continue
+					else:
+						break
+		else:
+			self.textBrowser.append("请重新选择ODN文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+	# def odmDataToSap1(self):
+	# 	fileUrl = self.lineEdit_6.text()
+	# 	if fileUrl:
+	# 		newData = Get_Data(fileUrl)
+	# 		newData.getFileData()
+	# 		projectNoList, csList, salesList, currencyList, partnerCodeList, materialCodeList, sapNoList, amountList, amountWithVATList, exchangeRateList ,costList= newData.getFileDataList1()
+	# 		n = 0
+	# 		for n in range(len(amountList)):
+	# 			# if materialCodeList[n] == '':
+	# 			# 	if chmMaterialCodeList[n] != '':
+	# 			# 		materialCode = chmMaterialCodeList[n]
+	# 			# 	else:
+	# 			# 		materialCode = phyMaterialCodeList[n]
+	# 			# else:
+	# 			# 	materialCode = materialCodeList[n]
+	# 			materialCode = materialCodeList[n]
+	# 			self.lineEdit_2.setText(projectNoList[n])
+	# 			self.lineEdit_3.setText(str(partnerCodeList[n]))
+	# 			self.lineEdit.setText(str(sapNoList[n]))
+	# 			self.comboBox_4.setItemText(int(0), materialCode)
+	# 			self.comboBox_2.setItemText(int(0), csList[n])
+	# 			if salesList[n] in configContent:
+	# 				self.comboBox_3.setItemText(int(0), salesList[n])
+	# 			else:
+	# 				self.comboBox_3.setItemText(int(0), '')
+	# 			self.comboBox.setItemText(int(0), currencyList[n])
+	# 			self.doubleSpinBox_2.setValue(amountList[n])
+	# 			self.doubleSpinBox_4.setValue(amountWithVATList[n])
+	# 			self.doubleSpinBox_3.setValue(costList[n])
+	# 			self.doubleSpinBox.setValue(exchangeRateList[n])
+	# 			app.processEvents()
+	# 			MyMainWindow.sapOperate(self)
+	# 			if n < len(amountList)-1:
+	# 				reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
+	# 											 QMessageBox.Yes)
+	# 				if reply == QMessageBox.Yes:
+	# 					continue
+	# 				else:
+	# 					break
+	# 	else:
+	# 		self.textBrowser.append("请重新选择ODN文件")
+	# 		QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+
+
 if __name__ == "__main__":
 	import sys
 	import os
