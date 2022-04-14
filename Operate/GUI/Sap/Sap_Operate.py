@@ -39,6 +39,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global today
 		global oneWeekday
 		global fileUrl
+		global data
+		data = {
+			'Project No.': [],
+			'Sales': [],
+			'Material Code': [],
+			'Currency': [],
+			'Exchange Rate': [],
+			'CS': [],
+			'Amount': [],
+			'Amount with VAT': [],
+			'Total Cost': [],
+			'Text': [],
+			'Long Text': [],
+			'Order No.': [],
+			'Proforma No.': [],
+			'Update Time': [],
+			'Remark': [],
+		}
 		date = datetime.datetime.now() + datetime.timedelta(days=1)
 		now = int(time.strftime('%Y'))
 		last_time = now - 1
@@ -141,6 +159,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def salesItem(self):
 		self.comboBox_3.clear()
 		self.comboBox_3.addItem('')
+		self.comboBox_3.addItem('')
 		nameList = username
 		i = 0
 		for each in nameList:
@@ -162,6 +181,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
 		self.doubleSpinBox_4.setValue(amount*1.06)
+
+	def getGuiData(self):
+		sapNo = self.lineEdit.text()
+		projectNo = self.lineEdit_2.text()
+		materialCode = self.comboBox_4.currentText()
+		currencyType = self.comboBox.currentText()
+		exchangeRate = float(self.doubleSpinBox.text())
+		globalPartnerCode = self.lineEdit_3.text()
+		csName = self.comboBox_2.currentText()
+		salesName = self.comboBox_3.currentText()
+		amount = float(self.doubleSpinBox_2.text())
+		cost = float(self.doubleSpinBox_3.text())
+		amountVat = float(self.doubleSpinBox_4.text())
+		longText = self.lineEdit_4.text()
+		shortText = self.lineEdit_5.text()
+		return sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText
 
 	def sapOperate(self):
 		try:
@@ -194,26 +229,28 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# session.findById("wnd[0]").sendVKey(0)
 			# session.findById("wnd[1]/tbar[0]/btn[0]").press()()
 			# session.findById("wnd[0]/usr/tabsTABSPR1/tabpSP02").select()()
+
 			flag = 1
-			sapNo = self.lineEdit.text()
-			projectNo = self.lineEdit_2.text()
-			materialCode = self.comboBox_4.currentText()
-			currencyType = self.comboBox.currentText()
-			exchangeRate = float(self.doubleSpinBox.text())
-			globalPartnerCode = self.lineEdit_3.text()
-			csName = self.comboBox_2.currentText()
+			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText = MyMainWindow.getGuiData(self)
+			# sapNo = self.lineEdit.text()
+			# projectNo = self.lineEdit_2.text()
+			# materialCode = self.comboBox_4.currentText()
+			# currencyType = self.comboBox.currentText()
+			# exchangeRate = float(self.doubleSpinBox.text())
+			# globalPartnerCode = self.lineEdit_3.text()
+			# csName = self.comboBox_2.currentText()
 			if csName != '':
 				csCode = configContent[csName]
-			salesName = self.comboBox_3.currentText()
+			# salesName = self.comboBox_3.currentText()
 			if salesName != '':
 				salesCode = configContent[salesName]
 			orderNo = ''
 			proformaNo = ''
-			amount = float(self.doubleSpinBox_2.text())
-			cost = float(self.doubleSpinBox_3.text())
-			amountVat = float(self.doubleSpinBox_4.text())
-			longText = self.lineEdit_4.text()
-			shortText = self.lineEdit_5.text()
+			# amount = float(self.doubleSpinBox_2.text())
+			# cost = float(self.doubleSpinBox_3.text())
+			# amountVat = float(self.doubleSpinBox_4.text())
+			# longText = self.lineEdit_4.text()
+			# shortText = self.lineEdit_5.text()
 			if sapNo == '' or projectNo == '' or materialCode == '' or currencyType == '' or exchangeRate == '' or globalPartnerCode == '' or csName == '' or amount == 0.00:
 				self.textBrowser.append("有关键信息未填")
 				app.processEvents()
@@ -619,10 +656,30 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						proformaNo = session.findById("wnd[0]/usr/ctxtVBRK-VBELN").text
 						session.findById("wnd[0]/mbar/menu[0]/menu[11]").select()
 						session.findById("wnd[1]/tbar[0]/btn[37]").press()
+
+					data['Project No.'].append(projectNo)
+					data['Sales'].append(salesName)
+					data['Material Code'].append(materialCode)
+					data['Currency'].append(currencyType)
+					data['Exchange Rate'].append(exchangeRate)
+					data['CS'].append(csName)
+					data['Amount'].append(amount)
+					data['Amount with VAT'].append(amountVat)
+					data['Total Cost'].append(cost)
+					data['Text'].append(shortText)
+					data['Long Text'].append(longText)
+					data['Update Time'].append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+					data['Remark'].append('')
 					if orderNo:
 						self.textBrowser.append("Order No.:%s" % orderNo)
+						data['Order No.'].append(orderNo)
+					else:
+						data['Order No.'].append('')
 					if proformaNo:
 						self.textBrowser.append("Proforma No.:%s" % proformaNo)
+						data['Proforma No.'].append(proformaNo)
+					else:
+						data['Proforma No.'].append('')
 					self.textBrowser.append('SAP操作已完成')
 					self.textBrowser.append('----------------------------------')
 					app.processEvents()
@@ -630,8 +687,26 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						QMessageBox.information(self, "提示信息", "SAP操作已完成", QMessageBox.Yes)
 
 
+
+
 		except:
-			projectNo = self.lineEdit_2.text()
+			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText = MyMainWindow.getGuiData(
+				self)
+			data['Project No.'].append(projectNo)
+			data['Sales'].append(salesName)
+			data['Material Code'].append(materialCode)
+			data['Currency'].append(currencyType)
+			data['Exchange Rate'].append(exchangeRate)
+			data['CS'].append(csName)
+			data['Amount'].append(amount)
+			data['Amount with VAT'].append(amountVat)
+			data['Total Cost'].append(cost)
+			data['Text'].append(shortText)
+			data['Long Text'].append(longText)
+			data['Order No.'].append('')
+			data['Proforma No.'].append('')
+			data['Update Time'].append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+			data['Remark'].append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('----------------------------------')
 			# print(sys.exc_info()[0])
@@ -662,10 +737,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		else:
 			self.textBrowser_2.append("请重新选择ODM文件")
 			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+
 	def odmDataToSap(self):
 		try:
 			fileUrl = self.lineEdit_6.text()
+			(filepath, filename) = os.path.split(fileUrl)
 			if fileUrl:
+				# log文件
+				logFileUrl = '%s\\..\\log\\%s' % (filepath, today)
+				MyMainWindow.createFolder(self, logFileUrl)
+				csvFileType = 'csv'
+				logFileName = 'log'
+				logDataPath = MyMainWindow.fileName(self, logFileUrl, logFileName, csvFileType)
+
 				newData = Get_Data()
 				newData.getFileData(fileUrl)
 				deleteList = {'Amount': 0}
@@ -694,14 +778,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.lineEdit_2.setText(fileDataList['Project No.'][n])
 					self.lineEdit_3.setText(str(fileDataList['GPC Glo. Par. Code'][n]))
 					self.lineEdit.setText(str(fileDataList['SAP No.'][n]))
+					# materialCodeList = ['', 'T75-441-A2', 'T75-405-A2', 'T20-441-00', 'T20-405-00', 'T75-441-00', 'T75-405-00', 'T75-441-D2', 'T75-405-D2', 'S11-441-10', 'S11-405-10']
+					# self.comboBox_4.setCurrentIndex(username.index(materialCode))
 					self.comboBox_4.setItemText(int(0), materialCode)
 					if fileDataList['CS'][n] in configContent:
+						# self.comboBox_2.setCurrentIndex(username.index(fileDataList['CS'][n])+1)
 						self.comboBox_2.setItemText(int(0), fileDataList['CS'][n])
 					else:
+						# self.comboBox_2.setCurrentIndex(0)
 						self.comboBox_2.setItemText(int(0), '')
 					if fileDataList['Sales'][n] in configContent:
+						# self.comboBox_3.setCurrentIndex(username.index(fileDataList['Sales'][n]) + 1)
 						self.comboBox_3.setItemText(int(0), fileDataList['Sales'][n])
 					else:
+						# self.comboBox_3.setCurrentIndex(0)
 						self.comboBox_3.setItemText(int(0), '')
 					self.comboBox.setItemText(int(0), fileDataList['Currency'][n])
 					self.doubleSpinBox_2.setValue(fileDataList['Amount'][n])
@@ -717,6 +807,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("No.:%s" % (n+1))
 					app.processEvents()
 					MyMainWindow.sapOperate(self)
+					# 写log
+					logData = pd.DataFrame(data)
+					logDataFile = logData.to_csv('%s' % (logDataPath), encoding='utf_8_sig')
 					if n < len(fileDataList['Amount'])-1:
 						if self.checkBox_5.isChecked():
 							reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
@@ -727,8 +820,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								break
 					else:
 						self.textBrowser.append("ODM数据已全部填写完成")
+						self.textBrowser.append("log数据:%s" % logDataPath)
 						self.textBrowser.append('----------------------------------')
 						QMessageBox.information(self, "提示信息", "ODM数据已全部填写完成", QMessageBox.Yes)
+
+
+
 			else:
 				self.textBrowser.append("请重新选择ODM文件")
 				QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
@@ -736,6 +833,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileData = self.lineEdit_6.text()
 			self.textBrowser.append('这份%s的ODM获取数据有问题' % fileData)
 			self.textBrowser.append('----------------------------------')
+
 	def fileName(self, fileUrl, fileName, fileType):
 		n = 1
 		# fileName = fileName + str(n) + '.' +fileType
@@ -748,6 +846,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		isExists = os.path.exists(url)
 		if not isExists:
 			os.makedirs(url)
+
 	def odmCombineData(self):
 		try:
 			fileUrl = self.lineEdit_7.text()

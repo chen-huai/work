@@ -304,6 +304,11 @@
              </item>
              <item>
               <property name="text">
+               <string>CNY</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>USD</string>
               </property>
              </item>
