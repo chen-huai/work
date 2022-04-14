@@ -19,8 +19,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.actionAuthor.triggered.connect(self.showAuthorMessage)
 		self.pushButton_11.clicked.connect(self.sapOperate)
 		self.pushButton_12.clicked.connect(self.textBrowser.clear)
+		self.pushButton_20.clicked.connect(self.textBrowser_2.clear)
 		self.pushButton_16.clicked.connect(self.getFileUrl)
+		self.pushButton_18.clicked.connect(self.getCombineFileUrl)
 		self.pushButton_17.clicked.connect(self.odmDataToSap)
+		self.pushButton_19.clicked.connect(self.odmCombineData)
 		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
@@ -154,7 +157,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.05\n\n\n 2022-03-25")
+						  "V 22.01.06\n\n\n 2022-04-13")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -243,17 +246,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				if salesName != '' or messageFlag == 1:
 					self.textBrowser.append("Sap No.:%s" % sapNo)
 					self.textBrowser.append("Project No.:%s" % projectNo)
-					self.textBrowser.append("materialCode:%s" % materialCode)
-					self.textBrowser.append("globalPartnerCode:%s" % globalPartnerCode)
-					self.textBrowser.append("csName:%s" % csName)
-					self.textBrowser.append("salesName:%s" % salesName)
-					self.textBrowser.append("amount:%s" % amount)
-					self.textBrowser.append("cost:%s" % cost)
-					self.textBrowser.append("currencyType:%s" % currencyType)
+					self.textBrowser.append("Material Code:%s" % materialCode)
+					self.textBrowser.append("Global Partner Code:%s" % globalPartnerCode)
+					self.textBrowser.append("CS Name:%s" % csName)
+					self.textBrowser.append("Sales Name:%s" % salesName)
+					self.textBrowser.append("Amount:%s" % amount)
+					self.textBrowser.append("Cost:%s" % cost)
+					self.textBrowser.append("Currency Type:%s" % currencyType)
 					self.textBrowser.append("CHM Cost:%s" % chmCost)
 					self.textBrowser.append("PHY Cost:%s" % phyCost)
-					self.textBrowser.append("CHM amount:%s" % chmRe)
-					self.textBrowser.append("PHY amount:%s" % phyRe)
+					self.textBrowser.append("CHM Amount:%s" % chmRe)
+					self.textBrowser.append("PHY Amount:%s" % phyRe)
 					app.processEvents()
 					# session.findById("wnd[0]").resizeWorkingPane(172, 38, 0)
 					if self.checkBox.isChecked():
@@ -638,22 +641,32 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			application = None
 			SapGuiAuto = None
 
-	def getFileUrl(self):
+	def getFile(self):
 		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '', 'files(*.docx;*.xls*;*.csv)')
 		fileUrl = selectBatchFile[0]
+		return fileUrl
+	def getFileUrl(self):
+		fileUrl = MyMainWindow.getFile(self)
 		if fileUrl:
 			self.lineEdit_6.setText(fileUrl)
 			app.processEvents()
 		else:
 			self.textBrowser.append("请重新选择ODM文件")
 			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
-
+	def getCombineFileUrl(self):
+		fileUrl = MyMainWindow.getFile(self)
+		if fileUrl:
+			self.lineEdit_7.setText(fileUrl)
+			app.processEvents()
+		else:
+			self.textBrowser_2.append("请重新选择ODM文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
 	def odmDataToSap(self):
 		try:
 			fileUrl = self.lineEdit_6.text()
 			if fileUrl:
-				newData = Get_Data(fileUrl)
-				newData.getFileData()
+				newData = Get_Data()
+				newData.getFileData(fileUrl)
 				deleteList = {'Amount': 0}
 				headList = newData.getHeaderData()
 				newData.deleteTheRows(deleteList)
@@ -666,6 +679,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					getFileDataListKey.append('Text')
 				elif 'Long Text' in headList:
 					getFileDataListKey.append('Long Text')
+
+
 				fileDataList = newData.getFileDataList(getFileDataListKey)
 				headerData = newData.getHeaderData()
 				n = 0
@@ -720,6 +735,74 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileData = self.lineEdit_6.text()
 			self.textBrowser.append('这份%s的ODM获取数据有问题' % fileData)
 			self.textBrowser.append('----------------------------------')
+	def fileName(self, fileUrl, fileName, fileType):
+		n = 1
+		# fileName = fileName + str(n) + '.' +fileType
+		while os.path.exists(fileUrl + '\\' + today + '-' + str(n) + ' ' + fileName + '.' + fileType):
+			n += 1
+		fileName = fileUrl + '\\' + today + '-' + str(n) + ' ' + fileName + '.' + fileType
+		return fileName
+
+	def createFolder(self, url):
+		isExists = os.path.exists(url)
+		if not isExists:
+			os.makedirs(url)
+	def odmCombineData(self):
+		try:
+			fileUrl = self.lineEdit_7.text()
+			(filepath, filename) = os.path.split(fileUrl)
+			if fileUrl:
+				newData = Get_Data()
+				newData.getFileData(fileUrl)
+				# 删除Amount为0的数据
+				deleteRowList = {'Amount': 0}
+				newData.deleteTheRows(deleteRowList)
+				# 保存原始数据
+				fileUrl = '%s\\%s' % (filepath, today)
+				MyMainWindow.createFolder(self, fileUrl)
+				csvFileType = 'csv'
+				odmFileName = 'ODM Raw Data'
+				odmDataPath = MyMainWindow.fileName(self, fileUrl, odmFileName, csvFileType)
+				odmDataFile = newData.fileData.to_csv('%s' % (odmDataPath), encoding='utf_8_sig')
+				# 数据透视并保存
+				pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month']
+				valusKey = ['Amount', 'Amount with VAT', 'Total Cost']
+				pivotTable = newData.pivotTable(pivotTableKey, valusKey)
+				combineFileName = 'Combine'
+				combineFileNamePath = MyMainWindow.fileName(self, fileUrl, combineFileName, csvFileType)
+				combineFile = pivotTable.to_csv('%s' % (combineFileNamePath), encoding='utf_8_sig')
+				# 读取数据透视数据
+				combineData = Get_Data()
+				combineData = combineData.getFileData(combineFileNamePath)
+				# 删除列
+				deleteColumnList = ['Amount', 'Amount with VAT', 'Total Cost']
+				newData = newData.deleteTheColumn(deleteColumnList)
+				# merge数据，combine和原始数据
+				onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month']
+				mergeData = pd.merge(combineData, newData, on=onData, how='inner')
+				mergeDataName = 'Merge to Project'
+				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
+				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
+				# merge数据去重得到最终数据
+				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
+				finilDataName = 'Finil'
+				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
+				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
+				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
+				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
+				self.textBrowser_2.append('添加Project No.的数据：%s' % mergeFileNamePath)
+				self.textBrowser_2.append('最终的SAP应用数据：%s' % finilFileNamePath)
+				self.textBrowser_2.append('ODM数据已处理完成')
+				self.textBrowser_2.append('----------------------------------')
+				app.processEvents()
+			else:
+				self.textBrowser_2.append('请重新选择ODM文件')
+				self.textBrowser_2.append('----------------------------------')
+		except:
+			fileData = self.lineEdit_7.text()
+			self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
 
 
 if __name__ == "__main__":

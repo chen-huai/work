@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
+    <width>768</width>
     <height>597</height>
    </rect>
   </property>
@@ -23,878 +23,963 @@
     <normaloff>:/ch.ico</normaloff>:/ch.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0" rowspan="4">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="title">
-       <string>Order Information</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lineEdit_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Cs Name</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="comboBox_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-         <item>
-          <property name="text">
-           <string/>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>SAP Operate</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0" rowspan="4">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string/>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
-         </item>
-        </widget>
-       </item>
-       <item row="23" column="0">
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Currency Type</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="pushButton_6">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Global Partner Code</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Material Code</string>
-         </property>
-        </widget>
-       </item>
-       <item row="16" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-         <property name="maximum">
-          <double>999999999.990000009536743</double>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QPushButton" name="pushButton_8">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Sales Name</string>
-         </property>
-        </widget>
-       </item>
-       <item row="23" column="1">
-        <widget class="QComboBox" name="comboBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>CNY</string>
+          <property name="title">
+           <string>Order Information</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>USD</string>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QPushButton" name="pushButton_7">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Cs Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QComboBox" name="comboBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+             <item>
+              <property name="text">
+               <string/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string/>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="23" column="0">
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Currency Type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QPushButton" name="pushButton_6">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Global Partner Code</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Material Code</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QPushButton" name="pushButton_8">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Sales Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="1">
+            <widget class="QComboBox" name="comboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>CNY</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>USD</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>EUR</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>HKD</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="19" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+           </item>
+           <item row="24" column="0">
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Exchange Rate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="comboBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+             <item>
+              <property name="text">
+               <string/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-441-A2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-405-A2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T20-441-00</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T20-405-00</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-441-00</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-405-00</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-441-D2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>T75-405-D2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>S11-441-10</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>S11-405-10</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Project No.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="25" column="1">
+            <widget class="QLineEdit" name="lineEdit_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Testing Fee</string>
+             </property>
+            </widget>
+           </item>
+           <item row="24" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+             <property name="decimals">
+              <number>4</number>
+             </property>
+             <property name="singleStep">
+              <double>0.000100000000000</double>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QPushButton" name="pushButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Sap No.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="statusTip">
+              <string>加税后价格，用于判断与Sap数据是否一致</string>
+             </property>
+             <property name="maximum">
+              <double>9999999999999.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="0">
+            <widget class="QPushButton" name="pushButton_10">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Cost</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="0">
+            <widget class="QPushButton" name="pushButton_13">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Amount with VAT</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>必填项</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0">
+            <widget class="QPushButton" name="pushButton_9">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Amount</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QComboBox" name="comboBox_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>不是当地销售可以为空</string>
+             </property>
+            </widget>
+           </item>
+           <item row="27" column="1">
+            <widget class="QLineEdit" name="lineEdit_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="25" column="0">
+            <widget class="QPushButton" name="pushButton_14">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Text</string>
+             </property>
+            </widget>
+           </item>
+           <item row="27" column="0">
+            <widget class="QPushButton" name="pushButton_15">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Long Text</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+          <zorder>lineEdit_2</zorder>
+          <zorder>pushButton_4</zorder>
+          <zorder>pushButton_8</zorder>
+          <zorder>doubleSpinBox_2</zorder>
+          <zorder>pushButton_3</zorder>
+          <zorder>comboBox_2</zorder>
+          <zorder>pushButton_9</zorder>
+          <zorder>comboBox</zorder>
+          <zorder>doubleSpinBox</zorder>
+          <zorder>pushButton_7</zorder>
+          <zorder>pushButton_6</zorder>
+          <zorder>pushButton_2</zorder>
+          <zorder>comboBox_3</zorder>
+          <zorder>pushButton_5</zorder>
+          <zorder>pushButton</zorder>
+          <zorder>lineEdit</zorder>
+          <zorder>pushButton_13</zorder>
+          <zorder>doubleSpinBox_4</zorder>
+          <zorder>lineEdit_3</zorder>
+          <zorder>comboBox_4</zorder>
+          <zorder>pushButton_10</zorder>
+          <zorder>doubleSpinBox_3</zorder>
+          <zorder>lineEdit_5</zorder>
+          <zorder>lineEdit_4</zorder>
+          <zorder>pushButton_14</zorder>
+          <zorder>pushButton_15</zorder>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>EUR</string>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>HKD</string>
+          <property name="statusTip">
+           <string>SAP步骤选择，中间开始时，请注意先保存上一步骤</string>
           </property>
-         </item>
-        </widget>
-       </item>
-       <item row="19" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="maximum">
-          <double>999999999.990000009536743</double>
-         </property>
-        </widget>
-       </item>
-       <item row="24" column="0">
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Exchange Rate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="comboBox_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-         <item>
-          <property name="text">
-           <string/>
+          <property name="title">
+           <string>Sap Function</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-441-A2</string>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QCheckBox" name="checkBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>/NVA01</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>/NVA02</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>/NVF01</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>/NVF03</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_6">
+             <property name="text">
+              <string>Save</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-405-A2</string>
+          <property name="title">
+           <string>ODM Data</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T20-441-00</string>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pushButton_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Get Data</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QGroupBox" name="groupBox_5">
+          <property name="title">
+           <string>Operate</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T20-405-00</string>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="checkBox_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Message</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_12">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="statusTip">
+              <string>清理Messages框中的信息</string>
+             </property>
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_11">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>点击后开始SAP操作</string>
+             </property>
+             <property name="text">
+              <string>Fill in the SAP</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Fill in the SAP for ODM Data</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-441-00</string>
+          <property name="title">
+           <string>Messages</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-405-00</string>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QTextBrowser" name="textBrowser">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>信息显示</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Combine Data</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-441-D2</string>
+          <property name="title">
+           <string>Operate</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>T75-405-D2</string>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_18">
+             <property name="text">
+              <string>Get File</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QPushButton" name="pushButton_19">
+             <property name="text">
+              <string>Combine Data</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEdit_7"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_20">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string>Messages</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>S11-441-10</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>S11-405-10</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Project No.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="1">
-        <widget class="QLineEdit" name="lineEdit_5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Testing Fee</string>
-         </property>
-        </widget>
-       </item>
-       <item row="24" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="singleStep">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="pushButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Sap No.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="statusTip">
-          <string>加税后价格，用于判断与Sap数据是否一致</string>
-         </property>
-         <property name="maximum">
-          <double>9999999999999.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="0">
-        <widget class="QPushButton" name="pushButton_10">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Cost</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="0">
-        <widget class="QPushButton" name="pushButton_13">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Amount with VAT</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>必填项</string>
-         </property>
-        </widget>
-       </item>
-       <item row="16" column="0">
-        <widget class="QPushButton" name="pushButton_9">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Amount</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QComboBox" name="comboBox_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>不是当地销售可以为空</string>
-         </property>
-        </widget>
-       </item>
-       <item row="27" column="1">
-        <widget class="QLineEdit" name="lineEdit_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="0">
-        <widget class="QPushButton" name="pushButton_14">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Text</string>
-         </property>
-        </widget>
-       </item>
-       <item row="27" column="0">
-        <widget class="QPushButton" name="pushButton_15">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Long Text</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-      <zorder>lineEdit_2</zorder>
-      <zorder>pushButton_4</zorder>
-      <zorder>pushButton_8</zorder>
-      <zorder>doubleSpinBox_2</zorder>
-      <zorder>pushButton_3</zorder>
-      <zorder>comboBox_2</zorder>
-      <zorder>pushButton_9</zorder>
-      <zorder>comboBox</zorder>
-      <zorder>doubleSpinBox</zorder>
-      <zorder>pushButton_7</zorder>
-      <zorder>pushButton_6</zorder>
-      <zorder>pushButton_2</zorder>
-      <zorder>comboBox_3</zorder>
-      <zorder>pushButton_5</zorder>
-      <zorder>pushButton</zorder>
-      <zorder>lineEdit</zorder>
-      <zorder>pushButton_13</zorder>
-      <zorder>doubleSpinBox_4</zorder>
-      <zorder>lineEdit_3</zorder>
-      <zorder>comboBox_4</zorder>
-      <zorder>pushButton_10</zorder>
-      <zorder>doubleSpinBox_3</zorder>
-      <zorder>lineEdit_5</zorder>
-      <zorder>lineEdit_4</zorder>
-      <zorder>pushButton_14</zorder>
-      <zorder>pushButton_15</zorder>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="statusTip">
-       <string>SAP步骤选择，中间开始时，请注意先保存上一步骤</string>
-      </property>
-      <property name="title">
-       <string>Sap Function</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QCheckBox" name="checkBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="tabletTracking">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>/NVA01</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="tabletTracking">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>/NVA02</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="tabletTracking">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>/NVF01</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="tabletTracking">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>/NVF03</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QGroupBox" name="groupBox_5">
-      <property name="title">
-       <string>Operate</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QCheckBox" name="checkBox_5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Message</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_12">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="statusTip">
-          <string>清理Messages框中的信息</string>
-         </property>
-         <property name="text">
-          <string>Clear</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_11">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>点击后开始SAP操作</string>
-         </property>
-         <property name="text">
-          <string>Fill in the SAP</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_17">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Fill in the SAP for ODM Data</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="title">
-       <string>Messages</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QTextBrowser" name="textBrowser">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>信息显示</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="title">
-       <string>ODM Data</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="pushButton_16">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Get Data</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_6">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QTextBrowser" name="textBrowser_2"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -904,7 +989,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>744</width>
+     <width>768</width>
      <height>25</height>
     </rect>
    </property>
