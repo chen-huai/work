@@ -157,7 +157,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.06\n\n\n 2022-04-13")
+						  "V 22.01.07\n\n\n 2022-04-14")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -398,7 +398,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").caretPosition = 8
 
-						if self.checkBox_2.isChecked():
+						if self.checkBox_2.isChecked() or self.checkBox_6.isChecked():
 							try:
 								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
@@ -501,10 +501,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
 
 							elif 'T20' in materialCode:
-								if '405' in materialCode:
-									session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-405-00"
-								else:
-									session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-441-00"
+								# if '405' in materialCode:
+								# 	session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-405-00"
+								# else:
+								# 	session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-441-00"
+								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,0]").text = "1"
 								session.findById(
@@ -573,7 +574,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 															 QMessageBox.Yes)
 								if reply == QMessageBox.Yes:
 									flag = 1
-							if self.checkBox_3.isChecked() and flag == 1:
+							if (self.checkBox_3.isChecked() or self.checkBox_6.isChecked()) and flag == 1:
 								try:
 									session.findById("wnd[0]/tbar[0]/btn[3]").press()
 									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
@@ -757,6 +758,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# 删除Amount为0的数据
 				deleteRowList = {'Amount': 0}
 				newData.deleteTheRows(deleteRowList)
+				newData.fileData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
 				# 保存原始数据
 				fileUrl = '%s\\%s' % (filepath, today)
 				MyMainWindow.createFolder(self, fileUrl)
@@ -787,11 +789,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
 				finilDataName = 'Finil'
 				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
+				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
 				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
 				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
 				self.textBrowser_2.append('添加Project No.的数据：%s' % mergeFileNamePath)
 				self.textBrowser_2.append('最终的SAP应用数据：%s' % finilFileNamePath)
+				self.lineEdit_6.setText(finilFileNamePath)
 				self.textBrowser_2.append('ODM数据已处理完成')
 				self.textBrowser_2.append('----------------------------------')
 				app.processEvents()
