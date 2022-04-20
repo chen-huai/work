@@ -99,6 +99,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 		MyMainWindow.getConfigContent(self)
 		MyMainWindow.csItem(self)
 		MyMainWindow.salesItem(self)
+		MyMainWindow.hourlyRate(self)
 		try:
 			self.textBrowser.append("配置获取成功")
 		except AttributeError:
@@ -117,7 +118,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['SAP名称', '内容', '备注'],
 			# ['销售组织', '0486', ''],
 			# ['销售办事处', '>601', '备注'],
-			['名称','编号','角色'],
+			['Hourly Rate', '金额', '角色'],
+			["Hourly Rate(PC)", 315, 'CS'],
+			['Hourly Rate(Lab)', 342, 'Lab'],
+			['名称', '编号', '角色'],
 			['chen, frank', '6375108', 'CS'],
 			['chen, frank', '6375108', 'Sales'],
 		]
@@ -144,6 +148,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			MyMainWindow.getConfigContent(self)
 		else:
 			QMessageBox.information(self, "提示信息", "没有重新导入配置文件，将按照原有的配置文件操作", QMessageBox.Yes)
+
+	def hourlyRate(self):
+		self.doubleSpinBox_5.setValue(float(format(float(configContent['Hourly Rate(PC)']), '.2f')))
+		self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(Lab)']), '.2f')))
 
 	def csItem(self):
 		self.comboBox_2.clear()
@@ -194,9 +202,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		amount = float(self.doubleSpinBox_2.text())
 		cost = float(self.doubleSpinBox_3.text())
 		amountVat = float(self.doubleSpinBox_4.text())
+		csHourlyRate = float(self.doubleSpinBox_5.text())
+		labHourlyRate = float(self.doubleSpinBox_6.text())
 		longText = self.lineEdit_4.text()
 		shortText = self.lineEdit_5.text()
-		return sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText
+		return sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate
 
 	def sapOperate(self):
 		try:
@@ -222,16 +232,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				SapGuiAuto = None
 				return
 
-			# session.findById("wnd[0]").resizeWorkingPane(65, 19, 0)
-			# session.findById("wnd[0]/tbar[0]/okcd").text = "mm03"
-			# session.findById("wnd[0]").sendVKey(0)
-			# session.findById("wnd[0]/usr/ctxtRMMG1-MATNR").Text="9000000000012"
-			# session.findById("wnd[0]").sendVKey(0)
-			# session.findById("wnd[1]/tbar[0]/btn[0]").press()()
-			# session.findById("wnd[0]/usr/tabsTABSPR1/tabpSP02").select()()
 
 			flag = 1
-			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText = MyMainWindow.getGuiData(self)
+			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			# sapNo = self.lineEdit.text()
 			# projectNo = self.lineEdit_2.text()
 			# materialCode = self.comboBox_4.currentText()
@@ -256,21 +259,53 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				app.processEvents()
 				QMessageBox.information(self, "提示信息", "有关键信息未填", QMessageBox.Yes)
 			else:
+				planCost = amountVat / 1.06 * exchangeRate * 0.9 - cost
 				if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
-					chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
-					phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
-					chmRe = format(amount * 0.5, '.2f')
-					phyRe = format(amount * 0.5, '.2f')
+					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.5, '.2f')
+					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.5, '.2f')
+					chmRe = format(amountVat/1.06 * 0.5, '.2f')
+					phyRe = format(amountVat/1.06 * 0.5, '.2f')
+					chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
 				elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
-					chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.8, '.2f')
-					phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.2, '.2f')
-					chmRe = format(amount * 0.8, '.2f')
-					phyRe = format(amount * 0.2, '.2f')
+					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.8, '.2f')
+					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.2, '.2f')
+					chmRe = format(amountVat/1.06 * 0.8, '.2f')
+					phyRe = format(amountVat/1.06 * 0.2, '.2f')
+					chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.2f')
+					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
 				else:
-					chmCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
-					phyCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
-					chmRe = amount
-					phyRe = amount
+					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3, '.2f')
+					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3, '.2f')
+					chmRe = format(amountVat/1.06, '.2f')
+					phyRe = format(amountVat/1.06, '.2f')
+					csCostAccounting = format(planCost * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.2f')
+
+				# 	用未税金额算销售，SAP和ODM会有差别
+				# if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
+				# 	chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
+				# 	phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
+				# 	chmRe = format(amount * 0.5, '.2f')
+				# 	phyRe = format(amount * 0.5, '.2f')
+				#
+				# elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
+				# 	chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.8, '.2f')
+				# 	phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.2, '.2f')
+				# 	chmRe = format(amount * 0.8, '.2f')
+				# 	phyRe = format(amount * 0.2, '.2f')
+				# else:
+				# 	chmCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
+				# 	phyCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
+				# 	chmRe = amount
+				# 	phyRe = amount
+
+
+
 				messageFlag = 1
 				if self.checkBox_5.isChecked():
 					if salesName == '':
@@ -295,7 +330,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("CHM Amount:%s" % chmRe)
 					self.textBrowser.append("PHY Amount:%s" % phyRe)
 					app.processEvents()
-					# session.findById("wnd[0]").resizeWorkingPane(172, 38, 0)
 					if self.checkBox.isChecked():
 						session.findById("wnd[0]/tbar[0]/okcd").text = "/nva01"
 						session.findById("wnd[0]").sendVKey(0)
@@ -326,13 +360,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").caretPosition = 3
 						session.findById("wnd[0]").sendVKey(0)
+						try:
+							session.findById("wnd[1]").sendVKey(0)
+						except:
+							pass
+						else:
+							pass
 						if currencyType != "CNY":
-							try:
-								session.findById("wnd[1]").sendVKey(0)
-							except:
-								pass
-							else:
-								pass
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = exchangeRate
 							session.findById(
@@ -394,7 +428,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "00"
 						# DATA B
-						# if self.checkBox_7.isChecked():
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14").select()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZAUART").text = "WO"
@@ -402,33 +435,34 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZUNLIMITLIAB").text = "N"
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtZAUFTD-VORAUS_AUFENDE").text = oneWeekday
-						if 'A2' in materialCode or 'D2' in materialCode:
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").text = "48601294"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,1]").text = "48601294"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,1]").text = phyCost
-						elif 'T20' in materialCode:
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601294"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601294"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = phyCost
-						else:
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
+						if self.checkBox_7.isChecked():
+							if 'A2' in materialCode or 'D2' in materialCode:
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").text = "48601294"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,1]").text = "48601294"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,1]").text = phyCost
+							elif 'T20' in materialCode:
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601294"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601294"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = phyCost
+							else:
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
 
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById(
@@ -538,41 +572,92 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = format(sapAmountVat,'.2f')
 								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
 
-							# 这个跟else重复
-							# elif 'T20' in materialCode:
-							# 	# if '405' in materialCode:
-							# 	# 	session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-405-00"
-							# 	# else:
-							# 	# 	session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T20-441-00"
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,0]").text = "1"
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtVBAP-ZIEME[3,0]").text = "pu"
-							# 	session.findById("wnd[0]").sendVKey(0)
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
-							# 	session.findById("wnd[0]").sendVKey(2)
-							# 	session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06").select()
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = amount
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").setFocus()
-							# 	session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").caretPosition = 16
-							# 	session.findById("wnd[0]").sendVKey(0)
-							# 	sapAmountVat = session.findById(
-							# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
+								if self.checkBox_8.isChecked():
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").setFocus
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").caretPosition = 10
+									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+									session.findById("wnd[1]/tbar[0]/btn[0]").press()
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+									session.findById("wnd[0]").sendVKey(0)
+
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
+									session.findById("wnd[0]").sendVKey(0)
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+									session.findById("wnd[0]").sendVKey(0)
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									# TODO 保存有问题
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
+									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+									session.findById("wnd[1]/tbar[0]/btn[0]").press()
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+									session.findById("wnd[0]").sendVKey(0)
+									if cost > 0:
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601240"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "FREMDL"
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = chmCsCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+									session.findById("wnd[0]").sendVKey(0)
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = chmLabCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+									session.findById("wnd[0]").sendVKey(0)
+									if cost > 0:
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = cost
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").setFocus
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").caretPosition = 20
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									# TODO 保存有问题
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							else:
-								# if '405' in materialCode:
-								# 	session.findById(
-								# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T75-405-00"
-								# else:
-								# 	session.findById(
-								# 		"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T75-441-00"
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
 								session.findById(
@@ -587,7 +672,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById("wnd[0]").sendVKey(2)
 								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06").select()
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = amount
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = chmRe
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").setFocus()
 								session.findById(
@@ -595,6 +680,61 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById("wnd[0]").sendVKey(0)
 								sapAmountVat = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
+
+								if self.checkBox_8.isChecked():
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
+									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+									session.findById("wnd[1]/tbar[0]/btn[0]").press()
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+									if 'T75' in materialCode:
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+									else:
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+									if cost > 0:
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601240"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "FREMDL"
+									session.findById("wnd[0]").sendVKey(0)
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = csCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+									session.findById("wnd[0]").sendVKey(0)
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = labCostAccounting
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
+									session.findById(
+										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+									session.findById("wnd[0]").sendVKey(0)
+									if cost > 0:
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = cost
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").setFocus
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").caretPosition = 20
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									# TODO 保存有问题
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 							if longText != '':
 								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09").select()
@@ -695,8 +835,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 		except:
-			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText = MyMainWindow.getGuiData(
-				self)
+			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			data['Project No.'].append(projectNo)
 			data['Sales'].append(salesName)
 			data['Material Code'].append(materialCode)
