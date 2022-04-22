@@ -21,9 +21,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_12.clicked.connect(self.textBrowser.clear)
 		self.pushButton_20.clicked.connect(self.textBrowser_2.clear)
 		self.pushButton_16.clicked.connect(self.getFileUrl)
-		self.pushButton_18.clicked.connect(self.getCombineFileUrl)
+		self.pushButton_18.clicked.connect(self.getODMDataFileUrl)
+		self.pushButton_23.clicked.connect(self.getCombineFileUrl)
+		self.pushButton_24.clicked.connect(self.getLogFileUrl)
 		self.pushButton_17.clicked.connect(self.odmDataToSap)
 		self.pushButton_19.clicked.connect(self.odmCombineData)
+		self.pushButton_25.clicked.connect(self.orderMergeProject)
 		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
@@ -42,6 +45,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global data
 		data = {
 			'Project No.': [],
+			'GPC Glo. Par. Code': [],
+			'SAP No.': [],
 			'Sales': [],
 			'Material Code': [],
 			'Currency': [],
@@ -115,12 +120,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			# ['SAP名称', '内容', '备注'],
-			# ['销售组织', '0486', ''],
-			# ['销售办事处', '>601', '备注'],
-			['Hourly Rate', '金额', '角色'],
-			["Hourly Rate(PC)", 315, 'CS'],
-			['Hourly Rate(Lab)', 342, 'Lab'],
+			['SAP登入信息', '内容', '备注'],
+			['订单类型', 'DR', '根据Site自定义'],
+			['销售组织', '0486', '根据Site自定义'],
+			['分销渠道', '01', '根据Site自定义'],
+			['销售办事处', '>601', '根据Site自定义'],
+			['销售组', '240', '根据Site自定义'],
+			['Hourly Rate', '金额', '备注'],
+			["Hourly Rate(PC)", 315, '每年更新'],
+			['Hourly Rate(Lab)', 342, '每年更新'],
 			['名称', '编号', '角色'],
 			['chen, frank', '6375108', 'CS'],
 			['chen, frank', '6375108', 'Sales'],
@@ -184,7 +192,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.07\n\n\n 2022-04-14")
+						  "V 22.01.10\n\n\n 2022-04-22")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -254,15 +262,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# amountVat = float(self.doubleSpinBox_4.text())
 			# longText = self.lineEdit_4.text()
 			# shortText = self.lineEdit_5.text()
-			if sapNo == '' or projectNo == '' or materialCode == '' or currencyType == '' or exchangeRate == '' or globalPartnerCode == '' or csName == '' or amount == 0.00:
+			if sapNo == '' or projectNo == '' or materialCode == '' or currencyType == '' or exchangeRate == '' or globalPartnerCode == '' or csName == '' or amount == 0.00 or amountVat == 0.00:
 				self.textBrowser.append("有关键信息未填")
+				self.textBrowser.append("'Project No.', 'CS', 'Sales', 'Currency', 'GPC Glo. Par. Code', 'Material Code','SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate'都是必须填写的")
+				self.textBrowser.append('----------------------------------')
 				app.processEvents()
 				QMessageBox.information(self, "提示信息", "有关键信息未填", QMessageBox.Yes)
 			else:
 				planCost = amountVat / 1.06 * exchangeRate * 0.9 - cost
+				revenue = amountVat/1.06 * exchangeRate
 				if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
-					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.5, '.2f')
-					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.5, '.2f')
+					chmCost = format((revenue - cost) * 0.3 * 0.5, '.2f')
+					phyCost = format((revenue - cost) * 0.3 * 0.5, '.2f')
 					chmRe = format(amountVat/1.06 * 0.5, '.2f')
 					phyRe = format(amountVat/1.06 * 0.5, '.2f')
 					chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
@@ -270,8 +281,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
 					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
 				elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
-					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.8, '.2f')
-					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3 * 0.2, '.2f')
+					chmCost = format((revenue - cost) * 0.3 * 0.8, '.2f')
+					phyCost = format((revenue - cost) * 0.3 * 0.2, '.2f')
 					chmRe = format(amountVat/1.06 * 0.8, '.2f')
 					phyRe = format(amountVat/1.06 * 0.2, '.2f')
 					chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
@@ -279,8 +290,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
 					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
 				else:
-					chmCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3, '.2f')
-					phyCost = format((amountVat/1.06 * exchangeRate - cost) * 0.3, '.2f')
+					chmCost = format((revenue - cost) * 0.3, '.2f')
+					phyCost = format((revenue - cost) * 0.3, '.2f')
 					chmRe = format(amountVat/1.06, '.2f')
 					phyRe = format(amountVat/1.06, '.2f')
 					csCostAccounting = format(planCost * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
@@ -333,9 +344,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					if self.checkBox.isChecked():
 						session.findById("wnd[0]/tbar[0]/okcd").text = "/nva01"
 						session.findById("wnd[0]").sendVKey(0)
-						session.findById("wnd[0]/usr/ctxtVBAK-AUART").text = "DR"
-						session.findById("wnd[0]/usr/ctxtVBAK-VKBUR").text = ">601"
-						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = "240"
+						session.findById("wnd[0]/usr/ctxtVBAK-AUART").text = configContent['订单类型']
+						session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = configContent['销售组织']
+						session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = configContent['分销渠道']
+						session.findById("wnd[0]/usr/ctxtVBAK-VKBUR").text = configContent['销售办事处']
+						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = configContent['销售组']
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById(
 							"wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/subPART-SUB:SAPMV45A:4701/ctxtKUAGV-KUNNR").text = sapNo
@@ -435,6 +448,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZUNLIMITLIAB").text = "N"
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtZAUFTD-VORAUS_AUFENDE").text = oneWeekday
+						if revenue >= 35000:
+							session.findById(
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/txtZAUFTD-AUFTRAGSWERT").text = format(revenue, '.2f')
+						# 是否要添加cost
 						if self.checkBox_7.isChecked():
 							if 'A2' in materialCode or 'D2' in materialCode:
 								session.findById(
@@ -803,6 +820,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[1]/tbar[0]/btn[37]").press()
 
 					data['Project No.'].append(projectNo)
+					data['GPC Glo. Par. Code'].append(globalPartnerCode)
+					data['SAP No.'].append(sapNo)
 					data['Sales'].append(salesName)
 					data['Material Code'].append(materialCode)
 					data['Currency'].append(currencyType)
@@ -837,6 +856,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		except:
 			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			data['Project No.'].append(projectNo)
+			data['GPC Glo. Par. Code'].append(globalPartnerCode)
+			data['SAP No.'].append(sapNo)
 			data['Sales'].append(salesName)
 			data['Material Code'].append(materialCode)
 			data['Currency'].append(currencyType)
@@ -853,6 +874,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			data['Remark'].append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('----------------------------------')
+			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % projectNo, QMessageBox.Yes)
 			# print(sys.exc_info()[0])
 
 		finally:
@@ -865,6 +887,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '', 'files(*.docx;*.xls*;*.csv)')
 		fileUrl = selectBatchFile[0]
 		return fileUrl
+
 	def getFileUrl(self):
 		fileUrl = MyMainWindow.getFile(self)
 		if fileUrl:
@@ -873,10 +896,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		else:
 			self.textBrowser.append("请重新选择ODM文件")
 			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
-	def getCombineFileUrl(self):
+
+	def getODMDataFileUrl(self):
 		fileUrl = MyMainWindow.getFile(self)
 		if fileUrl:
 			self.lineEdit_7.setText(fileUrl)
+			app.processEvents()
+		else:
+			self.textBrowser_2.append("请重新选择ODM文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+
+	def getCombineFileUrl(self):
+		fileUrl = MyMainWindow.getFile(self)
+		if fileUrl:
+			self.lineEdit_8.setText(fileUrl)
+			app.processEvents()
+		else:
+			self.textBrowser_2.append("请重新选择ODM文件")
+			QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
+
+	def getLogFileUrl(self):
+		fileUrl = MyMainWindow.getFile(self)
+		if fileUrl:
+			self.lineEdit_9.setText(fileUrl)
 			app.processEvents()
 		else:
 			self.textBrowser_2.append("请重新选择ODM文件")
@@ -920,8 +962,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					else:
 						materialCode = fileDataList['Material Code'][n]
 					self.lineEdit_2.setText(fileDataList['Project No.'][n])
-					self.lineEdit_3.setText(str(fileDataList['GPC Glo. Par. Code'][n]))
-					self.lineEdit.setText(str(fileDataList['SAP No.'][n]))
+					self.lineEdit_3.setText(str(int(fileDataList['GPC Glo. Par. Code'][n])))
+					self.textBrowser.append("No.:%s" % (n + 1))
+					if math.isnan(fileDataList['SAP No.'][n]):
+						self.textBrowser.append("没有SAP No.")
+						self.lineEdit.setText('')
+					else:
+						self.lineEdit.setText(str(int(fileDataList['SAP No.'][n])))
 					# materialCodeList = ['', 'T75-441-A2', 'T75-405-A2', 'T20-441-00', 'T20-405-00', 'T75-441-00', 'T75-405-00', 'T75-441-D2', 'T75-405-D2', 'S11-441-10', 'S11-405-10']
 					# self.comboBox_4.setCurrentIndex(username.index(materialCode))
 					self.comboBox_4.setItemText(int(0), materialCode)
@@ -948,7 +995,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.lineEdit_5.setText('Testing Fee')
 					if 'Long Text' in headList:
 						self.lineEdit_4.setText(fileDataList['Long Text'][n])
-					self.textBrowser.append("No.:%s" % (n+1))
+
 					app.processEvents()
 					MyMainWindow.sapOperate(self)
 					# 写log
@@ -967,9 +1014,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.textBrowser.append("log数据:%s" % logDataPath)
 						self.textBrowser.append('----------------------------------')
 						QMessageBox.information(self, "提示信息", "ODM数据已全部填写完成", QMessageBox.Yes)
-
-
-
 			else:
 				self.textBrowser.append("请重新选择ODM文件")
 				QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
@@ -977,6 +1021,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileData = self.lineEdit_6.text()
 			self.textBrowser.append('这份%s的ODM获取数据有问题' % fileData)
 			self.textBrowser.append('----------------------------------')
+			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def fileName(self, fileUrl, fileName, fileType):
 		n = 1
@@ -1002,6 +1047,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				deleteRowList = {'Amount': 0}
 				newData.deleteTheRows(deleteRowList)
 				newData.fileData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
+				# 只保留Order No为空的数据
+				newData.fileData = newData.fileData[newData.fileData[['SAP Order No.']].isnull().T.any()]
 				# 保存原始数据
 				fileUrl = '%s\\%s' % (filepath, today)
 				MyMainWindow.createFolder(self, fileUrl)
@@ -1023,7 +1070,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				deleteColumnList = ['Amount', 'Amount with VAT', 'Total Cost']
 				newData = newData.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
-				onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month']
+				onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				mergeData = pd.merge(combineData, newData, on=onData, how='inner')
 				mergeDataName = 'Merge to Project'
 				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
@@ -1032,7 +1079,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
 				finilDataName = 'Finil'
 				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
-				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
+				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
 				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
 				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
@@ -1050,6 +1097,47 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
 			self.textBrowser_2.append('----------------------------------')
 			app.processEvents()
+			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+
+	def orderMergeProject(self):
+		try:
+			combineFileUrl = self.lineEdit_8.text()
+			(combineFilepath, combineFilename) = os.path.split(combineFileUrl)
+			logFileUrl = self.lineEdit_9.text()
+			(logFilepath, logFilename) = os.path.split(logFileUrl)
+			if combineFileUrl and logFileUrl:
+				csvFileType = 'csv'
+				fileUrl = '%s\\..\\%s' % (combineFilepath, today)
+				combineFile = Get_Data()
+				combineFile.getFileData(combineFileUrl)
+				logFile = Get_Data()
+				logFile.getFileData(logFileUrl)
+				# 删除列
+				deleteColumnList = ['Project No.']
+				logFile = logFile.deleteTheColumn(deleteColumnList)
+				# merge数据，combine和原始数据
+				onData = ['CS', 'Currency', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Exchange Rate']
+				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='inner')
+				mergeData.sort_values(by=['Order No.'],axis=0, ascending=[True], inplace=True)
+				# 保留数据
+				leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Buyer(GPC)', 'CS', 'Currency', 'Exchange Rate', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Month', 'Text',  'Long Text']
+				mergeData = mergeData[leaveDataList]
+				mergeDataName = 'Order Merge Project'
+				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
+				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
+				self.textBrowser_2.append('Order NO 与 Project No合并的数据：%s' % mergeFileNamePath)
+				self.textBrowser_2.append('Order Merge Project 数据,根据Order No数据透视算Amount with VAT的平均数值与ODM导出数据算Amount with VAT总值比较大小，有差说明错误')
+				self.textBrowser_2.append('SAP数据已处理完成')
+				self.textBrowser_2.append('----------------------------------')
+			else:
+				self.textBrowser_2.append('请重新选择文件')
+				self.textBrowser_2.append('----------------------------------')
+		except:
+			self.textBrowser_2.append('Order No Merge Project No数据有问题')
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
+			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+
 
 
 if __name__ == "__main__":
@@ -1057,6 +1145,7 @@ if __name__ == "__main__":
 	import os
 	import re
 	import time
+	import math
 	import win32com.client
 	import pandas as pd
 	import numpy as np

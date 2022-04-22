@@ -14,8 +14,10 @@ class Get_Data():
         fileType = self.fileDataUrl.split(".")[-1]
         if fileType == 'xlsx':
             self.fileData = pd.read_excel(self.fileDataUrl)
+            # self.fileData = pd.read_excel(self.fileDataUrl, keep_default_na=False)
         elif fileType == 'csv':
             self.fileData = pd.read_csv(self.fileDataUrl)
+            # self.fileData = pd.read_csv(self.fileDataUrl, keep_default_na=False)
         height, width = self.fileData.shape
         return self.fileData
     def getHeaderData(self):
@@ -35,7 +37,7 @@ class Get_Data():
         self.amountWithVAT = self.headData.index('Amount with VAT')
         self.exchangeRate = self.headData.index('Exchange Rate')
         self.costList = list(self.fileData['Total Cost'])
-        return self.projectNo ,self.cs ,self.sales ,self.currency ,self.partnerCode ,self.materialCode ,self.phyMaterialCode ,self.chmMaterialCode ,self.sapNo ,self.amount ,self.amountWithVAT ,self.exchangeRate,self.costList
+        return self.projectNo, self.cs, self.sales, self.currency, self.partnerCode, self.materialCode, self.phyMaterialCode, self.chmMaterialCode, self.sapNo, self.amount, self.amountWithVAT, self.exchangeRate,self.costList
     def deleteTheRows(self, deleteRowList = {}):
         for key in deleteRowList:
             self.fileData = self.fileData[self.fileData[key] != deleteRowList[key]]
