@@ -345,8 +345,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]/tbar[0]/okcd").text = "/nva01"
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById("wnd[0]/usr/ctxtVBAK-AUART").text = configContent['订单类型']
-						session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = configContent['销售组织']
-						session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = configContent['分销渠道']
+						session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = '0486'
+						# session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = configContent['销售组织']
+						session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = '01'
+						# session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = configContent['分销渠道']
 						session.findById("wnd[0]/usr/ctxtVBAK-VKBUR").text = configContent['销售办事处']
 						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = configContent['销售组']
 						session.findById("wnd[0]").sendVKey(0)
@@ -1037,7 +1039,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			os.makedirs(url)
 
 	def odmCombineData(self):
-		try:
+		# try:
 			fileUrl = self.lineEdit_7.text()
 			(filepath, filename) = os.path.split(fileUrl)
 			if fileUrl:
@@ -1057,7 +1059,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				odmDataPath = MyMainWindow.fileName(self, fileUrl, odmFileName, csvFileType)
 				odmDataFile = newData.fileData.to_csv('%s' % (odmDataPath), encoding='utf_8_sig')
 				# 数据透视并保存
-				pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month']
+				pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				valusKey = ['Amount', 'Amount with VAT', 'Total Cost']
 				pivotTable = newData.pivotTable(pivotTableKey, valusKey)
 				combineFileName = 'Combine'
@@ -1079,7 +1081,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
 				finilDataName = 'Finil'
 				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
-				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
+				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True, True], inplace=True)
 				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
 				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
@@ -1092,12 +1094,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择ODM文件')
 				self.textBrowser_2.append('----------------------------------')
-		except:
-			fileData = self.lineEdit_7.text()
-			self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
-			self.textBrowser_2.append('----------------------------------')
-			app.processEvents()
-			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+		# except:
+		# 	fileData = self.lineEdit_7.text()
+		# 	self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
+		# 	self.textBrowser_2.append('----------------------------------')
+		# 	app.processEvents()
+		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def orderMergeProject(self):
 		try:
