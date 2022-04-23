@@ -120,12 +120,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			['SAP登入信息', '内容', '备注'],
-			['订单类型', 'DR', '根据Site自定义'],
-			['销售组织', '0486', '根据Site自定义'],
-			['分销渠道', '01', '根据Site自定义'],
-			['销售办事处', '>601', '根据Site自定义'],
-			['销售组', '240', '根据Site自定义'],
+			# ['SAP登入信息', '内容', '备注'],
+			# ['订单类型', 'DR', '根据Site自定义'],
+			# ['销售组织', '0486', '根据Site自定义'],
+			# ['分销渠道', '01', '根据Site自定义'],
+			# ['销售办事处', '>601', '根据Site自定义'],
+			# ['销售组', '240', '根据Site自定义'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
 			['Hourly Rate(Lab)', 342, '每年更新'],
@@ -342,15 +342,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("PHY Amount:%s" % phyRe)
 					app.processEvents()
 					if self.checkBox.isChecked():
+						orderType = self.lineEdit_10.text()
+						salesOrganization = self.lineEdit_11.text()
+						distributionChannels = self.lineEdit_12.text()
+						salesOffice = self.lineEdit_13.text()
+						salesGroup = self.lineEdit_14.text()
 						session.findById("wnd[0]/tbar[0]/okcd").text = "/nva01"
 						session.findById("wnd[0]").sendVKey(0)
-						session.findById("wnd[0]/usr/ctxtVBAK-AUART").text = configContent['订单类型']
-						session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = '0486'
-						# session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = configContent['销售组织']
-						session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = '01'
-						# session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = configContent['分销渠道']
-						session.findById("wnd[0]/usr/ctxtVBAK-VKBUR").text = configContent['销售办事处']
-						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = configContent['销售组']
+						session.findById("wnd[0]/usr/ctxtVBAK-AUART").text = orderType
+						session.findById("wnd[0]/usr/ctxtVBAK-VKORG").text = salesOrganization
+						session.findById("wnd[0]/usr/ctxtVBAK-VTWEG").text = distributionChannels
+						session.findById("wnd[0]/usr/ctxtVBAK-VKBUR").text = salesOffice
+						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = salesGroup
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById(
 							"wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/subPART-SUB:SAPMV45A:4701/ctxtKUAGV-KUNNR").text = sapNo
