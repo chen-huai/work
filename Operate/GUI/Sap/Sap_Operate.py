@@ -269,33 +269,52 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				app.processEvents()
 				QMessageBox.information(self, "提示信息", "有关键信息未填", QMessageBox.Yes)
 			else:
-				planCost = amountVat / 1.06 * exchangeRate * 0.9 - cost
-				revenue = amountVat/1.06 * exchangeRate
+				revenue = amountVat / 1.06
+				# plan cost
+				# planCost = revenue * exchangeRate * 0.9 - cost
+				planCost = revenue * exchangeRate
+				revenueForCny = revenue * exchangeRate
 				if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
-					chmCost = format((revenue - cost) * 0.3 * 0.5, '.2f')
-					phyCost = format((revenue - cost) * 0.3 * 0.5, '.2f')
-					chmRe = format(amountVat/1.06 * 0.5, '.2f')
-					phyRe = format(amountVat/1.06 * 0.5, '.2f')
-					chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					chmCost = format((revenueForCny - cost) * 0.3 * 0.5, '.2f')
+					phyCost = format((revenueForCny - cost) * 0.3 * 0.5, '.2f')
+					chmRe = format(revenue * 0.5, '.2f')
+					phyRe = format(revenue * 0.5, '.2f')
+					# plan cost总算法
+					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					
+					chmCsCostAccounting = format((planCost * 0.5 - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					chmLabCostAccounting = format((planCost * 0.5 - cost) * 0.3 / labHourlyRate, '.2f')
 					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
 					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
 				elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
-					chmCost = format((revenue - cost) * 0.3 * 0.8, '.2f')
-					phyCost = format((revenue - cost) * 0.3 * 0.2, '.2f')
-					chmRe = format(amountVat/1.06 * 0.8, '.2f')
-					phyRe = format(amountVat/1.06 * 0.2, '.2f')
-					chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.2f')
+					chmCost = format((revenueForCny - cost) * 0.3 * 0.8, '.2f')
+					phyCost = format((revenueForCny - cost) * 0.3 * 0.2, '.2f')
+					chmRe = format(revenue * 0.8, '.2f')
+					phyRe = format(revenue * 0.2, '.2f')
+					# plan cost总算法
+					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.2f')
+					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
+					
+					chmCsCostAccounting = format((planCost * 0.8 - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					chmLabCostAccounting = format((planCost * 0.8 - cost) * 0.3 / labHourlyRate, '.2f')
 					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
 					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
 				else:
-					chmCost = format((revenue - cost) * 0.3, '.2f')
-					phyCost = format((revenue - cost) * 0.3, '.2f')
-					chmRe = format(amountVat/1.06, '.2f')
-					phyRe = format(amountVat/1.06, '.2f')
-					csCostAccounting = format(planCost * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.2f')
+					chmCost = format((revenueForCny - cost) * 0.3, '.2f')
+					phyCost = format((revenueForCny - cost) * 0.3, '.2f')
+					chmRe = format(revenue, '.2f')
+					phyRe = format(revenue, '.2f')
+					# plan cost总算法
+					# csCostAccounting = format(planCost * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					# labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.2f')
+					
+					csCostAccounting = format((planCost - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
+					labCostAccounting = format((planCost - cost) * 0.3 / labHourlyRate, '.2f')
 
 				# 	用未税金额算销售，SAP和ODM会有差别
 				# if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
@@ -453,10 +472,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtVBAK-ZZUNLIMITLIAB").text = "N"
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/ctxtZAUFTD-VORAUS_AUFENDE").text = oneWeekday
-						if revenue >= 35000:
+						if revenueForCny >= 35000:
 							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/txtZAUFTD-AUFTRAGSWERT").text = format(revenue, '.2f')
-						# 是否要添加cost
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/txtZAUFTD-AUFTRAGSWERT").text = format(revenueForCny, '.2f')
+						# 是否要添加cost 
 						if self.checkBox_7.isChecked():
 							if 'A2' in materialCode or 'D2' in materialCode:
 								session.findById(
@@ -495,7 +514,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if self.checkBox_2.isChecked() or self.checkBox_6.isChecked():
 							try:
 								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							except:
 								try:
@@ -514,22 +533,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 					if self.checkBox_2.isChecked():
-							try:
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-								session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-							except:
-								try:
-									session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-								except:
-									self.textBrowser.append("已保存")
-								else:
-									pass
-							else:
-								pass
+							# try:
+							# 	session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# 	session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# 	session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+							# except:
+							# 	try:
+							# 		session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# 		session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							# 		session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+							# 		session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+							# 	except:
+							# 		self.textBrowser.append("已保存")
+							# 	else:
+							# 		pass
+							# else:
+							# 	pass
 							session.findById("wnd[0]/tbar[0]/okcd").text = "/NVA02"
 							session.findById("wnd[0]").sendVKey(0)
 							orderNo = session.findById("wnd[0]/usr/ctxtVBAK-VBELN").text
@@ -594,44 +613,49 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = format(sapAmountVat,'.2f')
 								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
 
-								if self.checkBox_8.isChecked():
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").setFocus
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").caretPosition = 10
-									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
-									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
-									session.findById("wnd[1]/tbar[0]/btn[0]").press()
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
-									session.findById("wnd[0]").sendVKey(0)
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+									# 这个是Item2000的
+									# session.findById(
+									# 	"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").setFocus()
+									# session.findById(
+									# 	"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").caretPosition = 10
+									# session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+									# session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+									# session.findById("wnd[1]/tbar[0]/btn[0]").press()
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+									# session.findById("wnd[0]").sendVKey(0)
+									#
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
+									# session.findById("wnd[0]").sendVKey(0)
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
+									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+									# session.findById(
+									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+									# session.findById("wnd[0]").sendVKey(0)
+									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
 
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
-									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									# TODO 保存有问题
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									# session.findById("wnd[0]/tbar[0]/btn[11]").press()
+									# # session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
+									# # session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									# # session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
+
+									# Items1000的plan cost
 									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
 									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
@@ -652,33 +676,30 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601240"
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "FREMDL"
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = chmCsCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = math.ceil(float(chmCsCostAccounting))
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
 									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = chmLabCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = math.ceil(float(chmLabCostAccounting))
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 									session.findById("wnd[0]").sendVKey(0)
 									if cost > 0:
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = cost
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").setFocus
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").caretPosition = 20
-									session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									# TODO 保存有问题
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+
+									session.findById("wnd[0]/tbar[0]/btn[11]").press()
+									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							else:
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
@@ -694,7 +715,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById("wnd[0]").sendVKey(2)
 								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06").select()
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = chmRe
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text = format(revenue, '.2f')
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").setFocus()
 								session.findById(
@@ -703,9 +724,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
 
-								if self.checkBox_8.isChecked():
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
 									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
 									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
@@ -729,43 +751,50 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601240"
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "FREMDL"
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
 									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = csCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = math.ceil(float(csCostAccounting))
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
 									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = labCostAccounting
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = math.ceil(float(labCostAccounting))
+									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
 									session.findById(
 										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 									session.findById("wnd[0]").sendVKey(0)
 									if cost > 0:
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = cost
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").setFocus
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,3]").caretPosition = 20
-									session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									# TODO 保存有问题
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+
+									session.findById("wnd[0]/tbar[0]/btn[11]").press()
+									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 							if longText != '':
+								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
+									session.findById(
+										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
+									session.findById("wnd[0]").sendVKey(2)
+
 								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09").select()
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = longText
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 									4, 4)
-							session.findById("wnd[0]/tbar[0]/btn[3]").press()
+							if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+								pass
+							else:
+								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 							amountVatStr = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", format(amountVat,'.2f'))
 							self.textBrowser.append("Sap Amount Vat:%s" % sapAmountVat)
 							self.textBrowser.append("Amount Vat:%s" % amountVatStr)
@@ -944,8 +973,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				newData = Get_Data()
 				newData.getFileData(fileUrl)
 				deleteList = {'Amount': 0}
-				headList = newData.getHeaderData()
 				newData.deleteTheRows(deleteList)
+				headList = newData.getHeaderData()
 				if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
 					fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
 					newData.fillNanColumn(fillNanColumnKey)
@@ -953,7 +982,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									  'SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate', 'Total Cost']
 				if 'Text' in headList:
 					getFileDataListKey.append('Text')
-				elif 'Long Text' in headList:
+				if 'Long Text' in headList:
 					getFileDataListKey.append('Long Text')
 
 
@@ -969,11 +998,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.lineEdit_2.setText(fileDataList['Project No.'][n])
 					self.lineEdit_3.setText(str(int(fileDataList['GPC Glo. Par. Code'][n])))
 					self.textBrowser.append("No.:%s" % (n + 1))
-					if math.isnan(fileDataList['SAP No.'][n]):
-						self.textBrowser.append("没有SAP No.")
+					# if pd.isnull(fileDataList['SAP No.'][n]):
+					# # if math.isnan(fileDataList['SAP No.'][n]):
+					# 	self.textBrowser.append("没有SAP No.")
+					# 	self.lineEdit.setText('')
+					# else:
+					# 	self.lineEdit.setText(str(int(fileDataList['SAP No.'][n])))
+					try:
+						self.lineEdit.setText(str(int(fileDataList['SAP No.'][n])))
+					except:
 						self.lineEdit.setText('')
 					else:
-						self.lineEdit.setText(str(int(fileDataList['SAP No.'][n])))
+						pass
 					# materialCodeList = ['', 'T75-441-A2', 'T75-405-A2', 'T20-441-00', 'T20-405-00', 'T75-441-00', 'T75-405-00', 'T75-441-D2', 'T75-405-D2', 'S11-441-10', 'S11-405-10']
 					# self.comboBox_4.setCurrentIndex(username.index(materialCode))
 					self.comboBox_4.setItemText(int(0), materialCode)
@@ -995,12 +1031,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.doubleSpinBox_3.setValue(fileDataList['Total Cost'][n])
 					self.doubleSpinBox.setValue(fileDataList['Exchange Rate'][n])
 					if 'Text' in headList:
-						self.lineEdit_5.setText(fileDataList['Text'][n])
+						try:
+							self.lineEdit_5.setText(fileDataList['Text'][n])
+						except:
+							self.lineEdit_5.setText('Testing Fee')
+						else:
+							pass
 					else:
 						self.lineEdit_5.setText('Testing Fee')
 					if 'Long Text' in headList:
-						self.lineEdit_4.setText(fileDataList['Long Text'][n])
-
+						try:
+							self.lineEdit_4.setText(fileDataList['Long Text'][n])
+						except:
+							pass
+						else:
+							pass
 					app.processEvents()
 					MyMainWindow.sapOperate(self)
 					# 写log
@@ -1054,6 +1099,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				newData.fileData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month'], axis=0, ascending=[True, True, True, True, True, True, True], inplace=True)
 				# 只保留Order No为空的数据
 				newData.fileData = newData.fileData[newData.fileData[['SAP Order No.']].isnull().T.any()]
+				# material code将空值填上
+				headList = newData.getHeaderData()
+				if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
+					fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
+					newData.fillNanColumn(fillNanColumnKey)
+				# 将联系人空值填上
+				newData.fileData['Client Contact Name'].fillna("******", inplace=True)
 				# 保存原始数据
 				fileUrl = '%s\\%s' % (filepath, today)
 				MyMainWindow.createFolder(self, fileUrl)
@@ -1062,7 +1114,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				odmDataPath = MyMainWindow.fileName(self, fileUrl, odmFileName, csvFileType)
 				odmDataFile = newData.fileData.to_csv('%s' % (odmDataPath), encoding='utf_8_sig')
 				# 数据透视并保存
-				pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
+				combinekeyFields = self.lineEdit_15.text()
+				combineKeyFieldsList = combinekeyFields.split(';')
+				pivotTableKey = combineKeyFieldsList
+				# pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				valusKey = ['Amount', 'Amount with VAT', 'Total Cost']
 				pivotTable = newData.pivotTable(pivotTableKey, valusKey)
 				combineFileName = 'Combine'
@@ -1075,7 +1130,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				deleteColumnList = ['Amount', 'Amount with VAT', 'Total Cost']
 				newData = newData.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
-				onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
+				onData = combineKeyFieldsList
+				# onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				mergeData = pd.merge(combineData, newData, on=onData, how='inner')
 				mergeDataName = 'Merge to Project'
 				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
@@ -1084,7 +1140,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
 				finilDataName = 'Finil'
 				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
-				mergeData.sort_values(by=["Invoices' name (Chinese)",'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True, True], inplace=True)
+				ascendingList = [True] * len(combineKeyFieldsList)
+				mergeData.sort_values(by=combineKeyFieldsList, axis=0, ascending=ascendingList, inplace=True)
+				# mergeData.sort_values(by=["Invoices' name (Chinese)", 'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True, True], inplace=True)
 				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
 				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
@@ -1105,7 +1163,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def orderMergeProject(self):
-		try:
+		# try:
 			combineFileUrl = self.lineEdit_8.text()
 			(combineFilepath, combineFilename) = os.path.split(combineFileUrl)
 			logFileUrl = self.lineEdit_9.text()
@@ -1114,18 +1172,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				csvFileType = 'csv'
 				fileUrl = '%s\\..\\%s' % (combineFilepath, today)
 				combineFile = Get_Data()
-				combineFile.getFileData(combineFileUrl)
+				combineFile.getMergeFileData(combineFileUrl)
 				logFile = Get_Data()
-				logFile.getFileData(logFileUrl)
+				logFile.getMergeFileData(logFileUrl)
 				# 删除列
 				deleteColumnList = ['Project No.']
 				logFile = logFile.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
-				onData = ['CS', 'Currency', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Exchange Rate']
+				mergekeyFields = self.lineEdit_16.text()
+				mergekeyFieldsList = mergekeyFields.split(';')
+				onData = mergekeyFieldsList
+				# onData = ['CS', 'Currency', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Exchange Rate']
 				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='inner')
-				mergeData.sort_values(by=['Order No.'],axis=0, ascending=[True], inplace=True)
+				mergeData.sort_values(by=['Order No.'], axis=0, ascending=[True], inplace=True)
 				# 保留数据
-				leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Buyer(GPC)', 'CS', 'Currency', 'Exchange Rate', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Month', 'Text',  'Long Text']
+				leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Amount with VAT']
+				# leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Buyer(GPC)', 'CS', 'Currency', "Exchange Rate", 'Material Code', 'SAP No.', 'Amount with VAT', 'Month', 'Text',  'Long Text', 'Client Contact Name']
 				mergeData = mergeData[leaveDataList]
 				mergeDataName = 'Order Merge Project'
 				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
@@ -1137,11 +1199,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择文件')
 				self.textBrowser_2.append('----------------------------------')
-		except:
-			self.textBrowser_2.append('Order No Merge Project No数据有问题')
-			self.textBrowser_2.append('----------------------------------')
-			app.processEvents()
-			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+		# except:
+		# 	self.textBrowser_2.append('Order No Merge Project No数据有问题')
+		# 	self.textBrowser_2.append('----------------------------------')
+		# 	app.processEvents()
+		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 
 
