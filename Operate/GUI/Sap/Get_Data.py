@@ -14,9 +14,24 @@ class Get_Data():
         fileType = self.fileDataUrl.split(".")[-1]
         if fileType == 'xlsx':
             self.fileData = pd.read_excel(self.fileDataUrl)
+            # self.fileData = pd.read_excel(self.fileDataUrl, dtype='str')
             # self.fileData = pd.read_excel(self.fileDataUrl, keep_default_na=False)
         elif fileType == 'csv':
             self.fileData = pd.read_csv(self.fileDataUrl)
+            # self.fileData = pd.read_csv(self.fileDataUrl, dtype='str')
+            # self.fileData = pd.read_csv(self.fileDataUrl, keep_default_na=False)
+        height, width = self.fileData.shape
+        return self.fileData
+    def getMergeFileData(self, fileDataUrl):
+        self.fileDataUrl = fileDataUrl
+        fileType = self.fileDataUrl.split(".")[-1]
+        if fileType == 'xlsx':
+            # self.fileData = pd.read_excel(self.fileDataUrl)
+            self.fileData = pd.read_excel(self.fileDataUrl, dtype='str')
+            # self.fileData = pd.read_excel(self.fileDataUrl, keep_default_na=False)
+        elif fileType == 'csv':
+            # self.fileData = pd.read_csv(self.fileDataUrl)
+            self.fileData = pd.read_csv(self.fileDataUrl, dtype='str')
             # self.fileData = pd.read_csv(self.fileDataUrl, keep_default_na=False)
         height, width = self.fileData.shape
         return self.fileData

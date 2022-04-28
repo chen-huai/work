@@ -192,7 +192,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def showVersion(self):
 		# 关于作者
 		QMessageBox.about(self, "版本",
-						  "V 22.01.10\n\n\n 2022-04-22")
+						  "V 22.01.11\n\n\n 2022-04-26")
 
 	def getAmountVat(self):
 		amount = float(self.doubleSpinBox_2.text())
@@ -615,91 +615,92 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
-									# 这个是Item2000的
-									# session.findById(
-									# 	"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").setFocus()
-									# session.findById(
-									# 	"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").caretPosition = 10
-									# session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
-									# session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
-									# session.findById("wnd[1]/tbar[0]/btn[0]").press()
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
-									# session.findById("wnd[0]").sendVKey(0)
-									#
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
-									# session.findById("wnd[0]").sendVKey(0)
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
-									# session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-									# session.findById(
-									# 	"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-									# session.findById("wnd[0]").sendVKey(0)
-									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
-
-									# session.findById("wnd[0]/tbar[0]/btn[11]").press()
-									# # session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
-									# # session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									# # session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-
-
-									# Items1000的plan cost
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
-									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
-									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
-									session.findById("wnd[1]/tbar[0]/btn[0]").press()
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
-									session.findById("wnd[0]").sendVKey(0)
-									if cost > 0:
+									if revenueForCny >= 1000:
+										# 这个是Item2000的
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").setFocus()
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,1]").caretPosition = 10
+										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+										session.findById("wnd[1]/tbar[0]/btn[0]").press()
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = math.ceil(float(chmCsCostAccounting))
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
-									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = math.ceil(float(chmLabCostAccounting))
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-									session.findById("wnd[0]").sendVKey(0)
-									if cost > 0:
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
 										session.findById("wnd[0]").sendVKey(0)
 
-									session.findById("wnd[0]/tbar[0]/btn[11]").press()
-									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+
+										session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+
+
+										# Items1000的plan cost
+										session.findById(
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
+										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+										session.findById("wnd[1]/tbar[0]/btn[0]").press()
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+										session.findById("wnd[0]").sendVKey(0)
+										if cost > 0:
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(chmCsCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+										session.findById("wnd[0]").sendVKey(0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(chmLabCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+										if cost > 0:
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+											session.findById("wnd[0]").sendVKey(0)
+
+										session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							else:
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
@@ -726,56 +727,57 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
-									session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
-									session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
-									session.findById("wnd[1]/tbar[0]/btn[0]").press()
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-									if 'T75' in materialCode:
+									if revenueForCny >= 1000:
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
-									else:
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
-									if cost > 0:
+											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").caretPosition = 10
+										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
+										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
+										session.findById("wnd[1]/tbar[0]/btn[0]").press()
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+										if 'T75' in materialCode:
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+										else:
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
 										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
-									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = math.ceil(float(csCostAccounting))
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
-									session.findById("wnd[0]").sendVKey(0)
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = math.ceil(float(labCostAccounting))
-									session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-									session.findById(
-										"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-									session.findById("wnd[0]").sendVKey(0)
-									if cost > 0:
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+										if cost > 0:
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
 										session.findById("wnd[0]").sendVKey(0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(csCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+										session.findById("wnd[0]").sendVKey(0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(labCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+										session.findById(
+											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+										session.findById("wnd[0]").sendVKey(0)
+										if cost > 0:
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+											session.findById("wnd[0]").sendVKey(0)
 
-									session.findById("wnd[0]/tbar[0]/btn[11]").press()
-									# session.findById("wnd[0]/tbar[0]/btn[3]").press()
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-									# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										# session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 							if longText != '':
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
@@ -1087,7 +1089,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			os.makedirs(url)
 
 	def odmCombineData(self):
-		# try:
+		try:
 			fileUrl = self.lineEdit_7.text()
 			(filepath, filename) = os.path.split(fileUrl)
 			if fileUrl:
@@ -1118,7 +1120,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				combineKeyFieldsList = combinekeyFields.split(';')
 				pivotTableKey = combineKeyFieldsList
 				# pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
-				valusKey = ['Amount', 'Amount with VAT', 'Total Cost']
+				valusKey = ['Amount', 'Amount with VAT', 'Total Cost', 'Revenue\n(RMB)']
 				pivotTable = newData.pivotTable(pivotTableKey, valusKey)
 				combineFileName = 'Combine'
 				combineFileNamePath = MyMainWindow.fileName(self, fileUrl, combineFileName, csvFileType)
@@ -1132,7 +1134,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# merge数据，combine和原始数据
 				onData = combineKeyFieldsList
 				# onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
-				mergeData = pd.merge(combineData, newData, on=onData, how='inner')
+				mergeData = pd.merge(combineData, newData, on=onData, how='right')
 				mergeDataName = 'Merge to Project'
 				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
@@ -1155,12 +1157,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择ODM文件')
 				self.textBrowser_2.append('----------------------------------')
-		# except:
-		# 	fileData = self.lineEdit_7.text()
-		# 	self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
-		# 	self.textBrowser_2.append('----------------------------------')
-		# 	app.processEvents()
-		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+		except:
+			fileData = self.lineEdit_7.text()
+			self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
+			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def orderMergeProject(self):
 		# try:
@@ -1183,12 +1185,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				mergekeyFieldsList = mergekeyFields.split(';')
 				onData = mergekeyFieldsList
 				# onData = ['CS', 'Currency', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Exchange Rate']
-				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='inner')
+				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='outer', indicator=True)
 				mergeData.sort_values(by=['Order No.'], axis=0, ascending=[True], inplace=True)
 				# 保留数据
-				leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Amount with VAT']
-				# leaveDataList = ['Project No.', 'Order No.',  "Invoices' name (Chinese)", 'Buyer(GPC)', 'CS', 'Currency', "Exchange Rate", 'Material Code', 'SAP No.', 'Amount with VAT', 'Month', 'Text',  'Long Text', 'Client Contact Name']
+				leaveDataList = ["_merge",  "Invoices' name (Chinese)", 'Project No.', 'Order No.', 'Month', 'Buyer(GPC)', 'Sales_x', 'Text', 'Long Text', 'Total Cost_x', 'Revenue\n(RMB)']
+				leaveDataList += onData
 				mergeData = mergeData[leaveDataList]
+				ascendingList = [True] * len(leaveDataList)
+				mergeData.sort_values(by=leaveDataList, axis=0, ascending=ascendingList, inplace=True)
 				mergeDataName = 'Order Merge Project'
 				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')

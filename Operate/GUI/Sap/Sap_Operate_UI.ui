@@ -165,7 +165,7 @@
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineEdit_16">
              <property name="text">
-              <string>CS;Currency;Material Code;GPC Glo. Par. Code;SAP No.;Amount with VAT;Exchange Rate</string>
+              <string>Amount with VAT;CS;Currency;Material Code;GPC Glo. Par. Code;SAP No.;Exchange Rate</string>
              </property>
             </widget>
            </item>
@@ -788,8 +788,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>277</width>
-             <height>402</height>
+             <width>365</width>
+             <height>500</height>
             </rect>
            </property>
            <attribute name="label">
