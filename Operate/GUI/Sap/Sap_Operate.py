@@ -966,11 +966,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			(filepath, filename) = os.path.split(fileUrl)
 			if fileUrl:
 				# log文件
-				logFileUrl = '%s\\..\\log\\%s' % (filepath, today)
+				logFileUrl = '%s/log' % filepath
 				MyMainWindow.createFolder(self, logFileUrl)
 				csvFileType = 'csv'
 				logFileName = 'log'
-				logDataPath = MyMainWindow.fileName(self, logFileUrl, logFileName, csvFileType)
+				logDataPath = MyMainWindow.getFileName(self, logFileUrl, logFileName, csvFileType)
 
 				newData = Get_Data()
 				newData.getFileData(fileUrl)
@@ -1052,7 +1052,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					MyMainWindow.sapOperate(self)
 					# 写log
 					logData = pd.DataFrame(data)
-					logDataFile = logData.to_csv('%s' % (logDataPath), encoding='utf_8_sig')
+					logDataFile = logData.to_csv('%s' % logDataPath, encoding='utf_8_sig')
+					os.startfile(logFileUrl)
+					os.startfile(logDataPath)
+					self.lineEdit_9.setText(logDataPath)
 					if n < len(fileDataList['Amount'])-1:
 						if self.checkBox_5.isChecked():
 							reply = QMessageBox.question(self, '信息', '是否继续填写下一个Order', QMessageBox.Yes | QMessageBox.No,
@@ -1075,12 +1078,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser.append('----------------------------------')
 			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
-	def fileName(self, fileUrl, fileName, fileType):
-		n = 1
-		# fileName = fileName + str(n) + '.' +fileType
-		while os.path.exists(fileUrl + '\\' + today + '-' + str(n) + ' ' + fileName + '.' + fileType):
-			n += 1
-		fileName = fileUrl + '\\' + today + '-' + str(n) + ' ' + fileName + '.' + fileType
+	def getFileName(self, fileUrl, fileName, fileType):
+		nowTime = time.strftime('%Y-%m-%d %H.%M.%S')
+		fileName = fileUrl + '/' + nowTime + ' - ' + fileName + '.' + fileType
 		return fileName
 
 	def createFolder(self, url):
@@ -1088,6 +1088,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		if not isExists:
 			os.makedirs(url)
 
+	# 数据透视并合并
 	def odmCombineData(self):
 		try:
 			fileUrl = self.lineEdit_7.text()
@@ -1109,11 +1110,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# 将联系人空值填上
 				newData.fileData['Client Contact Name'].fillna("******", inplace=True)
 				# 保存原始数据
-				fileUrl = '%s\\%s' % (filepath, today)
+				fileUrl = '%s/%s' % (filepath, today)
 				MyMainWindow.createFolder(self, fileUrl)
 				csvFileType = 'csv'
-				odmFileName = 'ODM Raw Data'
-				odmDataPath = MyMainWindow.fileName(self, fileUrl, odmFileName, csvFileType)
+				odmFileName = '1.ODM Raw Data'
+				odmDataPath = MyMainWindow.getFileName(self, fileUrl, odmFileName, csvFileType)
 				odmDataFile = newData.fileData.to_csv('%s' % (odmDataPath), encoding='utf_8_sig')
 				# 数据透视并保存
 				combinekeyFields = self.lineEdit_15.text()
@@ -1122,26 +1123,27 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# pivotTableKey = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				valusKey = ['Amount', 'Amount with VAT', 'Total Cost', 'Revenue\n(RMB)']
 				pivotTable = newData.pivotTable(pivotTableKey, valusKey)
-				combineFileName = 'Combine'
-				combineFileNamePath = MyMainWindow.fileName(self, fileUrl, combineFileName, csvFileType)
+				combineFileName = '2.Combine'
+				combineFileNamePath = MyMainWindow.getFileName(self, fileUrl, combineFileName, csvFileType)
 				combineFile = pivotTable.to_csv('%s' % (combineFileNamePath), encoding='utf_8_sig')
 				# 读取数据透视数据
 				combineData = Get_Data()
 				combineData = combineData.getFileData(combineFileNamePath)
 				# 删除列
-				deleteColumnList = ['Amount', 'Amount with VAT', 'Total Cost']
+				deleteColumnList = ['Amount', 'Amount with VAT', 'Total Cost', 'Revenue\n(RMB)']
 				newData = newData.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
 				onData = combineKeyFieldsList
 				# onData = ['CS', 'Sales', 'Currency', 'Material Code', "Invoices' name (Chinese)", 'Buyer(GPC)', 'Month', 'Exchange Rate']
 				mergeData = pd.merge(combineData, newData, on=onData, how='right')
-				mergeDataName = 'Merge to Project'
-				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
+				mergeDataName = '3.Merge to Project'
+				mergeFileNamePath = MyMainWindow.getFileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
+				self.lineEdit_8.setText(mergeFileNamePath)
 				# merge数据去重得到最终数据
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
-				finilDataName = 'Finil'
-				finilFileNamePath = MyMainWindow.fileName(self, fileUrl, finilDataName, csvFileType)
+				finilDataName = '4.Finil'
+				finilFileNamePath = MyMainWindow.getFileName(self, fileUrl, finilDataName, csvFileType)
 				ascendingList = [True] * len(combineKeyFieldsList)
 				mergeData.sort_values(by=combineKeyFieldsList, axis=0, ascending=ascendingList, inplace=True)
 				# mergeData.sort_values(by=["Invoices' name (Chinese)", 'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True, True], inplace=True)
@@ -1154,6 +1156,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.textBrowser_2.append('ODM数据已处理完成')
 				self.textBrowser_2.append('----------------------------------')
 				app.processEvents()
+				os.startfile(fileUrl)
+				os.startfile(finilFileNamePath)
 			else:
 				self.textBrowser_2.append('请重新选择ODM文件')
 				self.textBrowser_2.append('----------------------------------')
@@ -1164,15 +1168,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			app.processEvents()
 			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
+	# 找到project对应的order
 	def orderMergeProject(self):
-		# try:
+		try:
 			combineFileUrl = self.lineEdit_8.text()
 			(combineFilepath, combineFilename) = os.path.split(combineFileUrl)
 			logFileUrl = self.lineEdit_9.text()
 			(logFilepath, logFilename) = os.path.split(logFileUrl)
 			if combineFileUrl and logFileUrl:
 				csvFileType = 'csv'
-				fileUrl = '%s\\..\\%s' % (combineFilepath, today)
+				fileUrl = combineFilepath
 				combineFile = Get_Data()
 				combineFile.getMergeFileData(combineFileUrl)
 				logFile = Get_Data()
@@ -1194,20 +1199,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				ascendingList = [True] * len(leaveDataList)
 				mergeData.sort_values(by=leaveDataList, axis=0, ascending=ascendingList, inplace=True)
 				mergeDataName = 'Order Merge Project'
-				mergeFileNamePath = MyMainWindow.fileName(self, fileUrl, mergeDataName, csvFileType)
+				mergeFileNamePath = MyMainWindow.getFileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('Order NO 与 Project No合并的数据：%s' % mergeFileNamePath)
-				self.textBrowser_2.append('Order Merge Project 数据,根据Order No数据透视算Amount with VAT的平均数值与ODM导出数据算Amount with VAT总值比较大小，有差说明错误')
+				self.textBrowser_2.append('Order Merge Project 数据,根据Order No数据透视算Amount with VAT的平均数值与ODM导出数据算Amount with VAT总值比较大小，有差说明错误。')
 				self.textBrowser_2.append('SAP数据已处理完成')
 				self.textBrowser_2.append('----------------------------------')
+				os.startfile(combineFileUrl)
+				os.startfile(mergeFileNamePath)
+				os.startfile(fileUrl)
 			else:
 				self.textBrowser_2.append('请重新选择文件')
 				self.textBrowser_2.append('----------------------------------')
-		# except:
-		# 	self.textBrowser_2.append('Order No Merge Project No数据有问题')
-		# 	self.textBrowser_2.append('----------------------------------')
-		# 	app.processEvents()
-		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+		except:
+			self.textBrowser_2.append('Order No Merge Project No数据有问题')
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
+			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 
 
