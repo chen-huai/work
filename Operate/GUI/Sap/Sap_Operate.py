@@ -45,6 +45,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		global data
 		data = {
 			'Project No.': [],
+			'Order No.': [],
+			'Proforma No.': [],
 			'GPC Glo. Par. Code': [],
 			'SAP No.': [],
 			'Sales': [],
@@ -57,8 +59,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			'Total Cost': [],
 			'Text': [],
 			'Long Text': [],
-			'Order No.': [],
-			'Proforma No.': [],
 			'Update Time': [],
 			'Remark': [],
 		}
@@ -456,6 +456,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 							11, 11)
+						session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cmbLV70T-SPRAS").key = "EN"
+						session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cmbLV70T-SPRAS").setFocus()
+						session.findById("wnd[0]").sendVKey(0)
 						# DATA A
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13").select()
 						if 'D2' in materialCode:
@@ -613,8 +618,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = format(sapAmountVat,'.2f')
 								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
 
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
 									if revenueForCny >= 1000:
 										# 这个是Item2000的
 										session.findById(
@@ -636,22 +641,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
 										session.findById("wnd[0]").sendVKey(0)
 
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = phyCsCostAccounting
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(phyCsCostAccounting), 0)
 										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = phyLabCostAccounting
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(phyLabCostAccounting), 0)
 										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
 										session.findById("wnd[0]/tbar[0]/btn[3]").press()
 
-										session.findById("wnd[0]/tbar[0]/btn[11]").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION2").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 
 										# Items1000的plan cost
@@ -680,12 +684,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(chmCsCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(chmCsCostAccounting), 0)
 										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
 										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(chmLabCostAccounting),0)
+										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(chmLabCostAccounting), 0)
 										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
 										session.findById(
 											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
@@ -697,9 +701,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
 											session.findById("wnd[0]").sendVKey(0)
 
-										session.findById("wnd[0]/tbar[0]/btn[11]").press()
-										# session.findById("wnd[0]/tbar[0]/btn[3]").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							else:
 								session.findById(
@@ -725,8 +729,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/tblSAPLV69ATCTRL_KONDITIONEN/txtKOMV-KBETR[3,5]").text
 
-								session.findById("wnd[0]/tbar[0]/btn[3]").press()
+
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+									session.findById("wnd[0]/tbar[0]/btn[3]").press()
 									if revenueForCny >= 1000:
 										session.findById(
 											"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
@@ -773,11 +778,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
 											session.findById("wnd[0]").sendVKey(0)
+										# 直接保存
+										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
+										session.findById("wnd[0]/tbar[0]/btn[3]").press()
+										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
-										session.findById("wnd[0]/tbar[0]/btn[11]").press()
-										# session.findById("wnd[0]/tbar[0]/btn[3]").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 							if longText != '':
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
@@ -793,6 +798,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 									4, 4)
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cmbLV70T-SPRAS").key = "EN"
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cmbLV70T-SPRAS").setFocus()
+								session.findById("wnd[0]").sendVKey(0)
+
 							if self.checkBox_8.isChecked() or revenueForCny >= 35000:
 								pass
 							else:
@@ -889,7 +900,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 
-		except:
+		except Exception as msg:
 			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			data['Project No.'].append(projectNo)
 			data['GPC Glo. Par. Code'].append(globalPartnerCode)
@@ -909,6 +920,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			data['Update Time'].append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
 			data['Remark'].append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
+			self.textBrowser.append('错误信息：%s' % msg)
 			self.textBrowser.append('----------------------------------')
 			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % projectNo, QMessageBox.Yes)
 			# print(sys.exc_info()[0])
@@ -972,6 +984,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				logFileName = 'log'
 				logDataPath = MyMainWindow.getFileName(self, logFileUrl, logFileName, csvFileType)
 
+				# 获取最终ODM数据
 				newData = Get_Data()
 				newData.getFileData(fileUrl)
 				deleteList = {'Amount': 0}
@@ -1053,8 +1066,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					# 写log
 					logData = pd.DataFrame(data)
 					logDataFile = logData.to_csv('%s' % logDataPath, encoding='utf_8_sig')
-					os.startfile(logFileUrl)
-					os.startfile(logDataPath)
 					self.lineEdit_9.setText(logDataPath)
 					if n < len(fileDataList['Amount'])-1:
 						if self.checkBox_5.isChecked():
@@ -1065,6 +1076,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							else:
 								break
 					else:
+						os.startfile(logFileUrl)
+						os.startfile(logDataPath)
 						self.textBrowser.append("ODM数据已全部填写完成")
 						self.textBrowser.append("log数据:%s" % logDataPath)
 						self.textBrowser.append('----------------------------------')
@@ -1072,9 +1085,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser.append("请重新选择ODM文件")
 				QMessageBox.information(self, "提示信息", "请重新选择ODM文件", QMessageBox.Yes)
-		except:
+		except Exception as msg:
 			fileData = self.lineEdit_6.text()
 			self.textBrowser.append('这份%s的ODM获取数据有问题' % fileData)
+			self.textBrowser.append('错误信息：%s' % msg)
 			self.textBrowser.append('----------------------------------')
 			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
@@ -1161,9 +1175,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择ODM文件')
 				self.textBrowser_2.append('----------------------------------')
-		except:
+		except Exception as msg:
 			fileData = self.lineEdit_7.text()
 			self.textBrowser_2.append('这份%s的ODM获取数据有问题' % fileData)
+			self.textBrowser_2.append('错误信息：%s' % msg)
 			self.textBrowser_2.append('----------------------------------')
 			app.processEvents()
 			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
@@ -1179,25 +1194,42 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				csvFileType = 'csv'
 				fileUrl = combineFilepath
 				combineFile = Get_Data()
-				combineFile.getMergeFileData(combineFileUrl)
+				# combineFile.getMergeFileData(combineFileUrl)
+				combineFile.getFileData(combineFileUrl)
 				logFile = Get_Data()
-				logFile.getMergeFileData(logFileUrl)
+				# logFile.getMergeFileData(logFileUrl)
+				logFile.getFileData(logFileUrl)
 				# 删除列
 				deleteColumnList = ['Project No.']
 				logFile = logFile.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
 				mergekeyFields = self.lineEdit_16.text()
 				mergekeyFieldsList = mergekeyFields.split(';')
+				# 多个字段合并为一列，作为id用于匹配
+				# combineKey = ''
+				# logKey = ''
+				# for each in mergekeyFieldsList:
+				# 	combineKey += "+ combineFile.fileData['%s']" % each
+				# 	logKey += "+ logFile['%s']" % each
+				# combineFile.fileData['ID'] = combineKey
+				# logFile['ID'] = logKey
+				# combineFile.fileData['ID'] = combineFile.fileData['Amount with VAT'] + combineFile.fileData['CS'] + combineFile.fileData['Currency'] + combineFile.fileData['Material Code'] + combineFile.fileData['GPC Glo. Par. Code'] + combineFile.fileData['SAP No.'] + combineFile.fileData['Exchange Rate']
+				# logFile['ID'] = logFile['Amount with VAT'] + logFile['CS'] + logFile['Currency'] + logFile['Material Code'] + logFile['GPC Glo. Par. Code'] + logFile['SAP No.'] + logFile['Exchange Rate']
+				# mergeData = pd.merge(combineFile.fileData, logFile, on='ID', how='outer', indicator=True)
+				# 原来根据多个字段meger
+				# combineFile.fileData['SAP No.'] = combineFile.fileData['SAP No.'].apply(int)
+				# logFile['SAP No.'] = logFile['SAP No.'].apply(int)
 				onData = mergekeyFieldsList
-				# onData = ['CS', 'Currency', 'Material Code', "GPC Glo. Par. Code", 'SAP No.', 'Amount with VAT', 'Exchange Rate']
 				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='outer', indicator=True)
+				# mergeData = pd.merge(combineFile.fileData, logFile, on=['SAP No.'], how='outer', indicator=True)
 				mergeData.sort_values(by=['Order No.'], axis=0, ascending=[True], inplace=True)
 				# 保留数据
-				leaveDataList = ["_merge",  "Invoices' name (Chinese)", 'Project No.', 'Order No.', 'Month', 'Buyer(GPC)', 'Sales_x', 'Text', 'Long Text', 'Total Cost_x', 'Revenue\n(RMB)']
-				leaveDataList += onData
+				leaveDataList = ["_merge",  "Invoices' name (Chinese)", 'Project No.', 'Order No.', 'Month', 'Buyer(GPC)', 'Sales_x', 'Text', 'Long Text', 'Total Cost_x', 'Revenue\n(RMB)', 'SAP No._x']
+				leaveDataList += mergekeyFieldsList
 				mergeData = mergeData[leaveDataList]
 				ascendingList = [True] * len(leaveDataList)
 				mergeData.sort_values(by=leaveDataList, axis=0, ascending=ascendingList, inplace=True)
+
 				mergeDataName = 'Order Merge Project'
 				mergeFileNamePath = MyMainWindow.getFileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
@@ -1211,8 +1243,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择文件')
 				self.textBrowser_2.append('----------------------------------')
-		except:
+		except Exception as msg:
 			self.textBrowser_2.append('Order No Merge Project No数据有问题')
+			self.textBrowser_2.append('错误信息：%s' % msg)
 			self.textBrowser_2.append('----------------------------------')
 			app.processEvents()
 			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)

@@ -165,7 +165,7 @@
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineEdit_16">
              <property name="text">
-              <string>Amount with VAT;CS;Currency;Material Code;GPC Glo. Par. Code;SAP No.;Exchange Rate</string>
+              <string>Amount with VAT;CS;Currency;Material Code;GPC Glo. Par. Code;Exchange Rate</string>
              </property>
             </widget>
            </item>
@@ -519,15 +519,15 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_3">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>338</width>
-             <height>371</height>
+             <width>462</width>
+             <height>530</height>
             </rect>
            </property>
            <attribute name="label">
@@ -748,8 +748,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>355</width>
-             <height>497</height>
+             <width>462</width>
+             <height>530</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1346,7 +1346,7 @@
      <x>0</x>
      <y>0</y>
      <width>972</width>
-     <height>29</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

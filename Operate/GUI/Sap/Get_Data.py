@@ -27,7 +27,7 @@ class Get_Data():
         fileType = self.fileDataUrl.split(".")[-1]
         if fileType == 'xlsx':
             # self.fileData = pd.read_excel(self.fileDataUrl)
-            self.fileData = pd.read_excel(self.fileDataUrl, dtype='str')
+            self.fileData = pd.read_excel(self.fileDataUrl, float_precision='round_trip', dtype='str')
             # self.fileData = pd.read_excel(self.fileDataUrl, keep_default_na=False)
         elif fileType == 'csv':
             # self.fileData = pd.read_csv(self.fileDataUrl)
