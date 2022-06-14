@@ -190,7 +190,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		for i in range(len(content)):
 			configContent['%s' % content[i]] = rul[i]
 		a = len(configContent)
-		if (int(configContent['config_num']) != len(configContent)) or (len(configContent) != 40):
+		if (int(configContent['config_num']) != len(configContent)) or (len(configContent) != 43):
 			reply = QMessageBox.question(self, '信息', 'config文件配置缺少一些参数，是否重新创建并获取新的config文件', QMessageBox.Yes | QMessageBox.No,
 										 QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
@@ -210,7 +210,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		monthAbbrev = months[pos:pos + 3]
 
 		configContent = [
-			['config_num','40','config文件条目数量,不能更改数值'],# getConfigContent()中需要更改配置文件数量
+			['config_num','43','config文件条目数量,不能更改数值'],# getConfigContent()中需要更改配置文件数量
 			['选择ICP_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下ICP组Batch相关'],
 			['ICP_Batch_Import_URL', 'Z:\\Inorganic_batch\\Microwave\\Batch', 'ICP的Batch引入路径，所有ICP组batch均为次路径'],
 			['ICP_Batch_Export_URL', '%s' % desktopUrl, 'ICP仪器使用，一般为本机电脑桌面'],
@@ -220,21 +220,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['Nickel_Model_Import_URL','Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model','镍释放项目的模板文件路径'],
 			['Nickel_File_Name','TC_XMN_CHM_F_T.02E.xlsm','镍释放项目的模板文件名称'],
 			['选择ICP_Result的输入路径和输出路径','默认，可更改为自己需要的','以下ICP组Result相关'],
-			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP组结果的引入路径，选择CSV结果文件'],
-			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP组结果的导出路径，转化为TXT保存路径'],
-			['NB_Result_Import_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\Raw Dada\\%s' % (now,monthAbbrev),'NB-ICP组结果的引入路径，选择CSV结果文件'],
-			['NB_Result_Export_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\NB Result\\%s' % (now,monthAbbrev),'NB-ICP组结果的导出路径，转化为TXT保存路径'],
+			['ICP_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP OES组结果的引入路径，选择CSV结果文件'],
+			['ICP_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\%s' % (now,monthAbbrev),'ICP OES组结果的导出路径，转化为TXT保存路径'],
+			['NB_Result_Import_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\Raw Dada\\%s' % (now,monthAbbrev),'NB-ICP OES组结果的引入路径，选择CSV结果文件'],
+			['NB_Result_Export_URL','Z:\\Data\\%s\\Subcon\\NB CHM\\NB Result\\%s' % (now,monthAbbrev),'NB-ICP OES组结果的导出路径，转化为TXT保存路径'],
 			['AAS_Result_Import_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110' % now,'AAS组结果的引入路径，选择CSV结果文件'],
 			['AAS_Result_Export_URL','Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110' % now,'AAS组结果的导出路径，转化为TXT保存路径'],
 			['ECO_Result_Import_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\RawData' % now,'ECO项目结果的引入路径'],
 			['ECO_Result_Export_URL','Z:\\Data\\%s\\Subcon\\厦门质检院\\ZJY-Resuls' % now,'ECO项目结果转化后的输出路径'],
-			['ICP_QC_Chart_Import_URL','Z:\\QC Chart\\%s' % now,'ICP仪器的QC-Chart路径'],
-			['ICP_QC_Chart_File_Name','QC_Chart_Heavy_Metal_66_01_2018_012.xlsx','ICP仪器的QC-Chart文件名'],
+			['ICP_QC_Chart_Import_URL','Z:\\QC Chart\\%s' % now,'ICP OES仪器的QC-Chart路径'],
+			['ICP_QC_Chart_File_Name','QC_Chart_Heavy_Metal_66_01_2018_012.xlsx','ICP OES仪器的QC-Chart文件名'],
 			['Reach_Model_Import_URL', 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'Reach项目的模板路径'],
 			['Reach_Result_File_Name', 'SVHC_DCU.xlsx', 'Reach项目的模板文件名'],
 			['Reach_Result_Export_URL', 'Z:\\Data\\%s\\66-01-2018-012-ICPOES 5110\\SVHC'% now, 'Reach项目结果转化后的导出路径'],
 			['Reach_Message_Import_URL', 'Z:\\Inorganic\\Program\\1.Inorganic Operate\\1.New edition\\2.Model', 'Reach-Message项目的模板路径'],
 			['Reach_Message_File_Name', 'REACH_SVHC_Candidate_List.csv', 'Reach-Message项目的模板文件名'],
+			['ICP_MS_Result_Import_URL', 'Z:\\Data\\%s\\66-01-2022-005-ICPMS 7850\\%s' % (now,monthAbbrev), 'ICP-MS结果导入路径，选择CSV结果文件'],
+			['ICP_MS_QC_Chart_Import_URL', 'Z:\\QC Chart\\%s' % now, 'ICP MS仪器的QC-Chart路径'],
+			['ICP_MS_QC_Chart_File_Name', 'QC_Chart_extractable Heavy Metal_2022_005V1.xlsx', 'ICP MS仪器的QC-Chart文件名'],
 			['选择UV_Batch的输入路径和输出路径', '默认，可更改为自己需要的', '以下UV组Batch相关'],
 			['UV_Batch_Import_URL', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'UV组的Batch引入路径'],
 			['UV_Batch_Export_URL', 'Z:\\Inorganic_batch\\Formaldehyde\\Batch', 'UV组的Batch转化后的导出路径'],
@@ -1446,8 +1449,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.textBrowser.clear()
 		self.textBrowser_5.clear()
 		if messages == 'ICP':
-			if (self.comboBox.currentText() == 'URL:ICP Result'):
-				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ICP-Result文件',
+			if (self.comboBox.currentText() == 'URL:ICP OES Result'):
+				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ICP-OES-Result文件',
 																'%s' % configContent['ICP_Result_Import_URL'],
 																'CSV files(*.csv)')
 			elif self.comboBox.currentText() == 'URL:ECO ZJY Result':
@@ -1457,6 +1460,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			elif self.comboBox.currentText() == 'URL:NB ICP Result':
 				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ECO-Result文件',
 																'%s' % configContent['NB_Result_Import_URL'],
+																'Files (*.csv)')
+			elif self.comboBox.currentText() == 'URL:ICP MS Result':
+				selectResultFile = QFileDialog.getOpenFileNames(self, '选择ICP-MS-Result文件',
+																'%s' % configContent['ICP_MS_Result_Import_URL'],
 																'Files (*.csv)')
 		elif messages == 'UV':
 			if self.comboBox_2.currentText() == 'URL:Formal Result':
@@ -2001,7 +2008,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("生成路径：%s\\%s" % (configContent['ECO_Result_Export_URL'], today))
 
 	def icpQc(self):
-		# ICP QC 填写
+		# ICP OES QC 填写
 		# 判断是否选择了Result文件
 		# 判断是否选择了Result文件
 		try:
@@ -2043,6 +2050,138 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				excel.Application.DisplayAlerts = True
 				wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
 					configContent['ICP_QC_Chart_Import_URL'], configContent['ICP_QC_Chart_File_Name'])))
+				ws = wb.Worksheets('Data')
+				x = 1
+				oneRow = []
+				while ws.Cells(1, x).Value is not None:
+					oneRow.append(ws.Cells(1, x).Value)
+					x += 1
+				materialColumn = int(oneRow.index('Material')) + 1
+				sampleColumn = int(oneRow.index('Element')) + 1
+				material = []
+				resultRows = {}
+				elements = []
+				n = 2
+				# 获取需要测试元素
+				while ws.Cells(n, materialColumn).Value is not None:
+					material.append(ws.Cells(n, materialColumn).Value)
+					elements.append(ws.Cells(n, sampleColumn).Value)
+					resultRows['%s-%s' % (ws.Cells(n, materialColumn).Value, ws.Cells(n, sampleColumn).Value)] = n
+					n += 1
+				# print(elements)
+				# 获取所需数据
+				rusultList = []
+				rusultList2 = []
+				rusultList3 = []
+				e = str()
+				m = []
+				for each in set(material):
+					m.append(each)
+				for each in m:
+					if each == m[-1]:
+						e = e + each
+					else:
+						e = e + each + '|'
+				y = 1
+				for fileUrl in selectResultFile[0]:  # 遍历结果选择文件
+					fileDate = os.path.split(fileUrl)[1].split('-')[0]
+					self.textBrowser.append("%s:%s" % (y, fileDate))
+					self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
+					app.processEvents()
+					# 获取相关结果数据
+					csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+					csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)  # 保留A,D,E列
+					csvFile = csvFile.loc[csvFile['A'].str.contains(e)]  # 保留material列，不重复的物质
+					csvFile = csvFile[csvFile['D'].isin(set(elements))]  # 保留不重复元素
+					rusultList = list(csvFile['A'])
+					rusultList2 = list(csvFile['D'])
+					rusultList3 = list(csvFile['E'])
+					# print(resultRows)
+					for num in resultRows:
+						# print(num,resultRows[num])
+						if 'Date' in num:  # 跳过填写日期的行
+							continue
+						else:
+							c = 4
+							while ws.Cells(resultRows[num], c).Value is not None:
+								c += 1
+							for i in range(len(rusultList)):  # 遍历结果列表
+								list1 = rusultList[i].split(',')
+								if '%s-%s' % (list1[0], rusultList2[i]) in num:
+									if i + 1 < len(rusultList):
+										# 相同的元素测试验证并跳过
+										if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
+												rusultList[i + 1], rusultList2[i + 1]):
+											continue
+									if ',' in rusultList[i]:  # 将需要计算的挑选出来
+										if len(list1) == 3:
+											# float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
+												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
+											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+													 c).Value = float(
+												rusultList3[i]) * int(float(list1[1]) * 250) * float(
+												list1[2]) / float(
+												list1[1])
+										elif len(list1) == 2:
+											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
+												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
+											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+													 c).Value = float(
+												rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
+									else:
+										if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
+										ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
+											rusultList3[i]
+									c += 1
+					y += 1
+				self.textBrowser.append("完成QC填写")
+				self.lineEdit_6.setText("完成QC填写")
+
+	def icpMsQc(self):
+		# ICP MS QC 填写
+		# 判断是否选择了Result文件
+		# 判断是否选择了Result文件
+		try:
+			selectResultFile[0]
+		except NameError:
+			m = 'N'
+		else:
+			if selectResultFile[0] == []:
+				m = 'N'
+			else:
+				m = 'Y'
+		if m == 'N':
+			reply = QMessageBox.question(self, '信息', '是否需要获取Result数据文件', QMessageBox.Yes | QMessageBox.No,
+										 QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.getResult(self, 'ICP')
+				if selectResultFile[0] == []:
+					self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+					self.textBrowser.append("请重新选择ICP Result数据文件")
+					m = 'N'
+				else:
+					m = 'Y'
+			else:
+				self.lineEdit_6.setText("请重新选择ICP Result数据文件")
+				self.textBrowser.append("请重新选择ICP Result数据文件")
+				m = 'N'
+		if m == 'Y':
+			# 判断ICP QC模板是否存在
+			file = configContent['ICP_MS_QC_Chart_Import_URL'] + '\\' + configContent['ICP_MS_QC_Chart_File_Name']
+			folder = os.path.exists(file)
+			if not folder:
+				QMessageBox.information(self, "无ICP MS QC模板",
+										"没有QC Chart模板文件！！！\n请查看config配置文件内容是否符合需求。\nICP_MS_QC_Chart_Import_URL,ICP_MS_QC_Chart_File_Name\nICP MS QC Chart的文件路径、文件名称和Excel格式",
+										QMessageBox.Yes)
+				self.textBrowser.append("请更改配置文件并导入后，重新点击MM QC Chart按钮开始数据处理")
+			else:
+				excel = win32com.gencache.EnsureDispatch('Excel.Application')
+				excel.Visible = True
+				excel.Application.DisplayAlerts = True
+				wb = excel.Workbooks.Open(os.path.join(os.getcwd(), r'%s\%s' % (
+					configContent['ICP_MS_QC_Chart_Import_URL'], configContent['ICP_MS_QC_Chart_File_Name'])))
 				ws = wb.Worksheets('Data')
 				x = 1
 				oneRow = []
