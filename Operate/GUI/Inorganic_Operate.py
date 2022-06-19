@@ -19,6 +19,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_27.clicked.connect(self.icpResultToTxt)
 		self.pushButton_55.clicked.connect(self.nbResultToTxt)
 		self.pushButton_30.clicked.connect(self.icpQc)
+		self.pushButton_56.clicked.connect(self.icpMsQc)
 		self.pushButton_22.clicked.connect(self.nickelBatch)
 		self.pushButton_25.clicked.connect(lambda: self.ecoZjy('ZJY'))
 		self.pushButton_29.clicked.connect(lambda: self.getBatch('ICP'))
@@ -1761,23 +1762,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.textBrowser.append("确认Batch含有Reach方法")
 						self.lineEdit_6.setText("确认Batch含有Reach方法")
 				else:
-					rusultList = []
-					rusultList2 = []
-					rusultList3 = []
-					rusultList4 = {}
+					resultList = []
+					resultList2 = []
+					resultList3 = []
+					resultList4 = {}
 					for fileUrl in selectResultFile[0]:
 						csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
 						csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)
 						csvFile = csvFile[csvFile['A'].isin(resultLabnumber)]
 						csvFile = csvFile[csvFile['D'].isin(elements)]
-						rusultList += list(csvFile['A'])
-						rusultList2 += list(csvFile['D'])
-						rusultList3 += list(csvFile['E'])
-					for num, each in enumerate(rusultList):
+						resultList += list(csvFile['A'])
+						resultList2 += list(csvFile['D'])
+						resultList3 += list(csvFile['E'])
+					for num, each in enumerate(resultList):
 						if self.radioButton_2.isChecked():
-							if rusultList2[num] == 'Pb' and rusultList2[num] == rusultList2[num-1]:
+							if resultList2[num] == 'Pb' and resultList2[num] == resultList2[num-1]:
 								continue
-						rusultList4['%s-%s' % (rusultList[num], rusultList2[num])] = rusultList3[num]
+						resultList4['%s-%s' % (resultList[num], resultList2[num])] = resultList3[num]
 					# 填写excel模板文件
 					if endNum == 0 or endNum > len(resultLabnumber):
 						m = len(resultLabnumber) - startNum + 1
@@ -1785,7 +1786,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						m = endNum - startNum + 1
 					# print(m)
 					n = startNum - 1
-					# print(rusultList4)
+					# print(resultList4)
 					# print(elements)
 					for i in range(m):
 						name = resultLabnumber[n].replace("/", '_')
@@ -1798,12 +1799,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						x = 0
 						for e in range(len(elements)):
 							# print(resultLabnumber[n],elements[x])
-							if '%s-%s' % (resultLabnumber[n], elements[x]) in rusultList4.keys():
-								if str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
+							if '%s-%s' % (resultLabnumber[n], elements[x]) in resultList4.keys():
+								if str(resultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '未校正':
 									ws.Cells(resultRows[x], samConcColumn).Value = '未校正'
 									self.textBrowser.append('	%s:结果未校正' % (elements[x]))
 									app.processEvents()
-								elif str(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
+								elif str(resultList4['%s-%s' % (resultLabnumber[n], elements[x])]) == '####':
 									ws.Cells(resultRows[x], samConcColumn).Value = '9999'
 									ws.Cells(resultRows[x], reColumn).Value = '超出'
 									self.textBrowser.append('	%s:结果超出' % (elements[x]))
@@ -1811,10 +1812,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								else:
 									if sta == 1:
 										ws.Cells(resultRows[x], samConcColumn).Value = float(
-											rusultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
+											resultList4['%s-%s' % (resultLabnumber[n], elements[x])]) * int(
 											resultVolumeValue[n]) / float(resultQualityValue[n])
 									else:
-										ws.Cells(resultRows[x], conColumn).Value = float(rusultList4['%s-%s' % (resultLabnumber[n], elements[x])])
+										ws.Cells(resultRows[x], conColumn).Value = float(resultList4['%s-%s' % (resultLabnumber[n], elements[x])])
 									if self.radioButton_2.isChecked():
 										if elements[x] == 'Pb':
 											ws.Cells(resultRows[x], reColumn).Value = 'Pb受Fe影响,Fact校正'
@@ -2070,9 +2071,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					n += 1
 				# print(elements)
 				# 获取所需数据
-				rusultList = []
-				rusultList2 = []
-				rusultList3 = []
+				resultList = []
+				resultList2 = []
+				resultList3 = []
 				e = str()
 				m = []
 				for each in set(material):
@@ -2093,9 +2094,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)  # 保留A,D,E列
 					csvFile = csvFile.loc[csvFile['A'].str.contains(e)]  # 保留material列，不重复的物质
 					csvFile = csvFile[csvFile['D'].isin(set(elements))]  # 保留不重复元素
-					rusultList = list(csvFile['A'])
-					rusultList2 = list(csvFile['D'])
-					rusultList3 = list(csvFile['E'])
+					resultList = list(csvFile['A'])
+					resultList2 = list(csvFile['D'])
+					resultList3 = list(csvFile['E'])
 					# print(resultRows)
 					for num in resultRows:
 						# print(num,resultRows[num])
@@ -2105,35 +2106,35 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							c = 4
 							while ws.Cells(resultRows[num], c).Value is not None:
 								c += 1
-							for i in range(len(rusultList)):  # 遍历结果列表
-								list1 = rusultList[i].split(',')
-								if '%s-%s' % (list1[0], rusultList2[i]) in num:
-									if i + 1 < len(rusultList):
+							for i in range(len(resultList)):  # 遍历结果列表
+								list1 = resultList[i].split(',')
+								if '%s-%s' % (list1[0], resultList2[i]) in num:
+									if i + 1 < len(resultList):
 										# 相同的元素测试验证并跳过
-										if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
-												rusultList[i + 1], rusultList2[i + 1]):
+										if '%s-%s' % (resultList[i], resultList2[i]) == '%s-%s' % (
+												resultList[i + 1], resultList2[i + 1]):
 											continue
-									if ',' in rusultList[i]:  # 将需要计算的挑选出来
+									if ',' in resultList[i]:  # 将需要计算的挑选出来
 										if len(list1) == 3:
-											# float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+											# float(resultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
 											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
 												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
-											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+											ws.Cells(resultRows['%s-%s' % (list1[0], resultList2[i])],
 													 c).Value = float(
-												rusultList3[i]) * int(float(list1[1]) * 250) * float(
+												resultList3[i]) * int(float(list1[1]) * 250) * float(
 												list1[2]) / float(
 												list1[1])
 										elif len(list1) == 2:
 											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
 												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
-											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+											ws.Cells(resultRows['%s-%s' % (list1[0], resultList2[i])],
 													 c).Value = float(
-												rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
+												resultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
 									else:
-										if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
-											ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-										ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-											rusultList3[i]
+										if 'Date-%s' % resultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % resultList[i]], c).Value = fileDate
+										ws.Cells(resultRows['%s-%s' % (resultList[i], resultList2[i])], c).Value = \
+											resultList3[i]
 									c += 1
 					y += 1
 				self.textBrowser.append("完成QC填写")
@@ -2202,9 +2203,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					n += 1
 				# print(elements)
 				# 获取所需数据
-				rusultList = []
-				rusultList2 = []
-				rusultList3 = []
 				e = str()
 				m = []
 				for each in set(material):
@@ -2221,13 +2219,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
 					app.processEvents()
 					# 获取相关结果数据
-					csvFile = pd.read_csv(fileUrl, header=0, names=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
-					csvFile.drop(['B', 'C', 'F', 'G', 'H'], axis=1, inplace=True)  # 保留A,D,E列
-					csvFile = csvFile.loc[csvFile['A'].str.contains(e)]  # 保留material列，不重复的物质
-					csvFile = csvFile[csvFile['D'].isin(set(elements))]  # 保留不重复元素
-					rusultList = list(csvFile['A'])
-					rusultList2 = list(csvFile['D'])
-					rusultList3 = list(csvFile['E'])
+					csvFile = pd.read_csv(fileUrl, encoding='gbk')
+					# 获取抬头
+					headData = list(csvFile.head())
+					# 保留必要列
+					csvFile = csvFile[['Sample Name', 'Date and Time Acquired', 'Analyte', 'Concentration']]
+					# 保留包含关键字的行
+					csvFile = csvFile[csvFile['Sample Name'].str.contains(e)]
+					# 保留不重复元素
+					csvFile = csvFile[csvFile['Analyte'].isin(set(elements))]
+					resultList = list(csvFile['Sample Name'])
+					resultList2 = list(csvFile['Analyte'])
+					resultList3 = list(csvFile['Concentration'])
+					resultList4 = list(csvFile['Date and Time Acquired'])
 					# print(resultRows)
 					for num in resultRows:
 						# print(num,resultRows[num])
@@ -2237,35 +2241,46 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							c = 4
 							while ws.Cells(resultRows[num], c).Value is not None:
 								c += 1
-							for i in range(len(rusultList)):  # 遍历结果列表
-								list1 = rusultList[i].split(',')
-								if '%s-%s' % (list1[0], rusultList2[i]) in num:
-									if i + 1 < len(rusultList):
+							for i in range(len(resultList)):  # 遍历结果列表
+								if '/' in resultList[i]:
+									list1 = resultList[i].split('/')
+								else:
+									list1 = resultList[i].split(',')
+								if '/' not in resultList[i] and '%s-%s' % (list1[0], resultList2[i]) in num:
+									if i + 1 < len(resultList):
 										# 相同的元素测试验证并跳过
-										if '%s-%s' % (rusultList[i], rusultList2[i]) == '%s-%s' % (
-												rusultList[i + 1], rusultList2[i + 1]):
+										if '%s-%s' % (resultList[i], resultList2[i]) == '%s-%s' % (
+												resultList[i + 1], resultList2[i + 1]):
 											continue
-									if ',' in rusultList[i]:  # 将需要计算的挑选出来
+									if ',' in resultList[i]:  # 将需要计算的挑选出来
 										if len(list1) == 3:
-											# float(rusultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
+											# float(resultList3[i])*int(float(list1[1])*250)*float(list1[2])/float(list1[1])---溶度*定容体积*稀释倍数/质量
 											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
 												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
-											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+											ws.Cells(resultRows['%s-%s' % (list1[0], resultList2[i])],
 													 c).Value = float(
-												rusultList3[i]) * int(float(list1[1]) * 250) * float(
+												resultList3[i]) * int(float(list1[1]) * 250) * float(
 												list1[2]) / float(
 												list1[1])
 										elif len(list1) == 2:
 											if 'Date-%s' % list1[0] in resultRows.keys():  # 根据是否含有该索引填写日期
 												ws.Cells(resultRows['Date-%s' % list1[0]], c).Value = fileDate
-											ws.Cells(resultRows['%s-%s' % (list1[0], rusultList2[i])],
+											ws.Cells(resultRows['%s-%s' % (list1[0], resultList2[i])],
 													 c).Value = float(
-												rusultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
+												resultList3[i]) * int(float(list1[1]) * 250) / float(list1[1])
 									else:
-										if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
-											ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-										ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-											rusultList3[i]
+										if 'Date-%s' % resultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % resultList[i]], c).Value = fileDate
+										ws.Cells(resultRows['%s-%s' % (resultList[i], resultList2[i])], c).Value = resultList3[i]
+									c += 1
+								elif '/' in resultList[i] and '%s-%s' % (list1[0], resultList2[i]) in num:
+									if '/' in resultList[i]:
+										spBatch = resultList[i].split('/')
+										if 'Date-%s' % spBatch[0] in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % spBatch[0]], c).Value = fileDate
+										if '%s-Batch No' % spBatch[0] in resultRows.keys():  # 根据是否含有该索引Batch No
+											ws.Cells(resultRows['%s-Batch No' % spBatch[0]], c).Value = spBatch[1]
+										ws.Cells(resultRows['%s-%s' % (spBatch[0], resultList2[i])], c).Value = resultList3[i]
 									c += 1
 					y += 1
 				self.textBrowser.append("完成QC填写")
@@ -2412,9 +2427,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					n += 1
 				# print(elements)
 				# 获取所需数据
-				rusultList = []
-				rusultList2 = []
-				rusultList3 = []
+				resultList = []
+				resultList2 = []
+				resultList3 = []
 				e = str()
 				m = []
 				for each in set(material):
@@ -2446,8 +2461,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						csvFile = csvFile.loc[csvFile['A'].str.contains(e, na=False)]  # 保留material列，不重复的物质
 						# csvFile = csvFile.loc[csvFile['A'].str.contains('BS-DPC', na=False)]  # 保留material列，不重复的物质
 						# csvFile = csvFile[csvFile['A'].isin(['QC','BS-DPC'])]  # 保留material列，不重复的物质
-						rusultList = list(csvFile['A'])
-						rusultList2 = list(csvFile['B'])
+						resultList = list(csvFile['A'])
+						resultList2 = list(csvFile['B'])
 						for num in resultRows:
 							# print(num,resultRows[num])
 							if 'Date' in num:  # 跳过填写日期的行
@@ -2456,19 +2471,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								c = 6
 								while ws.Cells(resultRows[num], c).Value is not None:
 									c += 1
-								for i in range(len(rusultList)):  # 遍历结果列表
-									# print('%s-%s' % (rusultList[i].strip(), messages),num)
-									if '%s-%s' % (rusultList[i].strip(), messages) in num:  # strip()去除空格
-										if 'Date-%s' % rusultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
-											ws.Cells(resultRows['Date-%s' % rusultList[i].strip()], c).Value = fileDate
-											ws.Cells(resultRows['Date-%s' % rusultList[i].strip()],
+								for i in range(len(resultList)):  # 遍历结果列表
+									# print('%s-%s' % (resultList[i].strip(), messages),num)
+									if '%s-%s' % (resultList[i].strip(), messages) in num:  # strip()去除空格
+										if 'Date-%s' % resultList[i].strip() in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % resultList[i].strip()], c).Value = fileDate
+											ws.Cells(resultRows['Date-%s' % resultList[i].strip()],
 													 c).NumberFormat = "yyyy/mm/dd"
-										# if 'QCQ' in rusultList[i].strip() or 'BLK SPIKE' in rusultList[i].strip():
-										if 'QCQ' in rusultList[i].strip():
+										# if 'QCQ' in resultList[i].strip() or 'BLK SPIKE' in resultList[i].strip():
+										if 'QCQ' in resultList[i].strip():
 											continue
 										else:
-											ws.Cells(resultRows['%s-%s' % (rusultList[i].strip(), messages)], c).Value = \
-											rusultList2[i].strip()
+											ws.Cells(resultRows['%s-%s' % (resultList[i].strip(), messages)], c).Value = \
+											resultList2[i].strip()
 										c += 1
 						y += 1
 				self.textBrowser_5.append("完成QC填写")
@@ -2541,9 +2556,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					n += 1
 				# print(elements)
 				# 获取所需数据
-				rusultList = []
-				rusultList2 = []
-				rusultList3 = []
+				resultList = []
+				resultList2 = []
+				resultList3 = []
 				e = str()
 				m = []
 				for each in set(material):
@@ -2572,9 +2587,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						self.lineEdit_6.setText("正在进行%s QC填写" % fileDate)
 						app.processEvents()
 						csvFile = csvFile.loc[csvFile['C'].str.contains(e, na=False)]  # 保留material列，不重复的物质
-						rusultList = list(csvFile['C'])
-						rusultList2 = list(csvFile['D'])
-						rusultList3 = list(csvFile['F'])
+						resultList = list(csvFile['C'])
+						resultList2 = list(csvFile['D'])
+						resultList3 = list(csvFile['F'])
 						for num in resultRows:
 							# print(num,resultRows[num])
 							if 'Date' in num:  # 跳过填写日期的行
@@ -2583,15 +2598,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								c = 6
 								while ws.Cells(resultRows[num], c).Value is not None:
 									c += 1
-								for i in range(len(rusultList)):  # 遍历结果列表
-									# print('%s-%s' % (rusultList[i], rusultList2[i]),num)
-									if '%s-%s' % (rusultList[i], rusultList2[i]) in num:  # strip()去除空格
-										if 'Date-%s' % rusultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
-											ws.Cells(resultRows['Date-%s' % rusultList[i]], c).Value = fileDate
-											ws.Cells(resultRows['Date-%s' % rusultList[i]],
+								for i in range(len(resultList)):  # 遍历结果列表
+									# print('%s-%s' % (resultList[i], resultList2[i]),num)
+									if '%s-%s' % (resultList[i], resultList2[i]) in num:  # strip()去除空格
+										if 'Date-%s' % resultList[i] in resultRows.keys():  # 根据是否含有该索引填写日期
+											ws.Cells(resultRows['Date-%s' % resultList[i]], c).Value = fileDate
+											ws.Cells(resultRows['Date-%s' % resultList[i]],
 													 c).NumberFormat = "yyyy/mm/dd"
-										ws.Cells(resultRows['%s-%s' % (rusultList[i], rusultList2[i])], c).Value = \
-											rusultList3[i]
+										ws.Cells(resultRows['%s-%s' % (resultList[i], resultList2[i])], c).Value = \
+											resultList3[i]
 										c += 1
 						y += 1
 				self.textBrowser_5.append("完成QC填写")
