@@ -1609,7 +1609,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.lineEdit_6.setText("正在进行NB ICP文件转换为TXT")
 					fileName = os.path.split(fileUrl)[1]
 					app.processEvents()
-					csvFile = pd.read_csv(fileUrl,header=None)
+					csvFile = pd.read_csv(fileUrl,header=None,encoding='gbk')
 					csvLine = csvFile.iloc[0]  # 获取行索引为1数据
 					firstLine = list(csvLine)
 					leave = ['Sample Name', 'Operator', 'Analyte', 'Concentration', 'Units','Dilution Multiplier','Element Full Name']
