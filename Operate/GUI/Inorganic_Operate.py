@@ -2228,6 +2228,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					csvFile = csvFile[csvFile['Sample Name'].str.contains(e)]
 					# 保留不重复元素
 					csvFile = csvFile[csvFile['Analyte'].isin(set(elements))]
+					# 删除重复数据
+					csvFile.drop_duplicates(subset=['Sample Name','Date and Time Acquired', 'Analyte', 'Concentration'], keep='first', inplace=True)
 					resultList = list(csvFile['Sample Name'])
 					resultList2 = list(csvFile['Analyte'])
 					resultList3 = list(csvFile['Concentration'])
