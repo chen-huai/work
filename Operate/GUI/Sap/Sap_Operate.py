@@ -126,6 +126,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['分销渠道', '01', '根据Site自定义'],
 			# ['销售办事处', '>601', '根据Site自定义'],
 			# ['销售组', '240', '根据Site自定义'],
+			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
 			['Hourly Rate(Lab)', 342, '每年更新'],
@@ -932,7 +933,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			SapGuiAuto = None
 
 	def getFile(self):
-		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '', 'files(*.docx;*.xls*;*.csv)')
+		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '%s' % configContent['SAP_Date_URL'], 'files(*.docx;*.xls*;*.csv)')
 		fileUrl = selectBatchFile[0]
 		return fileUrl
 
