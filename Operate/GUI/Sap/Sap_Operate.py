@@ -933,7 +933,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			SapGuiAuto = None
 
 	def getFile(self):
-		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '%s' % configContent['SAP_Date_URL'], 'files(*.docx;*.xls*;*.csv)')
+		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '%s\\%s' % (configContent['SAP_Date_URL'], today), 'files(*.docx;*.xls*;*.csv)')
 		fileUrl = selectBatchFile[0]
 		return fileUrl
 
@@ -1202,9 +1202,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				logFile = Get_Data()
 				# logFile.getMergeFileData(logFileUrl)
 				logFile.getFileData(logFileUrl)
-				# 删除列
-				deleteColumnList = ['Project No.']
-				logFile = logFile.deleteTheColumn(deleteColumnList)
+				# # 删除列，Project No.保留以便更好的溯源数据
+				# deleteColumnList = ['Project No.']
+				# logFile = logFile.deleteTheColumn(deleteColumnList)
 				# merge数据，combine和原始数据
 				mergekeyFields = self.lineEdit_16.text()
 				mergekeyFieldsList = mergekeyFields.split(';')
@@ -1223,17 +1223,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# combineFile.fileData['SAP No.'] = combineFile.fileData['SAP No.'].apply(int)
 				# logFile['SAP No.'] = logFile['SAP No.'].apply(int)
 				onData = mergekeyFieldsList
-				mergeData = pd.merge(combineFile.fileData, logFile, on=onData, how='outer', indicator=True)
+				mergeData = pd.merge(combineFile.fileData, logFile.fileData, on=onData, how='outer', indicator=True)
 				# mergeData = pd.merge(combineFile.fileData, logFile, on=['SAP No.'], how='outer', indicator=True)
 				mergeData.sort_values(by=['Order No.'], axis=0, ascending=[True], inplace=True)
 				# 保留数据
-				leaveDataList = ["_merge",  "Invoices' name (Chinese)", 'Project No.', 'Order No.', 'Month', 'Buyer(GPC)', 'Sales_x', 'Text', 'Long Text', 'Total Cost_x', 'Revenue\n(RMB)', 'SAP No._x']
+				leaveDataList = ["_merge",  "Invoices' name (Chinese)", 'Project No._x', 'Order No.', 'Month', 'Buyer(GPC)', 'Sales_x', 'Text', 'Long Text', 'Total Cost_x', 'Revenue\n(RMB)', 'SAP No._x', 'Project No._y', 'Remark', 'Update Time']
 				leaveDataList += mergekeyFieldsList
 				mergeData = mergeData[leaveDataList]
 				ascendingList = [True] * len(leaveDataList)
 				mergeData.sort_values(by=leaveDataList, axis=0, ascending=ascendingList, inplace=True)
 
-				mergeDataName = 'Order Merge Project'
+				mergeDataName = '5.Order Merge Project'
 				mergeFileNamePath = MyMainWindow.getFileName(self, fileUrl, mergeDataName, csvFileType)
 				mergeFile = mergeData.to_csv('%s' % (mergeFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('Order NO 与 Project No合并的数据：%s' % mergeFileNamePath)
