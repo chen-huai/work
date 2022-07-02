@@ -990,6 +990,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				deleteList = {'Amount': 0}
 				newData.deleteTheRows(deleteList)
 				headList = newData.getHeaderData()
+				# 去除Amount with VAT中数值为空的数据，因为数据sales为空
+				newData.fileData = newData.fileData[newData.fileData['Amount with VAT'].notnull()]
 				if ("PHY Material Code" in headList) and ("CHM Material Code" in headList):
 					fillNanColumnKey = {'Material Code': ["PHY Material Code", "CHM Material Code"]}
 					newData.fillNanColumn(fillNanColumnKey)
