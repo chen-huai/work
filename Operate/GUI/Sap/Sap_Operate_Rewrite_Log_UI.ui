@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Frank</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>972</width>
-    <height>704</height>
+    <width>930</width>
+    <height>668</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -40,70 +41,6 @@
         <string>Combine Data</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox_7">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="title">
-           <string>ODM Data Combine</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_31">
-             <property name="text">
-              <string>Combine key fields</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_18">
-             <property name="text">
-              <string>Get File</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_7"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_15">
-             <property name="text">
-              <string>CS;Sales;Currency;Material Code;Invoices' name (Chinese);Buyer(GPC);Month;Exchange Rate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3" rowspan="2">
-            <widget class="QPushButton" name="pushButton_19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Combine Data</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QGroupBox" name="groupBox_6">
-          <property name="title">
-           <string>Messages</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="0" column="0">
-            <widget class="QTextBrowser" name="textBrowser_2"/>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QGroupBox" name="groupBox_9">
           <property name="sizePolicy">
@@ -118,6 +55,43 @@
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="3" column="1">
             <widget class="QLineEdit" name="lineEdit_9"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="lineEdit_8"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEdit_16">
+             <property name="text">
+              <string>CS;Sales;Currency;Material Code;Invoices' name (Chinese);Buyer(GPC);Month;Exchange Rate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_20">
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="pushButton_24">
+             <property name="text">
+              <string>Log Data</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2" rowspan="2">
+            <widget class="QPushButton" name="pushButton_25">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string> Merge</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="pushButton_32">
@@ -145,40 +119,74 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_8"/>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string>Messages</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QTextBrowser" name="textBrowser_2"/>
            </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="pushButton_20">
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>ODM Data Combine</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_18">
              <property name="text">
-              <string>Clear</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="pushButton_24">
-             <property name="text">
-              <string>Log Data</string>
+              <string>Get File</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_16">
+            <widget class="QLineEdit" name="lineEdit_7"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_31">
+             <property name="text">
+              <string>Combine key fields</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEdit_15">
              <property name="text">
               <string>CS;Sales;Currency;Material Code;Invoices' name (Chinese);Buyer(GPC);Month;Exchange Rate</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="2" rowspan="2">
-            <widget class="QPushButton" name="pushButton_25">
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_19">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="text">
-              <string> Merge</string>
+              <string>Combine Data</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_36">
+             <property name="text">
+              <string>Data Collation</string>
              </property>
             </widget>
            </item>
@@ -526,14 +534,14 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>462</width>
-             <height>530</height>
+             <width>441</width>
+             <height>494</height>
             </rect>
            </property>
            <attribute name="label">
             <string>Login in</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_10">
+           <layout class="QGridLayout" name="gridLayout_16">
             <item row="0" column="0">
              <widget class="QGroupBox" name="groupBox">
               <property name="sizePolicy">
@@ -729,6 +737,66 @@
              </widget>
             </item>
             <item row="2" column="0">
+             <widget class="QGroupBox" name="groupBox_13">
+              <property name="title">
+               <string>Cost Center</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="checkBox_13">
+                 <property name="text">
+                  <string>CS</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="lineEdit_18">
+                 <property name="text">
+                  <string>48601240</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="checkBox_14">
+                 <property name="text">
+                  <string>CHM</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="lineEdit_19">
+                 <property name="text">
+                  <string>48601293</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="checkBox_15">
+                 <property name="text">
+                  <string>PHY</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="lineEdit_20">
+                 <property name="text">
+                  <string>48601294</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="3" column="0">
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1336,6 +1404,215 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Admin Operate</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_10">
+          <property name="title">
+           <string>Naming Rules</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_14">
+           <item row="0" column="2">
+            <widget class="QSpinBox" name="spinBox">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>9</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QPushButton" name="pushButton_39">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Number of bits</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_38">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Start Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="checkBox_9">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Invoice No</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QSpinBox" name="spinBox_2">
+             <property name="maximum">
+              <number>20</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QPushButton" name="pushButton_40">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Number of bits</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="checkBox_12">
+             <property name="text">
+              <string>Order No</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="spinBox_3">
+             <property name="maximum">
+              <number>9</number>
+             </property>
+             <property name="value">
+              <number>7</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QSpinBox" name="spinBox_4">
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_37">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Start Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QCheckBox" name="checkBox_10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Company Name</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QCheckBox" name="checkBox_11">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Project No</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="6">
+            <widget class="QLineEdit" name="lineEdit_17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_12">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Operate</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_15">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_33">
+             <property name="text">
+              <string>Select Files</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_34">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_35">
+             <property name="text">
+              <string>Files Rename</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QGroupBox" name="groupBox_11">
+          <property name="title">
+           <string>Messages</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QTextBrowser" name="textBrowser_3"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -1345,7 +1622,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>972</width>
+     <width>930</width>
      <height>25</height>
     </rect>
    </property>
