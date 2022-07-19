@@ -349,6 +349,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					self.textBrowser.append("CHM Amount:%s" % chmRe)
 					self.textBrowser.append("PHY Amount:%s" % phyRe)
 					app.processEvents()
+					csCostCenter = self.lineEdit_18.text()
+					chmCostCenter = self.lineEdit_19.text()
+					phyCostCenter = self.lineEdit_20.text()
 					if self.checkBox.isChecked():
 						orderType = self.lineEdit_10.text()
 						salesOrganization = self.lineEdit_11.text()
@@ -473,29 +476,29 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						if self.checkBox_7.isChecked():
 							if 'A2' in materialCode or 'D2' in materialCode:
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").text = "48601294"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,1]").text = phyCostCenter
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,1]").text = "48601294"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,1]").text = phyCostCenter
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,1]").text = phyCost
 							elif 'T20' in materialCode:
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601294"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = phyCostCenter
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601294"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = phyCostCenter
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = phyCost
 							else:
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = "48601293"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = "48601293"
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/ctxtTABD-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
 
@@ -610,7 +613,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								sapAmountVat = format(sapAmountVat,'.2f')
 								sapAmountVat = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", sapAmountVat)
 
+
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
+
 									session.findById("wnd[0]/tbar[0]/btn[3]").press()
 									if revenueForCny >= 1000:
 										# 这个是Item2000的
@@ -621,28 +626,42 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
 										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
 										session.findById("wnd[1]/tbar[0]/btn[0]").press()
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+										# cs
+										if self.checkBox_13.isChecked():
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = csCostCenter
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+											# 录金额
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(
+												float(phyCsCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
+											session.findById("wnd[0]").sendVKey(0)
+										# phy
+										if self.checkBox_15.isChecked():
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = phyCostCenter
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(
+												float(phyLabCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
 
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(phyCsCostAccounting), 0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 20
-										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(phyLabCostAccounting), 0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-										session.findById("wnd[0]").sendVKey(0)
+
+
+										# session.findById("wnd[0]").sendVKey(0)
 										session.findById("wnd[0]/tbar[0]/btn[3]").press()
 
 										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
@@ -658,39 +677,50 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
 										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
 										session.findById("wnd[1]/tbar[0]/btn[0]").press()
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+										# cs
+										if self.checkBox_13.isChecked():
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = csCostCenter
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(
+												float(chmCsCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+										# 	chm
+										if self.checkBox_14.isChecked():
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = chmCostCenter
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(
+												float(chmLabCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
 										if cost > 0:
+											if self.checkBox_14.isChecked():
+												n = 2
+											else:
+												n = 1
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,%s]" % n).text = "E"
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,%s]" % n).text = csCostCenter
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(chmCsCostAccounting), 0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
-										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(chmLabCostAccounting), 0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-										session.findById("wnd[0]").sendVKey(0)
-										if cost > 0:
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,%s]" % n).text = "FREMDL"
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).setFocus()
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).caretPosition = 20
 											session.findById("wnd[0]").sendVKey(0)
 
 										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
@@ -732,43 +762,57 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById("wnd[0]/mbar/menu[3]/menu[7]").select()
 										session.findById("wnd[1]/usr/btnSPOP-VAROPTION1").press()
 										session.findById("wnd[1]/tbar[0]/btn[0]").press()
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = "48601240"
+										if self.checkBox_13.isChecked():
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,0]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,0]").text = csCostCenter
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(
+												float(csCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
+
+										if self.checkBox_14.isChecked() or self.checkBox_15.isChecked():
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,1]").text = "E"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(
+												float(labCostAccounting), 0)
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
+											session.findById(
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
+
 										if 'T75' in materialCode:
-											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601293"
+											if self.checkBox_14.isChecked():
+												session.findById(
+													"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = chmCostCenter
 										else:
-											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = "48601294"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,0]").text = "T01AST"
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,1]").text = "T01AST"
+											if self.checkBox_15.isChecked():
+												session.findById(
+													"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = phyCostCenter
+
 										if cost > 0:
+											if self.checkBox_14.isChecked() or self.checkBox_15.isChecked():
+												n = 2
+											else:
+												n = 1
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,2]").text = "E"
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-TYPPS[2,%s]" % n).text = "E"
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,2]").text = "48601240"
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,%s]" % n).text = csCostCenter
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,2]").text = "FREMDL"
-										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").text = round(float(csCostAccounting),0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,0]").caretPosition = 19
-										session.findById("wnd[0]").sendVKey(0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").text = round(float(labCostAccounting),0)
-										session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").setFocus()
-										session.findById(
-											"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
-										session.findById("wnd[0]").sendVKey(0)
-										if cost > 0:
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").text = format(cost / 1.06, '.2f')
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").setFocus()
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,%s]" % n).text = "FREMDL"
+
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).setFocus()
 											session.findById(
-												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,2]").caretPosition = 20
+												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).caretPosition = 20
 											session.findById("wnd[0]").sendVKey(0)
 										# 直接保存
 										# session.findById("wnd[0]/tbar[0]/btn[11]").press()
