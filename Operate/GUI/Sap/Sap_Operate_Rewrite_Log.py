@@ -979,6 +979,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			fileUrl = self.lineEdit_6.text()
 			(filepath, filename) = os.path.split(fileUrl)
 			if fileUrl:
+				# 下拉框默认选择0
+				self.comboBox.setCurrentIndex(0)
+				self.comboBox_2.setCurrentIndex(0)
+				self.comboBox_3.setCurrentIndex(0)
+				self.comboBox_4.setCurrentIndex(0)
 				# log文件
 				logFileUrl = '%s/log' % filepath
 				MyMainWindow.createFolder(self, logFileUrl)
