@@ -67,6 +67,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			MyMainWindow.getConfigContent(self)
 
 	def getConfigContent(self):
+		# 配置文件
 		csvFile = pd.read_csv('%s/config_sap.csv' % configFileUrl, names=['A', 'B', 'C'])
 		global configContent
 		global username
@@ -87,12 +88,57 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		MyMainWindow.csItem(self)
 		MyMainWindow.salesItem(self)
 		MyMainWindow.hourlyRate(self)
+		MyMainWindow.getInvoiceMsg(self)
+
 		try:
 			self.textBrowser.append("配置获取成功")
 		except AttributeError:
 			QMessageBox.information(self, "提示信息", "已获取配置文件内容", QMessageBox.Yes)
 		else:
 			pass
+
+	def getInvoiceMsg(self):
+		# 特殊开票文件
+		global specialInvoiceMsg
+		global invoiceName
+		global orderMode
+		global invoiceRemarks
+		global invoiceField
+		global invoiceGroup
+
+		invoiceFile = pd.read_csv('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+		# invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+		invoiceName = list(invoiceFile['Invoice name'])
+		orderMode = list(invoiceFile['开order方式'])
+		invoiceRemarks = list(invoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
+		invoiceField = list(invoiceFile['字段'])
+		invoiceGroup = list(invoiceFile['组别'])
+		orderModeList = list(set(orderMode))
+		specialInvoiceMsg = {}
+		for each in orderModeList:
+			specialInvoiceMsg[each] = {}
+			# 保留包含关键字的行
+			seachInvoiceFile = pd.DataFrame(invoiceFile[invoiceFile['开order方式'] == each])
+			# 嵌套字典
+			# invoiceName = {}
+			# orderMode = {}
+			# invoiceRemarks = {}
+			# invoiceField = {}
+			# invoiceGroup = {}
+			embeddedDict = {}
+			embeddedDict['Invoice name'] = list(seachInvoiceFile['Invoice name'])
+			embeddedDict['Order Mode'] = list(seachInvoiceFile['开order方式'])
+			embeddedDict['Invoice Remarks'] = list(seachInvoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
+			embeddedDict['Invoice Field'] = list(seachInvoiceFile['字段'])
+			embeddedDict['Invoice Group'] = list(seachInvoiceFile['组别'])
+			specialInvoiceMsg[each] = embeddedDict
+
+		self.textBrowser_2.append('特殊开票信息获取成功')
+		self.textBrowser_2.append('----------------------------------')
+
+
+
+
 
 	def createConfigContent(self):
 		global monthAbbrev
@@ -109,6 +155,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['销售办事处', '>601', '根据Site自定义'],
 			# ['销售组', '240', '根据Site自定义'],
 			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
+			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票名称'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
 			['Hourly Rate(Lab)', 342, '每年更新'],
@@ -929,9 +976,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			connection = None
 			application = None
 			SapGuiAuto = None
-
-
-
 
 	def getFile(self):
 		selectBatchFile = QFileDialog.getOpenFileName(self, '选择ODM导出文件', '%s\\%s' % (configContent['SAP_Date_URL'], today), 'files(*.docx;*.xls*;*.csv)')
