@@ -27,6 +27,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_17.clicked.connect(self.odmDataToSap)
 		self.pushButton_19.clicked.connect(self.odmCombineData)
 		self.pushButton_25.clicked.connect(self.orderMergeProject)
+		self.pushButton_36.clicked.connect(self.splitOdmData)
 		self.lineEdit_15.textChanged.connect(self.lineEditChange)
 		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
@@ -96,49 +97,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			QMessageBox.information(self, "提示信息", "已获取配置文件内容", QMessageBox.Yes)
 		else:
 			pass
-
-	def getInvoiceMsg(self):
-		# 特殊开票文件
-		global specialInvoiceMsg
-		global invoiceName
-		global orderMode
-		global invoiceRemarks
-		global invoiceField
-		global invoiceGroup
-
-		invoiceFile = pd.read_csv('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
-		# invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
-		invoiceName = list(invoiceFile['Invoice name'])
-		orderMode = list(invoiceFile['开order方式'])
-		invoiceRemarks = list(invoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
-		invoiceField = list(invoiceFile['字段'])
-		invoiceGroup = list(invoiceFile['组别'])
-		orderModeList = list(set(orderMode))
-		specialInvoiceMsg = {}
-		for each in orderModeList:
-			specialInvoiceMsg[each] = {}
-			# 保留包含关键字的行
-			seachInvoiceFile = pd.DataFrame(invoiceFile[invoiceFile['开order方式'] == each])
-			# 嵌套字典
-			# invoiceName = {}
-			# orderMode = {}
-			# invoiceRemarks = {}
-			# invoiceField = {}
-			# invoiceGroup = {}
-			embeddedDict = {}
-			embeddedDict['Invoice name'] = list(seachInvoiceFile['Invoice name'])
-			embeddedDict['Order Mode'] = list(seachInvoiceFile['开order方式'])
-			embeddedDict['Invoice Remarks'] = list(seachInvoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
-			embeddedDict['Invoice Field'] = list(seachInvoiceFile['字段'])
-			embeddedDict['Invoice Group'] = list(seachInvoiceFile['组别'])
-			specialInvoiceMsg[each] = embeddedDict
-
-		self.textBrowser_2.append('特殊开票信息获取成功')
-		self.textBrowser_2.append('----------------------------------')
-
-
-
-
 
 	def createConfigContent(self):
 		global monthAbbrev
@@ -1182,6 +1140,78 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def lineEditChange(self, url):
 		combineKey = self.lineEdit_15.text()
 		self.lineEdit_16.setText(combineKey)
+
+	def getInvoiceMsg(self):
+		try:
+			# 特殊开票文件
+			global specialInvoiceMsg
+			global invoiceName
+			global orderMode
+			global invoiceRemarks
+			global invoiceField
+			global invoiceGroup
+
+			invoiceFile = pd.read_csv('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+			# invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+			invoiceName = list(invoiceFile['Invoice name'])
+			orderMode = list(invoiceFile['开order方式'])
+			invoiceRemarks = list(invoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
+			invoiceField = list(invoiceFile['字段'])
+			invoiceGroup = list(invoiceFile['组别'])
+			orderModeList = list(set(orderMode))
+			specialInvoiceMsg = {}
+			for each in orderModeList:
+				specialInvoiceMsg[each] = {}
+				# 保留包含关键字的行
+				seachInvoiceFile = pd.DataFrame(invoiceFile[invoiceFile['开order方式'] == each])
+				# 嵌套字典
+				# invoiceName = {}
+				# orderMode = {}
+				# invoiceRemarks = {}
+				# invoiceField = {}
+				# invoiceGroup = {}
+				embeddedDict = {}
+				embeddedDict['Invoice name'] = list(seachInvoiceFile['Invoice name'])
+				embeddedDict['Order Mode'] = list(seachInvoiceFile['开order方式'])
+				embeddedDict['Invoice Remarks'] = list(seachInvoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
+				embeddedDict['Invoice Field'] = list(seachInvoiceFile['字段'])
+				embeddedDict['Invoice Group'] = list(seachInvoiceFile['组别'])
+				specialInvoiceMsg[each] = embeddedDict
+
+			self.textBrowser_2.append('特殊开票信息获取成功')
+			self.textBrowser_2.append('----------------------------------')
+		except Exception as msg:
+			self.textBrowser_2.append('错误信息：%s' % msg)
+			self.textBrowser_2.append('----------------------------------')
+
+	def splitOdmData(self):
+		# try:
+		# 	pass
+		# except Exception as msg:
+		# 	self.textBrowser_2.append('错误信息：%s' % msg)
+		# 	self.textBrowser_2.append('----------------------------------')
+		fileUrl = self.lineEdit_7.text()
+		(filepath, filename) = os.path.split(fileUrl)
+		if fileUrl:
+			newData = Get_Data()
+			newData.getFileData(fileUrl)
+			generalData = newData.fileData[~newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
+			generalFile = generalData.to_csv('C:\\Users\\chilo\\Desktop\\test\\特殊\\1.csv', encoding='utf_8_sig')
+			specialData = newData.fileData[newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
+			for each in specialInvoiceMsg:
+				eachSpecialData = specialData[specialData["Invoices' name (Chinese)"].isin(specialInvoiceMsg[each]['Invoice name'])]
+				if eachSpecialData.empty:
+					pass
+				else:
+					specialFile = eachSpecialData.to_csv('C:\\Users\\chilo\\Desktop\\test\\特殊\\%s.csv' % each, encoding='utf_8_sig')
+			self.textBrowser_2.append('处理好特殊数据')
+			self.textBrowser_2.append('----------------------------------')
+		else:
+			self.textBrowser_2.append('请重新选择ODM文件')
+			self.textBrowser_2.append('----------------------------------')
+
+
+
 
 	# 数据透视并合并
 	def odmCombineData(self):

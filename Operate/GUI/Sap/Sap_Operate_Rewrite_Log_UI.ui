@@ -95,6 +95,9 @@
            </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="pushButton_32">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -158,6 +161,9 @@
            </item>
            <item row="1" column="0">
             <widget class="QPushButton" name="pushButton_31">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Combine key fields</string>
              </property>
@@ -534,8 +540,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>441</width>
-             <height>494</height>
+             <width>380</width>
+             <height>503</height>
             </rect>
            </property>
            <attribute name="label">
@@ -816,8 +822,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>277</width>
-             <height>402</height>
+             <width>302</width>
+             <height>389</height>
             </rect>
            </property>
            <attribute name="label">
