@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Sap_Operate_Rewrite_Log_UI import *
 from Get_Data import *
+from File_Operate import *
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
@@ -113,7 +114,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['销售办事处', '>601', '根据Site自定义'],
 			# ['销售组', '240', '根据Site自定义'],
 			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
-			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票名称'],
+			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票文件名称'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
 			['Hourly Rate(Lab)', 342, '每年更新'],
@@ -1151,8 +1152,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			global invoiceField
 			global invoiceGroup
 
-			invoiceFile = pd.read_csv('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
-			# invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+			# invoiceFile = pd.read_csv(r'%s/%s' % (configFileUrl, configContent['Invoice_File_Name']), encoding="utf8")
+			invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
 			invoiceName = list(invoiceFile['Invoice name'])
 			orderMode = list(invoiceFile['开order方式'])
 			invoiceRemarks = list(invoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
@@ -1184,6 +1185,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.textBrowser_2.append('错误信息：%s' % msg)
 			self.textBrowser_2.append('----------------------------------')
 
+	# 分开ODM数据
 	def splitOdmData(self):
 		# try:
 		# 	pass
@@ -1196,22 +1198,33 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			newData = Get_Data()
 			newData.getFileData(fileUrl)
 			generalData = newData.fileData[~newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
-			generalFile = generalData.to_csv('C:\\Users\\chilo\\Desktop\\test\\特殊\\1.csv', encoding='utf_8_sig')
+			if generalData.empty:
+				pass
+			else:
+				newFolderUrl = '%s/%s' % (filepath, today)
+				newFolder = File_Opetate()
+				newFolder.createFolder(newFolderUrl)
+				csvFileType = 'csv'
+				invoiceFileName = '1.正常合并'
+				invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
+				generalFile = generalData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
 			specialData = newData.fileData[newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
+			fileNum = 2
 			for each in specialInvoiceMsg:
 				eachSpecialData = specialData[specialData["Invoices' name (Chinese)"].isin(specialInvoiceMsg[each]['Invoice name'])]
 				if eachSpecialData.empty:
 					pass
 				else:
-					specialFile = eachSpecialData.to_csv('C:\\Users\\chilo\\Desktop\\test\\特殊\\%s.csv' % each, encoding='utf_8_sig')
+					invoiceFileName = str(fileNum) + each
+					invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
+					specialFile = eachSpecialData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
+					fileNum += 1
+			os.startfile(newFolderUrl)
 			self.textBrowser_2.append('处理好特殊数据')
 			self.textBrowser_2.append('----------------------------------')
 		else:
 			self.textBrowser_2.append('请重新选择ODM文件')
 			self.textBrowser_2.append('----------------------------------')
-
-
-
 
 	# 数据透视并合并
 	def odmCombineData(self):

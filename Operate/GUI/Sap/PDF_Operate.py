@@ -45,39 +45,46 @@ if __name__ == '__main__':
     # ]
 
 
-    path = "C:\\Users\\chen-fr\\Desktop\\DG invoice"  # 文件夹目录
-    files = os.listdir(path)  # 得到文件夹下的所有文件名称
+    dirUrl = "C:\\Users\\chen-fr\\Desktop\\test2"  # 文件夹目录
+    files = os.listdir(dirUrl)  # 得到文件夹下的所有文件名称
     n = 1
     invoiceNoStar = 4
     orderNoStar = 7
     msg = {}
     for each in files:
-        with open('%s\\%s' % (path,each), 'rb') as my_pdf:
-            print(n)
-            fileCon = readPdf(my_pdf)
-            print(fileCon)
-            fileNum = 0
-            for fileCon[fileNum] in fileCon:
-                if re.match('.*P. R. China', fileCon[fileNum]):
-                    if fileCon[fileNum+2] == 'Invoice ':
-                        print(fileCon[fileNum], fileCon[fileNum + 4], 11)
-                        msg['Company Name'] = fileCon[fileNum + 4]
-                    else:
-                        print(fileCon[fileNum],fileCon[fileNum+2],11)
-                        msg['Company Name'] = fileCon[fileNum + 2]
-                elif re.match('%s\d{8}'%invoiceNoStar, fileCon[fileNum]):
-                    print(fileCon[fileNum], 22)
-                    msg['Invoice No'] = fileCon[fileNum]
-                elif re.match('%s\d{8}'%orderNoStar, fileCon[fileNum]):
-                    print(fileCon[fileNum], 33)
-                    msg['Order No'] = fileCon[fileNum]
-                elif re.match('\d{2}.\d{3}.\d{2}.\d{4,5}', fileCon[fileNum]):
-                    print(fileCon[fileNum], 44)
-                    msg['Project No'] = fileCon[fileNum]
-                fileNum += 1
-            n += 1
-        outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
-        saveAs('%s\\%s' % (path,each),'%s\\test\\%s' % (path,outputFlie))
+        print(each)
+        fileUrl = '%s\\%s' % (dirUrl, each)
+        if os.path.isfile(fileUrl):
+            with open(fileUrl, 'rb') as my_pdf:
+                print(n)
+                fileCon = readPdf(my_pdf)
+                print(fileCon)
+                fileNum = 0
+                for fileCon[fileNum] in fileCon:
+                    if re.match('.*P. R. China', fileCon[fileNum]):
+                        if fileCon[fileNum+2] == 'Invoice ':
+                            print(fileCon[fileNum], fileCon[fileNum + 4], 11)
+                            msg['Company Name'] = fileCon[fileNum + 4]
+                        else:
+                            print(fileCon[fileNum],fileCon[fileNum+2],11)
+                            msg['Company Name'] = fileCon[fileNum + 2]
+                    elif re.match('%s\d{8}'%invoiceNoStar, fileCon[fileNum]):
+                        print(fileCon[fileNum], 22)
+                        msg['Invoice No'] = fileCon[fileNum]
+                    elif re.match('%s\d{8}'%orderNoStar, fileCon[fileNum]):
+                        print(fileCon[fileNum], 33)
+                        msg['Order No'] = fileCon[fileNum]
+                    elif re.match('\d{2}.\d{3}.\d{2}.\d{4,5}', fileCon[fileNum]):
+                        print(fileCon[fileNum], 44)
+                        msg['Project No'] = fileCon[fileNum]
+                    fileNum += 1
+                n += 1
+                outputFlie = msg['Project No'] + '.pdf'
+                # outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
+                saveAs(fileUrl,'%s\\test\\%s' % (dirUrl, outputFlie))
+
+        else:
+            print('无')
 
 
 
