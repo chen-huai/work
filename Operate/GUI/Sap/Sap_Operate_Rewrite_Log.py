@@ -203,7 +203,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		labHourlyRate = float(self.doubleSpinBox_6.text())
 		longText = self.lineEdit_4.text()
 		shortText = self.lineEdit_5.text()
-		return sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate
+		planCostRate = float(self.doubleSpinBox_7.text())
+		significantDigits = int(self.spinBox_5.text())
+		return planCostRate, significantDigits, sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate
 
 	def sapOperate(self):
 		logMsg = {}
@@ -235,7 +237,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 			flag = 1
-			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
+			planCostRate, significantDigits, sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			# sapNo = self.lineEdit.text()
 			# projectNo = self.lineEdit_2.text()
 			# materialCode = self.comboBox_4.currentText()
@@ -275,41 +277,41 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					chmRe = format(revenue * 0.5, '.2f')
 					phyRe = format(revenue * 0.5, '.2f')
 					# plan cost总算法
-					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
-					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
+					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
+					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 					
-					chmCsCostAccounting = format((planCost * 0.5 - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					chmLabCostAccounting = format((planCost * 0.5 - cost) * 0.3 / labHourlyRate, '.2f')
-					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.2f')
+					chmCsCostAccounting = format((planCost * 0.5 - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
+					chmLabCostAccounting = format((planCost * 0.5 - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
+					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 				elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
 					chmCost = format((revenueForCny - cost) * 0.3 * 0.8, '.2f')
 					phyCost = format((revenueForCny - cost) * 0.3 * 0.2, '.2f')
 					chmRe = format(revenue * 0.8, '.2f')
 					phyRe = format(revenue * 0.2, '.2f')
 					# plan cost总算法
-					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.2f')
-					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
+					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
+					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
+					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 					
-					chmCsCostAccounting = format((planCost * 0.8 - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					chmLabCostAccounting = format((planCost * 0.8 - cost) * 0.3 / labHourlyRate, '.2f')
-					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.2f')
+					chmCsCostAccounting = format((planCost * 0.8 - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
+					chmLabCostAccounting = format((planCost * 0.8 - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
+					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 				else:
 					chmCost = format((revenueForCny - cost) * 0.3, '.2f')
 					phyCost = format((revenueForCny - cost) * 0.3, '.2f')
 					chmRe = format(revenue, '.2f')
 					phyRe = format(revenue, '.2f')
 					# plan cost总算法
-					# csCostAccounting = format(planCost * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					# labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.2f')
+					# csCostAccounting = format(planCost * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
+					# labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 					
-					csCostAccounting = format((planCost - cost) * (1 - 0.3 - 0.1) / csHourlyRate, '.2f')
-					labCostAccounting = format((planCost - cost) * 0.3 / labHourlyRate, '.2f')
+					csCostAccounting = format((planCost - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
+					labCostAccounting = format((planCost - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
 
 				# 	用未税金额算销售，SAP和ODM会有差别
 				# if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
@@ -921,7 +923,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			return logMsg
 
 		except Exception as msg:
-			sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
+			planCostRate, significantDigits ,sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
 			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
 			self.textBrowser.append('错误信息：%s' % msg)
 			logMsg['Remark'] += '错误信息：%s' % msg
