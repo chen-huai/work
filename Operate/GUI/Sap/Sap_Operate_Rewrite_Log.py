@@ -188,24 +188,25 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.doubleSpinBox_4.setValue(amount*1.06)
 
 	def getGuiData(self):
-		sapNo = self.lineEdit.text()
-		projectNo = self.lineEdit_2.text()
-		materialCode = self.comboBox_4.currentText()
-		currencyType = self.comboBox.currentText()
-		exchangeRate = float(self.doubleSpinBox.text())
-		globalPartnerCode = self.lineEdit_3.text()
-		csName = self.comboBox_2.currentText()
-		salesName = self.comboBox_3.currentText()
-		amount = float(self.doubleSpinBox_2.text())
-		cost = float(self.doubleSpinBox_3.text())
-		amountVat = float(self.doubleSpinBox_4.text())
-		csHourlyRate = float(self.doubleSpinBox_5.text())
-		labHourlyRate = float(self.doubleSpinBox_6.text())
-		longText = self.lineEdit_4.text()
-		shortText = self.lineEdit_5.text()
-		planCostRate = float(self.doubleSpinBox_7.text())
-		significantDigits = int(self.spinBox_5.text())
-		return planCostRate, significantDigits, sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate
+		guiData = {}
+		guiData['sapNo'] = self.lineEdit.text()
+		guiData['projectNo'] = self.lineEdit_2.text()
+		guiData['materialCode'] = self.comboBox_4.currentText()
+		guiData['currencyType'] = self.comboBox.currentText()
+		guiData['exchangeRate'] = float(self.doubleSpinBox.text())
+		guiData['globalPartnerCode'] = self.lineEdit_3.text()
+		guiData['csName'] = self.comboBox_2.currentText()
+		guiData['salesName'] = self.comboBox_3.currentText()
+		guiData['amount'] = float(self.doubleSpinBox_2.text())
+		guiData['cost'] = float(self.doubleSpinBox_3.text())
+		guiData['amountVat'] = float(self.doubleSpinBox_4.text())
+		guiData['csHourlyRate'] = float(self.doubleSpinBox_5.text())
+		guiData['labHourlyRate'] = float(self.doubleSpinBox_6.text())
+		guiData['longText'] = self.lineEdit_4.text()
+		guiData['shortText'] = self.lineEdit_5.text()
+		guiData['planCostRate'] = float(self.doubleSpinBox_7.text())
+		guiData['significantDigits'] = int(self.spinBox_5.text())
+		return guiData
 
 	def sapOperate(self):
 		logMsg = {}
@@ -237,27 +238,27 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
 			flag = 1
-			planCostRate, significantDigits, sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
-			# sapNo = self.lineEdit.text()
-			# projectNo = self.lineEdit_2.text()
-			# materialCode = self.comboBox_4.currentText()
-			# currencyType = self.comboBox.currentText()
-			# exchangeRate = float(self.doubleSpinBox.text())
-			# globalPartnerCode = self.lineEdit_3.text()
-			# csName = self.comboBox_2.currentText()
-			if csName != '':
-				csCode = configContent[csName]
-			# salesName = self.comboBox_3.currentText()
-			if salesName != '':
-				salesCode = configContent[salesName]
+			guiData= MyMainWindow.getGuiData(self)
+			# guiData['sapNo'] = self.lineEdit.text()
+			# guiData['projectNo'] = self.lineEdit_2.text()
+			# guiData['materialCode'] = self.comboBox_4.currentText()
+			# guiData['currencyType'] = self.comboBox.currentText()
+			# guiData['exchangeRate'] = float(self.doubleSpinBox.text())
+			# guiData['globalPartnerCode'] = self.lineEdit_3.text()
+			# guiData['csName'] = self.comboBox_2.currentText()
+			if guiData['csName'] != '':
+				csCode = configContent[guiData['csName']]
+			# guiData['salesName'] = self.comboBox_3.currentText()
+			if guiData['salesName'] != '':
+				salesCode = configContent[guiData['salesName']]
 			orderNo = ''
 			proformaNo = ''
-			# amount = float(self.doubleSpinBox_2.text())
-			# cost = float(self.doubleSpinBox_3.text())
-			# amountVat = float(self.doubleSpinBox_4.text())
-			# longText = self.lineEdit_4.text()
-			# shortText = self.lineEdit_5.text()
-			if sapNo == '' or projectNo == '' or materialCode == '' or currencyType == '' or exchangeRate == '' or globalPartnerCode == '' or csName == '' or amount == 0.00 or amountVat == 0.00:
+			# guiData['amount'] = float(self.doubleSpinBox_2.text())
+			# guiData['cost'] = float(self.doubleSpinBox_3.text())
+			# guiData['amountVat'] = float(self.doubleSpinBox_4.text())
+			# guiData['longText'] = self.lineEdit_4.text()
+			# guiData['shortText'] = self.lineEdit_5.text()
+			if guiData['sapNo'] == '' or guiData['projectNo'] == '' or guiData['materialCode'] == '' or guiData['currencyType'] == '' or guiData['exchangeRate'] == '' or guiData['globalPartnerCode'] == '' or guiData['csName'] == '' or guiData['amount'] == 0.00 or guiData['amountVat'] == 0.00:
 				self.textBrowser.append("有关键信息未填")
 				logMsg['Remark'] = '有关键信息未填'
 				self.textBrowser.append("'Project No.', 'CS', 'Sales', 'Currency', 'GPC Glo. Par. Code', 'Material Code','SAP No.', 'Amount', 'Amount with VAT', 'Exchange Rate'都是必须填写的")
@@ -266,92 +267,92 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				QMessageBox.information(self, "提示信息", "有关键信息未填", QMessageBox.Yes)
 
 			else:
-				revenue = amountVat / 1.06
+				revenue = guiData['amountVat'] / 1.06
 				# plan cost
-				# planCost = revenue * exchangeRate * 0.9 - cost
-				planCost = revenue * exchangeRate
-				revenueForCny = revenue * exchangeRate
-				if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
-					chmCost = format((revenueForCny - cost) * 0.3 * 0.5, '.2f')
-					phyCost = format((revenueForCny - cost) * 0.3 * 0.5, '.2f')
+				# planCost = revenue * guiData['exchangeRate'] * 0.9 - guiData['cost']
+				planCost = revenue * guiData['exchangeRate']
+				revenueForCny = revenue * guiData['exchangeRate']
+				if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode'])):
+					chmCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.5, '.2f')
+					phyCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.5, '.2f')
 					chmRe = format(revenue * 0.5, '.2f')
 					phyRe = format(revenue * 0.5, '.2f')
 					# plan cost总算法
-					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
-					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
-					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
-					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
 					
-					chmCsCostAccounting = format((planCost * 0.5 - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
-					chmLabCostAccounting = format((planCost * 0.5 - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
-					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
-					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
-				elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
-					chmCost = format((revenueForCny - cost) * 0.3 * 0.8, '.2f')
-					phyCost = format((revenueForCny - cost) * 0.3 * 0.2, '.2f')
+					chmCsCostAccounting = format((planCost * 0.5 - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					chmLabCostAccounting = format((planCost * 0.5 - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+				elif ('441' in guiData['materialCode']) and (("A2" in guiData['materialCode'] or ("D2" in guiData['materialCode']))):
+					chmCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.8, '.2f')
+					phyCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.2, '.2f')
 					chmRe = format(revenue * 0.8, '.2f')
 					phyRe = format(revenue * 0.2, '.2f')
 					# plan cost总算法
-					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
-					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
-					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
-					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
 					
-					chmCsCostAccounting = format((planCost * 0.8 - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
-					chmLabCostAccounting = format((planCost * 0.8 - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
-					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
-					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					chmCsCostAccounting = format((planCost * 0.8 - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					chmLabCostAccounting = format((planCost * 0.8 - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
 				else:
-					chmCost = format((revenueForCny - cost) * 0.3, '.2f')
-					phyCost = format((revenueForCny - cost) * 0.3, '.2f')
+					chmCost = format((revenueForCny - guiData['cost']) * 0.3, '.2f')
+					phyCost = format((revenueForCny - guiData['cost']) * 0.3, '.2f')
 					chmRe = format(revenue, '.2f')
 					phyRe = format(revenue, '.2f')
 					# plan cost总算法
-					# csCostAccounting = format(planCost * (1 - 0.3  - (1 - planCostRate )) / csHourlyRate, '.%sf' % significantDigits)
-					# labCostAccounting = format(planCost * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					# csCostAccounting = format(planCost * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# labCostAccounting = format(planCost * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
 					
-					csCostAccounting = format((planCost - cost) * (1 - 0.3 - (1 - planCostRate)) / csHourlyRate, '.%sf' % significantDigits)
-					labCostAccounting = format((planCost - cost) * 0.3 / labHourlyRate, '.%sf' % significantDigits)
+					csCostAccounting = format((planCost - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					labCostAccounting = format((planCost - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
 
 				# 	用未税金额算销售，SAP和ODM会有差别
-				# if ('405' in materialCode) and (("A2" in materialCode) or ("D2" in materialCode)):
-				# 	chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
-				# 	phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.5, '.2f')
-				# 	chmRe = format(amount * 0.5, '.2f')
-				# 	phyRe = format(amount * 0.5, '.2f')
+				# if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode'])):
+				# 	chmCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3 * 0.5, '.2f')
+				# 	phyCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3 * 0.5, '.2f')
+				# 	chmRe = format(guiData['amount'] * 0.5, '.2f')
+				# 	phyRe = format(guiData['amount'] * 0.5, '.2f')
 				#
-				# elif ('441' in materialCode) and (("A2" in materialCode or ("D2" in materialCode))):
-				# 	chmCost = format((amount * exchangeRate - cost) * 0.3 * 0.8, '.2f')
-				# 	phyCost = format((amount * exchangeRate - cost) * 0.3 * 0.2, '.2f')
-				# 	chmRe = format(amount * 0.8, '.2f')
-				# 	phyRe = format(amount * 0.2, '.2f')
+				# elif ('441' in guiData['materialCode']) and (("A2" in guiData['materialCode'] or ("D2" in guiData['materialCode']))):
+				# 	chmCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3 * 0.8, '.2f')
+				# 	phyCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3 * 0.2, '.2f')
+				# 	chmRe = format(guiData['amount'] * 0.8, '.2f')
+				# 	phyRe = format(guiData['amount'] * 0.2, '.2f')
 				# else:
-				# 	chmCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
-				# 	phyCost = format((amount * exchangeRate - cost) * 0.3, '.2f')
-				# 	chmRe = amount
-				# 	phyRe = amount
+				# 	chmCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3, '.2f')
+				# 	phyCost = format((guiData['amount'] * guiData['exchangeRate'] - guiData['cost']) * 0.3, '.2f')
+				# 	chmRe = guiData['amount']
+				# 	phyRe = guiData['amount']
 
 
 
 				messageFlag = 1
 				if self.checkBox_5.isChecked():
-					if salesName == '':
+					if guiData['salesName'] == '':
 						reply = QMessageBox.question(self, '信息', 'Sales未填，是否继续', QMessageBox.Yes | QMessageBox.No,
 													 QMessageBox.Yes)
 						if reply == QMessageBox.Yes:
 							messageFlag = 1
 						else:
 							messageFlag = 2
-				if salesName != '' or messageFlag == 1:
-					self.textBrowser.append("Sap No.:%s" % sapNo)
-					self.textBrowser.append("Project No.:%s" % projectNo)
-					self.textBrowser.append("Material Code:%s" % materialCode)
-					self.textBrowser.append("Global Partner Code:%s" % globalPartnerCode)
-					self.textBrowser.append("CS Name:%s" % csName)
-					self.textBrowser.append("Sales Name:%s" % salesName)
-					self.textBrowser.append("Amount:%s" % amount)
-					self.textBrowser.append("Cost:%s" % cost)
-					self.textBrowser.append("Currency Type:%s" % currencyType)
+				if guiData['salesName'] != '' or messageFlag == 1:
+					self.textBrowser.append("Sap No.:%s" % guiData['sapNo'])
+					self.textBrowser.append("Project No.:%s" % guiData['projectNo'])
+					self.textBrowser.append("Material Code:%s" % guiData['materialCode'])
+					self.textBrowser.append("Global Partner Code:%s" % guiData['globalPartnerCode'])
+					self.textBrowser.append("CS Name:%s" % guiData['csName'])
+					self.textBrowser.append("Sales Name:%s" % guiData['salesName'])
+					self.textBrowser.append("Amount:%s" % guiData['amount'])
+					self.textBrowser.append("Cost:%s" % guiData['cost'])
+					self.textBrowser.append("Currency Type:%s" % guiData['currencyType'])
 					self.textBrowser.append("CHM Cost:%s" % chmCost)
 					self.textBrowser.append("PHY Cost:%s" % phyCost)
 					self.textBrowser.append("CHM Amount:%s" % chmRe)
@@ -375,12 +376,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]/usr/ctxtVBAK-VKGRP").text = salesGroup
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById(
-							"wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/subPART-SUB:SAPMV45A:4701/ctxtKUAGV-KUNNR").text = sapNo
+							"wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/subPART-SUB:SAPMV45A:4701/ctxtKUAGV-KUNNR").text = guiData['sapNo']
 						session.findById(
 							"wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/subPART-SUB:SAPMV45A:4701/ctxtKUAGV-KUNNR").caretPosition = 6
 						session.findById("wnd[0]").sendVKey(0)
 						session.findById("wnd[0]").sendVKey(0)
-						session.findById("wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/txtVBKD-BSTKD").text = projectNo
+						session.findById("wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/txtVBKD-BSTKD").text = guiData['projectNo']
 						session.findById("wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/ctxtVBKD-BSTDK").text = today
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/ctxtVBKD-FBUDA").text = today
@@ -390,7 +391,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[1]/tbar[0]/btn[0]").press()
 						session.findById("wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/btnBT_HEAD").press()
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").text = currencyType
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").text = guiData['currencyType']
 
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBAK-WAERK").setFocus()
@@ -403,9 +404,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							pass
 						else:
 							pass
-						if currencyType != "CNY":
+						if guiData['currencyType'] != "CNY":
 							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = exchangeRate
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").text = guiData['exchangeRate']
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4301/ctxtVBKD-KURSK").setFocus()
 							session.findById(
@@ -420,7 +421,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]").sendVKey(0)
 						# 合作伙伴
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09").select()
-						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").text = globalPartnerCode
+						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").text = guiData['globalPartnerCode']
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").setFocus()
 						session.findById(
@@ -439,7 +440,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[1]/tbar[0]/btn[0]").press()
 						session.findById("wnd[1]/tbar[0]/btn[0]").press()
 						session.findById("wnd[0]").sendVKey(0)
-						if salesName != '':
+						if guiData['salesName'] != '':
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,7]").key = "VE"
 							session.findById(
@@ -452,7 +453,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						# 文本
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10").select()
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = shortText
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = guiData['shortText']
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 							11, 11)
@@ -463,7 +464,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]").sendVKey(0)
 						# DATA A
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13").select()
-						if 'D2' in materialCode:
+						if 'D2' in guiData['materialCode']:
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "E1"
 						else:
@@ -482,7 +483,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/txtZAUFTD-AUFTRAGSWERT").text = format(revenueForCny, '.2f')
 						# 是否要添加cost 
 						if self.checkBox_7.isChecked():
-							if 'A2' in materialCode or 'D2' in materialCode:
+							if 'A2' in guiData['materialCode'] or 'D2' in guiData['materialCode']:
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
@@ -495,7 +496,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,0]").text = chmCost
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AKOSTENSAETZE/txtTABD-FESTPREIS[5,1]").text = phyCost
-							elif 'T20' in materialCode:
+							elif 'T20' in guiData['materialCode']:
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = phyCostCenter
 								session.findById(
@@ -561,8 +562,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							app.processEvents()
 							logMsg['orderNo'] = orderNo
 							session.findById("wnd[0]").sendVKey(0)
-							if 'A2' in materialCode:
-								if '405' in materialCode:
+							if 'A2' in guiData['materialCode']:
+								if '405' in guiData['materialCode']:
 									session.findById(
 										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = "T75-405-00"
 									session.findById(
@@ -714,7 +715,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 										session.findById("wnd[0]").sendVKey(0)
-										if cost > 0:
+										if guiData['cost'] > 0:
 											if self.checkBox_14.isChecked():
 												n = 2
 											else:
@@ -725,7 +726,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,%s]" % n).text = csCostCenter
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,%s]" % n).text = "FREMDL"
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(guiData['cost'] / 1.06, '.2f')
 											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).setFocus()
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).caretPosition = 20
@@ -737,7 +738,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										# session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 							else:
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = materialCode
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").text = guiData['materialCode']
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/txtVBAP-ZMENG[2,0]").text = "1"
 								session.findById(
@@ -796,7 +797,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,1]").caretPosition = 20
 
-										if 'T75' in materialCode:
+										if 'T75' in guiData['materialCode']:
 											if self.checkBox_14.isChecked():
 												session.findById(
 													"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = chmCostCenter
@@ -805,7 +806,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 												session.findById(
 													"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,1]").text = phyCostCenter
 
-										if cost > 0:
+										if guiData['cost'] > 0:
 											if self.checkBox_14.isChecked() or self.checkBox_15.isChecked():
 												n = 2
 											else:
@@ -817,7 +818,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,%s]" % n).text = "FREMDL"
 
-											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(cost / 1.06, '.2f')
+											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(guiData['cost'] / 1.06, '.2f')
 											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).setFocus()
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).caretPosition = 20
@@ -828,7 +829,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 										session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 
-							if longText != '':
+							if guiData['longText'] != '':
 								if self.checkBox_8.isChecked() or revenueForCny >= 35000:
 									session.findById(
 										"wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4415/subSUBSCREEN_TC:SAPMV45A:4902/tblSAPMV45ATCTRL_U_ERF_GUTLAST/ctxtRV45A-MABNR[1,0]").setFocus()
@@ -838,7 +839,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 								session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09").select()
 								session.findById(
-									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = longText
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").text = guiData['longText']
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4152/subSUBSCREEN_TEXT:SAPLV70T:2100/cntlSPLITTER_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell").setSelectionIndexes(
 									4, 4)
@@ -852,7 +853,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								pass
 							else:
 								session.findById("wnd[0]/tbar[0]/btn[3]").press()
-							amountVatStr = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", format(amountVat,'.2f'))
+							amountVatStr = re.sub(r"(\d)(?=(\d\d\d)+(?!\d))", r"\1,", format(guiData['amountVat'],'.2f'))
 							self.textBrowser.append("Sap Amount Vat:%s" % sapAmountVat)
 							self.textBrowser.append("Amount Vat:%s" % amountVatStr)
 							app.processEvents()
@@ -923,12 +924,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			return logMsg
 
 		except Exception as msg:
-			planCostRate, significantDigits ,sapNo, projectNo, materialCode, currencyType, exchangeRate, globalPartnerCode, csName, salesName, amount, cost, amountVat, longText, shortText, csHourlyRate, labHourlyRate= MyMainWindow.getGuiData(self)
-			self.textBrowser.append('这单%s的数据或者SAP有问题' % projectNo)
+			guiData = MyMainWindow.getGuiData(self)
+			self.textBrowser.append('这单%s的数据或者SAP有问题' % guiData['projectNo'])
 			self.textBrowser.append('错误信息：%s' % msg)
 			logMsg['Remark'] += '错误信息：%s' % msg
 			self.textBrowser.append('----------------------------------')
-			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % projectNo, QMessageBox.Yes)
+			QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % guiData['projectNo'], QMessageBox.Yes)
 			return logMsg
 			# print(sys.exc_info()[0])
 
@@ -1099,7 +1100,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					# 写log
 					logIndex = logFile[(logFile['Project No.'] == fileDataList['Project No.'][n])].index.tolist()[0]
 					logFile.loc[logIndex, 'Order No.'] = logMsg['orderNo']
-					logFile.loc[logIndex, 'Remart'] = logMsg['Remark']
+					logFile.loc[logIndex, 'Remark'] = logMsg['Remark']
 					logFile.loc[logIndex, 'Proforma No.'] = logMsg['Proforma No.']
 					nowDate = datetime.datetime.today()
 					logFile.loc[logIndex, 'Update Time'] = nowDate
@@ -1376,7 +1377,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 	app.processEvents()
 		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
-
+	def pdfNameRule(self):
+		pass
 
 if __name__ == "__main__":
 	import sys
