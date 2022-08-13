@@ -206,6 +206,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		guiData['shortText'] = self.lineEdit_5.text()
 		guiData['planCostRate'] = float(self.doubleSpinBox_7.text())
 		guiData['significantDigits'] = int(self.spinBox_5.text())
+		guiData['invoiceStsrtNum'] = int(self.spinBox.text())
+		guiData['invoiceBits'] = int(self.spinBox_2.text())
+		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
+		guiData['orderBits'] = int(self.spinBox_4.text())
 		return guiData
 
 	def sapOperate(self):
@@ -1377,8 +1381,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 	app.processEvents()
 		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
-	def pdfNameRule(self):
-		pass
+	def pdfNameRule(self, msg):
+		guiData = MyMainWindow.getGuiData()
+		guiData['invoiceStsrtNum'] = int(self.spinBox.text())
+		guiData['invoiceBits'] = int(self.spinBox_2.text())
+		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
+		guiData['orderBits'] = int(self.spinBox_4.text())
+		pdfName = self.lineEdit_17.text()
+		if pdfName != '':
+			pdfName += ' + '
+		pdfName += msg
+		return pdfName
+
 
 if __name__ == "__main__":
 	import sys
