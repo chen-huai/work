@@ -1,16 +1,27 @@
+#-*- coding: utf-8 -*-
 from io import StringIO
+from io import open
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfinterp import PDFResourceManager
+# from pdfminer.pdfinterp import process_pdf
 import os
 import re
-import pdfplumber
-# from arc4 import ARC4
 
 def readPdf(inputFile):
-    text = []
-    with pdfplumber.open(inputFile) as pdf:
-        for page in pdf.pages:
-            text += page.extract_text().split("\n")  # 提取文本
-            print(text)
-    return text
+    # resource manager
+    rsrcmgr = PDFResourceManager()
+    retstr = StringIO()
+    laparams = LAParams()
+    # device
+    device = TextConverter(rsrcmgr, retstr, laparams=laparams)
+    process_pdf(rsrcmgr, device, inputFile)
+    device.close()
+    content = retstr.getvalue()
+    retstr.close()
+    # 获取所有行
+    lines = str(content).split("\n")
+    return lines
 
 def saveAs(inputFile,outputFile):
     with open(inputFile, 'rb') as fp1:
@@ -51,15 +62,13 @@ if __name__ == '__main__':
                 print(fileCon)
                 fileNum = 0
                 for fileCon[fileNum] in fileCon:
-                    # if re.match('.*P. R. China', fileCon[fileNum]):
-                    #     if fileCon[fileNum+2] == 'Invoice ':
-                    #         print(fileCon[fileNum], fileCon[fileNum + 4], 11)
-                    #         msg['Company Name'] = fileCon[fileNum + 4]
-                    #     else:
-                    #         print(fileCon[fileNum],fileCon[fileNum+2],11)
-                    #         msg['Company Name'] = fileCon[fileNum + 2]
-                    if re.match('.*Invoice No.', fileCon[fileNum]):
-                        msg['Company Name'] = fileCon[fileNum].replace('Invoice No.', '')
+                    if re.match('.*P. R. China', fileCon[fileNum]):
+                        if fileCon[fileNum+2] == 'Invoice ':
+                            print(fileCon[fileNum], fileCon[fileNum + 4], 11)
+                            msg['Company Name'] = fileCon[fileNum + 4]
+                        else:
+                            print(fileCon[fileNum],fileCon[fileNum+2],11)
+                            msg['Company Name'] = fileCon[fileNum + 2]
                     elif re.match('%s\d{8}'%invoiceNoStar, fileCon[fileNum]):
                         print(fileCon[fileNum], 22)
                         msg['Invoice No'] = fileCon[fileNum]
