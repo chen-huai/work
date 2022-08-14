@@ -35,6 +35,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
 		# self.pushButton_12.clicked.connect(self.lineEdit.clear)
+		self.checkBox_9.toggled.connect(lambda: self.pdfNameRule('Invoice No'))
+		self.checkBox_10.toggled.connect(lambda: self.pdfNameRule('Company Name'))
+		self.checkBox_12.toggled.connect(lambda: self.pdfNameRule('Order No'))
+		self.checkBox_11.toggled.connect(lambda: self.pdfNameRule('Project No'))
 
 	def getConfig(self):
 		# 初始化，获取或生成配置文件
@@ -210,6 +214,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		guiData['invoiceBits'] = int(self.spinBox_2.text())
 		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
 		guiData['orderBits'] = int(self.spinBox_4.text())
+		guiData['pdfName'] = self.lineEdit_17.text()
 		return guiData
 
 	def sapOperate(self):
@@ -1382,16 +1387,23 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def pdfNameRule(self, msg):
-		guiData = MyMainWindow.getGuiData()
-		guiData['invoiceStsrtNum'] = int(self.spinBox.text())
-		guiData['invoiceBits'] = int(self.spinBox_2.text())
-		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
-		guiData['orderBits'] = int(self.spinBox_4.text())
-		pdfName = self.lineEdit_17.text()
-		if pdfName != '':
-			pdfName += ' + '
-		pdfName += msg
-		return pdfName
+		guiData = MyMainWindow.getGuiData(self)
+		pdfName = guiData['pdfName']
+		pdfNameList = pdfName.split(' + ')
+		changedPdfName = ''
+		if msg in pdfNameList:
+			pdfNameList.remove(msg)
+			for each in pdfNameList:
+				if changedPdfName != '':
+					changedPdfName += ' + '
+				changedPdfName += each
+		else:
+			changedPdfName += pdfName
+			if changedPdfName != '':
+				changedPdfName += ' + '
+			changedPdfName += msg
+		self.lineEdit_17.setText(changedPdfName)
+		return changedPdfName
 
 
 if __name__ == "__main__":

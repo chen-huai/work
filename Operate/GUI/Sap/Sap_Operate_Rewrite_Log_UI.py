@@ -320,7 +320,7 @@ class Ui_MainWindow(object):
         self.toolBox.setSizePolicy(sizePolicy)
         self.toolBox.setObjectName("toolBox")
         self.page_3 = QtWidgets.QWidget()
-        self.page_3.setGeometry(QtCore.QRect(0, 0, 441, 494))
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 388, 486))
         self.page_3.setObjectName("page_3")
         self.gridLayout_16 = QtWidgets.QGridLayout(self.page_3)
         self.gridLayout_16.setObjectName("gridLayout_16")
@@ -497,7 +497,7 @@ class Ui_MainWindow(object):
         self.gridLayout_16.addWidget(self.groupBox_8, 1, 0, 1, 1)
         self.toolBox.addItem(self.page_3, "")
         self.page_4 = QtWidgets.QWidget()
-        self.page_4.setGeometry(QtCore.QRect(0, 0, 441, 494))
+        self.page_4.setGeometry(QtCore.QRect(0, 0, 380, 503))
         self.page_4.setObjectName("page_4")
         self.gridLayout = QtWidgets.QGridLayout(self.page_4)
         self.gridLayout.setObjectName("gridLayout")
@@ -964,7 +964,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.toolBox.setCurrentIndex(1)
+        self.toolBox.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
