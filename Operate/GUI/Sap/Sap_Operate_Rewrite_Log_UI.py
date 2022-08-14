@@ -1080,6 +1080,7 @@ class Ui_MainWindow(object):
         self.pushButton_37.setText(_translate("MainWindow", "Start Number"))
         self.checkBox_10.setText(_translate("MainWindow", "Company Name"))
         self.checkBox_11.setText(_translate("MainWindow", "Project No"))
+        self.lineEdit_17.setText(_translate("MainWindow", "Invoice No + Company Name"))
         self.groupBox_12.setTitle(_translate("MainWindow", "Operate"))
         self.pushButton_33.setText(_translate("MainWindow", "Select Files"))
         self.pushButton_34.setText(_translate("MainWindow", "Clear"))

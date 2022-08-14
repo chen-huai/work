@@ -875,8 +875,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>302</width>
-             <height>389</height>
+             <width>380</width>
+             <height>503</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1613,6 +1613,9 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Invoice No + Company Name</string>
              </property>
             </widget>
            </item>
