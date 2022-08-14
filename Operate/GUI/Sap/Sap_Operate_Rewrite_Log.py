@@ -29,6 +29,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_19.clicked.connect(self.odmCombineData)
 		self.pushButton_25.clicked.connect(self.orderMergeProject)
 		self.pushButton_36.clicked.connect(self.splitOdmData)
+		self.pushButton_34.clicked.connect(self.textBrowser_3.clear)
 		self.lineEdit_15.textChanged.connect(self.lineEditChange)
 		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
@@ -93,7 +94,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 		MyMainWindow.getConfigContent(self)
 		MyMainWindow.csItem(self)
 		MyMainWindow.salesItem(self)
-		MyMainWindow.hourlyRate(self)
+		MyMainWindow.getDefaultInformation(self)
 		MyMainWindow.getInvoiceMsg(self)
 
 		try:
@@ -116,12 +117,43 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['销售组织', '0486', '根据Site自定义'],
 			# ['分销渠道', '01', '根据Site自定义'],
 			# ['销售办事处', '>601', '根据Site自定义'],
-			# ['销售组', '240', '根据Site自定义'],
+			# ['销售组', '240', '根据Site自定义'],、
+			['特殊开票', '内容', '备注'],
 			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
 			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票文件名称'],
+			['SAP登入信息', '内容', '备注'],
+			['Login_msg', 'DR-0486-01->601-240', '订单类型-销售组织-分销渠道-销售办事处-销售组'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
 			['Hourly Rate(Lab)', 342, '每年更新'],
+			['成本中心', '编号', '备注'],
+			['CS_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['PHY_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['CHM_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['CS_Cost_Center', '48601240', 'CS成本中心'],
+			['CHM_Cost_Center', '48601293', 'CHM成本中心'],
+			['PHY_Cost_Center', '48601294', 'PHY成本中心'],
+			['计划成本', '数值', '备注'],
+			['Plan_Costc_Parameter', 0.9, '实际的90%'],
+			['Significant_Digits', 0, '保留几位有效数值'],
+			['SAP操作', '内容', '备注'],
+			['NVA01_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['NVA02_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['NVF01_Selected', 0, '是否默认被选中,1选中，0未选中'],
+			['NVF03_Selected', 0, '是否默认被选中,1选中，0未选中'],
+			['DataB_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['Plan_Cost_Selected', 25, '每月超过几号自动选中（不包含）'],
+			['Save_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['管理操作', '内容', '备注'],
+			['Invoice_No_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['Invoice_Start_Num', 4, 'Invoice的起始数字'],
+			['Invoice_Num', 10, 'Invoice的总位数'],
+			['Company_Name_Selected', 1, '是否默认被选中,1选中，0未选中'],
+			['Order_No_Selected', 0, '是否默认被选中,1选中，0未选中'],
+			['Order_Start_Num', 7, 'Order的起始数字'],
+			['Order_Num', 10, 'Order的总位数'],
+			['Project_No_Selected', 0, '是否默认被选中,1选中，0未选中'],
+			['PDF_Name', 'Invoice No + Company Name', 'PDF文件名称默认规则'],
 			['名称', '编号', '角色'],
 			['chen, frank', '6375108', 'CS'],
 			['chen, frank', '6375108', 'Sales'],
@@ -150,9 +182,47 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		else:
 			QMessageBox.information(self, "提示信息", "没有重新导入配置文件，将按照原有的配置文件操作", QMessageBox.Yes)
 
-	def hourlyRate(self):
+	def getDefaultInformation(self):
+		# 默认登录界面信息
+		loginMsgList = configContent['Login_msg'].split('-')
+		self.lineEdit_10.setText(loginMsgList[0])
+		self.lineEdit_11.setText(loginMsgList[1])
+		self.lineEdit_12.setText(loginMsgList[2])
+		self.lineEdit_13.setText(loginMsgList[3])
+		self.lineEdit_14.setText(loginMsgList[4])
+		# 每小时成本
 		self.doubleSpinBox_5.setValue(float(format(float(configContent['Hourly Rate(PC)']), '.2f')))
 		self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(Lab)']), '.2f')))
+		# 成本中心
+		self.checkBox_13.setChecked(int(configContent['CS_Selected']))
+		self.checkBox_14.setChecked(int(configContent['CHM_Selected']))
+		self.checkBox_15.setChecked(int(configContent['PHY_Selected']))
+		self.lineEdit_18.setText(configContent['CS_Cost_Center'])
+		self.lineEdit_19.setText(configContent['CHM_Cost_Center'])
+		self.lineEdit_20.setText(configContent['PHY_Cost_Center'])
+		# 计划成本
+		self.doubleSpinBox_7.setValue(float(format(float(configContent['Plan_Costc_Parameter']), '.2f')))
+		self.spinBox_5.setValue(int(configContent['Significant_Digits']))
+		# SAP操作
+		self.checkBox.setChecked(int(configContent['NVA01_Selected']))
+		self.checkBox_2.setChecked(int(configContent['NVA02_Selected']))
+		self.checkBox_3.setChecked(int(configContent['NVF01_Selected']))
+		self.checkBox_4.setChecked(int(configContent['NVF03_Selected']))
+		self.checkBox_7.setChecked(int(configContent['DataB_Selected']))
+		self.checkBox_6.setChecked(int(configContent['Save_Selected']))
+		if int(configContent['Plan_Cost_Selected']) < int(today.split('.')[-1]):
+			self.checkBox_8.setChecked(True)
+		# admin操作
+		self.checkBox_9.setChecked(int(configContent['Invoice_No_Selected']))
+		self.spinBox.setValue(int(configContent['Invoice_Start_Num']))
+		self.spinBox_2.setValue(int(configContent['Invoice_Num']))
+		self.checkBox_10.setChecked(int(configContent['Company_Name_Selected']))
+		self.checkBox_12.setChecked(int(configContent['Order_No_Selected']))
+		self.spinBox_3.setValue(int(configContent['Order_Start_Num']))
+		self.spinBox_4.setValue(int(configContent['Order_Num']))
+		self.checkBox_11.setChecked(int(configContent['Project_No_Selected']))
+		self.lineEdit.setText(configContent['PDF_Name'])
+
 
 	def csItem(self):
 		self.comboBox_2.clear()
@@ -216,6 +286,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		guiData['orderBits'] = int(self.spinBox_4.text())
 		guiData['pdfName'] = self.lineEdit_17.text()
 		return guiData
+	def getAdminGuiData(self):
+		guiAdminData = {}
+		guiAdminData['invoiceStsrtNum'] = int(self.spinBox.text())
+		guiAdminData['invoiceBits'] = int(self.spinBox_2.text())
+		guiAdminData['orderStsrtNum'] = int(self.spinBox_3.text())
+		guiAdminData['orderBits'] = int(self.spinBox_4.text())
+		guiAdminData['pdfName'] = self.lineEdit_17.text()
+		return guiAdminData
 
 	def sapOperate(self):
 		logMsg = {}
@@ -1387,7 +1465,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def pdfNameRule(self, msg):
-		guiData = MyMainWindow.getGuiData(self)
+		guiData = MyMainWindow.getAdminGuiData(self)
 		pdfName = guiData['pdfName']
 		pdfNameList = pdfName.split(' + ')
 		changedPdfName = ''
