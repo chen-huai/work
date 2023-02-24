@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 from Sap_Operate_Rewrite_Log_UI import *
 from Get_Data import *
 from File_Operate import *
+from PDF_Operate import *
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
@@ -30,6 +31,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.pushButton_25.clicked.connect(self.orderMergeProject)
 		self.pushButton_36.clicked.connect(self.splitOdmData)
 		self.pushButton_34.clicked.connect(self.textBrowser_3.clear)
+		self.pushButton_35.clicked.connect(self.pdfOperate)
+		self.pushButton_33.clicked.connect(self.getFiles)
 		self.lineEdit_15.textChanged.connect(self.lineEditChange)
 		# self.pushButton_17.clicked.connect(self.odmDataToSap1)
 		self.doubleSpinBox_2.valueChanged.connect(self.getAmountVat)
@@ -40,6 +43,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		self.checkBox_10.toggled.connect(lambda: self.pdfNameRule('Company Name'))
 		self.checkBox_12.toggled.connect(lambda: self.pdfNameRule('Order No'))
 		self.checkBox_11.toggled.connect(lambda: self.pdfNameRule('Project No'))
+		self.filesUrl = []
 
 	def getConfig(self):
 		# 初始化，获取或生成配置文件
@@ -98,7 +102,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		MyMainWindow.getInvoiceMsg(self)
 
 		try:
-			self.textBrowser.append("配置获取成功")
+			self.textBrowser_2.append("配置获取成功")
 		except AttributeError:
 			QMessageBox.information(self, "提示信息", "已获取配置文件内容", QMessageBox.Yes)
 		else:
@@ -120,6 +124,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# ['销售组', '240', '根据Site自定义'],、
 			['特殊开票', '内容', '备注'],
 			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
+			['Invoice_File_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM\\2.特殊开票', '特殊开票文件路径'],
 			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票文件名称'],
 			['SAP登入信息', '内容', '备注'],
 			['Login_msg', 'DR-0486-01->601-240', '订单类型-销售组织-分销渠道-销售办事处-销售组'],
@@ -147,13 +152,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['管理操作', '内容', '备注'],
 			['Invoice_No_Selected', 1, '是否默认被选中,1选中，0未选中'],
 			['Invoice_Start_Num', 4, 'Invoice的起始数字'],
-			['Invoice_Num', 10, 'Invoice的总位数'],
+			['Invoice_Num', 9, 'Invoice的总位数'],
 			['Company_Name_Selected', 1, '是否默认被选中,1选中，0未选中'],
 			['Order_No_Selected', 0, '是否默认被选中,1选中，0未选中'],
 			['Order_Start_Num', 7, 'Order的起始数字'],
-			['Order_Num', 10, 'Order的总位数'],
+			['Order_Num', 9, 'Order的总位数'],
 			['Project_No_Selected', 0, '是否默认被选中,1选中，0未选中'],
 			['PDF_Name', 'Invoice No + Company Name', 'PDF文件名称默认规则'],
+			['PDF_Files_Import_URL', desktopUrl, 'PDF文件导入路径'],
+			['PDF_Files_Export_URL', 'N:\\XM Softlines\\1. Project\\3. Finance\\02. WIP', 'PDF文件导出路径'],
 			['名称', '编号', '角色'],
 			['chen, frank', '6375108', 'CS'],
 			['chen, frank', '6375108', 'Sales'],
@@ -161,7 +168,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		config = np.array(configContent)
 		df = pd.DataFrame(config)
 		df.to_csv('%s/config_sap.csv' % configFileUrl, index=0, header=0, encoding='utf_8_sig')
-		self.textBrowser.append("配置文件创建成功")
+		self.textBrowser_2.append("配置文件创建成功")
 		QMessageBox.information(self, "提示信息",
 								"默认配置文件已经创建好，\n如需修改请在用户桌面查找config文件夹中config_sap.csv，\n将相应的文件内容替换成用户需求即可，修改后记得重新导入配置文件。",
 								QMessageBox.Yes)
@@ -184,44 +191,58 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 	def getDefaultInformation(self):
 		# 默认登录界面信息
-		loginMsgList = configContent['Login_msg'].split('-')
-		self.lineEdit_10.setText(loginMsgList[0])
-		self.lineEdit_11.setText(loginMsgList[1])
-		self.lineEdit_12.setText(loginMsgList[2])
-		self.lineEdit_13.setText(loginMsgList[3])
-		self.lineEdit_14.setText(loginMsgList[4])
-		# 每小时成本
-		self.doubleSpinBox_5.setValue(float(format(float(configContent['Hourly Rate(PC)']), '.2f')))
-		self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(Lab)']), '.2f')))
-		# 成本中心
-		self.checkBox_13.setChecked(int(configContent['CS_Selected']))
-		self.checkBox_14.setChecked(int(configContent['CHM_Selected']))
-		self.checkBox_15.setChecked(int(configContent['PHY_Selected']))
-		self.lineEdit_18.setText(configContent['CS_Cost_Center'])
-		self.lineEdit_19.setText(configContent['CHM_Cost_Center'])
-		self.lineEdit_20.setText(configContent['PHY_Cost_Center'])
-		# 计划成本
-		self.doubleSpinBox_7.setValue(float(format(float(configContent['Plan_Costc_Parameter']), '.2f')))
-		self.spinBox_5.setValue(int(configContent['Significant_Digits']))
-		# SAP操作
-		self.checkBox.setChecked(int(configContent['NVA01_Selected']))
-		self.checkBox_2.setChecked(int(configContent['NVA02_Selected']))
-		self.checkBox_3.setChecked(int(configContent['NVF01_Selected']))
-		self.checkBox_4.setChecked(int(configContent['NVF03_Selected']))
-		self.checkBox_7.setChecked(int(configContent['DataB_Selected']))
-		self.checkBox_6.setChecked(int(configContent['Save_Selected']))
-		if int(configContent['Plan_Cost_Selected']) < int(today.split('.')[-1]):
-			self.checkBox_8.setChecked(True)
-		# admin操作
-		self.checkBox_9.setChecked(int(configContent['Invoice_No_Selected']))
-		self.spinBox.setValue(int(configContent['Invoice_Start_Num']))
-		self.spinBox_2.setValue(int(configContent['Invoice_Num']))
-		self.checkBox_10.setChecked(int(configContent['Company_Name_Selected']))
-		self.checkBox_12.setChecked(int(configContent['Order_No_Selected']))
-		self.spinBox_3.setValue(int(configContent['Order_Start_Num']))
-		self.spinBox_4.setValue(int(configContent['Order_Num']))
-		self.checkBox_11.setChecked(int(configContent['Project_No_Selected']))
-		self.lineEdit.setText(configContent['PDF_Name'])
+		try:
+			loginMsgList = configContent['Login_msg'].split('-')
+			self.lineEdit_10.setText(loginMsgList[0])
+			self.lineEdit_11.setText(loginMsgList[1])
+			self.lineEdit_12.setText(loginMsgList[2])
+			self.lineEdit_13.setText(loginMsgList[3])
+			self.lineEdit_14.setText(loginMsgList[4])
+			# 每小时成本
+			self.doubleSpinBox_5.setValue(float(format(float(configContent['Hourly Rate(PC)']), '.2f')))
+			self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(Lab)']), '.2f')))
+			# 成本中心
+			self.checkBox_13.setChecked(int(configContent['CS_Selected']))
+			self.checkBox_14.setChecked(int(configContent['CHM_Selected']))
+			self.checkBox_15.setChecked(int(configContent['PHY_Selected']))
+			self.lineEdit_18.setText(configContent['CS_Cost_Center'])
+			self.lineEdit_19.setText(configContent['CHM_Cost_Center'])
+			self.lineEdit_20.setText(configContent['PHY_Cost_Center'])
+			# 计划成本
+			self.doubleSpinBox_7.setValue(float(format(float(configContent['Plan_Costc_Parameter']), '.2f')))
+			self.spinBox_5.setValue(int(configContent['Significant_Digits']))
+			# SAP操作
+			self.checkBox.setChecked(int(configContent['NVA01_Selected']))
+			self.checkBox_2.setChecked(int(configContent['NVA02_Selected']))
+			self.checkBox_3.setChecked(int(configContent['NVF01_Selected']))
+			self.checkBox_4.setChecked(int(configContent['NVF03_Selected']))
+			self.checkBox_7.setChecked(int(configContent['DataB_Selected']))
+			self.checkBox_6.setChecked(int(configContent['Save_Selected']))
+			if int(configContent['Plan_Cost_Selected']) < int(today.split('.')[-1]):
+				self.checkBox_8.setChecked(True)
+			# admin操作
+			self.checkBox_9.setChecked(int(configContent['Invoice_No_Selected']))
+			self.spinBox.setValue(int(configContent['Invoice_Start_Num']))
+			self.spinBox_2.setValue(int(configContent['Invoice_Num']))
+			self.checkBox_10.setChecked(int(configContent['Company_Name_Selected']))
+			self.checkBox_12.setChecked(int(configContent['Order_No_Selected']))
+			self.spinBox_3.setValue(int(configContent['Order_Start_Num']))
+			self.spinBox_4.setValue(int(configContent['Order_Num']))
+			self.checkBox_11.setChecked(int(configContent['Project_No_Selected']))
+			self.lineEdit_17.setText(configContent['PDF_Name'])
+		except Exception as msg:
+			self.textBrowser_2.append("错误信息：%s" % msg)
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
+			reply = QMessageBox.question(self, '信息', '错误信息：%s。\n是否要重新创建配置文件' % msg, QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				MyMainWindow.createConfigContent(self)
+				self.textBrowser.append("创建并导入配置成功")
+				self.textBrowser_2.append('----------------------------------')
+				app.processEvents()
+
+
+
 
 
 	def csItem(self):
@@ -1243,7 +1264,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			global invoiceGroup
 
 			# invoiceFile = pd.read_csv(r'%s/%s' % (configFileUrl, configContent['Invoice_File_Name']), encoding="utf8")
-			invoiceFile = pd.read_excel('%s/%s' % (configFileUrl, configContent['Invoice_File_Name']))
+			invoiceFile = pd.read_excel('%s/%s' % (configContent['Invoice_File_URL'], configContent['Invoice_File_Name']))
 			invoiceName = list(invoiceFile['Invoice name'])
 			orderMode = list(invoiceFile['开order方式'])
 			invoiceRemarks = list(invoiceFile['开票要求(特殊的外币开票请参考近期的invoice)'])
@@ -1305,7 +1326,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				if eachSpecialData.empty:
 					pass
 				else:
-					invoiceFileName = str(fileNum) + each
+					invoiceFileName = str(fileNum) + '.' + each
 					invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
 					specialFile = eachSpecialData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
 					fileNum += 1
@@ -1399,7 +1420,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 	# 找到project对应的order
 	def orderMergeProject(self):
-		# try:
+		try:
 			combineFileUrl = self.lineEdit_8.text()
 			(combineFilepath, combineFilename) = os.path.split(combineFileUrl)
 			logFileUrl = self.lineEdit_9.text()
@@ -1457,12 +1478,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			else:
 				self.textBrowser_2.append('请重新选择文件')
 				self.textBrowser_2.append('----------------------------------')
-		# except Exception as msg:
-		# 	self.textBrowser_2.append('Order No Merge Project No数据有问题')
-		# 	self.textBrowser_2.append('错误信息：%s' % msg)
-		# 	self.textBrowser_2.append('----------------------------------')
-		# 	app.processEvents()
-		# 	# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
+		except Exception as msg:
+			self.textBrowser_2.append('Order No Merge Project No数据有问题')
+			self.textBrowser_2.append('错误信息：%s' % msg)
+			self.textBrowser_2.append('----------------------------------')
+			app.processEvents()
+			# QMessageBox.information(self, "提示信息", '这份%s的ODM获取数据有问题' % fileData, QMessageBox.Yes)
 
 	def pdfNameRule(self, msg):
 		guiData = MyMainWindow.getAdminGuiData(self)
@@ -1482,6 +1503,83 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			changedPdfName += msg
 		self.lineEdit_17.setText(changedPdfName)
 		return changedPdfName
+
+
+	def getFiles(self):
+		selectBatchFile = QFileDialog.getOpenFileNames(self, '选择文件', '%s' % configContent['PDF_Files_Import_URL'], 'files(*.pdf)')
+		self.filesUrl = selectBatchFile[0]
+		if self.filesUrl != []:
+			self.textBrowser_3.append('选中文件:')
+			self.textBrowser_3.append('\n'.join(self.filesUrl))
+			self.textBrowser_3.append('----------------------------------')
+		else:
+			self.textBrowser_3.append('无选中文件')
+			self.textBrowser_3.append('----------------------------------')
+		app.processEvents()
+		return self.filesUrl
+
+
+	def pdfOperate(self):
+		fileUrls = self.filesUrl
+		flag ='Y'
+		if fileUrls == []:
+			reply = QMessageBox.question(self, '信息', '没有选中文件，是否重新选择文件', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+			if reply == QMessageBox.Yes:
+				fileUrls = MyMainWindow.getFiles(self)
+				if fileUrls == []:
+					flag = 'N'
+			else:
+				QMessageBox.information(self, "提示信息", "没有选中文件，请重新选择文件", QMessageBox.Yes)
+				flag ='N'
+		if flag == 'Y':
+			guiData = MyMainWindow.getAdminGuiData(self)
+			pdfOperate = PDF_Operate
+			self.textBrowser_3.append('导出文件夹：%s' % configContent['PDF_Files_Export_URL'])
+			self.textBrowser_3.append('导出文件名称：')
+			i = 1
+			for fileUrl in fileUrls:
+				try:
+					self.textBrowser_3.append('第%s份文件：' % i)
+					msg = {}
+					with open(fileUrl, 'rb') as pdfFile:
+						fileCon = pdfOperate.readPdf(pdfFile)
+						fileNum = 0
+						for fileCon[fileNum] in fileCon:
+							if re.match('.*Invoice No.', fileCon[fileNum]):
+								msg['Company Name'] = fileCon[fileNum].replace('Invoice No.', '')
+							elif re.match('%s\d{%s}' % (guiData['invoiceStsrtNum'], int(guiData['invoiceBits'])-1), fileCon[fileNum]):
+								msg['Invoice No'] = fileCon[fileNum]
+							elif re.match('%s\d{%s}' % (guiData['orderStsrtNum'], int(guiData['orderBits'])-1), fileCon[fileNum]):
+								msg['Order No'] = fileCon[fileNum].split(' ')[0]
+							elif re.match('\d{2}.\d{3}.\d{2}.\d{4,5}', fileCon[fileNum]):
+								msg['Project No'] = fileCon[fileNum].split(' ')[0]
+							fileNum += 1
+						pdfNameRule = guiData['pdfName'].split(' + ')
+						outputFlieName = ''
+						for eachName in pdfNameRule:
+							if outputFlieName != '':
+								outputFlieName += '-'
+							if eachName == 'Invoice No':
+								outputFlieName += msg['Invoice No']
+							elif eachName == 'Company Name':
+								outputFlieName += msg['Company Name']
+							elif eachName == 'Order No':
+								outputFlieName += msg['Order No']
+							elif eachName == 'Project No':
+								outputFlieName += msg['Project No']
+						outputFlie = outputFlieName + '.pdf'
+						# outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
+						pdfOperate.saveAs(fileUrl, '%s\\%s' % (configContent['PDF_Files_Export_URL'], outputFlie))
+					self.textBrowser_3.append('%s' % outputFlie)
+				except Exception as errorMsg:
+					# self.textBrowser_3.append("<font color='red'>第%s份文件：</font>" % i)
+					self.textBrowser_3.append("<font color='red'>出错信息：%s </font>" % errorMsg)
+					self.textBrowser_3.append("<font color='red'>出错的文件：%s </font>" % fileUrl)
+				i += 1
+			self.textBrowser_3.append('----------------------------------')
+
+
+
 
 
 if __name__ == "__main__":

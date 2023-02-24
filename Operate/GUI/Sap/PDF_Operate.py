@@ -11,26 +11,27 @@ class PDF_Operate():
                 text += page.extract_text().split("\n")  # 提取文本
         return text
 
-    def saveAs(inputFile,outputFile):
+    def saveAs(inputFile, outputFile):
         with open(inputFile, 'rb') as fp1:
             b1 = fp1.read()
         with open(outputFile, 'wb') as fp2:
             fp2.write(b1)
 
 # if __name__ == '__main__':
-#     dirUrl = "C:\\Users\\chen-fr\\Desktop\\New folder"  # 文件夹目录
+#     dirUrl = "C:\\Users\\chen-fr\\Desktop\\test2"  # 文件夹目录
 #     files = os.listdir(dirUrl)  # 得到文件夹下的所有文件名称
 #     n = 1
 #     invoiceNoStar = 4
 #     orderNoStar = 7
 #     msg = {}
+#     pdfOperate = PDF_Operate
 #     for each in files:
 #         print(each)
 #         fileUrl = '%s\\%s' % (dirUrl, each)
 #         if os.path.isfile(fileUrl):
 #             with open(fileUrl, 'rb') as my_pdf:
 #                 print(n)
-#                 fileCon = readPdf(my_pdf)
+#                 fileCon = pdfOperate.readPdf(my_pdf)
 #                 print(fileCon)
 #                 fileNum = 0
 #                 for fileCon[fileNum] in fileCon:
@@ -47,9 +48,9 @@ class PDF_Operate():
 #                         msg['Project No'] = fileCon[fileNum]
 #                     fileNum += 1
 #                 n += 1
-#                 # outputFlie = msg['Project No'] + '.pdf'
-#                 outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
-#                 saveAs(fileUrl,'%s\\test\\%s' % (dirUrl, outputFlie))
+#                 outputFlie = msg['Project No'] + '.pdf'
+#                 # outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
+#                 pdfOperate.saveAs(fileUrl,'%s\\test\\%s' % (dirUrl, outputFlie))
 #
 #         else:
 #             print('无')
