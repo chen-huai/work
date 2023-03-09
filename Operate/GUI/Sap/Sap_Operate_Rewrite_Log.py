@@ -1298,44 +1298,45 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 	# 分开ODM数据
 	def splitOdmData(self):
-		# try:
-		# 	pass
-		# except Exception as msg:
-		# 	self.textBrowser_2.append('错误信息：%s' % msg)
-		# 	self.textBrowser_2.append('----------------------------------')
-		fileUrl = self.lineEdit_7.text()
-		(filepath, filename) = os.path.split(fileUrl)
-		if fileUrl:
-			newData = Get_Data()
-			newData.getFileData(fileUrl)
-			generalData = newData.fileData[~newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
-			if generalData.empty:
-				pass
-			else:
+		try:
+			fileUrl = self.lineEdit_7.text()
+			(filepath, filename) = os.path.split(fileUrl)
+			if fileUrl:
+				newData = Get_Data()
+				newData.getFileData(fileUrl)
+				generalData = newData.fileData[~newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
+				# 新文件地址
 				newFolderUrl = '%s/%s' % (filepath, today)
 				newFolder = File_Opetate()
 				newFolder.createFolder(newFolderUrl)
 				csvFileType = 'csv'
-				invoiceFileName = '1.正常合并'
-				invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
-				generalFile = generalData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
-			specialData = newData.fileData[newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
-			fileNum = 2
-			for each in specialInvoiceMsg:
-				eachSpecialData = specialData[specialData["Invoices' name (Chinese)"].isin(specialInvoiceMsg[each]['Invoice name'])]
-				if eachSpecialData.empty:
+				if generalData.empty:
 					pass
 				else:
-					invoiceFileName = str(fileNum) + '.' + each
+					invoiceFileName = '1.正常合并'
 					invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
-					specialFile = eachSpecialData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
-					fileNum += 1
-			os.startfile(newFolderUrl)
-			self.textBrowser_2.append('处理好特殊数据')
+					generalFile = generalData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
+				specialData = newData.fileData[newData.fileData["Invoices' name (Chinese)"].isin(invoiceName)]
+				fileNum = 2
+				for each in specialInvoiceMsg:
+					eachSpecialData = specialData[specialData["Invoices' name (Chinese)"].isin(specialInvoiceMsg[each]['Invoice name'])]
+					if eachSpecialData.empty:
+						pass
+					else:
+						invoiceFileName = str(fileNum) + '.' + each
+						invoiceFilePath = newFolder.getFileName(newFolderUrl, invoiceFileName, csvFileType)
+						specialFile = eachSpecialData.to_csv('%s' % invoiceFilePath, encoding='utf_8_sig')
+						fileNum += 1
+				os.startfile(newFolderUrl)
+				self.textBrowser_2.append('处理好特殊数据')
+				self.textBrowser_2.append('----------------------------------')
+			else:
+				self.textBrowser_2.append('请重新选择ODM文件')
+				self.textBrowser_2.append('----------------------------------')
+		except Exception as msg:
+			self.textBrowser_2.append('错误信息：%s' % msg)
 			self.textBrowser_2.append('----------------------------------')
-		else:
-			self.textBrowser_2.append('请重新选择ODM文件')
-			self.textBrowser_2.append('----------------------------------')
+
 
 	# 数据透视并合并
 	def odmCombineData(self):
