@@ -130,7 +130,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['Login_msg', 'DR-0486-01->601-240', '订单类型-销售组织-分销渠道-销售办事处-销售组'],
 			['Hourly Rate', '金额', '备注'],
 			["Hourly Rate(PC)", 315, '每年更新'],
-			['Hourly Rate(Lab)', 342, '每年更新'],
+			['Hourly Rate(CHM)', 342, '每年更新'],
+			['Hourly Rate(PHY)', 342, '每年更新'],
 			['成本中心', '编号', '备注'],
 			['CS_Selected', 1, '是否默认被选中,1选中，0未选中'],
 			['PHY_Selected', 1, '是否默认被选中,1选中，0未选中'],
@@ -139,8 +140,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['CHM_Cost_Center', '48601293', 'CHM成本中心'],
 			['PHY_Cost_Center', '48601294', 'PHY成本中心'],
 			['计划成本', '数值', '备注'],
-			['Plan_Costc_Parameter', 0.9, '实际的90%'],
+			['Plan_Cost_Parameter', 0.9, '实际的90%，预留10%利润'],
 			['Significant_Digits', 0, '保留几位有效数值'],
+			['实验室成本比例', '数值', '备注'],
+			['CHM_Cost_Parameter', 0.3, '给到CHM30%'],
+			['PHY_Cost_Parameter', 0.3, '给到PHY30%'],
 			['SAP操作', '内容', '备注'],
 			['NVA01_Selected', 1, '是否默认被选中,1选中，0未选中'],
 			['NVA02_Selected', 1, '是否默认被选中,1选中，0未选中'],
@@ -200,7 +204,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.lineEdit_14.setText(loginMsgList[4])
 			# 每小时成本
 			self.doubleSpinBox_5.setValue(float(format(float(configContent['Hourly Rate(PC)']), '.2f')))
-			self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(Lab)']), '.2f')))
+			self.doubleSpinBox_6.setValue(float(format(float(configContent['Hourly Rate(CHM)']), '.2f')))
+			self.doubleSpinBox_8.setValue(float(format(float(configContent['Hourly Rate(PHY)']), '.2f')))
 			# 成本中心
 			self.checkBox_13.setChecked(int(configContent['CS_Selected']))
 			self.checkBox_14.setChecked(int(configContent['CHM_Selected']))
@@ -209,8 +214,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			self.lineEdit_19.setText(configContent['CHM_Cost_Center'])
 			self.lineEdit_20.setText(configContent['PHY_Cost_Center'])
 			# 计划成本
-			self.doubleSpinBox_7.setValue(float(format(float(configContent['Plan_Costc_Parameter']), '.2f')))
+			self.doubleSpinBox_7.setValue(float(format(float(configContent['Plan_Cost_Parameter']), '.2f')))
 			self.spinBox_5.setValue(int(configContent['Significant_Digits']))
+			# 实验室分配比例
+			self.doubleSpinBox_9.setValue(float(format(float(configContent['CHM_Cost_Parameter']), '.2f')))
+			self.doubleSpinBox_10.setValue(float(format(float(configContent['PHY_Cost_Parameter']), '.2f')))
 			# SAP操作
 			self.checkBox.setChecked(int(configContent['NVA01_Selected']))
 			self.checkBox_2.setChecked(int(configContent['NVA02_Selected']))
@@ -296,11 +304,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		guiData['cost'] = float(self.doubleSpinBox_3.text())
 		guiData['amountVat'] = float(self.doubleSpinBox_4.text())
 		guiData['csHourlyRate'] = float(self.doubleSpinBox_5.text())
-		guiData['labHourlyRate'] = float(self.doubleSpinBox_6.text())
+		guiData['chmHourlyRate'] = float(self.doubleSpinBox_6.text())
+		guiData['phyHourlyRate'] = float(self.doubleSpinBox_8.text())
 		guiData['longText'] = self.lineEdit_4.text()
 		guiData['shortText'] = self.lineEdit_5.text()
 		guiData['planCostRate'] = float(self.doubleSpinBox_7.text())
 		guiData['significantDigits'] = int(self.spinBox_5.text())
+		guiData['chmCostRate'] = float(self.doubleSpinBox_9.text())
+		guiData['phyCostRate'] = float(self.doubleSpinBox_10.text())
 		guiData['invoiceStsrtNum'] = int(self.spinBox.text())
 		guiData['invoiceBits'] = int(self.spinBox_2.text())
 		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
@@ -381,46 +392,70 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				planCost = revenue * guiData['exchangeRate']
 				revenueForCny = revenue * guiData['exchangeRate']
 				if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode'])):
-					chmCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.5, '.2f')
-					phyCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.5, '.2f')
+					# DataB-CHM成本
+					chmCost = format((revenueForCny - guiData['cost']) * guiData['chmCostRate'] * 0.5, '.2f')
+					# DataB-PHY成本
+					phyCost = format((revenueForCny - guiData['cost']) * guiData['phyCostRate'] * 0.5, '.2f')
+					# Item1000 的revenue
 					chmRe = format(revenue * 0.5, '.2f')
+					# Item2000 的revenue
 					phyRe = format(revenue * 0.5, '.2f')
 					# plan cost总算法
 					# chmCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# chmLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
 					# phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
-					
-					chmCsCostAccounting = format((planCost * 0.5 - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					chmLabCostAccounting = format((planCost * 0.5 - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
-					phyCsCostAccounting = format(planCost * 0.5 * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					phyLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyLabCostAccounting = format(planCost * 0.5 * 0.3 / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
+
+					# plan cost，理论上（revenue-total cost）*0.9*0.5，实际上SFL省略了0.9的计算（金额不大）
+
+					# CS的Item1000-Cost
+					chmCsCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * (1 - guiData['chmCostRate']) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# CHM的Item1000-Cost
+					chmLabCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * guiData['chmCostRate'] / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# CS的Item2000-Cost
+					phyCsCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * (1 - guiData['phyCostRate']) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# PHY的Item2000-Cost
+					phyLabCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * guiData['phyCostRate'] / guiData['phyHourlyRate'], '.%sf' % guiData['significantDigits'])
 				elif ('441' in guiData['materialCode']) and (("A2" in guiData['materialCode'] or ("D2" in guiData['materialCode']))):
-					chmCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.8, '.2f')
-					phyCost = format((revenueForCny - guiData['cost']) * 0.3 * 0.2, '.2f')
+					# DataB-CHM成本
+					chmCost = format((revenueForCny - guiData['cost']) * guiData['chmCostRate'] * 0.8, '.2f')
+					# DataB-PHY成本
+					phyCost = format((revenueForCny - guiData['cost']) * guiData['phyCostRate'] * 0.2, '.2f')
+					# Item1000 的revenue
 					chmRe = format(revenue * 0.8, '.2f')
+					# Item2000 的revenue
 					phyRe = format(revenue * 0.2, '.2f')
 					# plan cost总算法
 					# chmCsCostAccounting = format(planCost * 0.8 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# chmLabCostAccounting = format(planCost * 0.8 * 0.3 / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
 					# phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
-					
-					chmCsCostAccounting = format((planCost * 0.8 - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					chmLabCostAccounting = format((planCost * 0.8 - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
-					phyCsCostAccounting = format(planCost * 0.2 * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					phyLabCostAccounting = format(planCost * 0.2 * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# phyLabCostAccounting = format(planCost * 0.2 * 0.3 / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
+
+					# CS的Item1000-Cost
+					chmCsCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.8 * (1 - guiData['chmCostRate']) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# CHM的Item1000-Cost
+					chmLabCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.8 * guiData['chmCostRate'] / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# CS的Item2000-Cost
+					phyCsCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.2 * (1 - guiData['phyCostRate']) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# PHY的Item2000-Cost
+					phyLabCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.2 * guiData['phyCostRate'] / guiData['phyHourlyRate'], '.%sf' % guiData['significantDigits'])
 				else:
-					chmCost = format((revenueForCny - guiData['cost']) * 0.3, '.2f')
-					phyCost = format((revenueForCny - guiData['cost']) * 0.3, '.2f')
+					chmCost = format((revenueForCny - guiData['cost']) * guiData['chmCostRate'], '.2f')
+					phyCost = format((revenueForCny - guiData['cost']) * guiData['phyCostRate'], '.2f')
 					chmRe = format(revenue, '.2f')
 					phyRe = format(revenue, '.2f')
 					# plan cost总算法
 					# csCostAccounting = format(planCost * (1 - 0.3  - (1 - guiData['planCostRate'] )) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					# labCostAccounting = format(planCost * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
-					
-					csCostAccounting = format((planCost - guiData['cost']) * (1 - 0.3 - (1 - guiData['planCostRate'])) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
-					labCostAccounting = format((planCost - guiData['cost']) * 0.3 / guiData['labHourlyRate'], '.%sf' % guiData['significantDigits'])
+					# labCostAccounting = format(planCost * 0.3 / guiData['chmHourlyRate'], '.%sf' % guiData['significantDigits'])
+					if 'T75' in guiData['materialCode']:
+						labCostRate = guiData['chmCostRate']
+						labHourlyRate = guiData['chmHourlyRate']
+					else:
+						labCostRate = guiData['phyCostRate']
+						labHourlyRate = guiData['phyHourlyRate']
+
+					csCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * (1 - labCostRate) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
+					labCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * labCostRate / labHourlyRate, '.%sf' % guiData['significantDigits'])
 
 				# 	用未税金额算销售，SAP和ODM会有差别
 				# if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode'])):
@@ -925,7 +960,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK2[3,%s]" % n).text = csCostCenter
 											session.findById(
 												"wnd[0]/usr/tblSAPLKKDI1301_TC/ctxtRK70L-HERK3[4,%s]" % n).text = "FREMDL"
-
 											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).text = format(guiData['cost'] / 1.06, '.2f')
 											session.findById("wnd[0]/usr/tblSAPLKKDI1301_TC/txtRK70L-MENGE[6,%s]" % n).setFocus()
 											session.findById(
