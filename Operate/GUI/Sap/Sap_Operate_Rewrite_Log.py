@@ -564,15 +564,36 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]").sendVKey(0)
 						# 合作伙伴
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09").select()
-						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").text = guiData['globalPartnerCode']
+
+						# 获取文本名称
+						fourName = session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,4]").text
+						fiveName = session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,5]").text
+
+						# eNum负责雇员位置，gNum送达方位置
+						if fourName == '负责雇员' or fourName == 'Employee respons.':
+							eNum = 4
+							gNum = 5
+						else:
+							eNum = 5
+							gNum = 4
+
+						# 送达方GPC
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").setFocus()
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,%s]" % gNum).key = "ZG"
+						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).text = guiData['globalPartnerCode']
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,4]").caretPosition = 8
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).setFocus()
+						session.findById(
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).caretPosition = 8
 						session.findById("wnd[0]").sendVKey(0)
+						# 负责雇员cs
 						session.findById(
-							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,5]").text = csCode
+							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % eNum).text = csCode
 						session.findById("wnd[0]").sendVKey(0)
+
+						# 联系人
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,6]").key = "AP"
 						session.findById(
@@ -1426,22 +1447,22 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				self.lineEdit_8.setText(mergeFileNamePath)
 				# merge数据去重得到最终数据
 				mergeData.drop_duplicates(subset=pivotTableKey, keep='first', inplace=True)
-				finilDataName = '4.Finil'
-				finilFileNamePath = MyMainWindow.getFileName(self, fileUrl, finilDataName, csvFileType)
+				finalDataName = '4.final'
+				finalFileNamePath = MyMainWindow.getFileName(self, fileUrl, finalDataName, csvFileType)
 				ascendingList = [True] * len(combineKeyFieldsList)
 				mergeData.sort_values(by=combineKeyFieldsList, axis=0, ascending=ascendingList, inplace=True)
 				# mergeData.sort_values(by=["Invoices' name (Chinese)", 'CS', 'Sales', 'Currency', 'Material Code', 'Buyer(GPC)', 'Month', 'Exchange Rate'], axis=0, ascending=[True, True, True, True, True, True, True, True], inplace=True)
-				finilFile = mergeData.to_csv('%s' % (finilFileNamePath), encoding='utf_8_sig')
+				finalFile = mergeData.to_csv('%s' % (finalFileNamePath), encoding='utf_8_sig')
 				self.textBrowser_2.append('ODM原始数据：%s' % odmDataPath)
 				self.textBrowser_2.append('数据透视数据：%s' % combineFileNamePath)
 				self.textBrowser_2.append('添加Project No.的数据：%s' % mergeFileNamePath)
-				self.textBrowser_2.append('最终的SAP应用数据：%s' % finilFileNamePath)
-				self.lineEdit_6.setText(finilFileNamePath)
+				self.textBrowser_2.append('最终的SAP应用数据：%s' % finalFileNamePath)
+				self.lineEdit_6.setText(finalFileNamePath)
 				self.textBrowser_2.append('ODM数据已处理完成')
 				self.textBrowser_2.append('----------------------------------')
 				app.processEvents()
 				os.startfile(fileUrl)
-				os.startfile(finilFileNamePath)
+				os.startfile(finalFileNamePath)
 			else:
 				self.textBrowser_2.append('请重新选择ODM文件')
 				self.textBrowser_2.append('----------------------------------')
