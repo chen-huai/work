@@ -571,7 +571,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						fiveName = session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,5]").text
 
-						# eNum负责雇员位置，gNum送达方位置
+						# # eNum负责雇员位置，gNum送达方位置
 						if fourName == '负责雇员' or fourName == 'Employee respons.':
 							eNum = 4
 							gNum = 5
@@ -580,6 +580,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							gNum = 4
 
 						# 送达方GPC
+						# eNum负责雇员位置，gNum送达方位置
+
+						# if fiveName == '送达方' or fiveName == 'Global Partner':
+						# 	gNum = 5
+						# else:
+						# 	gNum = 4
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,%s]" % gNum).key = "ZG"
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).text = guiData['globalPartnerCode']
@@ -587,8 +593,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).setFocus()
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % gNum).caretPosition = 8
-						session.findById("wnd[0]").sendVKey(0)
+						# session.findById("wnd[0]").sendVKey(0)
+
+						# fiveName = session.findById(
+						# 	"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/cmbGVS_TC_DATA-REC-PARVW[0,5]").text
+
 						# 负责雇员cs
+						# eNum负责雇员位置，gNum送达方位置
+						# if fourName == '负责雇员' or fourName == 'Employee respons.':
+						# 	eNum = 4
+						# else:
+						# 	eNum = 5
+
 						session.findById(
 							"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09/ssubSUBSCREEN_BODY:SAPMV45A:4352/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,%s]" % eNum).text = csCode
 						session.findById("wnd[0]").sendVKey(0)
