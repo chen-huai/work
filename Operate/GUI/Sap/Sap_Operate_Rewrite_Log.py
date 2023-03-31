@@ -145,6 +145,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['实验室成本比例', '数值', '备注'],
 			['CHM_Cost_Parameter', 0.3, '给到CHM30%'],
 			['PHY_Cost_Parameter', 0.3, '给到PHY30%'],
+			['DATA A数据填写', '判断依据', '备注'],
+			['Data_A_E1', '5010815347;5010427355;5010913488;5010685589;5010829635;5010817524', 'Data A录E1,新添加用;隔开即可'],
+			['Data_A_Z2', '5010908478;5010823259', 'Data A录Z2,新添加用;隔开即可'],
 			['SAP操作', '内容', '备注'],
 			['NVA01_Selected', 1, '是否默认被选中,1选中，0未选中'],
 			['NVA02_Selected', 1, '是否默认被选中,1选中，0未选中'],
@@ -219,6 +222,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			# 实验室分配比例
 			self.doubleSpinBox_9.setValue(float(format(float(configContent['CHM_Cost_Parameter']), '.2f')))
 			self.doubleSpinBox_10.setValue(float(format(float(configContent['PHY_Cost_Parameter']), '.2f')))
+			# DATA A选择
+			self.lineEdit_21.setText(configContent['Data_A_E1'])
+			self.lineEdit_22.setText(configContent['Data_A_Z2'])
 			# SAP操作
 			self.checkBox.setChecked(int(configContent['NVA01_Selected']))
 			self.checkBox_2.setChecked(int(configContent['NVA02_Selected']))
@@ -312,6 +318,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 		guiData['significantDigits'] = int(self.spinBox_5.text())
 		guiData['chmCostRate'] = float(self.doubleSpinBox_9.text())
 		guiData['phyCostRate'] = float(self.doubleSpinBox_10.text())
+		guiData['dataAE1'] = self.lineEdit_21.text().split(';')
+		guiData['dataAZ2'] = self.lineEdit_22.text().split(';')
 		guiData['invoiceStsrtNum'] = int(self.spinBox.text())
 		guiData['invoiceBits'] = int(self.spinBox_2.text())
 		guiData['orderStsrtNum'] = int(self.spinBox_3.text())
@@ -644,12 +652,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]").sendVKey(0)
 						# DATA A
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13").select()
-						if 'D2' in guiData['materialCode']:
+						if guiData['sapNo'] in guiData['dataAE1']:
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "E1"
+						elif guiData['sapNo'] in guiData['dataAZ2']:
+							session.findById(
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "Z2"
 						else:
 							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "00"
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "Z0"
 						# DATA B
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14").select()
 						session.findById(
