@@ -125,7 +125,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 			['特殊开票', '内容', '备注'],
 			['SAP_Date_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM', '文件数据路径'],
 			['Invoice_File_URL', 'N:\\XM Softlines\\6. Personel\\5. Personal\\Supporting Team\\收样\\3.Sap\\ODM Data - XM\\2.特殊开票', '特殊开票文件路径'],
-			['Invoice_File_Name', '开票特殊要求2022.xlsx', '特殊开票文件名称'],
+			['Invoice_File_Name', '特殊开票要求2022.xlsx', '特殊开票文件名称'],
 			['SAP登入信息', '内容', '备注'],
 			['Login_msg', 'DR-0486-01->601-240', '订单类型-销售组织-分销渠道-销售办事处-销售组'],
 			['Hourly Rate', '金额', '备注'],
@@ -652,15 +652,19 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						session.findById("wnd[0]").sendVKey(0)
 						# DATA A
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13").select()
-						if guiData['sapNo'] in guiData['dataAE1']:
-							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "E1"
+						if 'D2' in guiData['materialCode'] or 'D3' in guiData['materialCode']:
+							if guiData['sapNo'] in guiData['dataAE1']:
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "E1"
+							else:
+								session.findById(
+									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "Z0"
 						elif guiData['sapNo'] in guiData['dataAZ2']:
 							session.findById(
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "Z2"
 						else:
 							session.findById(
-								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "Z0"
+								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13/ssubSUBSCREEN_BODY:SAPMV45A:4309/cmbVBAK-KVGR1").key = "00"
 						# DATA B
 						session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14").select()
 						session.findById(
