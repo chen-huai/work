@@ -399,7 +399,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				# planCost = revenue * guiData['exchangeRate'] * 0.9 - guiData['cost']
 				planCost = revenue * guiData['exchangeRate']
 				revenueForCny = revenue * guiData['exchangeRate']
-				if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode'])):
+				if ('405' in guiData['materialCode']) and (("A2" in guiData['materialCode']) or ("D2" in guiData['materialCode']) or ("D3" in guiData['materialCode'])):
 					# DataB-CHM成本
 					chmCost = format((revenueForCny - guiData['cost']) * guiData['chmCostRate'] * 0.5, '.2f')
 					# DataB-PHY成本
@@ -424,7 +424,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 					phyCsCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * (1 - guiData['phyCostRate']) / guiData['csHourlyRate'], '.%sf' % guiData['significantDigits'])
 					# PHY的Item2000-Cost
 					phyLabCostAccounting = format((revenueForCny*0.9 - guiData['cost']) * 0.5 * guiData['phyCostRate'] / guiData['phyHourlyRate'], '.%sf' % guiData['significantDigits'])
-				elif ('441' in guiData['materialCode']) and (("A2" in guiData['materialCode'] or ("D2" in guiData['materialCode']))):
+				elif ('441' in guiData['materialCode']) and (("A2" in guiData['materialCode'] or ("D2" in guiData['materialCode']) or ("D3" in guiData['materialCode']))):
 					# DataB-CHM成本
 					chmCost = format((revenueForCny - guiData['cost']) * guiData['chmCostRate'] * 0.8, '.2f')
 					# DataB-PHY成本
@@ -678,7 +678,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 								"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/txtZAUFTD-AUFTRAGSWERT").text = format(revenueForCny, '.2f')
 						# 是否要添加cost 
 						if self.checkBox_7.isChecked():
-							if 'A2' in guiData['materialCode'] or 'D2' in guiData['materialCode']:
+							if 'A2' in guiData['materialCode'] or 'D2' in guiData['materialCode'] or 'D3' in guiData['materialCode']:
 								session.findById(
 									"wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\14/ssubSUBSCREEN_BODY:SAPMV45A:4312/tblSAPMV45AZULEISTENDE/ctxtTABL-KOSTL[0,0]").text = chmCostCenter
 								session.findById(
