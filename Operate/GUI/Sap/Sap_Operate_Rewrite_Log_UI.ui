@@ -533,7 +533,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_3">
            <property name="geometry">
@@ -985,8 +985,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>277</width>
-             <height>402</height>
+             <width>441</width>
+             <height>494</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1101,12 +1101,12 @@
               </item>
               <item>
                <property name="text">
-                <string>T75-441-D2</string>
+                <string>T75-441-D3</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>T75-405-D2</string>
+                <string>T75-405-D3</string>
                </property>
               </item>
               <item>

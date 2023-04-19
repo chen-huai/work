@@ -550,7 +550,7 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.SpanningRole, self.groupBox_16)
         self.toolBox.addItem(self.page_3, "")
         self.page_4 = QtWidgets.QWidget()
-        self.page_4.setGeometry(QtCore.QRect(0, 0, 277, 402))
+        self.page_4.setGeometry(QtCore.QRect(0, 0, 441, 494))
         self.page_4.setObjectName("page_4")
         self.gridLayout = QtWidgets.QGridLayout(self.page_4)
         self.gridLayout.setObjectName("gridLayout")
@@ -1017,7 +1017,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.toolBox.setCurrentIndex(0)
+        self.toolBox.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1100,8 +1100,8 @@ class Ui_MainWindow(object):
         self.comboBox_4.setItemText(4, _translate("MainWindow", "T20-405-00"))
         self.comboBox_4.setItemText(5, _translate("MainWindow", "T75-441-00"))
         self.comboBox_4.setItemText(6, _translate("MainWindow", "T75-405-00"))
-        self.comboBox_4.setItemText(7, _translate("MainWindow", "T75-441-D2"))
-        self.comboBox_4.setItemText(8, _translate("MainWindow", "T75-405-D2"))
+        self.comboBox_4.setItemText(7, _translate("MainWindow", "T75-441-D3"))
+        self.comboBox_4.setItemText(8, _translate("MainWindow", "T75-405-D3"))
         self.comboBox_4.setItemText(9, _translate("MainWindow", "S11-441-10"))
         self.comboBox_4.setItemText(10, _translate("MainWindow", "S11-405-10"))
         self.pushButton_6.setText(_translate("MainWindow", "Global Partner Code"))
