@@ -1630,18 +1630,26 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 				try:
 					self.textBrowser_3.append('第%s份文件：' % i)
 					msg = {}
+					msg['Invoice No'] = ''
 					with open(fileUrl, 'rb') as pdfFile:
 						fileCon = pdfOperate.readPdf(pdfFile)
 						fileNum = 0
 						for fileCon[fileNum] in fileCon:
-							if re.match('.*Invoice No.', fileCon[fileNum]):
-								msg['Company Name'] = fileCon[fileNum].replace('Invoice No.', '')
+							if re.match('.*P. R. China', fileCon[fileNum]):
+								msg['Company Name'] = fileCon[fileNum + 1].replace('Please quote this number on all inquiries and payments.', '').replace('Invoice No.', '')
 							elif re.match('%s\d{%s}' % (guiData['invoiceStsrtNum'], int(guiData['invoiceBits'])-1), fileCon[fileNum]):
 								msg['Invoice No'] = fileCon[fileNum]
-							elif re.match('%s\d{%s}' % (guiData['orderStsrtNum'], int(guiData['orderBits'])-1), fileCon[fileNum]):
-								msg['Order No'] = fileCon[fileNum].split(' ')[0]
-							elif re.match('\d{2}.\d{3}.\d{2}.\d{4,5}', fileCon[fileNum]):
-								msg['Project No'] = fileCon[fileNum].split(' ')[0]
+							elif re.search('\d{2}.\d{3}.\d{2}.\d{4,5}', fileCon[fileNum]):
+								res = fileCon[fileNum].split(' ')
+								for each in res:
+									if re.search('\d{2}.\d{3}.\d{2}.\d{4,5}', each):
+										msg['Project No'] = each
+									elif re.search('%s\d{%s}' % (guiData['invoiceStsrtNum'], int(guiData['invoiceBits'])-1), each) and msg['Invoice No'] == '':
+										msg['Invoice No'] = each
+							elif re.search('%s\d{%s}' % (guiData['orderStsrtNum'], int(guiData['orderBits'])-1), fileCon[fileNum]):
+								res = fileCon[fileNum].split(' ')
+								if len(res[1]) == int(guiData['orderBits']):
+									msg['Order No'] = res[1]
 							fileNum += 1
 						pdfNameRule = guiData['pdfName'].split(' + ')
 						outputFlieName = ''
@@ -1660,6 +1668,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 						# outputFlie = msg['Invoice No'] + '-' + msg['Company Name'] + '.pdf'
 						pdfOperate.saveAs(fileUrl, '%s\\%s' % (configContent['PDF_Files_Export_URL'], outputFlie))
 					self.textBrowser_3.append('%s' % outputFlie)
+					app.processEvents()
 				except Exception as errorMsg:
 					# self.textBrowser_3.append("<font color='red'>第%s份文件：</font>" % i)
 					self.textBrowser_3.append("<font color='red'>出错信息：%s </font>" % errorMsg)
