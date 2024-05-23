@@ -98,6 +98,11 @@ class Get_Data():
         mergeData = pd.merge(data1, data2, on=onData, how='inner')
         return mergeData
 
+    def concat_func(self, data):
+        return pd.Series({
+            '合并':'\n'.join(data['合并'].unique()),
+        }
+        )
 # deleteRowList = {'Amount': 0}
 # # a = Get_Data("C:\\Users\\chen-fr\\OneDrive - Binghamton University\\chenhuai\\CS Work\\4.SAP Data\\ODM Data\\Final Data\\data.csv")
 # a = Get_Data()
